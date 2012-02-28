@@ -353,7 +353,7 @@
       <Token axis="y" layerList="5" angle="90">u</Token>
       <Token axis="y" layerList="6" angle="90">U</Token>
       <Token axis="y" layerList="5,6" angle="90">Uw 2U</Token>
-      <Token axis="z" layerList="4,5,6" angle="90">3f</Token>
+      <Token axis="z" layerList="4,5,6" angle="90">3F</Token>
       <Token axis="z" layerList="1,2,3,4,5,6" angle="90">z [f] [b&apos;]</Token>
       <Token axis="x" layerList="4,5,6" angle="90">3R</Token>
       <Token axis="y" layerList="4,5,6" angle="90">3U</Token>
@@ -452,7 +452,7 @@
       <Token axis="z" layerList="1,2,3,4,5,6,7" angle="180">[f2] [b2&apos;]</Token>
       <Token axis="z" layerList="7" angle="90">F</Token>
       <Token axis="z" layerList="6,7" angle="90">Fw 2F</Token>
-      <Token axis="z" layerList="5,6,7" angle="90">3f</Token>
+      <Token axis="z" layerList="5,6,7" angle="90">3F</Token>
       <Token axis="z" layerList="1,2,3" angle="-90">3B</Token>
       <Token axis="y" layerList="1,2,3" angle="-90">3D</Token>
       <Token axis="x" layerList="1,2,3" angle="-90">3L</Token>
