@@ -1,9 +1,9 @@
 <html>
 <head>
-<title>alg.garron.us (v1.3.0)</title>
+<title>alg.garron.us</title>
 <!-- Lucas Garron, 20090630 -->
 <!-- Alg Animation Tool -->
-<!-- alg.garron.us (v1.3) -->
+<!-- alg.garron.us (v1.3.1) -->
 <!-- This file may be freely downloaded/modified/distributed, if it is marked as a derivative and the source is attributed.-->
 <!-- Applets by Werner Randelshofer (http://www.randelshofer.ch/) -->
 <!--
@@ -26,28 +26,28 @@ Allow static image generation with iCube: http://software.rubikscube.info/icube/
 -->
 
 <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" /> 
-
-<!-- Skin CSS file -->
-<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.6.0/build/assets/skins/sam/resize.css">
-<!-- Utility Dependencies -->
-<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/yahoo-dom-event/yahoo-dom-event.js"></script> 
-<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/dragdrop/dragdrop-min.js"></script> 
-<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/element/element-beta-min.js"></script> 
-<!-- Source file for the Resize Utility -->
-<script src="http://yui.yahooapis.com/2.6.0/build/resize/resize-min.js"></script>
+<link rel="search" type="application/opensearchdescription+xml" href="./searchDescription.xml" title="alg.garron.us"/> 
 
 
 <!-- I apologize dearly for the lack of CSS on this page. -->
 <style type="text/css" media="screen">
 	body {margin: 0px; padding 0px; font-family: Helvetica, Tahoma, Arial;}
-    #appletdiv {height: 300px; width: 98%; padding: 2px; border: 1px dotted #888;}
-    table {border-collapse: collapse; border: none; margin: 0px;}
-    td {border: none;}
-	#titletext {
-    	font-size: 200%;
-    	font-weight: bold;
-    	text-decoration: underline;
+    #appletdiv {
+        height: 24em;
+        width: 92%;
+        padding: 12px;
+        margin: auto;
+        resize: both;
+        overflow: auto;
+        background: #EEC;
+        min-width: 256px;
     }
+    table {border-collapse: collapse; border: none; margin: 0px;}
+    td {border: none; padding: 1em 0em;}
+	#titletext {
+		font-size: 200%;
+		font-weight: bold;
+	}
     #copyurl {
     	 width: 90%;
     	 text-align: center;
@@ -145,7 +145,7 @@ function colorcharconvert(colchar)
 	switch (colchar)
 	{
 	case "y": return("ffff00");
-	case "w": return("ffffff");
+	case "w": return("eeeeee");
 	case "b": return("0000ff");
 	case "g": return("00ff00");
 	case "o": return("ff8800");
@@ -260,7 +260,7 @@ function escapealg(algstr){return algstr.replace(/\n/g, '%0A').replace(/-/g, '%2
 function unescapealg(algstr){return unescape(algstr.replace(/_/g,' ').replace(/\+/g,' ').replace(/-/g,'\''));}
 function unescapeapplet(algstr){return algstr.replace(/\n/g, '\\n');}
 function highlightinput(inputId) {inputId.focus(); inputId.select();}
-function nameedit() {document.getElementById("titlespan").innerHTML='<input id="titleinput" type="text" value="'+p_name+'" onload="javascript:this.focus();" onchange="javascript:p_name=this.value;" onblur="javascript:namesolidify()" style="font-size: 150%; text-align: center;"/>';} 
+function nameedit() {document.getElementById("titlespan").innerHTML='<input id="titleinput" type="text" value="'+p_name+'" onload="javascript:this.focus();this.select();" onchange="javascript:p_name=this.value;" onblur="javascript:namesolidify()" style="font-size: 150%; text-align: center;"/>';}
 function namesolidify() {document.getElementById("titlespan").innerHTML='<span id="titletext" style="font-size: 200%; font-weight: bold;" onclick="javascript:nameedit()">'+p_name+'<\/span>';}
   
 function loadapplet()
@@ -295,7 +295,7 @@ document.getElementById("righthalf").innerHTML='<span title="Link for forums">Fo
 	+'\n <param name="scriptType" value="'+p_animtype.replace('gen','Generator').replace('solve','Solver')+'">'
 	+'\n <param name="resourceFile" value="'+notationfile+'"/><param name="notation" value="'+p_cube+'"/>'
 	+'\n <param name="colorTable" value="'+hexscheme(p_scheme)+'"><param name="faces" value="1,2,3,4,5,6">'
-	+'\n <param name="backgroundColor" value="0xffffdd">'
+	+'\n <param name="backgroundColor" value="0xffffff">'
 	+stickerappletcode
 	+displinescode
 	+'\n <param name="initScript" value="'+applet_ini+'">'
@@ -303,8 +303,6 @@ document.getElementById("righthalf").innerHTML='<span title="Link for forums">Fo
 	+'\n<\/applet>'
 	+'\n<\/div>'
 ;
-
-var resize = new YAHOO.util.Resize('appletdiv');
 }
 
 function showhelp()
@@ -320,7 +318,7 @@ document.getElementById("righthalf").innerHTML='<span style="font-size: 200%; fo
 +'\n<ul style="text-align: left;">'
 +'\n<li>Reset: Reload page with algs/options cleared.<\/li>'
 +'\n<li>Reload: Reload page with selected settings.<\/li>'
-+'\n<li>Test: Refresh applet with current settings.<\/a><\/li>'
++'\n<li>View: Refresh applet with current settings.<\/a><\/li>'
 +'\n<\/ul>'
 +'\n'
 +'\n<li><u>Title<\/u>: Click the title! You can edit it.<\/li>'
@@ -367,7 +365,7 @@ document.getElementById("righthalf").innerHTML='<span style="font-size: 200%; fo
 +'\n<\/p>'
 +'\n<applet code="AlgTyper.class" archive="applet\/AlgTyper.jar" width="95%" height="256" name="algtyper" id="algtyper">'
 +'\n<param name="mayscript" value="true">'
-+'\n<param name="bgcolor" value="ffffdd">'
++'\n<param name="bgcolor" value="ffffff">'
 +'\n<param name="hint" value="0">'
 +'\n<param name="showScrambleButton" value="false">'
 +'\n<param name="colorscheme" value="wygbor">'
@@ -419,20 +417,14 @@ function submitalg()
 
 
 </script>
- <script type="text/javascript">
+ 
+<style type="text/css">
+#titletext {
+    cursor: crosshair;
+}
+</style>
+ 
 
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-19943138-1']);
-  _gaq.push(['_setDomainName', '.garron.us']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
 </head>
 <body bgcolor="#ffffdd">
 <center>
@@ -458,8 +450,8 @@ document.write('<br><span title="Algorithm"><textarea id="alg" rows="12" cols="5
 </script>
 <br>
 <span title="Refresh and reset the page."><button type="button" onclick="window.location='?'">Reset</button></span>
-<span title="Reload the page with the new alg."><button type="button" onclick="javascript:submitalg()">Reload!</button></span>
-<span title="Refresh applet WITHOUT reloading the page."><button type="button" onclick="javascript:setalgs();loadapplet()">Test</button></a>
+<span title="Reload the page with the new alg."><button type="button" onclick="javascript:submitalg()">Reload</button></span>
+<span title="Refresh applet WITHOUT reloading the page."><button type="button" onclick="javascript:setalgs();loadapplet()">View</button></a>
 <!--<input type="submit" value="Submit">-->
 
 <br>
@@ -519,7 +511,7 @@ document.getElementById('stage'+p_stage).checked="true";
 <button type="button" onclick="showhelp();" style="font-size: 125%">Show Help</button>
 <button type="button" onclick="showAlgTyper();" style="font-size: 125%">AlgTyper</button>
 <br><br>
-<span style="font-family: monospace" title="Everyone loves XKCD. Especially because of the hovertext.">alg.garron.us - v1.3beta - by Lucas Garron<br>Original applets by <a href="http://www.randelshofer.ch/">Werner Randelshofer</a> and <a href="http://www.rubikscube.info/">Josef Jelinek</a></span>
+<span style="font-family: monospace" title="Everyone loves XKCD. Especially because of the hovertext.">alg.garron.us - by Lucas Garron<br>Original applets by <a href="http://www.randelshofer.ch/">Werner Randelshofer</a> and <a href="http://www.rubikscube.info/">Josef Jelinek</a></span>
 
 </td>
 <td id="righthalf" width="50%" style="vertical-align: top;" >
@@ -531,7 +523,7 @@ document.getElementById('stage'+p_stage).checked="true";
 </p>
 <applet code="AlgTyper.class" archive="applet/AlgTyper.jar" width="95%" height="256" name="algtyper" id="algtyper">
 <param name="mayscript" value="true">
-<param name="bgcolor" value="ffffdd">
+<param name="bgcolor" value="ffffff">
 <param name="hint" value="0">
 <param name="colorscheme" value="wygbor">
 <param name="speed" value="5">
@@ -563,4 +555,24 @@ else
 
 
 </center>
+
+
+
+</script>
+ <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-19943138-1']);
+  _gaq.push(['_setDomainName', '.garron.us']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+
 </body></html>
