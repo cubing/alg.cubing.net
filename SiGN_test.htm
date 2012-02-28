@@ -1,9 +1,9 @@
 <html>
 <head>
-<title>alg.garron.us (v1.1.6beta)</title>
+<title>alg.garron.us (v1.1.7beta)</title>
 <!-- Lucas Garron, 2009-03-25 -->
 <!-- Alg Animation Tool -->
-<!-- alg.garron.us (v1.1.3) -->
+<!-- alg.garron.us (v1.1.7) -->
 <!-- This file may be freely downloaded/modified/distributed, if it is marked as a derivative and the source is attributed.-->
 <!-- Applets by Werner Randelshofer (http://www.randelshofer.ch/) -->
 <!--
@@ -339,7 +339,7 @@ document.write('<br><span title="Algorithm"><textarea name="alg" id="alg" rows="
 <input type="radio" name="scheme" id="colb" value="grobyw" onclick="p_scheme='grobyw';">BOY
 <input type="radio" name="scheme" id="colj" value="groybw" onclick="p_scheme='groybw';">Japanese
 <input type="radio" name="scheme" id="colc" value="custom" onclick="p_scheme=schemeinput.value;highlightinput(schemeinput);">
-	<input id="schemeinput" type="text" name="schemeinput" value="" onclick="javascript:getElementById('colc').checked=true" onchange="javascript:p_scheme=this.value"/>
+	<input id="schemeinput" type="text" name="schemeinput" value="" onclick="javascript:getElementById('colc').checked=true" onchange="javascript:p_scheme=this.value" size="6"/>
 	<script language="JavaScript">schemeinput.value=p_scheme</script>
 </span>
 
@@ -359,53 +359,11 @@ document.write('<br><span title="Algorithm"><textarea name="alg" id="alg" rows="
 </form>
 <button type="button" onclick="showhelp();" style="font-size: 125%">Show Help</button>
 <br><br>
-<span style="font-family: monospace" title="Everyone loves XKCD. Especially because of the hovertext.">alg.garron.us - by Lucas Garron</span>
+<span style="font-family: monospace" title="Everyone loves XKCD. Especially because of the hovertext.">alg.garron.us - v1.1.7beta - by Lucas Garron</span>
 
 </td>
 <td name="righthalf" id="righthalf" width="50%" style="vertical-align: top;" >
 
-<span "style="font-size: 200%; font-weight: bold;">Help</span>
-<br>alg.garron.us is a tool for viewing and sharing algs. v1.1.6beta
-<ul style="text-align: left;">
-<li>Just type an alg into the lower textbox and click <i>Reload</i> or <i>Test</i>.</li>
-<li>If you would like to add pre-moves (like a scramble), type them into the upper textbox.</li>
-
-<li><u>Buttons</u>:</li>
-<ul style="text-align: left;">
-<li>Reset: Reload Page with algs/options cleared.</li>
-<li>Reload: Reload page with selected settings.</li>
-<li>Test: Refresh applet with current settings.</a></li>
-</ul>
-
-<li><u>Puzzle</u>: You can select</li>
-<ul style="text-align: left;">
-<li>2x2x2-7x7x7</li>
-</ul>
-
-<li><u>Notation</u>:</li>
-<ul style="text-align: left;">
-<li>SiGN: Simple General Notation</li>
-<li>WCA: <a href="http://www.worldcubeassociation.org/regulations/#notation">WCA Official Notation</a></li>
-<li>Superset: Werner Randelshofer's <a href="http://www.randelshofer.ch/rubikplayer/documentation/superset_eng.html">Superset ENG</a></li>
-</ul>
-
-<li><u>Animation Type</u>:</li>
-<ul style="text-align: left;">
-<li>Solver: View the moves solving the puzzle.</li>
-<li>Generator: View moves applied moves to a solved state</li>
-</ul>
-
-<li><u>Color Scheme</u>: Set colors for FRLBDU or pick a standard scheme.</li>
-
-<li><u>Stage</u>: 3x3x3 ONLY - Gray out pieces to emphasize the pieces of a solving stage</li>
-<ul style="text-align: left;">
-<li>Full, F2L, OLL/CLS, ZBLS, CMLL</li>
-<li>Hidden: CLL, COLL, ELL, ELS, EO, EOLine, FRSlot, WVLS, ZBLL.</li>
-</ul>
-
-</ul>
-</p>
-<p style="text-align: center;"><button type="button" onclick="javascript:setalgs();loadapplet()">Hide Help - Load Applet Here</button></p>
 
 <!--
 <br>Loading Applet/Help here...
