@@ -1,0 +1,179 @@
+<html><head><title>SiGN Test 1.0.0</title>
+<!-- Lucas Garron, 2009-03-24 -->
+<!-- Alg Animation Tool-->
+
+<!-- Skin CSS file -->
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.6.0/build/assets/skins/sam/resize.css">
+<!-- Utility Dependencies -->
+<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/yahoo-dom-event/yahoo-dom-event.js"></script> 
+<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/dragdrop/dragdrop-min.js"></script> 
+<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/element/element-beta-min.js"></script> 
+<!-- Source file for the Resize Utility -->
+<script src="http://yui.yahooapis.com/2.6.0/build/resize/resize-min.js"></script>
+<style type="text/css" media="screen">
+    #resizeMe {height: 300px; width: 100%; padding: 2px; border: 1px solid black;}
+</style>
+
+
+<script type="text/javascript">
+ function gup( name , alt ){var results = RegExp( "[\\?&]"+name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]")+"=([^&#<]*)" ).exec( window.location.href ); if( results==null ) return alt; else return results[1];};
+ 
+  var p_ini=gup('ini','');
+  var p_alg=gup('alg','RUR\'');
+  var p_name=gup('name','alg.garron.us');
+  var p_cube=gup('cube','3x3x3');
+  var p_notation=gup('notation','sign');
+  var p_animtype=gup('animtype','gen');
+  var p_scheme=gup('scheme','boy');
+  var p_dim=gup('dim','none');
+
+function paramadd(paramname, paramval, paramdefault)
+  {
+  if ((paramval=="")||(paramval==paramdefault))
+  	return "";
+  else
+  		return "&"+paramname+"="+paramval;
+  	
+}
+
+function escapealg(algstr)
+{
+	return algstr.replace(/\n/g, '%0A').replace(/-/g, '%2D').replace(/\'/g, '-').replace(/ /g, '_');
+}
+
+function unescapealg(algstr)
+{
+	return unescape(algstr).replace(/_/g,' ').replace(/-/g,'\'');
+}
+
+function unescapeapplet(algstr)
+{
+	return unescape(algstr.replace(/-/g,'\'').replace(/_/g,' ').replace(/-/g,'\'').replace(/%0A/g,' '));
+}
+  
+function submitalg()
+  {
+  var url="?alg="+escapealg(document.getElementById('alg').value);
+  url=url+paramadd('ini',escapealg(document.getElementById('ini').value),'');
+  url=url+paramadd('name',p_name,'alg.garron.us');
+  url=url+paramadd('cube',p_cube,'3x3x3');
+  url=url+paramadd('notation',p_notation,'sign');
+  url=url+paramadd('animtype',p_animtype,'gen');
+  url=url+paramadd('scheme',p_scheme,'wygbor');
+  url=url+paramadd('dim',p_dim,'none');
+//  alert(url);
+  window.location=url;
+  return true;
+  }
+  
+function highlightschemeinput() {
+  document.getElementById('schemeinput').focus();
+  document.getElementById('schemeinput').select();
+}
+ 
+ </script>
+ 
+ 
+</head>
+<body bgcolor="#ffffdd">
+<center>
+
+
+
+<table width="100%" height="100%" style="text-align: center;" border="1" cellspacing="1" cellpadding="4">
+<tr width="50%">
+<td width="1*" style="vertical-align: top;">
+<script language="JavaScript">
+document.write('<span style="font-size: 200%; font-weight: bold; ">'+unescapealg(p_name)+'</span>');
+
+</script>
+<!-- <span style="font-size: 125%;">	Si<i>mple</i> G<i>eneral</i> N<i>otation</i></span>-->
+
+<form  action="SiGN_test.htm" method="get">
+
+<span title="Cube Size">
+<script language="JavaScript">document.write('<u>'+p_cube+'</u> - ');</script>
+<input type="radio" name="cubes" id="c2" value="2" onclick="p_cube='2x2x2'">2 
+<input type="radio" name="cubes" id="c3" value="3" onclick="p_cube='3x3x3'">3 
+<input type="radio" name="cubes" id="c4" value="4" onclick="p_cube='4x4x4'">4 
+<input type="radio" name="cubes" id="c5" value="5" onclick="p_cube='5x5x5'">5 
+<input type="radio" name="cubes" id="c6" value="6" onclick="p_cube='6x6x6'">6 
+<input type="radio" name="cubes" id="c7" value="7" onclick="p_cube='7x7x7'">7
+</span>
+
+
+<script language="JavaScript">
+document.write('<br><span title="Scramble"><textarea name="ini" id="ini" rows="2" cols="50">'+unescapealg(p_ini)+'</textarea></span>');
+</script>
+<script language="JavaScript">
+document.write('<br><span title="Algorithm"><textarea name="alg" id="alg" rows="12" cols="50">'+unescapealg(p_alg)+'</textarea></span>');
+</script>
+<br><button type="button" onclick="javascript:submitalg()">View!</button>
+<!--<input type="submit" value="Submit">-->
+
+<br>
+<span id="options">
+<span title="Notation">
+<br><script language="JavaScript">document.write('<u>'+p_notation.replace('sign','SiGN')+'</u> - ');</script>
+<input type="radio" name="notation" id="ns" value="sign" onclick="p_notation='sign'">SiGN 
+<input type="radio" name="notation" id="nw" value="wca" onclick="p_notation='WCA'">WCA
+<input type="radio" name="notation" id="nu" value="superset" onclick="p_notation='superset'">Superset</span>
+
+<span title="Animation Type">
+<br><script language="JavaScript">document.write('<u>'+p_animtype.replace('solve','Solver').replace('gen','Generator')+'</u> - ');</script>
+<input type="radio" name="animtype" id="ats" value="solve" onclick="p_animtype='solve'">Solver 
+<input type="radio" name="animtype" id="atg" value="gen" onclick="p_animtype='gen'">Generator
+</span>
+
+<span title="Color Scheme (UDFBLR)">
+<br><script language="JavaScript">document.write('<u>'+p_scheme.replace('boy','BOY').replace('jap','Japanese')+'</u> - ');</script>
+<input type="radio" name="scheme" id="colb" value="wygbor" onclick="p_scheme='wygbor';">BOY
+<input type="radio" name="scheme" id="colj" value="wbgyor" onclick="p_scheme='wbgyor';">Japanese
+<input type="radio" name="scheme" id="colc" value="custom" onclick="p_scheme=schemeinput.value;highlightschemeinput();">
+	<input id="schemeinput" type="text" name="schemeinput" value="" onclick="javascript:getElementById('colc').checked=true" onchange="javascript:p_scheme=this.value"/>
+	<script language="JavaScript">schemeinput.value=p_scheme</script>
+</span>
+
+<span title="Dimming">
+<br><script language="JavaScript">document.write('<u>'+p_dim.replace('boy','BOY').replace('jap','Japanese')+'</u> - ');</script>
+<input type="radio" name="dim" id="atn" value="boy" onclick="p_dim='none';">None
+<input type="radio" name="dim" id="atf" value="boy" onclick="p_dim='f2l';">F2L
+<input type="radio" name="dim" id="ato" value="boy" onclick="p_dim='oll';">OLL/CLS
+<!--<input type="radio" name="dim" id="atl" value="boy" onclick="p_dim='l6e';">L6E
+<input type="radio" name="dim" id="atcm" value="boy" onclick="p_dim='cmll';">CMLL
+<input type="radio" name="dim" id="atco" value="boy" onclick="p_dim='coll';">COLL
+<input type="radio" name="dim" id="atzb" value="boy" onclick="p_dim='zbls';">ZBLS
+<input type="radio" name="dim" id="atzb" value="boy" onclick="p_dim='centers';">Centers-->
+</span>
+</span>
+
+</form>
+
+</td>
+<td width="50%" style="vertical-align: top;">
+
+
+ <div id="resizeMe">
+<script language="JavaScript">
+var jarfile=cube.replace('2x2x2','PocketPlayer').replace('3x3x3','RubikPlayer').replace('4x4x4','RevengePlayer').replace('5x5x5','ProfessorPlayer').replace('6x6x6','VCube6Player').replace('7x7x7','VCube7Player');
+var notationfile='notation/'+p_notation+'.xml';
+document.write('<applet code="'+jarfile+'.class" archive="applet/'+jarfile+'.jar" width="100%" height="100%">');
+document.write(' <param name="scriptType" value="'+animtype.replace('gen','Generator').replace('solve','Solver')+'">');
+document.write(' <param name="resourceFile" value="'+notationfile+'"/><param name="notation" value="'+cube+'"/>');
+document.write(' <param name="colorTable" value="0x00cc00,0xdd0000,0xff9900,0x0000dd,0xffff00,0xffffff"><param name="faces" value="0,1,2,3,4,5">');
+document.write(' <param name="initScript" value="'+unescapeapplet(p_ini)+'">');
+document.write(' <param name="script" value="'+unescapeapplet(p_alg)+'">');
+document.write('</applet>');
+</script>
+</div>
+<script type="text/javascript">
+var resize = new YAHOO.util.Resize('resizeMe');
+</script>
+
+</td>
+</tr>
+</table>
+
+
+</center>
+</body></html>
