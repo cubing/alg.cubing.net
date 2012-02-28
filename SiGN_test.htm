@@ -1,9 +1,9 @@
 <html>
 <head>
-<title>alg.garron.us (v1.1.11beta)</title>
-<!-- Lucas Garron, 20090629 -->
+<title>alg.garron.us (v1.2.1)</title>
+<!-- Lucas Garron, 20090630 -->
 <!-- Alg Animation Tool -->
-<!-- alg.garron.us (v1.1.11) -->
+<!-- alg.garron.us (v1.2) -->
 <!-- This file may be freely downloaded/modified/distributed, if it is marked as a derivative and the source is attributed.-->
 <!-- Applets by Werner Randelshofer (http://www.randelshofer.ch/) -->
 <!--
@@ -13,9 +13,12 @@ Dim colors to half-tones to emphasize pieces (for L6E, etc).
 Click option text selects corresponding radio.
 Tool Panels: Alg manipulation (mirror, inverse, derotate...), reconstruction preparation (with load/save feature?), adding algs/solves to db, alg data.
 Random scramble for ini.
-Fix \n in appleh
+Fix \n in applet
+Redo right tabs without Javascript string storage (hidden divs?)
+Applet:
+-Take colscheme
 
-Proper, general commutator/conjugate suppart.
+Proper, general commutator/conjugate support.
 Other puzzles (Square-1, Pyraminx).
 Allow static image generation with iCube: http://software.rubikscube.info/icube/ (Requires Javascript parser and sim.)
 
@@ -162,7 +165,7 @@ switch (stickerspec)
 	case "F2L": return stickerout(['0,0,0,1,1,1,1,1,1','0,0,0,2,2,2,2,2,2','0,0,0,3,3,3,3,3,3',
 		'0,0,0,4,4,4,4,4,4','5,5,5,5,5,5,5,5,5','0,0,0,0,6,0,0,0,0']); break;
 	case "FRSlot": return stickerout(['0,0,0,0,1,1,0,1,1','0,0,0,2,2,0,2,2,0','0,0,0,0,3,0,0,3,0',
-		'0,0,0,0,4,0,0,4,0','5,5,5,5,5,5,5,5,5','6,6,6,6,6,6,6,6,6']); break;
+		'0,0,0,0,4,0,0,4,0','5,5,5,5,5,5,5,5,5','0,0,0,0,6,0,0,0,0']); break;
 	case "CLS": case "OLL": case "WVLS": return stickerout(['0,0,0,1,1,1,1,1,1','0,0,0,2,2,2,2,2,2','0,0,0,3,3,3,3,3,3',
 		'0,0,0,4,4,4,4,4,4','5,5,5,5,5,5,5,5,5','6,6,6,6,6,6,6,6,6']); break;
 	case "ZBLS": return stickerout(['0,0,0,1,1,1,1,1,1','0,0,0,2,2,2,2,2,2','0,0,0,3,3,3,3,3,3',
@@ -251,7 +254,7 @@ var resize = new YAHOO.util.Resize('appletdiv');
 
 function showhelp()
 {
-window.location.hash="#help";
+window.location.hash="#AlgTyper";
 righthalf.innerHTML='<span "style="font-size: 200%; font-weight: bold;">Help<\/span>'
 +'\n<br>alg.garron.us is a tool for viewing and sharing algs.'
 +'\n<ul style="text-align: left;">'
@@ -295,6 +298,34 @@ righthalf.innerHTML='<span "style="font-size: 200%; font-weight: bold;">Help<\/s
 +'\n<\/ul>'
 +'\n<\/p>'
 +'\n<p style="text-align: center;"><button type="button" onclick="javascript:setalgs();loadapplet()">Hide Help, Load Applet<\/button><\/p>'
+;
+
+}
+
+function showAlgTyper()
+{
+window.location.hash="#AlgTyper";
+righthalf.innerHTML='<span "style="font-size: 200%; font-weight: bold;">AlgTyper (Beta)<\/span>'
++'\n<p style="text-align: center;">Convenient <a href="http://www.ryanheise.com/cube/speed.html" target="new">Heise<\/a>-style alg input.'
++'\n<br><button type="button" onclick="algtyper.reinitmove(\'\');">Clear<\/button>'
++'\n<button type="button" onclick="algtyper.reinitmove(document.getElementById(\'ini\').value);">Scramble<\/button>'
++'\n<\/p>'
++'\n<applet code="AlgTyper.class" archive="applet\/AlgTyper.jar" width="95%" height="256" name="algtyper" id="algtyper">'
++'\n<param name="mayscript" value="true">'
++'\n<param name="bgcolor" value="ffffdd">'
++'\n<param name="hint" value="0">'
++'\n<param name="colorscheme" value="wygbor">'
++'\n<param name="edit" value="0">'
++'\n<param name="speed" value="5">'
++'\n<\/applet>'
++'\n<script type="text\/javascript">'
++'\n	algtyper.reinitmove(document.getElementById(\'ini\').value);'
++'\n<\/script>'
++'\n<p style="text-align: center;">'
++'\n<button type="button" onclick="document.getElementById(\'alg\').value=algtyper.GimmeAlg();">Alg it!<\/button>'
++'\n<button type="button" onclick="document.getElementById(\'alg\').value+=algtyper.GimmeAlg();">Append<\/button>'
++'\n<\/p>'
++'\n<p style="text-align: center;"><button type="button" onclick="javascript:setalgs();loadapplet()">Hide AlgTyper, Load Applet<\/button><\/p>'
 ;
 
 }
@@ -417,20 +448,44 @@ document.getElementById('stage'+p_stage).checked="true";
 
 </form>
 <button type="button" onclick="showhelp();" style="font-size: 125%">Show Help</button>
+<button type="button" onclick="showAlgTyper();" style="font-size: 125%">AlgTyper</button>
 <br><br>
 <span style="font-family: monospace" title="Everyone loves XKCD. Especially because of the hovertext.">alg.garron.us - v1.1.10beta - by Lucas Garron</span>
 
 </td>
 <td name="righthalf" id="righthalf" width="50%" style="vertical-align: top;" >
 
+<span "style="font-size: 200%; font-weight: bold;">AlgTyper</span>
+<p style="text-align: center;">
+ <button type="button" onclick="algtyper.reinitmove('');algtyper.repaint();">Clear</button>
+ <button type="button" onclick="algtyper.reinitmove(document.getElementById('ini').value);">Scramble</button>
+</p>
+<applet code="AlgTyper.class" archive="applet/AlgTyper.jar" width="95%" height="256" name="algtyper" id="algtyper">
+<param name="mayscript" value="true">
+<param name="bgcolor" value="ffffdd">
+<param name="hint" value="0">
+<param name="colorscheme" value="wygbor">
+<param name="speed" value="5">
+</applet>
+<script type="text/javascript">
+	algtyper.reinitmove(document.getElementById('ini').value);
+</script>
+<p style="text-align: center;">
+ <button type="button" onclick="document.getElementById('alg').value=algtyper.GimmeAlg();">Alg it!</button>
+ <button type="button" onclick="document.getElementById('alg').value+=algtyper.GimmeAlg();">Append</button>
+</p>
+<p style="text-align: center;"><button type="button" onclick="javascript:setalgs();loadapplet()">Hide AlgTyper, Load Applet</button></p>
 
 <br>Loading Applet/Help here...
 <script type="text/javascript">
 if (window.location.hash=='#help')
 	showhelp();
+else if (window.location.hash=='#AlgTyper')
+	showAlgTyper();
 else
 	loadapplet();
 </script>
+
 
 </td>
 </tr>
