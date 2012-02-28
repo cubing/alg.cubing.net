@@ -1,23 +1,21 @@
 <html>
 <head>
-<title>alg.garron.us (v1.1.7beta)</title>
+<title>alg.garron.us (v1.1.8beta)</title>
 <!-- Lucas Garron, 2009-03-25 -->
 <!-- Alg Animation Tool -->
-<!-- alg.garron.us (v1.1.7) -->
+<!-- alg.garron.us (v1.1.8) -->
 <!-- This file may be freely downloaded/modified/distributed, if it is marked as a derivative and the source is attributed.-->
 <!-- Applets by Werner Randelshofer (http://www.randelshofer.ch/) -->
 <!--
 TODO List:
 
 Dim colors to half-tones to emphasize pieces (for L6E, etc).
-Pre-check current settings in options on load
 Tool Panels: Alg manipulation (mirror, inverse, derotate...), reconstruction preparation (with load/save feature?), adding algs/solves to db, tinyurl-like-URL-shortening.
 Random scramble for ini.
-Other puzzles (Square-1, Pyraminx).
-Allow static imag e generation with iCube: http://software.rubikscube.info/icube/
+
 Proper, general commutator/conjugate suppart.
-Live update of currunt params instead of dispplaying those from page load?
-Click on param name selects box
+Other puzzles (Square-1, Pyraminx).
+Allow static imag e generation with iCube: http://software.rubikscube.info/icube/ (Requires Javascript parser and sim.)
 
 -->
 
@@ -173,7 +171,7 @@ switch (stickerspec)
 	case "CLL": return stickerout(['1,0,1,1,1,1,1,1,1','2,0,2,2,2,2,2,2,2','3,0,3,3,3,3,3,3,3',
 		'4,0,4,4,4,4,4,4,4','5,5,5,5,5,5,5,5,5','6,0,6,0,6,0,6,0,6']); break;
 	case "CMLL": return stickerout(['1,0,1,1,0,1,1,0,1','2,0,2,2,2,2,2,2,2','3,0,3,3,3,3,3,3,3',
-		'4,0,4,4,0,4,4,0,4','5,0,5,5,0,5,5,0,5','6,0,6,0,6,0,6,0,6']); break;
+		'4,0,4,4,0,4,4,0,4','5,0,5,5,0,5,5,0,5','6,0,6,0,0,0,6,0,6']); break;
 	default: return stickerout(['1,1,1,1,1,1,1,1,1','2,2,2,2,2,2,2,2,2','3,3,3,3,3,3,3,3,3',
 		'4,4,4,4,4,4,4,4,4','5,5,5,5,5,5,5,5,5','6,6,6,6,6,6,6,6,6']); break;
 }
@@ -210,10 +208,13 @@ var notationfile='notation/'+p_notation+'.xml';
 var stickerappletcode='';
 if (p_cube=='3x3x3') stickerappletcode=stickercube(p_stage);
 
-//alert("p");
-//alert(righthalf.innerHTML);
+var URLparams = makeURLparams();
+if (URLparams=="?alg=")
+	URLparams='[url=http://alg.garron.us/]alg.garron.us[/url]';
+else
+	URLparams='[url=http://alg.garron.us/'+URLparams+']'+p_alg+'[/url]'; //p_alg covered by setalgs() in makeURLparams().
 
-righthalf.innerHTML='<input id="copyurl" type="text" name="copyurl" readonly="readonly" value="[url=http://alg.garron.us/]alg.garron.us[/url]" onclick="this.focus();this.select();" size="30"/>'
+righthalf.innerHTML='<input id="copyurl" type="text" name="copyurl" readonly="readonly" value="'+URLparams+'" onclick="this.focus();this.select();" size="30"/>'
 	+'\n<div name="appletdiv" id="appletdiv">'
 	+'\n<applet code="'+jarfile+'.class" archive="applet/'+jarfile+'.jar" width="100%" height="100%">'
 	+'\n <param name="scriptType" value="'+p_animtype.replace('gen','Generator').replace('solve','Solver')+'">'
@@ -225,12 +226,6 @@ righthalf.innerHTML='<input id="copyurl" type="text" name="copyurl" readonly="re
 	+'\n<\/applet>'
 	+'\n<\/div>';
 
-var URLparams = makeURLparams();
-if (URLparams=="?alg=")
-copyurl.value='[url=http://alg.garron.us/]alg.garron.us[/url]';
-else
-	copyurl.value='[url=http://alg.garron.us/'+URLparams+']'+p_alg+'[/url]'; //p_alg covered by setalgs() in makeURLparams().
-
 var resize = new YAHOO.util.Resize('appletdiv');
 }
 
@@ -238,9 +233,46 @@ function showhelp()
 {
 window.location.hash="#help"
 righthalf.innerHTML='<span "style="font-size: 200%; font-weight: bold;">Help<\/span>'
-+'<br><br>I am compiling a help page for here.'
-+'<br><br><button type="button" onclick="javascript:setalgs();loadapplet()">(Re-)Load Applet Here<\/button>'
-
++'\n<br>alg.garron.us is a tool for viewing and sharing algs.'
++'\n<ul style="text-align: left;">'
++'\n<li>Just type an alg into the lower textbox and click <i>Reload<\/i> or <i>Test<\/i>.<\/li>'
++'\n<li>If you would like to add pre-moves (like a scramble), type them into the upper textbox.<\/li>'
++'\n'
++'\n<li><u>Buttons<\/u>:<\/li>'
++'\n<ul style="text-align: left;">'
++'\n<li>Reset: Reload Page with algs/options cleared.<\/li>'
++'\n<li>Reload: Reload page with selected settings.<\/li>'
++'\n<li>Test: Refresh applet with current settings.<\/a><\/li>'
++'\n<\/ul>'
++'\n'
++'\n<li><u>Puzzle<\/u>: You can select 2x2x2-7x7x7<\/li>'
++'\n'
++'\n<li><u>Notation<\/u>:<\/li>'
++'\n<ul style="text-align: left;">'
++'\n<li>SiGN: Simple General Notation<\/li>'
++'\n<li>WCA: <a href="http://www.worldcubeassociation.org/regulations/#notation">WCA Official Notation<\/a><\/li>'
++'\n<li>Superset: Werner Randelshofer\'s <a href="http://www.randelshofer.ch/rubikplayer/documentation/superset_eng.html">Superset ENG<\/a><\/li>'
++'\n<\/ul>'
++'\n'
++'\n<li><u>Animation Type<\/u>:<\/li>'
++'\n<ul style="text-align: left;">'
++'\n<li>Solver: View the moves solving the puzzle.<\/li>'
++'\n<li>Generator: View moves applied moves to a solved state<\/li>'
++'\n<\/ul>'
++'\n'
++'\n<li><u>Color Scheme<\/u>: Set colors for FRLBDU or pick a standard scheme.<\/li>'
++'\n'
++'\n<li><u>Stage<\/u>: 3x3x3 ONLY - Gray out pieces to emphasize the pieces of a solving stage<\/li>'
++'\n<ul style="text-align: left;">'
++'\n<li>Full, F2L, OLL/CLS, ZBLS, CMLL<\/li>'
++'\n<li>Hidden: CLL, COLL, ELL, ELS, EO, EOLine, FRSlot, WVLS, ZBLL.<\/li>'
++'\n<\/ul>'
++'\n'
++'\n<li>Offline use is possible, but not "supported" yet.<\/li>'
++'\n'
++'\n<\/ul>'
++'\n<\/p>'
++'\n<p style="text-align: center;"><button type="button" onclick="javascript:setalgs();loadapplet()">Hide Help, Load Applet<\/button><\/p>'
 ;
 
 }
@@ -365,7 +397,6 @@ document.write('<br><span title="Algorithm"><textarea name="alg" id="alg" rows="
 <td name="righthalf" id="righthalf" width="50%" style="vertical-align: top;" >
 
 
-<!--
 <br>Loading Applet/Help here...
 <script type="text/javascript">
 if (window.location.hash=='#help')
@@ -373,7 +404,6 @@ if (window.location.hash=='#help')
 else
 	loadapplet();
 </script>
--->
 
 </td>
 </tr>
