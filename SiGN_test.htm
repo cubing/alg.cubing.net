@@ -1,6 +1,19 @@
-<html><head><title>SiGN Test 1.1.2</title>
-<!-- Lucas Garron, 2009-03-24 -->
-<!-- Alg Animation Tool-->
+<html>
+<head>
+<title>alg.garron.us (v1.1.3)</title>
+<!-- Lucas Garron, 2009-03-25 -->
+<!-- Alg Animation Tool -->
+<!-- alg.garron.us (v1.1.3) -->
+<!-- This file may be freely downloaded/modified/distributed, if it is marked as a derivative and the source is attributed.-->
+<!--
+TODO List:
+
+Dim half-tones (for L6E, etc.).
+Pre-check current settings in options.
+Tool Panels: Alg manipulation, Reconstruction Preparation (with load/save feature?).
+Random scramble for ini.
+
+-->
 
 <!-- Skin CSS file -->
 <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.6.0/build/assets/skins/sam/resize.css">
@@ -11,28 +24,90 @@
 <!-- Source file for the Resize Utility -->
 <script src="http://yui.yahooapis.com/2.6.0/build/resize/resize-min.js"></script>
 <style type="text/css" media="screen">
-    #resizeMe {height: 300px; width: 100%; padding: 2px; border: 1px solid black;}
+    #appletdiv {height: 300px; width: 100%; padding: 2px; border: 1px solid black;}
 </style>
 
 
 <script type="text/javascript">
- function gup( name , alt ){var results = RegExp( "[\\?&]"+name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]")+"=([^&#<]*)" ).exec( window.location.href ); if( results==null ) return alt; else return results[1];};
+
+function gup( name , alt ){var results = RegExp( "[\\?&]"+name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]")+"=([^&#<]*)" ).exec( window.location.href ); if( results==null ) return alt; else return results[1];};
+
+
+//Should I implement a general (slower?) function that takes an array?
+function paramdefault(paramname)
+{
+	switch (paramname)
+	{
+	case 'ini': return('');
+	case 'alg': return('RUR\'');
+	case 'name': return('alg.garron.us');
+	case 'cube': return('3x3x3');
+	case 'notation': return('sign');
+	case 'animtype': return('gen');
+	case 'scheme': return('grobyw');
+	case 'dim': return('none');
+	default: return('');
+	}
+}
+
+function propername(param, str)
+{
+	switch (param)
+	{
+	case 'notation': {
+		switch (str)
+		{
+		case 'sign': return('SiGN');
+		case 'wca': return('WCA');
+		case 'superset': return('Superset');
+		default: return str;
+		};
+		break;}
+	case 'animtype': {
+		switch (str)
+		{
+		case 'solve': return('Solver');
+		case 'gen': return('Generator');
+		default: return str;
+		};
+		break;}
+	case 'scheme': {
+		switch (str)
+		{
+		case 'grobyw': return('BOY');
+		case 'groybw': return('Japanese');
+		default: return str;
+		};
+		break;}
+	case 'dim': {
+		switch (str)
+		{
+		case 'none': return('None');
+		default: return str;
+		};
+		break;}
+	default: return str;
+	}
+}
+
+function gupdef(name)
+{
+ 	return gup(name,paramdefault(name));
+}
  
-  var applet_ini=unescapeapplet(gup('ini',''));
-  var applet_alg=unescapeapplet(gup('alg','RUR\''));
-  var p_ini=unescapealg(gup('ini',''));
-  var p_alg=unescapealg(gup('alg','RUR\''));
-  var p_name=unescapealg(gup('name','alg.garron.us'));
-  var p_cube=gup('cube','3x3x3');
-  var p_notation=gup('notation','sign');
-  var p_animtype=gup('animtype','gen');
-  var p_scheme=gup('scheme','grobyw');
-  var p_dim=gup('dim','none');
-  
-  //Reload inside
-  //dim half-tones
-  //make applet a fun
-  //regularize proper names
+var applet_ini=unescapeapplet(gupdef('ini'));
+var applet_alg=unescapeapplet(gupdef('alg'));
+var p_ini=unescapealg(gupdef('ini'));
+var p_alg=unescapealg(gupdef('alg'));
+var p_name=unescapealg(gupdef('name'));
+var p_cube=gupdef('cube','3x3x3');
+var p_notation=gupdef('notation');
+var p_animtype=gupdef('animtype');
+var p_scheme=gupdef('scheme');
+var p_dim=gupdef('dim');
+
+if(p_name!=paramdefault('name'))
+	document.title=p_name+' - alg.garron.us';
 
 
 function colorcharconvert(colchar)
@@ -55,21 +130,16 @@ function hexscheme(str)
 {
 	var strout=("x"+str).split("");
 	for (x in strout)
-	{
 		strout[x]="0x"+colorcharconvert(strout[x]);
-//alert(strout[x]);
-	}
-	
 	return strout.join(",");
 }
 
-//alert(hexscheme(p_scheme));
 
 function stickerout(sarr)
 {
-return '<param name="stickersFront" value="'+sarr[0]+'"><param name="stickersRight" value="'+sarr[1]
-	+'"><param name="stickersDown" value="'+sarr[2]+'"><param name="stickersBack" value="'+sarr[3]
-	+'"><param name="stickersLeft" value="'+sarr[4]+'"><param name="stickersUp" value="'+sarr[5]+'">';
+	return '<param name="stickersFront" value="'+sarr[0]+'"><param name="stickersRight" value="'+sarr[1]
+		+'"><param name="stickersDown" value="'+sarr[2]+'"><param name="stickersBack" value="'+sarr[3]
+		+'"><param name="stickersLeft" value="'+sarr[4]+'"><param name="stickersUp" value="'+sarr[5]+'">';
 }
 
 function stickercube(stickerspec)
@@ -101,59 +171,79 @@ switch (stickerspec)
 }
 }
 
-function paramadd(paramname, paramval, paramdefault)
-  {
-  if ((paramval=="")||(paramval==paramdefault))
+function paramadd(paramname, paramval, paramdefaultval)
+{
+  if ((paramval=="")||(paramval==paramdefaultval))
   	return "";
   else
   		return "&"+paramname+"="+paramval;
 }
 
-function escapealg(algstr)
+function paramadddef(paramname, paramval)
 {
-	return algstr.replace(/\n/g, '%0A').replace(/-/g, '%2D').replace(/\'/g, '-').replace(/ /g, '_');
+  if ((paramval=="")||(paramval==paramdefault(paramname)))
+  	return "";
+  else
+  		return "&"+paramname+"="+paramval;
 }
 
-function unescapealg(algstr)
-{
-	return unescape(algstr).replace(/_/g,' ').replace(/-/g,'\'');
-}
-
-function unescapeapplet(algstr)
-{
-	return unescape(algstr.replace(/-/g,'\'').replace(/_/g,' ').replace(/-/g,'\'').replace(/%0A/g,' '));
-}
+function escapealg(algstr){return algstr.replace(/\n/g, '%0A').replace(/-/g, '%2D').replace(/\'/g, '-').replace(/ /g, '_');}
+function unescapealg(algstr){return unescape(algstr.replace(/_/g,' ').replace(/-/g,'\''));}
+function unescapeapplet(algstr){return unescapealg(algstr);}
+function highlightinput(inputId) {inputId.focus(); inputId.select();}
+function nameedit() {titlespan.innerHTML='<input id="titleinput" type="text" name="titleinput" value="'+p_name+'" onload="javascript:this.focus();" onchange="javascript:p_name=this.value;" onblur="javascript:namesolidify()" style="font-size: 150%; text-align: center;"/>';} 
+function namesolidify() {titlespan.innerHTML='<span name="titletext" id="titletext" "style="font-size: 200%; font-weight: bold;" onclick="javascript:nameedit()">'+p_name+'<\/span>';}
   
+function loadapplet()
+{
+var jarfile=p_cube.replace('2x2x2','PocketPlayer').replace('3x3x3','RubikPlayer').replace('4x4x4','RevengePlayer').replace('5x5x5','ProfessorPlayer').replace('6x6x6','VCube6Player').replace('7x7x7','VCube7Player');
+var notationfile='notation/'+p_notation+'.xml';
+
+appletdiv.innerHTML='<applet code="'+jarfile+'.class" archive="applet/'+jarfile+'.jar" width="100%" height="100%">'
+	+'\n <param name="scriptType" value="'+p_animtype.replace('gen','Generator').replace('solve','Solver')+'">'
+	+'\n <param name="resourceFile" value="'+notationfile+'"/><param name="notation" value="'+p_cube+'"/>'
+	+'\n <param name="colorTable" value="'+hexscheme(p_scheme)+'"><param name="faces" value="1,2,3,4,5,6">'
+	+'\n <param name="initScript" value="'+applet_ini+'">'
+	+'\n <param name="script" value="'+applet_alg+'">'
+	+'\n<\/applet>';
+
+copyurl.value='[url=http://alg.garron.us'+makeURLparams()+']'+p_alg+'[/url]'; //p_alg covered by setalgs() in makeURLparams().
+
+var resize = new YAHOO.util.Resize('appletdiv');
+}
+
+function setalgs()
+{
+applet_ini=document.getElementById('alg').value;
+applet_alg=document.getElementById('alg').value;
+p_ini=document.getElementById('ini').value;
+p_alg=document.getElementById('alg').value;
+}
+
+function makeURLparams()
+{
+	setalgs();
+	var url="?alg="+escapealg(p_alg);
+	url=url+paramadddef('ini',escapealg(p_ini));
+	url=url+paramadddef('name',escapealg(p_name));
+	url=url+paramadddef('cube',p_cube);
+	url=url+paramadddef('notation',p_notation);
+	url=url+paramadddef('animtype',p_animtype);
+	url=url+paramadddef('scheme',p_scheme);
+		var p_dim_url=p_dim;
+		//if (p_cube!='3x3x3') p_dim_url=;;;
+	url=url+paramadddef('dim',p_dim_url);
+	return url;
+}
+
 function submitalg()
-  {
-  var url="?alg="+escapealg(document.getElementById('alg').value);
-  url=url+paramadd('ini',escapealg(document.getElementById('ini').value),'');
-  url=url+paramadd('name',escapealg(p_name),'alg.garron.us');
-  url=url+paramadd('cube',p_cube,'3x3x3');
-  url=url+paramadd('notation',p_notation,'sign');
-  url=url+paramadd('animtype',p_animtype,'gen');
-  url=url+paramadd('scheme',p_scheme,'wygbor');
-  url=url+paramadd('dim',p_dim,'none');
-//  alert(url);
-  window.location=url;
-  return true;
-  }
-  
-function highlightinput(inputId) {
-  inputId.focus();
-  inputId.select();
+{
+	window.location=makeURLparams();
 }
   
-  
-function nameedit() {
-  titlespan.innerHTML='<input id="titleinput" type="text" name="titleinput" value="'+p_name+'" onload="javascript:this.focus();" onchange="javascript:p_name=this.value;" onblur="javascript:namesolidify()" style="font-size: 150%; text-align: center;"/>';
-} 
-  
-function namesolidify() {
-  titlespan.innerHTML='<span name="titletext" id="titletext" "style="font-size: 200%; font-weight: bold;" onclick="javascript:nameedit()">'+p_name+'<\/span>';
-}
- 
- </script>
+
+
+</script>
  
  
 </head>
@@ -192,24 +282,25 @@ document.write('<br><span title="Scramble"><textarea name="ini" id="ini" rows="2
 document.write('<br><span title="Algorithm"><textarea name="alg" id="alg" rows="12" cols="50">'+p_alg+'<\/textarea></span>');
 </script>
 <br><button type="button" onclick="javascript:submitalg()">Reload!</button>
+<button type="button" onclick="javascript:setalgs();loadapplet()">Test</button>
 <!--<input type="submit" value="Submit">-->
 
 <br>
 <span id="options">
 <span title="Notation">
-<br><script language="JavaScript">document.write('<u>'+p_notation.replace('sign','SiGN')+'<\/u> - ');</script>
+<br><script language="JavaScript">document.write('<u>'+propername('notation',p_notation)+'<\/u> - ');</script>
 <input type="radio" name="notation" id="ns" value="sign" onclick="p_notation='sign'">SiGN 
 <input type="radio" name="notation" id="nw" value="wca" onclick="p_notation='WCA'">WCA
 <input type="radio" name="notation" id="nu" value="superset" onclick="p_notation='superset'">Superset</span>
 
 <span title="Animation Type">
-<br><script language="JavaScript">document.write('<u>'+p_animtype.replace('solve','Solver').replace('gen','Generator')+'<\/u> - ');</script>
+<br><script language="JavaScript">document.write('<u>'+propername('animtype',p_animtype)+'<\/u> - ');</script>
 <input type="radio" name="animtype" id="ats" value="solve" onclick="p_animtype='solve'">Solver 
 <input type="radio" name="animtype" id="atg" value="gen" onclick="p_animtype='gen'">Generator
 </span>
 
 <span title="Color Scheme (FRLBDU)">
-<br><script language="JavaScript">document.write('<u>'+p_scheme.replace('boy','BOY').replace('jap','Japanese')+'<\/u> - ');</script>
+<br><script language="JavaScript">document.write('<u>'+propername('scheme',p_scheme)+'<\/u> - ');</script>
 <input type="radio" name="scheme" id="colb" value="grobyw" onclick="p_scheme='grobyw';">BOY
 <input type="radio" name="scheme" id="colj" value="groybw" onclick="p_scheme='groybw';">Japanese
 <input type="radio" name="scheme" id="colc" value="custom" onclick="p_scheme=schemeinput.value;highlightinput(schemeinput);">
@@ -217,8 +308,8 @@ document.write('<br><span title="Algorithm"><textarea name="alg" id="alg" rows="
 	<script language="JavaScript">schemeinput.value=p_scheme</script>
 </span>
 
-<span title="Dimming">
-<br><script language="JavaScript">document.write('<u>'+p_dim.replace('boy','BOY').replace('jap','Japanese')+'<\/u> - ');</script>
+<span title="Dimming (currently for 3x3x3 ONLY)">
+<br><script language="JavaScript">document.write('<u>'+propername('dim',p_dim)+'<\/u> - ');</script>
 <input type="radio" name="dim" id="atn" value="boy" onclick="p_dim='none';">None
 <input type="radio" name="dim" id="atf" value="boy" onclick="p_dim='F2L';">F2L
 <input type="radio" name="dim" id="ato" value="boy" onclick="p_dim='OLL';">OLL/CLS
@@ -231,28 +322,21 @@ document.write('<br><span title="Algorithm"><textarea name="alg" id="alg" rows="
 </span>
 
 </form>
+<button type="button" onclick="window.location.reload()">Reload URL</button>
+<button type="button" onclick="window.location='?'">Reset</button>
+<br><br>
+<span style="font-family: monospace">alg.garron.us - by Lucas Garron</span>
 
 </td>
 <td width="50%" style="vertical-align: top;">
 
-
- <div id="resizeMe">
-<script language="JavaScript">
-var jarfile=p_cube.replace('2x2x2','PocketPlayer').replace('3x3x3','RubikPlayer').replace('4x4x4','RevengePlayer').replace('5x5x5','ProfessorPlayer').replace('6x6x6','VCube6Player').replace('7x7x7','VCube7Player');
-var notationfile='notation/'+p_notation+'.xml';
-document.write('<applet code="'+jarfile+'.class" archive="applet/'+jarfile+'.jar" width="100%" height="100%">');
-document.write(' <param name="scriptType" value="'+p_animtype.replace('gen','Generator').replace('solve','Solver')+'">');
-document.write(' <param name="resourceFile" value="'+notationfile+'"/><param name="notation" value="'+p_cube+'"/>');
-document.write(' <param name="colorTable" value="'+hexscheme(p_scheme)+'"><param name="faces" value="1,2,3,4,5,6">');
-if (p_cube=="3x3x3") document.write(stickercube(p_dim));
-document.write(' <param name="initScript" value="'+applet_ini+'">');
-document.write(' <param name="script" value="'+applet_alg+'">');
-document.write('<\/applet>');
+<input id="copyurl" type="text" name="copyurl" readonly="readonly" value='[url=http://alg.garron.us]alg.garron.us[/url]' onclick="this.focus();this.select();" size="30"/>
+<div name="appletdiv" id="appletdiv">
+<br>Loading Applet here...
+<script type="text/javascript">
+loadapplet();
 </script>
 </div>
-<script type="text/javascript">
-var resize = new YAHOO.util.Resize('resizeMe');
-</script>
 
 </td>
 </tr>
