@@ -135,12 +135,36 @@ function colorcharconvert(colchar)
 	}
 }
 
+function lightcolorcharconvert(colchar)
+{
+	switch (colchar)
+	{
+	case "y": return("888800");
+	case "w": return("aaaaaa");
+	case "b": return("000088");
+	case "g": return("008800");
+	case "o": return("884400");
+	case "r": return("880000");
+	case "x": return("444444");
+	default: return("000000");
+	}
+}
+
 
 function hexscheme(str)
 {
-	var strout=("x"+str).split("");
-	for (x in strout)
-		strout[x]="0x"+colorcharconvert(strout[x]);
+     var str6 = str;
+     if((str.length)!=6)
+          str6=paramdefault('scheme');
+
+	var strin=("x"+str6).split("");
+     var strout=new Array(14);
+     var x=0;
+	for (x=0;x<=6;x++)
+     {
+		strout[x]="0x"+colorcharconvert(strin[x]);
+		strout[x+7]="0x"+lightcolorcharconvert(strin[x]);
+     }
 	return strout.join(",");
 }
 
@@ -156,7 +180,7 @@ function stickercube(stickerspec)
 {
 switch (stickerspec)
 {
-	case "full": case "ZBLL": case "ELL": return stickerout(['1,1,1,1,1,1,1,1,1','2,2,2,2,2,2,2,2,2','3,3,3,3,3,3,3,3,3',
+	case "full": case "ZBLL": case "ELL": case "PLL": return stickerout(['1,1,1,1,1,1,1,1,1','2,2,2,2,2,2,2,2,2','3,3,3,3,3,3,3,3,3',
 		'4,4,4,4,4,4,4,4,4','5,5,5,5,5,5,5,5,5','6,6,6,6,6,6,6,6,6']); break;
 	case "EO": return stickerout(['0,0,0,6,1,6,0,0,0','0,0,0,0,2,0,0,0,0','0,0,0,0,3,0,0,0,0',
 		'0,0,0,6,4,6,0,0,0','0,6,0,6,5,6,0,6,0','0,6,0,6,6,6,0,6,0']); break;
@@ -178,6 +202,8 @@ switch (stickerspec)
 		'4,0,4,4,4,4,4,4,4','5,5,5,5,5,5,5,5,5','6,0,6,0,6,0,6,0,6']); break;
 	case "CMLL": return stickerout(['1,0,1,1,0,1,1,0,1','2,0,2,2,2,2,2,2,2','3,0,3,3,3,3,3,3,3',
 		'4,0,4,4,0,4,4,0,4','5,0,5,5,0,5,5,0,5','6,0,6,0,0,0,6,0,6']); break;
+	case "L6E": return stickerout(['7,1,7,7,1,7,7,1,7','8,2,8,8,8,8,8,8,8','9,3,9,9,9,9,9,9,9',
+		'10,4,10,10,4,10,10,4,10','11,5,11,11,5,11,11,5,11','12,6,12,6,6,6,12,6,12']); break;
 	default: return stickerout(['1,1,1,1,1,1,1,1,1','2,2,2,2,2,2,2,2,2','3,3,3,3,3,3,3,3,3',
 		'4,4,4,4,4,4,4,4,4','5,5,5,5,5,5,5,5,5','6,6,6,6,6,6,6,6,6']); break;
 		
@@ -450,7 +476,7 @@ document.getElementById('stage'+p_stage).checked="true";
 <button type="button" onclick="showhelp();" style="font-size: 125%">Show Help</button>
 <button type="button" onclick="showAlgTyper();" style="font-size: 125%">AlgTyper</button>
 <br><br>
-<span style="font-family: monospace" title="Everyone loves XKCD. Especially because of the hovertext.">alg.garron.us - v1.2beta - by Lucas Garron<br>Original applets bf Werner Randelshofer and Josef Jelinek</span>
+<span style="font-family: monospace" title="Everyone loves XKCD. Especially because of the hovertext.">alg.garron.us - v1.2beta - by Lucas Garron<br>Original applets by <a href="http://www.randelshofer.ch/">Werner Randelshofer</a> and <a href="http://www.rubikscube.info/">Josef Jelinek</a></span>
 
 </td>
 <td name="righthalf" id="righthalf" width="50%" style="vertical-align: top;" >
