@@ -18,14 +18,86 @@
 <script type="text/javascript">
  function gup( name , alt ){var results = RegExp( "[\\?&]"+name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]")+"=([^&#<]*)" ).exec( window.location.href ); if( results==null ) return alt; else return results[1];};
  
-  var p_ini=gup('ini','');
-  var p_alg=gup('alg','RUR\'');
-  var p_name=gup('name','alg.garron.us');
+  var applet_ini=unescapeapplet(gup('ini',''));
+  var applet_alg=unescapeapplet(gup('alg','RUR\''));
+  var p_ini=unescapealg(gup('ini',''));
+  var p_alg=unescapealg(gup('alg','RUR\''));
+  var p_name=unescapealg(gup('name','alg.garron.us'));
   var p_cube=gup('cube','3x3x3');
   var p_notation=gup('notation','sign');
   var p_animtype=gup('animtype','gen');
-  var p_scheme=gup('scheme','boy');
+  var p_scheme=gup('scheme','grobyw');
   var p_dim=gup('dim','none');
+  
+  //Reload inside
+  //dim half-tones
+  //make applet a fun
+  //regularize proper names
+
+
+function colorcharconvert(colchar)
+{
+	switch (colchar)
+	{
+	case "y": return("ffff00");
+	case "w": return("ffffff");
+	case "b": return("0000ff");
+	case "g": return("00ff00");
+	case "o": return("ff8800");
+	case "r": return("ff0000");
+	case "x": return("888888");
+	default: return("000000");
+	}
+}
+
+
+function hexscheme(str)
+{
+	var strout=("x"+str).split("");
+	for (x in strout)
+	{
+		strout[x]="0x"+colorcharconvert(strout[x]);
+//alert(strout[x]);
+	}
+	
+	return strout.join(",");
+}
+
+//alert(hexscheme(p_scheme));
+
+function stickerout(sarr)
+{
+return '<param name="stickersFront" value="'+sarr[0]+'"><param name="stickersRight" value="'+sarr[1]
+	+'"><param name="stickersDown" value="'+sarr[2]+'"><param name="stickersBack" value="'+sarr[3]
+	+'"><param name="stickersLeft" value="'+sarr[4]+'"><param name="stickersUp" value="'+sarr[5]+'">';
+}
+
+function stickercube(stickerspec)
+{
+switch (stickerspec)
+{
+	case "none": case "ZBLL": case "ELL": return stickerout(['1,1,1,1,1,1,1,1,1','2,2,2,2,2,2,2,2,2','3,3,3,3,3,3,3,3,3',
+		'4,4,4,4,4,4,4,4,4','5,5,5,5,5,5,5,5,5','6,6,6,6,6,6,6,6,6']); break;
+	case "F2L": return stickerout(['0,0,0,1,1,1,1,1,1','0,0,0,2,2,2,2,2,2','0,0,0,3,3,3,3,3,3',
+		'0,0,0,4,4,4,4,4,4','5,5,5,5,5,5,5,5,5','0,0,0,0,6,0,0,0,0']); break;
+	case "FRSlot": return stickerout(['0,0,0,0,1,1,0,1,1','0,0,0,2,2,0,2,2,0','0,0,0,0,3,0,0,3,0',
+		'0,0,0,0,4,0,0,4,0','5,5,5,5,5,5,5,5,5','6,6,6,6,6,6,6,6,6']); break;
+	case "CLS": case "OLL": case "WV": return stickerout(['0,0,0,1,1,1,1,1,1','0,0,0,2,2,2,2,2,2','0,0,0,3,3,3,3,3,3',
+		'0,0,0,4,4,4,4,4,4','5,5,5,5,5,5,5,5,5','6,6,6,6,6,6,6,6,6']); break;
+	case "ZBLS": return stickerout(['0,0,0,1,1,1,1,1,1','0,0,0,2,2,2,2,2,2','0,0,0,3,3,3,3,3,3',
+		'0,0,0,4,4,4,4,4,4','5,5,5,5,5,5,5,5,5','0,6,0,6,6,6,0,6,0']); break;
+	case "ELS": return stickerout(['0,0,0,1,1,1,1,1,0','0,0,0,2,2,2,0,2,2','0,0,0,3,3,3,3,3,3',
+		'0,0,0,4,4,4,4,4,4','5,5,0,5,5,5,5,5,5','0,6,0,6,6,6,0,6,0']); break;
+	case "COLL": return stickerout(['1,0,1,1,1,1,1,1,1','2,0,2,2,2,2,2,2,2','3,0,3,3,3,3,3,3,3',
+		'4,0,4,4,4,4,4,4,4','5,5,5,5,5,5,5,5,5','6,6,6,6,6,6,6,6,6']); break;
+	case "CLL": return stickerout(['1,0,1,1,1,1,1,1,1','2,0,2,2,2,2,2,2,2','3,0,3,3,3,3,3,3,3',
+		'4,0,4,4,4,4,4,4,4','5,5,5,5,5,5,5,5,5','6,0,6,0,6,0,6,0,6']); break;
+	case "CMLL": return stickerout(['1,0,1,1,0,1,1,0,1','2,0,2,2,2,2,2,2,2','3,0,3,3,3,3,3,3,3',
+		'4,0,4,4,0,4,4,0,4','5,0,5,5,0,5,5,0,5','6,0,6,0,6,0,6,0,6']); break;
+	default: return stickerout(['1,1,1,1,1,1,1,1,1','2,2,2,2,2,2,2,2,2','3,3,3,3,3,3,3,3,3',
+		'4,4,4,4,4,4,4,4,4','5,5,5,5,5,5,5,5,5','6,6,6,6,6,6,6,6,6']); break;
+}
+}
 
 function paramadd(paramname, paramval, paramdefault)
   {
@@ -33,7 +105,6 @@ function paramadd(paramname, paramval, paramdefault)
   	return "";
   else
   		return "&"+paramname+"="+paramval;
-  	
 }
 
 function escapealg(algstr)
@@ -66,9 +137,18 @@ function submitalg()
   return true;
   }
   
-function highlightschemeinput() {
-  document.getElementById('schemeinput').focus();
-  document.getElementById('schemeinput').select();
+function highlightinput(inputId) {
+  inputId.focus();
+  inputId.select();
+}
+  
+  
+function nameedit() {//alert(document.getElementById('titlespan').innerHTML);
+  titlespan.innerHTML='<input id="titleinput" type="text" name="titleinput" value="'+p_name+'" onload="javascript:this.focus();" onchange="javascript:p_name=this.value;" onblur="javascript:namesolidify()" style="font-size: 150%; text-align: center;"/>';
+} 
+  
+function namesolidify() {//alert(document.getElementById('titlespan').innerHTML);
+  titlespan.innerHTML='<span name="titletext" id="titletext" "style="font-size: 200%; font-weight: bold;" onclick="javascript:nameedit()">'+p_name+'<\/span>';
 }
  
  </script>
@@ -83,16 +163,17 @@ function highlightschemeinput() {
 <table width="100%" height="100%" style="text-align: center;" border="1" cellspacing="1" cellpadding="4">
 <tr width="50%">
 <td width="1*" style="vertical-align: top;">
+<span name="titlespan" id="titlespan"> 
 <script language="JavaScript">
-document.write('<span style="font-size: 200%; font-weight: bold; ">'+unescapealg(p_name)+'</span>');
-
+document.write('<span name="titletext" id="titletext" "style="font-size: 200%; font-weight: bold;" onclick="javascript:nameedit()">'+p_name+'<\/span>');
 </script>
+</span>
 <!-- <span style="font-size: 125%;">	Si<i>mple</i> G<i>eneral</i> N<i>otation</i></span>-->
 
 <form  action="SiGN_test.htm" method="get">
 
 <span title="Cube Size">
-<script language="JavaScript">document.write('<u>'+p_cube+'</u> - ');</script>
+<script language="JavaScript">document.write('<u>'+p_cube+'<\/u> - ');</script>
 <input type="radio" name="cubes" id="c2" value="2" onclick="p_cube='2x2x2'">2 
 <input type="radio" name="cubes" id="c3" value="3" onclick="p_cube='3x3x3'">3 
 <input type="radio" name="cubes" id="c4" value="4" onclick="p_cube='4x4x4'">4 
@@ -103,46 +184,46 @@ document.write('<span style="font-size: 200%; font-weight: bold; ">'+unescapealg
 
 
 <script language="JavaScript">
-document.write('<br><span title="Scramble"><textarea name="ini" id="ini" rows="2" cols="50">'+unescapealg(p_ini)+'</textarea></span>');
+document.write('<br><span title="Scramble"><textarea name="ini" id="ini" rows="2" cols="50">'+p_ini+'<\/textarea></span>');
 </script>
 <script language="JavaScript">
-document.write('<br><span title="Algorithm"><textarea name="alg" id="alg" rows="12" cols="50">'+unescapealg(p_alg)+'</textarea></span>');
+document.write('<br><span title="Algorithm"><textarea name="alg" id="alg" rows="12" cols="50">'+p_alg+'<\/textarea></span>');
 </script>
-<br><button type="button" onclick="javascript:submitalg()">View!</button>
+<br><button type="button" onclick="javascript:submitalg()">Reload!</button>
 <!--<input type="submit" value="Submit">-->
 
 <br>
 <span id="options">
 <span title="Notation">
-<br><script language="JavaScript">document.write('<u>'+p_notation.replace('sign','SiGN')+'</u> - ');</script>
+<br><script language="JavaScript">document.write('<u>'+p_notation.replace('sign','SiGN')+'<\/u> - ');</script>
 <input type="radio" name="notation" id="ns" value="sign" onclick="p_notation='sign'">SiGN 
 <input type="radio" name="notation" id="nw" value="wca" onclick="p_notation='WCA'">WCA
 <input type="radio" name="notation" id="nu" value="superset" onclick="p_notation='superset'">Superset</span>
 
 <span title="Animation Type">
-<br><script language="JavaScript">document.write('<u>'+p_animtype.replace('solve','Solver').replace('gen','Generator')+'</u> - ');</script>
+<br><script language="JavaScript">document.write('<u>'+p_animtype.replace('solve','Solver').replace('gen','Generator')+'<\/u> - ');</script>
 <input type="radio" name="animtype" id="ats" value="solve" onclick="p_animtype='solve'">Solver 
 <input type="radio" name="animtype" id="atg" value="gen" onclick="p_animtype='gen'">Generator
 </span>
 
-<span title="Color Scheme (UDFBLR)">
-<br><script language="JavaScript">document.write('<u>'+p_scheme.replace('boy','BOY').replace('jap','Japanese')+'</u> - ');</script>
-<input type="radio" name="scheme" id="colb" value="wygbor" onclick="p_scheme='wygbor';">BOY
-<input type="radio" name="scheme" id="colj" value="wbgyor" onclick="p_scheme='wbgyor';">Japanese
-<input type="radio" name="scheme" id="colc" value="custom" onclick="p_scheme=schemeinput.value;highlightschemeinput();">
+<span title="Color Scheme (FRLBDU)">
+<br><script language="JavaScript">document.write('<u>'+p_scheme.replace('boy','BOY').replace('jap','Japanese')+'<\/u> - ');</script>
+<input type="radio" name="scheme" id="colb" value="grobyw" onclick="p_scheme='grobyw';">BOY
+<input type="radio" name="scheme" id="colj" value="groybw" onclick="p_scheme='groybw';">Japanese
+<input type="radio" name="scheme" id="colc" value="custom" onclick="p_scheme=schemeinput.value;highlightinput(schemeinput);">
 	<input id="schemeinput" type="text" name="schemeinput" value="" onclick="javascript:getElementById('colc').checked=true" onchange="javascript:p_scheme=this.value"/>
 	<script language="JavaScript">schemeinput.value=p_scheme</script>
 </span>
 
 <span title="Dimming">
-<br><script language="JavaScript">document.write('<u>'+p_dim.replace('boy','BOY').replace('jap','Japanese')+'</u> - ');</script>
+<br><script language="JavaScript">document.write('<u>'+p_dim.replace('boy','BOY').replace('jap','Japanese')+'<\/u> - ');</script>
 <input type="radio" name="dim" id="atn" value="boy" onclick="p_dim='none';">None
-<input type="radio" name="dim" id="atf" value="boy" onclick="p_dim='f2l';">F2L
-<input type="radio" name="dim" id="ato" value="boy" onclick="p_dim='oll';">OLL/CLS
-<!--<input type="radio" name="dim" id="atl" value="boy" onclick="p_dim='l6e';">L6E
-<input type="radio" name="dim" id="atcm" value="boy" onclick="p_dim='cmll';">CMLL
-<input type="radio" name="dim" id="atco" value="boy" onclick="p_dim='coll';">COLL
-<input type="radio" name="dim" id="atzb" value="boy" onclick="p_dim='zbls';">ZBLS
+<input type="radio" name="dim" id="atf" value="boy" onclick="p_dim='F2L';">F2L
+<input type="radio" name="dim" id="ato" value="boy" onclick="p_dim='OLL';">OLL/CLS
+<input type="radio" name="dim" id="atzb" value="boy" onclick="p_dim='ZBLS;">ZBLS
+<!--<input type="radio" name="dim" id="atl" value="boy" onclick="p_dim='L6E';">L6E
+<input type="radio" name="dim" id="atcm" value="boy" onclick="p_dim='CMLL';">CMLL
+<input type="radio" name="dim" id="atco" value="boy" onclick="p_dim='COLL';">COLL
 <input type="radio" name="dim" id="atzb" value="boy" onclick="p_dim='centers';">Centers-->
 </span>
 </span>
@@ -155,15 +236,16 @@ document.write('<br><span title="Algorithm"><textarea name="alg" id="alg" rows="
 
  <div id="resizeMe">
 <script language="JavaScript">
-var jarfile=cube.replace('2x2x2','PocketPlayer').replace('3x3x3','RubikPlayer').replace('4x4x4','RevengePlayer').replace('5x5x5','ProfessorPlayer').replace('6x6x6','VCube6Player').replace('7x7x7','VCube7Player');
+var jarfile=p_cube.replace('2x2x2','PocketPlayer').replace('3x3x3','RubikPlayer').replace('4x4x4','RevengePlayer').replace('5x5x5','ProfessorPlayer').replace('6x6x6','VCube6Player').replace('7x7x7','VCube7Player');
 var notationfile='notation/'+p_notation+'.xml';
 document.write('<applet code="'+jarfile+'.class" archive="applet/'+jarfile+'.jar" width="100%" height="100%">');
-document.write(' <param name="scriptType" value="'+animtype.replace('gen','Generator').replace('solve','Solver')+'">');
-document.write(' <param name="resourceFile" value="'+notationfile+'"/><param name="notation" value="'+cube+'"/>');
-document.write(' <param name="colorTable" value="0x00cc00,0xdd0000,0xff9900,0x0000dd,0xffff00,0xffffff"><param name="faces" value="0,1,2,3,4,5">');
-document.write(' <param name="initScript" value="'+unescapeapplet(p_ini)+'">');
-document.write(' <param name="script" value="'+unescapeapplet(p_alg)+'">');
-document.write('</applet>');
+document.write(' <param name="scriptType" value="'+p_animtype.replace('gen','Generator').replace('solve','Solver')+'">');
+document.write(' <param name="resourceFile" value="'+notationfile+'"/><param name="notation" value="'+p_cube+'"/>');
+document.write(' <param name="colorTable" value="'+hexscheme(p_scheme)+'"><param name="faces" value="1,2,3,4,5,6">');
+if (p_cube=="3x3x3") document.write(stickercube(p_dim));
+document.write(' <param name="initScript" value="'+applet_ini+'">');
+document.write(' <param name="script" value="'+applet_alg+'">');
+document.write('<\/applet>');
 </script>
 </div>
 <script type="text/javascript">
