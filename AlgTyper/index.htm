@@ -1,0 +1,85 @@
+<html><head><title>AlgTyper</title>
+
+<!-- Skin CSS file -->
+<link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.6.0/build/assets/skins/sam/resize.css">
+<!-- Utility Dependencies -->
+<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/yahoo-dom-event/yahoo-dom-event.js"></script> 
+<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/dragdrop/dragdrop-min.js"></script> 
+<script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/element/element-beta-min.js"></script> 
+<!-- Source file for the Resize Utility -->
+<script src="http://yui.yahooapis.com/2.6.0/build/resize/resize-min.js"></script>
+
+<style type="text/css" media="screen">
+    #resizeMe {
+        height: 256px;
+        width: 512px;
+        border: 1px solid black;
+    }
+</style>
+
+<script type="text/javascript">{
+ function gup( name ){var results = RegExp( "[\\?&]"+name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]")+"=([^&#<]*)" ).exec( window.location.href ); if( results==null ) return ""; else return results[1];};
+ function gupd(param, def){var paramval=gup(param); if( paramval=="" ) return def; else return paramval;};
+ 
+ function putalgintextarea()
+ {
+	document.getElementById('alg').value=anima.randomCube();
+	document.getElementById('alg').select();
+ }
+ 
+ function unesc(str)
+ {
+	return str.replace(/%20/g, '').replace(/%27/g, '\'').replace(/_/g, ' ');
+ }
+  
+ function submitalg()
+ {
+	putalgintextarea();
+	window.location='http://cube.garron.us/applets/SiGN_test.htm?alg='+animapp.GimmeAlg().replace(/\n/g, '%0A').replace(/-/g, '%2D').replace(/\'/g, '-').replace(/ /g, '_');
+ }
+ };
+
+ </script>
+
+
+</head><body>
+<center>
+<span style="font-size: 200%"><u>AnimCube + Heise Sim: AlgTyper</u></span><br>
+by Lucas Garron, November 29, 2008; Initial Test Version<br>
+<button onclick="putalgintextarea();">Gimme alg!</button><br>
+<input id="alg" size="100"></input>
+ 
+ <div id="resizeMe">
+<applet code="AlgTyper.class" archive="AlgTyper.jar" width="95%" height="100%" name="animapp" id="animapp">
+<param name="mayscript" value="true">
+<script type="text/javascript">
+document.write('<param name="colorscheme" value="'+gupd('colorscheme','wygbor')+'">');
+if (gupd('initmove','')!='')
+{
+	document.write('<param name="initmove" value="'+unesc(gupd('initmove',''))+'">');
+	document.getElementById('alg').value=unesc(gupd('initmove',''));
+}
+document.write('<param name="speed" value="'+gupd('speed','5')+'">');
+</script>
+</applet>
+<applet code="org/kociemba/twophase/Tools.class" archive="twophase.jar" width="95%" height="100%" name="anima" id="anima">
+</applet>
+
+</div>
+
+<script type="text/javascript">
+var resize = new YAHOO.util.Resize('resizeMe');
+</script>
+
+<br><button onclick="submitalg();">Applet</button>
+<br>Thanks to Ryan Heise for creating a simulator with a good keyboard control of the cube, and to Josef Jelinek for writing a well-commented applet.
+<br> Note that this is a complete hack. It's only designed for obtaining the notation of an alg from muscle memory. Fast typing will sometimes drop moves. Verify any alg before using.
+<br><u>Directions:</u><br>
+Select the applet, and perform moves on it like in the Heise sim.<br>
+Press "Gimme Alg!" The text should appear in the input field -selected, ready to copy.
+</center>
+</body></html>
+
+
+
+
