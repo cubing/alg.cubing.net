@@ -9,6 +9,7 @@
 <!--
 TODO List:
 
+REWRITE LAYOUT COMPLETELY
 Dim colors to half-tones to emphasize pieces (for L6E, etc).
 Click option text selects corresponding radio.
 Tool Panels: Alg manipulation (mirror, inverse, derotate...), reconstruction preparation (with load/save feature?), adding algs/solves to db, alg data.
@@ -130,7 +131,7 @@ function colorcharconvert(colchar)
 	case "g": return("00ff00");
 	case "o": return("ff8800");
 	case "r": return("ff0000");
-	case "x": return("888888");
+	case "x": return("444444");
 	default: return("000000");
 	}
 }
@@ -144,8 +145,8 @@ function lightcolorcharconvert(colchar)
 	case "b": return("000088");
 	case "g": return("008800");
 	case "o": return("884400");
-	case "r": return("880000");
-	case "x": return("444444");
+	case "r": return("660000");
+	case "x": return("222222");
 	default: return("000000");
 	}
 }
@@ -180,30 +181,38 @@ function stickercube(stickerspec)
 {
 switch (stickerspec)
 {
-	case "full": case "ZBLL": case "ELL": case "PLL": return stickerout(['1,1,1,1,1,1,1,1,1','2,2,2,2,2,2,2,2,2','3,3,3,3,3,3,3,3,3',
+	case "full": return stickerout(['1,1,1,1,1,1,1,1,1','2,2,2,2,2,2,2,2,2','3,3,3,3,3,3,3,3,3',
 		'4,4,4,4,4,4,4,4,4','5,5,5,5,5,5,5,5,5','6,6,6,6,6,6,6,6,6']); break;
+  case "PLL": case "ZBLL": case "ZZLL": return stickerout(['1,1,1,8,8,8,8,8,8','2,2,2,9,9,9,9,9,9','3,3,3,10,10,10,10,10,10', '4,4,4,11,11,11,11,11,11','12,12,12,12,12,12,12,12,12','6,6,6,6,6,6,6,6,6']); break;
+  case "ELL": return stickerout(['8,1,8,8,8,8,8,8,8','9,2,9,9,9,9,9,9,9','10,3,10,10,10,10,10,10,10', '11,4,11,11,11,11,11,11,11','12,12,12,12,12,12,12,12,12','13,6,13,6,6,6,13,6,13']); break;
 	case "EO": return stickerout(['0,0,0,6,1,6,0,0,0','0,0,0,0,2,0,0,0,0','0,0,0,0,3,0,0,0,0',
 		'0,0,0,6,4,6,0,0,0','0,6,0,6,5,6,0,6,0','0,6,0,6,6,6,0,6,0']); break;
-	case "EOLine": return stickerout(['0,0,0,6,1,6,0,1,0','0,0,0,0,2,0,0,2,0','0,0,0,0,3,0,0,3,0',
-		'0,0,0,6,4,6,0,4,0','0,5,0,5,5,5,0,5,0','0,6,0,6,6,6,0,6,0']); break;
+	case "EOLine": return stickerout(['0,0,0,12,8,12,0,8,0','0,0,0,0,9,0,0,0,0','0,0,0,0,10,0,0,0,0',
+		'0,0,0,12,11,12,0,11,0','0,5,0,12,5,12,0,5,0','0,12,0,12,6,12,0,12,0']);
 	case "F2L": return stickerout(['0,0,0,1,1,1,1,1,1','0,0,0,2,2,2,2,2,2','0,0,0,3,3,3,3,3,3',
-		'0,0,0,4,4,4,4,4,4','5,5,5,5,5,5,5,5,5','0,0,0,0,6,0,0,0,0']); break;
-	case "FRSlot": return stickerout(['0,0,0,0,1,1,0,1,1','0,0,0,2,2,0,2,2,0','0,0,0,0,3,0,0,3,0',
-		'0,0,0,0,4,0,0,4,0','5,5,5,5,5,5,5,5,5','0,0,0,0,6,0,0,0,0']); break;
-	case "CLS": case "OLL": case "WVLS": return stickerout(['0,0,0,1,1,1,1,1,1','0,0,0,2,2,2,2,2,2','0,0,0,3,3,3,3,3,3',
-		'0,0,0,4,4,4,4,4,4','5,5,5,5,5,5,5,5,5','6,6,6,6,6,6,6,6,6']); break;
-	case "ZBLS": return stickerout(['0,0,0,1,1,1,1,1,1','0,0,0,2,2,2,2,2,2','0,0,0,3,3,3,3,3,3',
-		'0,0,0,4,4,4,4,4,4','5,5,5,5,5,5,5,5,5','0,6,0,6,6,6,0,6,0']); break;
-	case "ELS": return stickerout(['0,0,0,1,1,1,1,1,0','0,0,0,2,2,2,0,2,2','0,0,0,3,3,3,3,3,3',
-		'0,0,0,4,4,4,4,4,4','5,5,0,5,5,5,5,5,5','0,6,0,6,6,6,0,6,0']); break;
-	case "COLL": return stickerout(['1,0,1,1,1,1,1,1,1','2,0,2,2,2,2,2,2,2','3,0,3,3,3,3,3,3,3',
-		'4,0,4,4,4,4,4,4,4','5,5,5,5,5,5,5,5,5','6,6,6,6,6,6,6,6,6']); break;
-	case "CLL": return stickerout(['1,0,1,1,1,1,1,1,1','2,0,2,2,2,2,2,2,2','3,0,3,3,3,3,3,3,3',
-		'4,0,4,4,4,4,4,4,4','5,5,5,5,5,5,5,5,5','6,0,6,0,6,0,6,0,6']); break;
+		'0,0,0,4,4,4,4,4,4','5,5,5,5,5,5,5,5,5','0,0,0,0,13,0,0,0,0']); break;
+	case "FRSlot": return stickerout(['0,0,0,8,8,1,8,8,1','0,0,0,2,9,9,2,9,9','0,0,0,10,10,10,10,10,10',
+		'0,0,0,11,11,11,11,11,11','12,12,5,12,12,12,12,12,12','0,0,0,0,13,0,0,0,0']); break;
+  case "FRSlotOnly": return stickerout(['0,0,0,0,8,1,0,8,1','0,0,0,2,9,0,2,9,0','0,0,0,0,10,0,0,10,0','0,0,0,0,11,0,0,11,0','0,12,5,12,12,12,0,12,0','0,0,0,0,13,0,0,0,0']); break;
+  case "OLL": return stickerout(['0,0,0,8,8,8,8,8,8','0,0,0,9,9,9,9,9,9','0,0,0,10,10,10,10,10,10', '0,0,0,11,11,11,11,11,11','12,12,12,12,12,12,12,12,12','6,6,6,6,6,6,6,6,6']); break;
+  case "CLS": return stickerout(['0,0,0,8,8,8,8,8,8','0,0,0,9,9,9,9,9,9','0,0,0,10,10,10,10,10,10', '0,0,0,11,11,11,11,11,11','12,12,5,12,12,12,12,12,12','6,6,6,6,6,6,6,6,6']); break;
+  case "WVLS": return stickerout(['0,0,0,8,8,1,8,8,1','0,0,0,2,9,9,2,9,9','0,0,0,10,10,10,10,10,10',
+		'0,0,0,11,11,11,11,11,11','12,12,5,12,12,12,12,12,12','6,6,6,6,6,6,6,6,6']); break;
+	case "ZBLS": case "VHLS": return stickerout(['0,0,0,8,8,1,8,8,1','0,0,0,2,9,9,2,9,9','0,0,0,10,10,10,10,10,10',
+		'0,0,0,11,11,11,11,11,11','12,12,5,12,12,12,12,12,12','0,6,0,6,6,6,0,6,0']); break;
+	case "ELS": return stickerout(['8,1,8,8,8,8,8,8,8','9,2,9,9,9,9,9,9,9','10,3,10,10,10,10,10,10,10', '4,4,4,11,11,11,11,11,11','5,5,0,5,5,5,5,5,5','13,6,13,6,6,6,13,6,13']); break;
+	case "COLL": return stickerout(['1,0,1,8,8,8,8,8,8','2,0,2,9,9,9,9,9,9','3,0,3,10,10,10,10,10,10', '4,0,4,11,11,11,11,11,11','5,5,5,5,5,5,5,5,5','6,13,6,13,6,13,6,13,6']); break;
+	case "CLL": return stickerout(['1,0,1,8,8,8,8,8,8','2,0,2,9,9,9,9,9,9','3,0,3,10,10,10,10,10,10', '4,0,4,11,11,11,11,11,11','5,5,5,5,5,5,5,5,5','6,0,6,0,6,0,6,0,6']); break;
 	case "CMLL": return stickerout(['1,0,1,1,0,1,1,0,1','2,0,2,2,2,2,2,2,2','3,0,3,3,3,3,3,3,3',
 		'4,0,4,4,0,4,4,0,4','5,0,5,5,0,5,5,0,5','6,0,6,0,0,0,6,0,6']); break;
-	case "L6E": return stickerout(['7,1,7,7,1,7,7,1,7','8,2,8,8,8,8,8,8,8','9,3,9,9,9,9,9,9,9',
-		'10,4,10,10,4,10,10,4,10','11,5,11,11,5,11,11,5,11','12,6,12,6,6,6,12,6,12']); break;
+	case "L6E": return stickerout(['8,1,8,8,1,8,8,1,8','9,2,9,9,9,9,9,9,9','10,3,10,10,10,10,10,10,10', '11,4,11,11,4,11,11,4,11','12,5,12,12,5,12,12,5,12','13,6,13,6,6,6,13,6,13']); break;
+  case "Cross": return stickerout(['0,0,0,0,8,0,0,1,0','0,0,0,0,9,0,0,2,0','0,0,0,0,10,0,0,3,0','0,0,0,0,11,0,0,4,0','0,5,0,5,5,5,0,5,0','0,0,0,0,13,0,0,0,0']); break;
+  case "FirstLayer": return stickerout(['0,0,0,0,8,0,1,1,1','0,0,0,0,9,0,2,2,2','0,0,0,0,10,0,3,3,3','0,0,0,0,11,0,4,4,4','5,5,5,5,5,5,5,5,5','0,0,0,0,13,0,0,0,0']); break;
+  case "FirstLayerCorners": return stickerout(['0,0,0,0,8,0,1,8,1','0,0,0,0,9,0,2,9,2','0,0,0,0,10,0,3,10,3','0,0,0,0,11,0,4,11,4','5,12,5,12,5,12,5,12,5','0,0,0,0,13,0,0,0,0']); break;
+  case "Corners": return stickerout(['1,0,1,0,8,0,1,0,1','2,0,2,0,9,0,2,0,2','3,0,3,0,10,0,3,0,3','4,0,4,0,11,0,4,0,4','5,0,5,0,12,0,5,0,5','6,0,6,0,13,0,6,0,6']); break;
+  case "Triangle": return stickerout(['0,0,0,0,8,0,1,0,0','0,0,0,0,9,0,0,0,2','0,0,0,0,10,0,3,3,3','0,0,0,0,11,0,4,4,4','5,0,0,5,5,0,5,5,5','0,0,0,0,13,0,0,0,0']); break;
+  case "DL2x2x3": return stickerout(['0,0,0,1,1,0,1,1,0','0,0,0,0,9,0,0,0,0','0,0,0,3,3,3,3,3,3','0,0,0,0,4,4,0,4,4','5,5,0,5,5,0,5,5,0','0,0,0,0,13,0,0,0,0']); break;
+  case "DLPetrusStep4a": return stickerout(['0,0,0,8,8,0,8,8,0','0,2,0,2,2,2,0,2,0','0,0,0,10,10,10,10,10,10','0,0,0,0,11,11,0,11,11','12,12,0,12,12,0,12,12,0','0,6,0,6,6,6,0,6,0']); break;
 	default: return stickerout(['1,1,1,1,1,1,1,1,1','2,2,2,2,2,2,2,2,2','3,3,3,3,3,3,3,3,3',
 		'4,4,4,4,4,4,4,4,4','5,5,5,5,5,5,5,5,5','6,6,6,6,6,6,6,6,6']); break;
 		
@@ -315,8 +324,8 @@ righthalf.innerHTML='<span "style="font-size: 200%; font-weight: bold;">Help<\/s
 +'\n'
 +'\n<li><u>Stage<\/u>: 3x3x3 ONLY - Gray out pieces to emphasize the pieces of a solving stage<\/li>'
 +'\n<ul style="text-align: left;">'
-+'\n<li>Full, F2L, OLL/CLS, ZBLS, CMLL<\/li>'
-+'\n<li>Hidden: CLL, COLL, ELL, ELS, EO, EOLine, FRSlot, WVLS, ZBLL.<\/li>'
++'\n<li>Full, F2L, PLL, OLL<\/li>'
++'\n<li>Hidden: ZBLL, ELL, EO, EOLine, F2L, FRSlot, CLS, WVLS, ZBLS, VHLS, ELS, COLL, CLL, CMLL, L6E, Cross, FirstLayer, FirstLayerCorners, Corners, Triangle, DL2x2x3, DLPetrusStep4a.<\/li>'
 +'\n<\/ul>'
 +'\n'
 +'\n<li>Offline use is possible, but not "supported" yet.<\/li>'
@@ -340,6 +349,7 @@ righthalf.innerHTML='<span "style="font-size: 200%; font-weight: bold;">AlgTyper
 +'\n<param name="mayscript" value="true">'
 +'\n<param name="bgcolor" value="ffffdd">'
 +'\n<param name="hint" value="0">'
++'\n<param name="showScrambleButton" value="false">'
 +'\n<param name="colorscheme" value="wygbor">'
 +'\n<param name="edit" value="0">'
 +'\n<param name="speed" value="5">'
@@ -426,9 +436,9 @@ document.write('<br><span title="Scramble"><textarea name="ini" id="ini" rows="2
 document.write('<br><span title="Algorithm"><textarea name="alg" id="alg" rows="12" cols="50">'+p_alg+'<\/textarea></span>');
 </script>
 <br>
-<button type="button" onclick="window.location='?'">Reset</button>
-<button type="button" onclick="javascript:submitalg()">Reload!</button>
-<button type="button" onclick="javascript:setalgs();loadapplet()">Test</button>
+<span title="Refresh and reset the page."<button type="button" onclick="window.location='?'">Reset</button></a>
+<span title="Reload the page with the new alg."<button type="button" onclick="javascript:submitalg()">Reload!</button></a>
+<span title="Refresh applet WITHOUT reloading the page."><button type="button" onclick="javascript:setalgs();loadapplet()">Test</button></a>
 <!--<input type="submit" value="Submit">-->
 
 <br>
@@ -458,9 +468,8 @@ document.write('<br><span title="Algorithm"><textarea name="alg" id="alg" rows="
 <br><script language="JavaScript">document.write('<u>Stage<\/u>: ');</script>
 <input type="radio" name="stage" id="stagefull" value="full" onclick="p_stage='full';">Full
 <input type="radio" name="stage" id="stageF2L" value="F2L" onclick="p_stage='F2L';">F2L
-<input type="radio" name="stage" id="stageOLL" value="OLL" onclick="p_stage='OLL';">OLL/CLS
-<input type="radio" name="stage" id="stageZBLS" value="ZBLS" onclick="p_stage='ZBLS';">ZBLS
-<input type="radio" name="stage" id="stageCMLL" value="CMLL" onclick="p_stage='CMLL';">CMLL
+<input type="radio" name="stage" id="stagePLL" value="PLL" onclick="p_stage='PLL';">PLL
+<input type="radio" name="stage" id="stageOLL" value="OLL" onclick="p_stage='OLL';">OLL
 </span>
 </span>
 
@@ -471,7 +480,7 @@ document.getElementById('animtype'+p_animtype).checked="true";
 document.getElementById('scheme'+p_scheme).checked="true";
 document.getElementById('stage'+p_stage).checked="true";
 </script>
-
+<br>
 </form>
 <button type="button" onclick="showhelp();" style="font-size: 125%">Show Help</button>
 <button type="button" onclick="showAlgTyper();" style="font-size: 125%">AlgTyper</button>
@@ -503,6 +512,7 @@ document.getElementById('stage'+p_stage).checked="true";
 <p style="text-align: center;"><button type="button" onclick="javascript:setalgs();loadapplet()">Hide AlgTyper, Load Applet</button></p>
 
 <br>Loading Applet/Help here...
+<br>(Note: You need Java and Javascript enabled.)
 <script type="text/javascript">
 if (window.location.hash=='#help')
 	showhelp();
