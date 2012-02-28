@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>alg.garron.us (v1.1.4beta)</title>
+<title>alg.garron.us (v1.1.6beta)</title>
 <!-- Lucas Garron, 2009-03-25 -->
 <!-- Alg Animation Tool -->
 <!-- alg.garron.us (v1.1.3) -->
@@ -17,6 +17,7 @@ Other puzzles (Square-1, Pyraminx).
 Allow static imag e generation with iCube: http://software.rubikscube.info/icube/
 Proper, general commutator/conjugate suppart.
 Live update of currunt params instead of dispplaying those from page load?
+Click on param name selects box
 
 -->
 
@@ -50,7 +51,7 @@ function paramdefault(paramname)
 	case 'notation': return('sign');
 	case 'animtype': return('gen');
 	case 'scheme': return('grobyw');
-	case 'dim': return('none');
+	case 'stage': return('full');
 	default: return('');
 	}
 }
@@ -84,10 +85,10 @@ function propername(param, str)
 		default: return str;
 		};
 		break;}
-	case 'dim': {
+	case 'stage': {
 		switch (str)
 		{
-		case 'none': return('None');
+		case 'full': return('Full');
 		default: return str;
 		};
 		break;}
@@ -109,7 +110,7 @@ var p_cube=gupdef('cube','3x3x3');
 var p_notation=gupdef('notation');
 var p_animtype=gupdef('animtype');
 var p_scheme=gupdef('scheme');
-var p_dim=gupdef('dim');
+var p_stage=gupdef('stage');
 
 if(p_name!=paramdefault('name'))
 	document.title=p_name+' - alg.garron.us';
@@ -151,15 +152,17 @@ function stickercube(stickerspec)
 {
 switch (stickerspec)
 {
-	case "none": case "ZBLL": case "ELL": return stickerout(['1,1,1,1,1,1,1,1,1','2,2,2,2,2,2,2,2,2','3,3,3,3,3,3,3,3,3',
+	case "full": case "ZBLL": case "ELL": return stickerout(['1,1,1,1,1,1,1,1,1','2,2,2,2,2,2,2,2,2','3,3,3,3,3,3,3,3,3',
 		'4,4,4,4,4,4,4,4,4','5,5,5,5,5,5,5,5,5','6,6,6,6,6,6,6,6,6']); break;
+	case "EO": return stickerout(['0,0,0,6,1,6,0,0,0','0,0,0,0,2,0,0,0,0','0,0,0,0,3,0,0,0,0',
+		'0,0,0,6,4,6,0,0,0','0,6,0,6,5,6,0,6,0','0,6,0,6,6,6,0,6,0']); break;
 	case "EOLine": return stickerout(['0,0,0,6,1,6,0,1,0','0,0,0,0,2,0,0,2,0','0,0,0,0,3,0,0,3,0',
 		'0,0,0,6,4,6,0,4,0','0,5,0,5,5,5,0,5,0','0,6,0,6,6,6,0,6,0']); break;
 	case "F2L": return stickerout(['0,0,0,1,1,1,1,1,1','0,0,0,2,2,2,2,2,2','0,0,0,3,3,3,3,3,3',
 		'0,0,0,4,4,4,4,4,4','5,5,5,5,5,5,5,5,5','0,0,0,0,6,0,0,0,0']); break;
 	case "FRSlot": return stickerout(['0,0,0,0,1,1,0,1,1','0,0,0,2,2,0,2,2,0','0,0,0,0,3,0,0,3,0',
 		'0,0,0,0,4,0,0,4,0','5,5,5,5,5,5,5,5,5','6,6,6,6,6,6,6,6,6']); break;
-	case "CLS": case "OLL": case "WV": return stickerout(['0,0,0,1,1,1,1,1,1','0,0,0,2,2,2,2,2,2','0,0,0,3,3,3,3,3,3',
+	case "CLS": case "OLL": case "WVLS": return stickerout(['0,0,0,1,1,1,1,1,1','0,0,0,2,2,2,2,2,2','0,0,0,3,3,3,3,3,3',
 		'0,0,0,4,4,4,4,4,4','5,5,5,5,5,5,5,5,5','6,6,6,6,6,6,6,6,6']); break;
 	case "ZBLS": return stickerout(['0,0,0,1,1,1,1,1,1','0,0,0,2,2,2,2,2,2','0,0,0,3,3,3,3,3,3',
 		'0,0,0,4,4,4,4,4,4','5,5,5,5,5,5,5,5,5','0,6,0,6,6,6,0,6,0']); break;
@@ -192,6 +195,7 @@ function paramadddef(paramname, paramval)
   		return "&"+paramname+"="+paramval;
 }
 
+//escape ampersand?
 function escapealg(algstr){return algstr.replace(/\n/g, '%0A').replace(/-/g, '%2D').replace(/\'/g, '-').replace(/ /g, '_');}
 function unescapealg(algstr){return unescape(algstr.replace(/_/g,' ').replace(/-/g,'\''));}
 function unescapeapplet(algstr){return unescapealg(algstr);}
@@ -204,16 +208,22 @@ function loadapplet()
 var jarfile=p_cube.replace('2x2x2','PocketPlayer').replace('3x3x3','RubikPlayer').replace('4x4x4','RevengePlayer').replace('5x5x5','ProfessorPlayer').replace('6x6x6','VCube6Player').replace('7x7x7','VCube7Player');
 var notationfile='notation/'+p_notation+'.xml';
 var stickerappletcode='';
-if (p_cube=='3x3x3') stickerappletcode=stickercube(p_dim);
+if (p_cube=='3x3x3') stickerappletcode=stickercube(p_stage);
 
-appletdiv.innerHTML='<applet code="'+jarfile+'.class" archive="applet/'+jarfile+'.jar" width="100%" height="100%">'
+//alert("p");
+//alert(righthalf.innerHTML);
+
+righthalf.innerHTML='<input id="copyurl" type="text" name="copyurl" readonly="readonly" value="[url=http://alg.garron.us/]alg.garron.us[/url]" onclick="this.focus();this.select();" size="30"/>'
+	+'\n<div name="appletdiv" id="appletdiv">'
+	+'\n<applet code="'+jarfile+'.class" archive="applet/'+jarfile+'.jar" width="100%" height="100%">'
 	+'\n <param name="scriptType" value="'+p_animtype.replace('gen','Generator').replace('solve','Solver')+'">'
 	+'\n <param name="resourceFile" value="'+notationfile+'"/><param name="notation" value="'+p_cube+'"/>'
 	+'\n <param name="colorTable" value="'+hexscheme(p_scheme)+'"><param name="faces" value="1,2,3,4,5,6">'
 	+stickerappletcode
 	+'\n <param name="initScript" value="'+applet_ini+'">'
 	+'\n <param name="script" value="'+applet_alg+'">'
-	+'\n<\/applet>';
+	+'\n<\/applet>'
+	+'\n<\/div>';
 
 var URLparams = makeURLparams();
 if (URLparams=="?alg=")
@@ -222,6 +232,17 @@ else
 	copyurl.value='[url=http://alg.garron.us/'+URLparams+']'+p_alg+'[/url]'; //p_alg covered by setalgs() in makeURLparams().
 
 var resize = new YAHOO.util.Resize('appletdiv');
+}
+
+function showhelp()
+{
+window.location.hash="#help"
+righthalf.innerHTML='<span "style="font-size: 200%; font-weight: bold;">Help<\/span>'
++'<br><br>I am compiling a help page for here.'
++'<br><br><button type="button" onclick="javascript:setalgs();loadapplet()">(Re-)Load Applet Here<\/button>'
+
+;
+
 }
 
 function setalgs()
@@ -242,9 +263,9 @@ function makeURLparams()
 	url=url+paramadddef('notation',p_notation);
 	url=url+paramadddef('animtype',p_animtype);
 	url=url+paramadddef('scheme',p_scheme);
-		var p_dim_url=p_dim;
-		//if (p_cube!='3x3x3') p_dim_url=;;;
-	url=url+paramadddef('dim',p_dim_url);
+		var p_stage_url=p_stage;
+		//if (p_cube!='3x3x3') p_stage_url=;;;
+	url=url+paramadddef('stage',p_stage_url);
 	return url;
 }
 
@@ -266,7 +287,7 @@ function submitalg()
 
 <table width="100%" height="100%" style="text-align: center;" border="1" cellspacing="1" cellpadding="4">
 <tr width="50%">
-<td width="1*" style="vertical-align: top;">
+<td name="lefthalf" width="1*" style="vertical-align: top;">
 <span name="titlespan" id="titlespan"> 
 <script language="JavaScript">
 document.write('<span name="titletext" id="titletext" "style="font-size: 200%; font-weight: bold;" onclick="javascript:nameedit()">'+p_name+'<\/span>');
@@ -288,31 +309,33 @@ document.write('<span name="titletext" id="titletext" "style="font-size: 200%; f
 
 
 <script language="JavaScript">
-document.write('<br><span title="Scramble"><textarea name="ini" id="ini" rows="2" cols="50">'+p_ini+'<\/textarea></span>');
+document.write('<br><span title="Scramble"><textarea name="ini" id="ini" rows="2" cols="50" style="background: #ffffee;">'+p_ini+'<\/textarea></span>');
 </script>
 <script language="JavaScript">
 document.write('<br><span title="Algorithm"><textarea name="alg" id="alg" rows="12" cols="50">'+p_alg+'<\/textarea></span>');
 </script>
-<br><button type="button" onclick="javascript:submitalg()">Reload!</button>
+<br>
+<button type="button" onclick="window.location='?'">Reset</button>
+<button type="button" onclick="javascript:submitalg()">Reload!</button>
 <button type="button" onclick="javascript:setalgs();loadapplet()">Test</button>
 <!--<input type="submit" value="Submit">-->
 
 <br>
 <span id="options">
 <span title="Notation">
-<br><script language="JavaScript">document.write('<u>'+propername('notation',p_notation)+'<\/u> - ');</script>
+<br><script language="JavaScript">document.write('<u>Notation: '+propername('notation',p_notation)+'<\/u> - ');</script>
 <input type="radio" name="notation" id="ns" value="sign" onclick="p_notation='sign'">SiGN 
 <input type="radio" name="notation" id="nw" value="wca" onclick="p_notation='WCA'">WCA
 <input type="radio" name="notation" id="nu" value="superset" onclick="p_notation='superset'">Superset</span>
 
 <span title="Animation Type">
-<br><script language="JavaScript">document.write('<u>'+propername('animtype',p_animtype)+'<\/u> - ');</script>
+<br><script language="JavaScript">document.write('<u>Animation Type: '+propername('animtype',p_animtype)+'<\/u> - ');</script>
 <input type="radio" name="animtype" id="ats" value="solve" onclick="p_animtype='solve'">Solver 
 <input type="radio" name="animtype" id="atg" value="gen" onclick="p_animtype='gen'">Generator
 </span>
 
 <span title="Color Scheme (FRLBDU)">
-<br><script language="JavaScript">document.write('<u>'+propername('scheme',p_scheme)+'<\/u> - ');</script>
+<br><script language="JavaScript">document.write('<u>Color Scheme: '+propername('scheme',p_scheme)+'<\/u> - ');</script>
 <input type="radio" name="scheme" id="colb" value="grobyw" onclick="p_scheme='grobyw';">BOY
 <input type="radio" name="scheme" id="colj" value="groybw" onclick="p_scheme='groybw';">Japanese
 <input type="radio" name="scheme" id="colc" value="custom" onclick="p_scheme=schemeinput.value;highlightinput(schemeinput);">
@@ -320,35 +343,79 @@ document.write('<br><span title="Algorithm"><textarea name="alg" id="alg" rows="
 	<script language="JavaScript">schemeinput.value=p_scheme</script>
 </span>
 
-<span title="Dimming (currently for 3x3x3 ONLY)">
-<br><script language="JavaScript">document.write('<u>'+propername('dim',p_dim)+'<\/u> - ');</script>
-<input type="radio" name="dim" id="atn" value="boy" onclick="p_dim='none';">None
-<input type="radio" name="dim" id="atf" value="boy" onclick="p_dim='F2L';">F2L
-<input type="radio" name="dim" id="ato" value="boy" onclick="p_dim='OLL';">OLL/CLS
-<input type="radio" name="dim" id="atzb" value="boy" onclick="p_dim='ZBLS;">ZBLS
-<!--<input type="radio" name="dim" id="atl" value="boy" onclick="p_dim='L6E';">L6E
-<input type="radio" name="dim" id="atcm" value="boy" onclick="p_dim='CMLL';">CMLL
-<input type="radio" name="dim" id="atco" value="boy" onclick="p_dim='COLL';">COLL
-<input type="radio" name="dim" id="atzb" value="boy" onclick="p_dim='centers';">Centers-->
+<span title="Stage (currently for 3x3x3 ONLY)">
+<br><script language="JavaScript">document.write('<u>Stage: '+propername('stage',p_stage)+'<\/u> - ');</script>
+<input type="radio" name="stage" id="stagen" value="boy" onclick="p_stage='full';">Full
+<input type="radio" name="stage" id="stagef" value="boy" onclick="p_stage='F2L';">F2L
+<input type="radio" name="stage" id="stageo" value="boy" onclick="p_stage='OLL';">OLL/CLS
+<input type="radio" name="stage" id="stagezb" value="boy" onclick="p_stage='ZBLS;">ZBLS
+<input type="radio" name="stage" id="stagecm" value="boy" onclick="p_stage='CMLL';">CMLL
+<!--<input type="radio" name="stage" id="stagel" value="boy" onclick="p_stage='L6E';">L6E
+<input type="radio" name="stage" id="stageco" value="boy" onclick="p_stage='COLL';">COLL
+<input type="radio" name="stage" id="stagezb" value="boy" onclick="p_stage='centers';">Centers-->
 </span>
 </span>
 
 </form>
-<button type="button" onclick="window.location.reload()">Reload URL</button>
-<button type="button" onclick="window.location='?'">Reset</button>
+<button type="button" onclick="showhelp();" style="font-size: 125%">Show Help</button>
 <br><br>
-<span style="font-family: monospace">alg.garron.us - by Lucas Garron</span>
+<span style="font-family: monospace" title="Everyone loves XKCD. Especially because of the hovertext.">alg.garron.us - by Lucas Garron</span>
 
 </td>
-<td width="50%" style="vertical-align: top;">
+<td name="righthalf" id="righthalf" width="50%" style="vertical-align: top;" >
 
-<input id="copyurl" type="text" name="copyurl" readonly="readonly" value='[url=http://alg.garron.us/]alg.garron.us[/url]' onclick="this.focus();this.select();" size="30"/>
-<div name="appletdiv" id="appletdiv">
-<br>Loading Applet here...
+<span "style="font-size: 200%; font-weight: bold;">Help</span>
+<br>alg.garron.us is a tool for viewing and sharing algs. v1.1.6beta
+<ul style="text-align: left;">
+<li>Just type an alg into the lower textbox and click <i>Reload</i> or <i>Test</i>.</li>
+<li>If you would like to add pre-moves (like a scramble), type them into the upper textbox.</li>
+
+<li><u>Buttons</u>:</li>
+<ul style="text-align: left;">
+<li>Reset: Reload Page with algs/options cleared.</li>
+<li>Reload: Reload page with selected settings.</li>
+<li>Test: Refresh applet with current settings.</a></li>
+</ul>
+
+<li><u>Puzzle</u>: You can select</li>
+<ul style="text-align: left;">
+<li>2x2x2-7x7x7</li>
+</ul>
+
+<li><u>Notation</u>:</li>
+<ul style="text-align: left;">
+<li>SiGN: Simple General Notation</li>
+<li>WCA: <a href="http://www.worldcubeassociation.org/regulations/#notation">WCA Official Notation</a></li>
+<li>Superset: Werner Randelshofer's <a href="http://www.randelshofer.ch/rubikplayer/documentation/superset_eng.html">Superset ENG</a></li>
+</ul>
+
+<li><u>Animation Type</u>:</li>
+<ul style="text-align: left;">
+<li>Solver: View the moves solving the puzzle.</li>
+<li>Generator: View moves applied moves to a solved state</li>
+</ul>
+
+<li><u>Color Scheme</u>: Set colors for FRLBDU or pick a standard scheme.</li>
+
+<li><u>Stage</u>: 3x3x3 ONLY - Gray out pieces to emphasize the pieces of a solving stage</li>
+<ul style="text-align: left;">
+<li>Full, F2L, OLL/CLS, ZBLS, CMLL</li>
+<li>Hidden: CLL, COLL, ELL, ELS, EO, EOLine, FRSlot, WVLS, ZBLL.</li>
+</ul>
+
+</ul>
+</p>
+<p style="text-align: center;"><button type="button" onclick="javascript:setalgs();loadapplet()">Hide Help - Load Applet Here</button></p>
+
+<!--
+<br>Loading Applet/Help here...
 <script type="text/javascript">
-loadapplet();
+if (window.location.hash=='#help')
+	showhelp();
+else
+	loadapplet();
 </script>
-</div>
+-->
 
 </td>
 </tr>
