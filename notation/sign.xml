@@ -1,0 +1,671 @@
+<CubeMarkup version="6">
+  <Notation id="sign2" default="true" layerCount="2">
+    <Name>2x2x2</Name>
+    <Description>SiGN, 2x2x2, version 0.3.2</Description>
+    <Author>Lucas Garron</Author>
+    <Date>2008-08-17</Date>
+    <Statement symbol="comment">
+      <Token symbol="commentMultiLineBegin">/*</Token>
+      <Token symbol="commentMultiLineEnd">*/</Token>
+      <Token symbol="commentSingleLineBegin">//</Token>
+    </Statement>
+    <Statement symbol="NOP">
+      <Token symbol="NOP">_ .</Token>
+    <Statement symbol="move">
+    </Statement>
+      <Token axis="x" layerList="1,2" angle="90">x</Token> <Token axis="x" layerList="1,2" angle="180">x2</Token>
+      <Token axis="y" layerList="1,2" angle="90">y</Token> <Token axis="y" layerList="1,2" angle="180">y2</Token>
+      <Token axis="z" layerList="1,2" angle="90">z</Token> <Token axis="z" layerList="1,2" angle="180">z2</Token>
+      <Token axis="x" layerList="2" angle="90">R</Token> <Token axis="x" layerList="2" angle="180">R2</Token>
+      <Token axis="y" layerList="2" angle="90">U</Token> <Token axis="y" layerList="2" angle="180">U2</Token>
+      <Token axis="z" layerList="2" angle="90">F</Token> <Token axis="z" layerList="2" angle="180">F2</Token>
+      <Token axis="x" layerList="1" angle="-90">L</Token> <Token axis="x" layerList="1" angle="-180">L2</Token>
+      <Token axis="y" layerList="1" angle="-90">D</Token> <Token axis="y" layerList="1" angle="-180">D2</Token>
+      <Token axis="z" layerList="1" angle="-90">B</Token> <Token axis="z" layerList="1" angle="-180">B2</Token>
+    </Statement>
+    <Statement symbol="grouping">
+      <Token symbol="groupingBegin">(</Token>
+      <Token symbol="groupingEnd">)</Token>
+    </Statement>
+    <Statement syntax="suffix" symbol="inversion">
+      <Token symbol="invertor">&apos; -</Token>
+    </Statement>
+      <Statement syntax="precircumfix" symbol="conjugation">
+      <Token symbol="conjugationBegin">[</Token>
+      <Token symbol="conjugationEnd">]</Token>
+      <Token symbol="conjugationDelim">:</Token>
+    </Statement>
+    <Statement syntax="precircumfix" symbol="commutation">
+      <Token symbol="commutationBegin">[</Token>
+      <Token symbol="commutationEnd">]</Token>
+      <Token symbol="commutationDelim">,</Token>
+    </Statement>
+    <Statement syntax="precircumfix" symbol="permutation">
+      <Token symbol="permR">R</Token>
+      <Token symbol="permU">U</Token>
+      <Token symbol="permF">F</Token>
+      <Token symbol="permL">L</Token>
+      <Token symbol="permD">D</Token>
+      <Token symbol="permB">B</Token>
+      <Token symbol="permPlus">+</Token>
+      <Token symbol="permMinus">-</Token>
+      <Token symbol="permPlusPlus">++</Token>
+      <Token symbol="permBegin">(</Token>
+      <Token symbol="permEnd">)</Token>
+      <Token symbol="permDelim">,</Token>
+    </Statement>
+    <Statement syntax="suffix" symbol="repetition"/>
+  </Notation>
+<Notation id="sign3" default="true" layerCount="3">
+    <Name>3x3x3</Name>
+    <Description>SiGN, 3x3x3, version 0.3.2</Description>
+    <Author>Lucas Garron</Author>
+    <Date>2008-08-17</Date>
+    <Statement symbol="comment">
+      <Token symbol="commentMultiLineBegin">/*</Token>
+      <Token symbol="commentMultiLineEnd">*/</Token>
+      <Token symbol="commentSingleLineBegin">//</Token>
+    </Statement>
+    <Statement symbol="NOP">
+      <Token symbol="NOP">_ .</Token>
+    <Statement symbol="move">
+    </Statement>
+      <Token axis="x" layerList="1,2,3" angle="90">x</Token> <Token axis="x" layerList="1,2,3" angle="180">x2</Token>
+      <Token axis="y" layerList="1,2,3" angle="90">y</Token> <Token axis="y" layerList="1,2,3" angle="180">y2</Token>
+      <Token axis="z" layerList="1,2,3" angle="90">z</Token> <Token axis="z" layerList="1,2,3" angle="180">z2</Token>
+      <Token axis="x" layerList="3" angle="90">R</Token> <Token axis="x" layerList="3" angle="180">R2</Token>
+      <Token axis="y" layerList="3" angle="90">U</Token> <Token axis="y" layerList="3" angle="180">U2</Token>
+      <Token axis="z" layerList="3" angle="90">F</Token> <Token axis="z" layerList="3" angle="180">F2</Token>
+      <Token axis="x" layerList="1" angle="-90">L</Token> <Token axis="x" layerList="1" angle="-180">L2</Token>
+      <Token axis="y" layerList="1" angle="-90">D</Token> <Token axis="y" layerList="1" angle="-180">D2</Token>
+      <Token axis="z" layerList="1" angle="-90">B</Token> <Token axis="z" layerList="1" angle="-180">B2</Token>
+      <Token axis="x" layerList="2" angle="90">2R</Token> <Token axis="x" layerList="2" angle="180">2R2</Token>
+      <Token axis="y" layerList="2" angle="90">2U</Token> <Token axis="y" layerList="2" angle="180">2U2</Token>
+      <Token axis="z" layerList="2" angle="90">2F</Token> <Token axis="z" layerList="2" angle="180">2F2</Token>
+      <Token axis="x" layerList="2" angle="-90">2L</Token> <Token axis="x" layerList="2" angle="-180">2L2</Token>
+      <Token axis="y" layerList="2" angle="-90">2D</Token> <Token axis="y" layerList="2" angle="-180">2D2</Token>
+      <Token axis="z" layerList="2" angle="-90">2B</Token> <Token axis="z" layerList="2" angle="-180">2B2</Token>
+      <Token axis="x" layerList="1" angle="90">3R</Token> <Token axis="x" layerList="1" angle="180">3R2</Token>
+      <Token axis="y" layerList="1" angle="90">3U</Token> <Token axis="y" layerList="1" angle="180">3U2</Token>
+      <Token axis="z" layerList="1" angle="90">3F</Token> <Token axis="z" layerList="1" angle="180">3F2</Token>
+      <Token axis="x" layerList="3" angle="-90">3L</Token> <Token axis="x" layerList="3" angle="-180">3L2</Token>
+      <Token axis="y" layerList="3" angle="-90">3D</Token> <Token axis="y" layerList="3" angle="-180">3D2</Token>
+      <Token axis="z" layerList="3" angle="-90">3B</Token> <Token axis="z" layerList="3" angle="-180">3B2</Token>
+      <Token axis="x" layerList="2" angle="-90">M</Token> <Token axis="x" layerList="2" angle="-180">M2</Token>
+      <Token axis="y" layerList="2" angle="-90">E</Token> <Token axis="y" layerList="2" angle="-180">E2</Token>
+      <Token axis="z" layerList="2" angle="90">S</Token> <Token axis="z" layerList="2" angle="180">S2</Token>
+      <Token axis="x" layerList="2,3" angle="90">r 2r</Token> <Token axis="x" layerList="2,3" angle="180">r2 2r2</Token>
+      <Token axis="y" layerList="2,3" angle="90">u 2u</Token> <Token axis="y" layerList="2,3" angle="180">u2 2u2</Token>
+      <Token axis="z" layerList="2,3" angle="90">f 2f</Token> <Token axis="z" layerList="2,3" angle="180">f2 2f2</Token>
+      <Token axis="x" layerList="1,2" angle="-90">l 2l</Token> <Token axis="x" layerList="1,2" angle="-180">l2 2l2</Token>
+      <Token axis="y" layerList="1,2" angle="-90">d 2d</Token> <Token axis="y" layerList="1,2" angle="-180">d2 2d2</Token>
+      <Token axis="z" layerList="1,2" angle="-90">b 2b</Token> <Token axis="z" layerList="1,2" angle="-180">b2 2b2</Token>
+    </Statement>
+    <Statement symbol="grouping">
+      <Token symbol="groupingBegin">(</Token>
+      <Token symbol="groupingEnd">)</Token>
+    </Statement>
+    <Statement syntax="suffix" symbol="inversion">
+      <Token symbol="invertor">&apos; -</Token>
+    </Statement>
+      <Statement syntax="precircumfix" symbol="conjugation">
+      <Token symbol="conjugationBegin">[</Token>
+      <Token symbol="conjugationEnd">]</Token>
+      <Token symbol="conjugationDelim">:</Token>
+    </Statement>
+    <Statement syntax="precircumfix" symbol="commutation">
+      <Token symbol="commutationBegin">[</Token>
+      <Token symbol="commutationEnd">]</Token>
+      <Token symbol="commutationDelim">,</Token>
+    </Statement>
+    <Statement syntax="precircumfix" symbol="permutation">
+      <Token symbol="permR">R</Token>
+      <Token symbol="permU">U</Token>
+      <Token symbol="permF">F</Token>
+      <Token symbol="permL">L</Token>
+      <Token symbol="permD">D</Token>
+      <Token symbol="permB">B</Token>
+      <Token symbol="permPlus">+</Token>
+      <Token symbol="permMinus">-</Token>
+      <Token symbol="permPlusPlus">++</Token>
+      <Token symbol="permBegin">(</Token>
+      <Token symbol="permEnd">)</Token>
+      <Token symbol="permDelim">,</Token>
+    </Statement>
+    <Statement syntax="suffix" symbol="repetition"/>
+  </Notation>
+<Notation id="sign4" default="true" layerCount="4">
+    <Name>4x4x4</Name>
+    <Description>SiGN, 4x4x4, version 0.3.2</Description>
+    <Author>Lucas Garron</Author>
+    <Date>2008-08-17</Date>
+    <Statement symbol="comment">
+      <Token symbol="commentMultiLineBegin">/*</Token>
+      <Token symbol="commentMultiLineEnd">*/</Token>
+      <Token symbol="commentSingleLineBegin">//</Token>
+    </Statement>
+    <Statement symbol="NOP">
+      <Token symbol="NOP">_ .</Token>
+    <Statement symbol="move">
+    </Statement>
+      <Token axis="x" layerList="1,2,3,4" angle="90">x</Token> <Token axis="x" layerList="1,2,3,4" angle="180">x2</Token>
+      <Token axis="y" layerList="1,2,3,4" angle="90">y</Token> <Token axis="y" layerList="1,2,3,4" angle="180">y2</Token>
+      <Token axis="z" layerList="1,2,3,4" angle="90">z</Token> <Token axis="z" layerList="1,2,3,4" angle="180">z2</Token>
+      <Token axis="x" layerList="4" angle="90">R</Token> <Token axis="x" layerList="4" angle="180">R2</Token>
+      <Token axis="y" layerList="4" angle="90">U</Token> <Token axis="y" layerList="4" angle="180">U2</Token>
+      <Token axis="z" layerList="4" angle="90">F</Token> <Token axis="z" layerList="4" angle="180">F2</Token>
+      <Token axis="x" layerList="1" angle="-90">L</Token> <Token axis="x" layerList="1" angle="-180">L2</Token>
+      <Token axis="y" layerList="1" angle="-90">D</Token> <Token axis="y" layerList="1" angle="-180">D2</Token>
+      <Token axis="z" layerList="1" angle="-90">B</Token> <Token axis="z" layerList="1" angle="-180">B2</Token>
+      <Token axis="x" layerList="3" angle="90">2R</Token> <Token axis="x" layerList="3" angle="180">2R2</Token>
+      <Token axis="y" layerList="3" angle="90">2U</Token> <Token axis="y" layerList="3" angle="180">2U2</Token>
+      <Token axis="z" layerList="3" angle="90">2F</Token> <Token axis="z" layerList="3" angle="180">2F2</Token>
+      <Token axis="x" layerList="2" angle="-90">2L</Token> <Token axis="x" layerList="2" angle="-180">2L2</Token>
+      <Token axis="y" layerList="2" angle="-90">2D</Token> <Token axis="y" layerList="2" angle="-180">2D2</Token>
+      <Token axis="z" layerList="2" angle="-90">2B</Token> <Token axis="z" layerList="2" angle="-180">2B2</Token>
+      <Token axis="x" layerList="2" angle="90">3R</Token> <Token axis="x" layerList="2" angle="180">3R2</Token>
+      <Token axis="y" layerList="2" angle="90">3U</Token> <Token axis="y" layerList="2" angle="180">3U2</Token>
+      <Token axis="z" layerList="2" angle="90">3F</Token> <Token axis="z" layerList="2" angle="180">3F2</Token>
+      <Token axis="x" layerList="3" angle="-90">3L</Token> <Token axis="x" layerList="3" angle="-180">3L2</Token>
+      <Token axis="y" layerList="3" angle="-90">3D</Token> <Token axis="y" layerList="3" angle="-180">3D2</Token>
+      <Token axis="z" layerList="3" angle="-90">3B</Token> <Token axis="z" layerList="3" angle="-180">3B2</Token>
+      <Token axis="x" layerList="1" angle="90">4R</Token> <Token axis="x" layerList="1" angle="180">4R2</Token>
+      <Token axis="y" layerList="1" angle="90">4U</Token> <Token axis="y" layerList="1" angle="180">4U2</Token>
+      <Token axis="z" layerList="1" angle="90">4F</Token> <Token axis="z" layerList="1" angle="180">4F2</Token>
+      <Token axis="x" layerList="4" angle="-90">4L</Token> <Token axis="x" layerList="4" angle="-180">4L2</Token>
+      <Token axis="y" layerList="4" angle="-90">4D</Token> <Token axis="y" layerList="4" angle="-180">4D2</Token>
+      <Token axis="z" layerList="4" angle="-90">4B</Token> <Token axis="z" layerList="4" angle="-180">4B2</Token>
+      <Token axis="x" layerList="2,3" angle="90">2-3r</Token> <Token axis="x" layerList="2,3" angle="180">2-3r2</Token>
+      <Token axis="y" layerList="2,3" angle="90">2-3u</Token> <Token axis="y" layerList="2,3" angle="180">2-3u2</Token>
+      <Token axis="z" layerList="2,3" angle="90">2-3f</Token> <Token axis="z" layerList="2,3" angle="180">2-3f2</Token>
+      <Token axis="x" layerList="2,3" angle="-90">2-3l</Token> <Token axis="x" layerList="2,3" angle="-180">2-3l2</Token>
+      <Token axis="y" layerList="2,3" angle="-90">2-3d</Token> <Token axis="y" layerList="2,3" angle="-180">2-3d2</Token>
+      <Token axis="z" layerList="2,3" angle="-90">2-3b</Token> <Token axis="z" layerList="2,3" angle="-180">2-3b2</Token>
+      <Token axis="x" layerList="2,3" angle="-90">m 2m</Token> <Token axis="x" layerList="2,3" angle="-180">m2 2m2</Token>
+      <Token axis="y" layerList="2,3" angle="-90">e 2e</Token> <Token axis="y" layerList="2,3" angle="-180">e2 2e2</Token>
+      <Token axis="z" layerList="2,3" angle="90">s 2s</Token> <Token axis="z" layerList="2,3" angle="180">s2 2s2</Token>
+      <Token axis="x" layerList="3,4" angle="90">r 2r</Token> <Token axis="x" layerList="3,4" angle="180">r2 2r2</Token>
+      <Token axis="y" layerList="3,4" angle="90">u 2u</Token> <Token axis="y" layerList="3,4" angle="180">u2 2u2</Token>
+      <Token axis="z" layerList="3,4" angle="90">f 2f</Token> <Token axis="z" layerList="3,4" angle="180">f2 2f2</Token>
+      <Token axis="x" layerList="1,2" angle="-90">l 2l</Token> <Token axis="x" layerList="1,2" angle="-180">l2 2l2</Token>
+      <Token axis="y" layerList="1,2" angle="-90">d 2d</Token> <Token axis="y" layerList="1,2" angle="-180">d2 2d2</Token>
+      <Token axis="z" layerList="1,2" angle="-90">b 2b</Token> <Token axis="z" layerList="1,2" angle="-180">b2 2b2</Token>
+    </Statement>
+    <Statement symbol="grouping">
+      <Token symbol="groupingBegin">(</Token>
+      <Token symbol="groupingEnd">)</Token>
+    </Statement>
+    <Statement syntax="suffix" symbol="inversion">
+      <Token symbol="invertor">&apos; -</Token>
+    </Statement>
+      <Statement syntax="precircumfix" symbol="conjugation">
+      <Token symbol="conjugationBegin">[</Token>
+      <Token symbol="conjugationEnd">]</Token>
+      <Token symbol="conjugationDelim">:</Token>
+    </Statement>
+    <Statement syntax="precircumfix" symbol="commutation">
+      <Token symbol="commutationBegin">[</Token>
+      <Token symbol="commutationEnd">]</Token>
+      <Token symbol="commutationDelim">,</Token>
+    </Statement>
+    <Statement syntax="precircumfix" symbol="permutation">
+      <Token symbol="permR">R</Token>
+      <Token symbol="permU">U</Token>
+      <Token symbol="permF">F</Token>
+      <Token symbol="permL">L</Token>
+      <Token symbol="permD">D</Token>
+      <Token symbol="permB">B</Token>
+      <Token symbol="permPlus">+</Token>
+      <Token symbol="permMinus">-</Token>
+      <Token symbol="permPlusPlus">++</Token>
+      <Token symbol="permBegin">(</Token>
+      <Token symbol="permEnd">)</Token>
+      <Token symbol="permDelim">,</Token>
+    </Statement>
+    <Statement syntax="suffix" symbol="repetition"/>
+  </Notation>
+<Notation id="sign5" default="true" layerCount="5">
+    <Name>5x5x5</Name>
+    <Description>SiGN, 5x5x5, version 0.3.2</Description>
+    <Author>Lucas Garron</Author>
+    <Date>2008-08-17</Date>
+    <Statement symbol="comment">
+      <Token symbol="commentMultiLineBegin">/*</Token>
+      <Token symbol="commentMultiLineEnd">*/</Token>
+      <Token symbol="commentSingleLineBegin">//</Token>
+    </Statement>
+    <Statement symbol="NOP">
+      <Token symbol="NOP">_ .</Token>
+    <Statement symbol="move">
+    </Statement>
+      <Token axis="x" layerList="1,2,3,4,5" angle="90">x</Token> <Token axis="x" layerList="1,2,3,4,5" angle="180">x2</Token>
+      <Token axis="y" layerList="1,2,3,4,5" angle="90">y</Token> <Token axis="y" layerList="1,2,3,4,5" angle="180">y2</Token>
+      <Token axis="z" layerList="1,2,3,4,5" angle="90">z</Token> <Token axis="z" layerList="1,2,3,4,5" angle="180">z2</Token>
+      <Token axis="x" layerList="5" angle="90">R</Token> <Token axis="x" layerList="5" angle="180">R2</Token>
+      <Token axis="y" layerList="5" angle="90">U</Token> <Token axis="y" layerList="5" angle="180">U2</Token>
+      <Token axis="z" layerList="5" angle="90">F</Token> <Token axis="z" layerList="5" angle="180">F2</Token>
+      <Token axis="x" layerList="1" angle="-90">L</Token> <Token axis="x" layerList="1" angle="-180">L2</Token>
+      <Token axis="y" layerList="1" angle="-90">D</Token> <Token axis="y" layerList="1" angle="-180">D2</Token>
+      <Token axis="z" layerList="1" angle="-90">B</Token> <Token axis="z" layerList="1" angle="-180">B2</Token>
+      <Token axis="x" layerList="4" angle="90">2R</Token> <Token axis="x" layerList="4" angle="180">2R2</Token>
+      <Token axis="y" layerList="4" angle="90">2U</Token> <Token axis="y" layerList="4" angle="180">2U2</Token>
+      <Token axis="z" layerList="4" angle="90">2F</Token> <Token axis="z" layerList="4" angle="180">2F2</Token>
+      <Token axis="x" layerList="2" angle="-90">2L</Token> <Token axis="x" layerList="2" angle="-180">2L2</Token>
+      <Token axis="y" layerList="2" angle="-90">2D</Token> <Token axis="y" layerList="2" angle="-180">2D2</Token>
+      <Token axis="z" layerList="2" angle="-90">2B</Token> <Token axis="z" layerList="2" angle="-180">2B2</Token>
+      <Token axis="x" layerList="3" angle="90">3R</Token> <Token axis="x" layerList="3" angle="180">3R2</Token>
+      <Token axis="y" layerList="3" angle="90">3U</Token> <Token axis="y" layerList="3" angle="180">3U2</Token>
+      <Token axis="z" layerList="3" angle="90">3F</Token> <Token axis="z" layerList="3" angle="180">3F2</Token>
+      <Token axis="x" layerList="3" angle="-90">3L</Token> <Token axis="x" layerList="3" angle="-180">3L2</Token>
+      <Token axis="y" layerList="3" angle="-90">3D</Token> <Token axis="y" layerList="3" angle="-180">3D2</Token>
+      <Token axis="z" layerList="3" angle="-90">3B</Token> <Token axis="z" layerList="3" angle="-180">3B2</Token>
+      <Token axis="x" layerList="2" angle="90">4R</Token> <Token axis="x" layerList="2" angle="180">4R2</Token>
+      <Token axis="y" layerList="2" angle="90">4U</Token> <Token axis="y" layerList="2" angle="180">4U2</Token>
+      <Token axis="z" layerList="2" angle="90">4F</Token> <Token axis="z" layerList="2" angle="180">4F2</Token>
+      <Token axis="x" layerList="4" angle="-90">4L</Token> <Token axis="x" layerList="4" angle="-180">4L2</Token>
+      <Token axis="y" layerList="4" angle="-90">4D</Token> <Token axis="y" layerList="4" angle="-180">4D2</Token>
+      <Token axis="z" layerList="4" angle="-90">4B</Token> <Token axis="z" layerList="4" angle="-180">4B2</Token>
+      <Token axis="x" layerList="1" angle="90">5R</Token> <Token axis="x" layerList="1" angle="180">5R2</Token>
+      <Token axis="y" layerList="1" angle="90">5U</Token> <Token axis="y" layerList="1" angle="180">5U2</Token>
+      <Token axis="z" layerList="1" angle="90">5F</Token> <Token axis="z" layerList="1" angle="180">5F2</Token>
+      <Token axis="x" layerList="5" angle="-90">5L</Token> <Token axis="x" layerList="5" angle="-180">5L2</Token>
+      <Token axis="y" layerList="5" angle="-90">5D</Token> <Token axis="y" layerList="5" angle="-180">5D2</Token>
+      <Token axis="z" layerList="5" angle="-90">5B</Token> <Token axis="z" layerList="5" angle="-180">5B2</Token>
+      <Token axis="x" layerList="3,4,5" angle="90">3r</Token> <Token axis="x" layerList="3,4,5" angle="180">3r2</Token>
+      <Token axis="y" layerList="3,4,5" angle="90">3u</Token> <Token axis="y" layerList="3,4,5" angle="180">3u2</Token>
+      <Token axis="z" layerList="3,4,5" angle="90">3f</Token> <Token axis="z" layerList="3,4,5" angle="180">3f2</Token>
+      <Token axis="x" layerList="1,2,3" angle="-90">3l</Token> <Token axis="x" layerList="1,2,3" angle="-180">3l2</Token>
+      <Token axis="y" layerList="1,2,3" angle="-90">3d</Token> <Token axis="y" layerList="1,2,3" angle="-180">3d2</Token>
+      <Token axis="z" layerList="1,2,3" angle="-90">3b</Token> <Token axis="z" layerList="1,2,3" angle="-180">3b2</Token>
+      <Token axis="x" layerList="3,4" angle="90">2-3r</Token> <Token axis="x" layerList="3,4" angle="180">2-3r2</Token>
+      <Token axis="y" layerList="3,4" angle="90">2-3u</Token> <Token axis="y" layerList="3,4" angle="180">2-3u2</Token>
+      <Token axis="z" layerList="3,4" angle="90">2-3f</Token> <Token axis="z" layerList="3,4" angle="180">2-3f2</Token>
+      <Token axis="x" layerList="2,3" angle="-90">2-3l</Token> <Token axis="x" layerList="2,3" angle="-180">2-3l2</Token>
+      <Token axis="y" layerList="2,3" angle="-90">2-3d</Token> <Token axis="y" layerList="2,3" angle="-180">2-3d2</Token>
+      <Token axis="z" layerList="2,3" angle="-90">2-3b</Token> <Token axis="z" layerList="2,3" angle="-180">2-3b2</Token>
+      <Token axis="x" layerList="2,3,4" angle="90">2-4r</Token> <Token axis="x" layerList="2,3,4" angle="180">2-4r2</Token>
+      <Token axis="y" layerList="2,3,4" angle="90">2-4u</Token> <Token axis="y" layerList="2,3,4" angle="180">2-4u2</Token>
+      <Token axis="z" layerList="2,3,4" angle="90">2-4f</Token> <Token axis="z" layerList="2,3,4" angle="180">2-4f2</Token>
+      <Token axis="x" layerList="2,3,4" angle="-90">2-4l</Token> <Token axis="x" layerList="2,3,4" angle="-180">2-4l2</Token>
+      <Token axis="y" layerList="2,3,4" angle="-90">2-4d</Token> <Token axis="y" layerList="2,3,4" angle="-180">2-4d2</Token>
+      <Token axis="z" layerList="2,3,4" angle="-90">2-4b</Token> <Token axis="z" layerList="2,3,4" angle="-180">2-4b2</Token>
+      <Token axis="x" layerList="2,3" angle="90">3-4r</Token> <Token axis="x" layerList="2,3" angle="180">3-4r2</Token>
+      <Token axis="y" layerList="2,3" angle="90">3-4u</Token> <Token axis="y" layerList="2,3" angle="180">3-4u2</Token>
+      <Token axis="z" layerList="2,3" angle="90">3-4f</Token> <Token axis="z" layerList="2,3" angle="180">3-4f2</Token>
+      <Token axis="x" layerList="3,4" angle="-90">3-4l</Token> <Token axis="x" layerList="3,4" angle="-180">3-4l2</Token>
+      <Token axis="y" layerList="3,4" angle="-90">3-4d</Token> <Token axis="y" layerList="3,4" angle="-180">3-4d2</Token>
+      <Token axis="z" layerList="3,4" angle="-90">3-4b</Token> <Token axis="z" layerList="3,4" angle="-180">3-4b2</Token>
+      <Token axis="x" layerList="2,3,4" angle="-90">m 3m</Token> <Token axis="x" layerList="2,3,4" angle="-180">m2 3m2</Token>
+      <Token axis="y" layerList="2,3,4" angle="-90">e 3e</Token> <Token axis="y" layerList="2,3,4" angle="-180">e2 3e2</Token>
+      <Token axis="z" layerList="2,3,4" angle="90">s 3s</Token> <Token axis="z" layerList="2,3,4" angle="180">s2 3s2</Token>
+      <Token axis="x" layerList="3" angle="-90">M</Token> <Token axis="x" layerList="3" angle="-180">M2</Token>
+      <Token axis="y" layerList="3" angle="-90">E</Token> <Token axis="y" layerList="3" angle="-180">E2</Token>
+      <Token axis="z" layerList="3" angle="90">S</Token> <Token axis="z" layerList="3" angle="180">S2</Token>
+      <Token axis="x" layerList="4,5" angle="90">r 2r</Token> <Token axis="x" layerList="4,5" angle="180">r2 2r2</Token>
+      <Token axis="y" layerList="4,5" angle="90">u 2u</Token> <Token axis="y" layerList="4,5" angle="180">u2 2u2</Token>
+      <Token axis="z" layerList="4,5" angle="90">f 2f</Token> <Token axis="z" layerList="4,5" angle="180">f2 2f2</Token>
+      <Token axis="x" layerList="1,2" angle="-90">l 2l</Token> <Token axis="x" layerList="1,2" angle="-180">l2 2l2</Token>
+      <Token axis="y" layerList="1,2" angle="-90">d 2d</Token> <Token axis="y" layerList="1,2" angle="-180">d2 2d2</Token>
+      <Token axis="z" layerList="1,2" angle="-90">b 2b</Token> <Token axis="z" layerList="1,2" angle="-180">b2 2b2</Token>
+    </Statement>
+    <Statement symbol="grouping">
+      <Token symbol="groupingBegin">(</Token>
+      <Token symbol="groupingEnd">)</Token>
+    </Statement>
+    <Statement syntax="suffix" symbol="inversion">
+      <Token symbol="invertor">&apos; -</Token>
+    </Statement>
+      <Statement syntax="precircumfix" symbol="conjugation">
+      <Token symbol="conjugationBegin">[</Token>
+      <Token symbol="conjugationEnd">]</Token>
+      <Token symbol="conjugationDelim">:</Token>
+    </Statement>
+    <Statement syntax="precircumfix" symbol="commutation">
+      <Token symbol="commutationBegin">[</Token>
+      <Token symbol="commutationEnd">]</Token>
+      <Token symbol="commutationDelim">,</Token>
+    </Statement>
+    <Statement syntax="precircumfix" symbol="permutation">
+      <Token symbol="permR">R</Token>
+      <Token symbol="permU">U</Token>
+      <Token symbol="permF">F</Token>
+      <Token symbol="permL">L</Token>
+      <Token symbol="permD">D</Token>
+      <Token symbol="permB">B</Token>
+      <Token symbol="permPlus">+</Token>
+      <Token symbol="permMinus">-</Token>
+      <Token symbol="permPlusPlus">++</Token>
+      <Token symbol="permBegin">(</Token>
+      <Token symbol="permEnd">)</Token>
+      <Token symbol="permDelim">,</Token>
+    </Statement>
+    <Statement syntax="suffix" symbol="repetition"/>
+  </Notation>
+<Notation id="sign6" default="true" layerCount="6">
+    <Name>6x6x6</Name>
+    <Description>SiGN, 6x6x6, version 0.3.2</Description>
+    <Author>Lucas Garron</Author>
+    <Date>2008-08-17</Date>
+    <Statement symbol="comment">
+      <Token symbol="commentMultiLineBegin">/*</Token>
+      <Token symbol="commentMultiLineEnd">*/</Token>
+      <Token symbol="commentSingleLineBegin">//</Token>
+    </Statement>
+    <Statement symbol="NOP">
+      <Token symbol="NOP">_ .</Token>
+    <Statement symbol="move">
+    </Statement>
+      <Token axis="x" layerList="1,2,3,4,5,6" angle="90">x</Token> <Token axis="x" layerList="1,2,3,4,5,6" angle="180">x2</Token>
+      <Token axis="y" layerList="1,2,3,4,5,6" angle="90">y</Token> <Token axis="y" layerList="1,2,3,4,5,6" angle="180">y2</Token>
+      <Token axis="z" layerList="1,2,3,4,5,6" angle="90">z</Token> <Token axis="z" layerList="1,2,3,4,5,6" angle="180">z2</Token>
+      <Token axis="x" layerList="6" angle="90">R</Token> <Token axis="x" layerList="6" angle="180">R2</Token>
+      <Token axis="y" layerList="6" angle="90">U</Token> <Token axis="y" layerList="6" angle="180">U2</Token>
+      <Token axis="z" layerList="6" angle="90">F</Token> <Token axis="z" layerList="6" angle="180">F2</Token>
+      <Token axis="x" layerList="1" angle="-90">L</Token> <Token axis="x" layerList="1" angle="-180">L2</Token>
+      <Token axis="y" layerList="1" angle="-90">D</Token> <Token axis="y" layerList="1" angle="-180">D2</Token>
+      <Token axis="z" layerList="1" angle="-90">B</Token> <Token axis="z" layerList="1" angle="-180">B2</Token>
+      <Token axis="x" layerList="5" angle="90">2R</Token> <Token axis="x" layerList="5" angle="180">2R2</Token>
+      <Token axis="y" layerList="5" angle="90">2U</Token> <Token axis="y" layerList="5" angle="180">2U2</Token>
+      <Token axis="z" layerList="5" angle="90">2F</Token> <Token axis="z" layerList="5" angle="180">2F2</Token>
+      <Token axis="x" layerList="2" angle="-90">2L</Token> <Token axis="x" layerList="2" angle="-180">2L2</Token>
+      <Token axis="y" layerList="2" angle="-90">2D</Token> <Token axis="y" layerList="2" angle="-180">2D2</Token>
+      <Token axis="z" layerList="2" angle="-90">2B</Token> <Token axis="z" layerList="2" angle="-180">2B2</Token>
+      <Token axis="x" layerList="4" angle="90">3R</Token> <Token axis="x" layerList="4" angle="180">3R2</Token>
+      <Token axis="y" layerList="4" angle="90">3U</Token> <Token axis="y" layerList="4" angle="180">3U2</Token>
+      <Token axis="z" layerList="4" angle="90">3F</Token> <Token axis="z" layerList="4" angle="180">3F2</Token>
+      <Token axis="x" layerList="3" angle="-90">3L</Token> <Token axis="x" layerList="3" angle="-180">3L2</Token>
+      <Token axis="y" layerList="3" angle="-90">3D</Token> <Token axis="y" layerList="3" angle="-180">3D2</Token>
+      <Token axis="z" layerList="3" angle="-90">3B</Token> <Token axis="z" layerList="3" angle="-180">3B2</Token>
+      <Token axis="x" layerList="3" angle="90">4R</Token> <Token axis="x" layerList="3" angle="180">4R2</Token>
+      <Token axis="y" layerList="3" angle="90">4U</Token> <Token axis="y" layerList="3" angle="180">4U2</Token>
+      <Token axis="z" layerList="3" angle="90">4F</Token> <Token axis="z" layerList="3" angle="180">4F2</Token>
+      <Token axis="x" layerList="4" angle="-90">4L</Token> <Token axis="x" layerList="4" angle="-180">4L2</Token>
+      <Token axis="y" layerList="4" angle="-90">4D</Token> <Token axis="y" layerList="4" angle="-180">4D2</Token>
+      <Token axis="z" layerList="4" angle="-90">4B</Token> <Token axis="z" layerList="4" angle="-180">4B2</Token>
+      <Token axis="x" layerList="2" angle="90">5R</Token> <Token axis="x" layerList="2" angle="180">5R2</Token>
+      <Token axis="y" layerList="2" angle="90">5U</Token> <Token axis="y" layerList="2" angle="180">5U2</Token>
+      <Token axis="z" layerList="2" angle="90">5F</Token> <Token axis="z" layerList="2" angle="180">5F2</Token>
+      <Token axis="x" layerList="5" angle="-90">5L</Token> <Token axis="x" layerList="5" angle="-180">5L2</Token>
+      <Token axis="y" layerList="5" angle="-90">5D</Token> <Token axis="y" layerList="5" angle="-180">5D2</Token>
+      <Token axis="z" layerList="5" angle="-90">5B</Token> <Token axis="z" layerList="5" angle="-180">5B2</Token>
+      <Token axis="x" layerList="1" angle="90">6R</Token> <Token axis="x" layerList="1" angle="180">6R2</Token>
+      <Token axis="y" layerList="1" angle="90">6U</Token> <Token axis="y" layerList="1" angle="180">6U2</Token>
+      <Token axis="z" layerList="1" angle="90">6F</Token> <Token axis="z" layerList="1" angle="180">6F2</Token>
+      <Token axis="x" layerList="6" angle="-90">6L</Token> <Token axis="x" layerList="6" angle="-180">6L2</Token>
+      <Token axis="y" layerList="6" angle="-90">6D</Token> <Token axis="y" layerList="6" angle="-180">6D2</Token>
+      <Token axis="z" layerList="6" angle="-90">6B</Token> <Token axis="z" layerList="6" angle="-180">6B2</Token>
+      <Token axis="x" layerList="4,5,6" angle="90">3r</Token> <Token axis="x" layerList="4,5,6" angle="180">3r2</Token>
+      <Token axis="y" layerList="4,5,6" angle="90">3u</Token> <Token axis="y" layerList="4,5,6" angle="180">3u2</Token>
+      <Token axis="z" layerList="4,5,6" angle="90">3f</Token> <Token axis="z" layerList="4,5,6" angle="180">3f2</Token>
+      <Token axis="x" layerList="1,2,3" angle="-90">3l</Token> <Token axis="x" layerList="1,2,3" angle="-180">3l2</Token>
+      <Token axis="y" layerList="1,2,3" angle="-90">3d</Token> <Token axis="y" layerList="1,2,3" angle="-180">3d2</Token>
+      <Token axis="z" layerList="1,2,3" angle="-90">3b</Token> <Token axis="z" layerList="1,2,3" angle="-180">3b2</Token>
+      <Token axis="x" layerList="3,4,5,6" angle="90">4r</Token> <Token axis="x" layerList="3,4,5,6" angle="180">4r2</Token>
+      <Token axis="y" layerList="3,4,5,6" angle="90">4u</Token> <Token axis="y" layerList="3,4,5,6" angle="180">4u2</Token>
+      <Token axis="z" layerList="3,4,5,6" angle="90">4f</Token> <Token axis="z" layerList="3,4,5,6" angle="180">4f2</Token>
+      <Token axis="x" layerList="1,2,3,4" angle="-90">4l</Token> <Token axis="x" layerList="1,2,3,4" angle="-180">4l2</Token>
+      <Token axis="y" layerList="1,2,3,4" angle="-90">4d</Token> <Token axis="y" layerList="1,2,3,4" angle="-180">4d2</Token>
+      <Token axis="z" layerList="1,2,3,4" angle="-90">4b</Token> <Token axis="z" layerList="1,2,3,4" angle="-180">4b2</Token>
+      <Token axis="x" layerList="4,5" angle="90">2-3r</Token> <Token axis="x" layerList="4,5" angle="180">2-3r2</Token>
+      <Token axis="y" layerList="4,5" angle="90">2-3u</Token> <Token axis="y" layerList="4,5" angle="180">2-3u2</Token>
+      <Token axis="z" layerList="4,5" angle="90">2-3f</Token> <Token axis="z" layerList="4,5" angle="180">2-3f2</Token>
+      <Token axis="x" layerList="2,3" angle="-90">2-3l</Token> <Token axis="x" layerList="2,3" angle="-180">2-3l2</Token>
+      <Token axis="y" layerList="2,3" angle="-90">2-3d</Token> <Token axis="y" layerList="2,3" angle="-180">2-3d2</Token>
+      <Token axis="z" layerList="2,3" angle="-90">2-3b</Token> <Token axis="z" layerList="2,3" angle="-180">2-3b2</Token>
+      <Token axis="x" layerList="3,4,5" angle="90">2-4r</Token> <Token axis="x" layerList="3,4,5" angle="180">2-4r2</Token>
+      <Token axis="y" layerList="3,4,5" angle="90">2-4u</Token> <Token axis="y" layerList="3,4,5" angle="180">2-4u2</Token>
+      <Token axis="z" layerList="3,4,5" angle="90">2-4f</Token> <Token axis="z" layerList="3,4,5" angle="180">2-4f2</Token>
+      <Token axis="x" layerList="2,3,4" angle="-90">2-4l</Token> <Token axis="x" layerList="2,3,4" angle="-180">2-4l2</Token>
+      <Token axis="y" layerList="2,3,4" angle="-90">2-4d</Token> <Token axis="y" layerList="2,3,4" angle="-180">2-4d2</Token>
+      <Token axis="z" layerList="2,3,4" angle="-90">2-4b</Token> <Token axis="z" layerList="2,3,4" angle="-180">2-4b2</Token>
+      <Token axis="x" layerList="2,3,4,5" angle="90">2-5r</Token> <Token axis="x" layerList="2,3,4,5" angle="180">2-5r2</Token>
+      <Token axis="y" layerList="2,3,4,5" angle="90">2-5u</Token> <Token axis="y" layerList="2,3,4,5" angle="180">2-5u2</Token>
+      <Token axis="z" layerList="2,3,4,5" angle="90">2-5f</Token> <Token axis="z" layerList="2,3,4,5" angle="180">2-5f2</Token>
+      <Token axis="x" layerList="2,3,4,5" angle="-90">2-5l</Token> <Token axis="x" layerList="2,3,4,5" angle="-180">2-5l2</Token>
+      <Token axis="y" layerList="2,3,4,5" angle="-90">2-5d</Token> <Token axis="y" layerList="2,3,4,5" angle="-180">2-5d2</Token>
+      <Token axis="z" layerList="2,3,4,5" angle="-90">2-5b</Token> <Token axis="z" layerList="2,3,4,5" angle="-180">2-5b2</Token>
+      <Token axis="x" layerList="3,4" angle="90">3-4r</Token> <Token axis="x" layerList="3,4" angle="180">3-4r2</Token>
+      <Token axis="y" layerList="3,4" angle="90">3-4u</Token> <Token axis="y" layerList="3,4" angle="180">3-4u2</Token>
+      <Token axis="z" layerList="3,4" angle="90">3-4f</Token> <Token axis="z" layerList="3,4" angle="180">3-4f2</Token>
+      <Token axis="x" layerList="3,4" angle="-90">3-4l</Token> <Token axis="x" layerList="3,4" angle="-180">3-4l2</Token>
+      <Token axis="y" layerList="3,4" angle="-90">3-4d</Token> <Token axis="y" layerList="3,4" angle="-180">3-4d2</Token>
+      <Token axis="z" layerList="3,4" angle="-90">3-4b</Token> <Token axis="z" layerList="3,4" angle="-180">3-4b2</Token>
+      <Token axis="x" layerList="2,3,4" angle="90">3-5r</Token> <Token axis="x" layerList="2,3,4" angle="180">3-5r2</Token>
+      <Token axis="y" layerList="2,3,4" angle="90">3-5u</Token> <Token axis="y" layerList="2,3,4" angle="180">3-5u2</Token>
+      <Token axis="z" layerList="2,3,4" angle="90">3-5f</Token> <Token axis="z" layerList="2,3,4" angle="180">3-5f2</Token>
+      <Token axis="x" layerList="3,4,5" angle="-90">3-5l</Token> <Token axis="x" layerList="3,4,5" angle="-180">3-5l2</Token>
+      <Token axis="y" layerList="3,4,5" angle="-90">3-5d</Token> <Token axis="y" layerList="3,4,5" angle="-180">3-5d2</Token>
+      <Token axis="z" layerList="3,4,5" angle="-90">3-5b</Token> <Token axis="z" layerList="3,4,5" angle="-180">3-5b2</Token>
+      <Token axis="x" layerList="2,3" angle="90">4-5r</Token> <Token axis="x" layerList="2,3" angle="180">4-5r2</Token>
+      <Token axis="y" layerList="2,3" angle="90">4-5u</Token> <Token axis="y" layerList="2,3" angle="180">4-5u2</Token>
+      <Token axis="z" layerList="2,3" angle="90">4-5f</Token> <Token axis="z" layerList="2,3" angle="180">4-5f2</Token>
+      <Token axis="x" layerList="4,5" angle="-90">4-5l</Token> <Token axis="x" layerList="4,5" angle="-180">4-5l2</Token>
+      <Token axis="y" layerList="4,5" angle="-90">4-5d</Token> <Token axis="y" layerList="4,5" angle="-180">4-5d2</Token>
+      <Token axis="z" layerList="4,5" angle="-90">4-5b</Token> <Token axis="z" layerList="4,5" angle="-180">4-5b2</Token>
+      <Token axis="x" layerList="2,3,4,5" angle="-90">m 4m</Token> <Token axis="x" layerList="2,3,4,5" angle="-180">m2 4m2</Token>
+      <Token axis="y" layerList="2,3,4,5" angle="-90">e 4e</Token> <Token axis="y" layerList="2,3,4,5" angle="-180">e2 4e2</Token>
+      <Token axis="z" layerList="2,3,4,5" angle="90">s 4s</Token> <Token axis="z" layerList="2,3,4,5" angle="180">s2 4s2</Token>
+      <Token axis="x" layerList="3,4" angle="-90">2m</Token> <Token axis="x" layerList="3,4" angle="-180">2m2</Token>
+      <Token axis="y" layerList="3,4" angle="-90">2e</Token> <Token axis="y" layerList="3,4" angle="-180">2e2</Token>
+      <Token axis="z" layerList="3,4" angle="90">2s</Token> <Token axis="z" layerList="3,4" angle="180">2s2</Token>
+      <Token axis="x" layerList="5,6" angle="90">r 2r</Token> <Token axis="x" layerList="5,6" angle="180">r2 2r2</Token>
+      <Token axis="y" layerList="5,6" angle="90">u 2u</Token> <Token axis="y" layerList="5,6" angle="180">u2 2u2</Token>
+      <Token axis="z" layerList="5,6" angle="90">f 2f</Token> <Token axis="z" layerList="5,6" angle="180">f2 2f2</Token>
+      <Token axis="x" layerList="1,2" angle="-90">l 2l</Token> <Token axis="x" layerList="1,2" angle="-180">l2 2l2</Token>
+      <Token axis="y" layerList="1,2" angle="-90">d 2d</Token> <Token axis="y" layerList="1,2" angle="-180">d2 2d2</Token>
+      <Token axis="z" layerList="1,2" angle="-90">b 2b</Token> <Token axis="z" layerList="1,2" angle="-180">b2 2b2</Token>
+    </Statement>
+    <Statement symbol="grouping">
+      <Token symbol="groupingBegin">(</Token>
+      <Token symbol="groupingEnd">)</Token>
+    </Statement>
+    <Statement syntax="suffix" symbol="inversion">
+      <Token symbol="invertor">&apos; -</Token>
+    </Statement>
+      <Statement syntax="precircumfix" symbol="conjugation">
+      <Token symbol="conjugationBegin">[</Token>
+      <Token symbol="conjugationEnd">]</Token>
+      <Token symbol="conjugationDelim">:</Token>
+    </Statement>
+    <Statement syntax="precircumfix" symbol="commutation">
+      <Token symbol="commutationBegin">[</Token>
+      <Token symbol="commutationEnd">]</Token>
+      <Token symbol="commutationDelim">,</Token>
+    </Statement>
+    <Statement syntax="precircumfix" symbol="permutation">
+      <Token symbol="permR">R</Token>
+      <Token symbol="permU">U</Token>
+      <Token symbol="permF">F</Token>
+      <Token symbol="permL">L</Token>
+      <Token symbol="permD">D</Token>
+      <Token symbol="permB">B</Token>
+      <Token symbol="permPlus">+</Token>
+      <Token symbol="permMinus">-</Token>
+      <Token symbol="permPlusPlus">++</Token>
+      <Token symbol="permBegin">(</Token>
+      <Token symbol="permEnd">)</Token>
+      <Token symbol="permDelim">,</Token>
+    </Statement>
+    <Statement syntax="suffix" symbol="repetition"/>
+  </Notation>
+<Notation id="sign7" default="true" layerCount="7">
+    <Name>7x7x7</Name>
+    <Description>SiGN, 7x7x7, version 0.3.2</Description>
+    <Author>Lucas Garron</Author>
+    <Date>2008-08-17</Date>
+    <Statement symbol="comment">
+      <Token symbol="commentMultiLineBegin">/*</Token>
+      <Token symbol="commentMultiLineEnd">*/</Token>
+      <Token symbol="commentSingleLineBegin">//</Token>
+    </Statement>
+    <Statement symbol="NOP">
+      <Token symbol="NOP">_ .</Token>
+    <Statement symbol="move">
+    </Statement>
+      <Token axis="x" layerList="5,6" angle="90">2-3r</Token> <Token axis="x" layerList="5,6" angle="180">2-3r2</Token>
+      <Token axis="y" layerList="5,6" angle="90">2-3u</Token> <Token axis="y" layerList="5,6" angle="180">2-3u2</Token>
+      <Token axis="z" layerList="5,6" angle="90">2-3f</Token> <Token axis="z" layerList="5,6" angle="180">2-3f2</Token>
+      <Token axis="x" layerList="2,3" angle="-90">2-3l</Token> <Token axis="x" layerList="2,3" angle="-180">2-3l2</Token>
+      <Token axis="y" layerList="2,3" angle="-90">2-3d</Token> <Token axis="y" layerList="2,3" angle="-180">2-3d2</Token>
+      <Token axis="z" layerList="2,3" angle="-90">2-3b</Token> <Token axis="z" layerList="2,3" angle="-180">2-3b2</Token>
+      <Token axis="x" layerList="4,5,6" angle="90">2-4r</Token> <Token axis="x" layerList="4,5,6" angle="180">2-4r2</Token>
+      <Token axis="y" layerList="4,5,6" angle="90">2-4u</Token> <Token axis="y" layerList="4,5,6" angle="180">2-4u2</Token>
+      <Token axis="z" layerList="4,5,6" angle="90">2-4f</Token> <Token axis="z" layerList="4,5,6" angle="180">2-4f2</Token>
+      <Token axis="x" layerList="2,3,4" angle="-90">2-4l</Token> <Token axis="x" layerList="2,3,4" angle="-180">2-4l2</Token>
+      <Token axis="y" layerList="2,3,4" angle="-90">2-4d</Token> <Token axis="y" layerList="2,3,4" angle="-180">2-4d2</Token>
+      <Token axis="z" layerList="2,3,4" angle="-90">2-4b</Token> <Token axis="z" layerList="2,3,4" angle="-180">2-4b2</Token>
+      <Token axis="x" layerList="3,4,5,6" angle="90">2-5r</Token> <Token axis="x" layerList="3,4,5,6" angle="180">2-5r2</Token>
+      <Token axis="y" layerList="3,4,5,6" angle="90">2-5u</Token> <Token axis="y" layerList="3,4,5,6" angle="180">2-5u2</Token>
+      <Token axis="z" layerList="3,4,5,6" angle="90">2-5f</Token> <Token axis="z" layerList="3,4,5,6" angle="180">2-5f2</Token>
+      <Token axis="x" layerList="2,3,4,5" angle="-90">2-5l</Token> <Token axis="x" layerList="2,3,4,5" angle="-180">2-5l2</Token>
+      <Token axis="y" layerList="2,3,4,5" angle="-90">2-5d</Token> <Token axis="y" layerList="2,3,4,5" angle="-180">2-5d2</Token>
+      <Token axis="z" layerList="2,3,4,5" angle="-90">2-5b</Token> <Token axis="z" layerList="2,3,4,5" angle="-180">2-5b2</Token>
+      <Token axis="x" layerList="2,3,4,5,6" angle="90">2-6r</Token> <Token axis="x" layerList="2,3,4,5,6" angle="180">2-6r2</Token>
+      <Token axis="y" layerList="2,3,4,5,6" angle="90">2-6u</Token> <Token axis="y" layerList="2,3,4,5,6" angle="180">2-6u2</Token>
+      <Token axis="z" layerList="2,3,4,5,6" angle="90">2-6f</Token> <Token axis="z" layerList="2,3,4,5,6" angle="180">2-6f2</Token>
+      <Token axis="x" layerList="2,3,4,5,6" angle="-90">2-6l</Token> <Token axis="x" layerList="2,3,4,5,6" angle="-180">2-6l2</Token>
+      <Token axis="y" layerList="2,3,4,5,6" angle="-90">2-6d</Token> <Token axis="y" layerList="2,3,4,5,6" angle="-180">2-6d2</Token>
+      <Token axis="z" layerList="2,3,4,5,6" angle="-90">2-6b</Token> <Token axis="z" layerList="2,3,4,5,6" angle="-180">2-6b2</Token>
+      <Token axis="x" layerList="4,5" angle="90">3-4r</Token> <Token axis="x" layerList="4,5" angle="180">3-4r2</Token>
+      <Token axis="y" layerList="4,5" angle="90">3-4u</Token> <Token axis="y" layerList="4,5" angle="180">3-4u2</Token>
+      <Token axis="z" layerList="4,5" angle="90">3-4f</Token> <Token axis="z" layerList="4,5" angle="180">3-4f2</Token>
+      <Token axis="x" layerList="3,4" angle="-90">3-4l</Token> <Token axis="x" layerList="3,4" angle="-180">3-4l2</Token>
+      <Token axis="y" layerList="3,4" angle="-90">3-4d</Token> <Token axis="y" layerList="3,4" angle="-180">3-4d2</Token>
+      <Token axis="z" layerList="3,4" angle="-90">3-4b</Token> <Token axis="z" layerList="3,4" angle="-180">3-4b2</Token>
+      <Token axis="x" layerList="3,4,5" angle="90">3-5r</Token> <Token axis="x" layerList="3,4,5" angle="180">3-5r2</Token>
+      <Token axis="y" layerList="3,4,5" angle="90">3-5u</Token> <Token axis="y" layerList="3,4,5" angle="180">3-5u2</Token>
+      <Token axis="z" layerList="3,4,5" angle="90">3-5f</Token> <Token axis="z" layerList="3,4,5" angle="180">3-5f2</Token>
+      <Token axis="x" layerList="3,4,5" angle="-90">3-5l</Token> <Token axis="x" layerList="3,4,5" angle="-180">3-5l2</Token>
+      <Token axis="y" layerList="3,4,5" angle="-90">3-5d</Token> <Token axis="y" layerList="3,4,5" angle="-180">3-5d2</Token>
+      <Token axis="z" layerList="3,4,5" angle="-90">3-5b</Token> <Token axis="z" layerList="3,4,5" angle="-180">3-5b2</Token>
+      <Token axis="x" layerList="2,3,4,5" angle="90">3-6r</Token> <Token axis="x" layerList="2,3,4,5" angle="180">3-6r2</Token>
+      <Token axis="y" layerList="2,3,4,5" angle="90">3-6u</Token> <Token axis="y" layerList="2,3,4,5" angle="180">3-6u2</Token>
+      <Token axis="z" layerList="2,3,4,5" angle="90">3-6f</Token> <Token axis="z" layerList="2,3,4,5" angle="180">3-6f2</Token>
+      <Token axis="x" layerList="3,4,5,6" angle="-90">3-6l</Token> <Token axis="x" layerList="3,4,5,6" angle="-180">3-6l2</Token>
+      <Token axis="y" layerList="3,4,5,6" angle="-90">3-6d</Token> <Token axis="y" layerList="3,4,5,6" angle="-180">3-6d2</Token>
+      <Token axis="z" layerList="3,4,5,6" angle="-90">3-6b</Token> <Token axis="z" layerList="3,4,5,6" angle="-180">3-6b2</Token>
+      <Token axis="x" layerList="3,4" angle="90">4-5r</Token> <Token axis="x" layerList="3,4" angle="180">4-5r2</Token>
+      <Token axis="y" layerList="3,4" angle="90">4-5u</Token> <Token axis="y" layerList="3,4" angle="180">4-5u2</Token>
+      <Token axis="z" layerList="3,4" angle="90">4-5f</Token> <Token axis="z" layerList="3,4" angle="180">4-5f2</Token>
+      <Token axis="x" layerList="4,5" angle="-90">4-5l</Token> <Token axis="x" layerList="4,5" angle="-180">4-5l2</Token>
+      <Token axis="y" layerList="4,5" angle="-90">4-5d</Token> <Token axis="y" layerList="4,5" angle="-180">4-5d2</Token>
+      <Token axis="z" layerList="4,5" angle="-90">4-5b</Token> <Token axis="z" layerList="4,5" angle="-180">4-5b2</Token>
+      <Token axis="x" layerList="2,3,4" angle="90">4-6r</Token> <Token axis="x" layerList="2,3,4" angle="180">4-6r2</Token>
+      <Token axis="y" layerList="2,3,4" angle="90">4-6u</Token> <Token axis="y" layerList="2,3,4" angle="180">4-6u2</Token>
+      <Token axis="z" layerList="2,3,4" angle="90">4-6f</Token> <Token axis="z" layerList="2,3,4" angle="180">4-6f2</Token>
+      <Token axis="x" layerList="4,5,6" angle="-90">4-6l</Token> <Token axis="x" layerList="4,5,6" angle="-180">4-6l2</Token>
+      <Token axis="y" layerList="4,5,6" angle="-90">4-6d</Token> <Token axis="y" layerList="4,5,6" angle="-180">4-6d2</Token>
+      <Token axis="z" layerList="4,5,6" angle="-90">4-6b</Token> <Token axis="z" layerList="4,5,6" angle="-180">4-6b2</Token>
+      <Token axis="x" layerList="2,3" angle="90">5-6r</Token> <Token axis="x" layerList="2,3" angle="180">5-6r2</Token>
+      <Token axis="y" layerList="2,3" angle="90">5-6u</Token> <Token axis="y" layerList="2,3" angle="180">5-6u2</Token>
+      <Token axis="z" layerList="2,3" angle="90">5-6f</Token> <Token axis="z" layerList="2,3" angle="180">5-6f2</Token>
+      <Token axis="x" layerList="5,6" angle="-90">5-6l</Token> <Token axis="x" layerList="5,6" angle="-180">5-6l2</Token>
+      <Token axis="y" layerList="5,6" angle="-90">5-6d</Token> <Token axis="y" layerList="5,6" angle="-180">5-6d2</Token>
+      <Token axis="z" layerList="5,6" angle="-90">5-6b</Token> <Token axis="z" layerList="5,6" angle="-180">5-6b2</Token>
+      <Token axis="x" layerList="6" angle="90">2R</Token> <Token axis="x" layerList="6" angle="180">2R2</Token>
+      <Token axis="y" layerList="6" angle="90">2U</Token> <Token axis="y" layerList="6" angle="180">2U2</Token>
+      <Token axis="z" layerList="6" angle="90">2F</Token> <Token axis="z" layerList="6" angle="180">2F2</Token>
+      <Token axis="x" layerList="2" angle="-90">2L</Token> <Token axis="x" layerList="2" angle="-180">2L2</Token>
+      <Token axis="y" layerList="2" angle="-90">2D</Token> <Token axis="y" layerList="2" angle="-180">2D2</Token>
+      <Token axis="z" layerList="2" angle="-90">2B</Token> <Token axis="z" layerList="2" angle="-180">2B2</Token>
+      <Token axis="x" layerList="5" angle="90">3R</Token> <Token axis="x" layerList="5" angle="180">3R2</Token>
+      <Token axis="y" layerList="5" angle="90">3U</Token> <Token axis="y" layerList="5" angle="180">3U2</Token>
+      <Token axis="z" layerList="5" angle="90">3F</Token> <Token axis="z" layerList="5" angle="180">3F2</Token>
+      <Token axis="x" layerList="3" angle="-90">3L</Token> <Token axis="x" layerList="3" angle="-180">3L2</Token>
+      <Token axis="y" layerList="3" angle="-90">3D</Token> <Token axis="y" layerList="3" angle="-180">3D2</Token>
+      <Token axis="z" layerList="3" angle="-90">3B</Token> <Token axis="z" layerList="3" angle="-180">3B2</Token>
+      <Token axis="x" layerList="4" angle="90">4R</Token> <Token axis="x" layerList="4" angle="180">4R2</Token>
+      <Token axis="y" layerList="4" angle="90">4U</Token> <Token axis="y" layerList="4" angle="180">4U2</Token>
+      <Token axis="z" layerList="4" angle="90">4F</Token> <Token axis="z" layerList="4" angle="180">4F2</Token>
+      <Token axis="x" layerList="4" angle="-90">4L</Token> <Token axis="x" layerList="4" angle="-180">4L2</Token>
+      <Token axis="y" layerList="4" angle="-90">4D</Token> <Token axis="y" layerList="4" angle="-180">4D2</Token>
+      <Token axis="z" layerList="4" angle="-90">4B</Token> <Token axis="z" layerList="4" angle="-180">4B2</Token>
+      <Token axis="x" layerList="3" angle="90">5R</Token> <Token axis="x" layerList="3" angle="180">5R2</Token>
+      <Token axis="y" layerList="3" angle="90">5U</Token> <Token axis="y" layerList="3" angle="180">5U2</Token>
+      <Token axis="z" layerList="3" angle="90">5F</Token> <Token axis="z" layerList="3" angle="180">5F2</Token>
+      <Token axis="x" layerList="5" angle="-90">5L</Token> <Token axis="x" layerList="5" angle="-180">5L2</Token>
+      <Token axis="y" layerList="5" angle="-90">5D</Token> <Token axis="y" layerList="5" angle="-180">5D2</Token>
+      <Token axis="z" layerList="5" angle="-90">5B</Token> <Token axis="z" layerList="5" angle="-180">5B2</Token>
+      <Token axis="x" layerList="2" angle="90">6R</Token> <Token axis="x" layerList="2" angle="180">6R2</Token>
+      <Token axis="y" layerList="2" angle="90">6U</Token> <Token axis="y" layerList="2" angle="180">6U2</Token>
+      <Token axis="z" layerList="2" angle="90">6F</Token> <Token axis="z" layerList="2" angle="180">6F2</Token>
+      <Token axis="x" layerList="6" angle="-90">6L</Token> <Token axis="x" layerList="6" angle="-180">6L2</Token>
+      <Token axis="y" layerList="6" angle="-90">6D</Token> <Token axis="y" layerList="6" angle="-180">6D2</Token>
+      <Token axis="z" layerList="6" angle="-90">6B</Token> <Token axis="z" layerList="6" angle="-180">6B2</Token>
+      <Token axis="x" layerList="5,6,7" angle="90">3r</Token> <Token axis="x" layerList="5,6,7" angle="180">3r2</Token>
+      <Token axis="y" layerList="5,6,7" angle="90">3u</Token> <Token axis="y" layerList="5,6,7" angle="180">3u2</Token>
+      <Token axis="z" layerList="5,6,7" angle="90">3f</Token> <Token axis="z" layerList="5,6,7" angle="180">3f2</Token>
+      <Token axis="x" layerList="1,2,3" angle="-90">3l</Token> <Token axis="x" layerList="1,2,3" angle="-180">3l2</Token>
+      <Token axis="y" layerList="1,2,3" angle="-90">3d</Token> <Token axis="y" layerList="1,2,3" angle="-180">3d2</Token>
+      <Token axis="z" layerList="1,2,3" angle="-90">3b</Token> <Token axis="z" layerList="1,2,3" angle="-180">3b2</Token>
+      <Token axis="x" layerList="4,5,6,7" angle="90">4r</Token> <Token axis="x" layerList="4,5,6,7" angle="180">4r2</Token>
+      <Token axis="y" layerList="4,5,6,7" angle="90">4u</Token> <Token axis="y" layerList="4,5,6,7" angle="180">4u2</Token>
+      <Token axis="z" layerList="4,5,6,7" angle="90">4f</Token> <Token axis="z" layerList="4,5,6,7" angle="180">4f2</Token>
+      <Token axis="x" layerList="1,2,3,4" angle="-90">4l</Token> <Token axis="x" layerList="1,2,3,4" angle="-180">4l2</Token>
+      <Token axis="y" layerList="1,2,3,4" angle="-90">4d</Token> <Token axis="y" layerList="1,2,3,4" angle="-180">4d2</Token>
+      <Token axis="z" layerList="1,2,3,4" angle="-90">4b</Token> <Token axis="z" layerList="1,2,3,4" angle="-180">4b2</Token>
+      <Token axis="x" layerList="3,4,5,6,7" angle="90">5r</Token> <Token axis="x" layerList="3,4,5,6,7" angle="180">5r2</Token>
+      <Token axis="y" layerList="3,4,5,6,7" angle="90">5u</Token> <Token axis="y" layerList="3,4,5,6,7" angle="180">5u2</Token>
+      <Token axis="z" layerList="3,4,5,6,7" angle="90">5f</Token> <Token axis="z" layerList="3,4,5,6,7" angle="180">5f2</Token>
+      <Token axis="x" layerList="1,2,3,4,5" angle="-90">5l</Token> <Token axis="x" layerList="1,2,3,4,5" angle="-180">5l2</Token>
+      <Token axis="y" layerList="1,2,3,4,5" angle="-90">5d</Token> <Token axis="y" layerList="1,2,3,4,5" angle="-180">5d2</Token>
+      <Token axis="z" layerList="1,2,3,4,5" angle="-90">5b</Token> <Token axis="z" layerList="1,2,3,4,5" angle="-180">5b2</Token>
+      <Token axis="x" layerList="2,3,4,5,6" angle="-90">m 5m</Token> <Token axis="x" layerList="2,3,4,5,6" angle="-180">m2 5m2</Token>
+      <Token axis="y" layerList="2,3,4,5,6" angle="-90">e 5e</Token> <Token axis="y" layerList="2,3,4,5,6" angle="-180">e2 5e2</Token>
+      <Token axis="z" layerList="2,3,4,5,6" angle="90">s 5s</Token> <Token axis="z" layerList="2,3,4,5,6" angle="180">s2 5s2</Token>
+      <Token axis="x" layerList="4" angle="-90">M</Token> <Token axis="x" layerList="4" angle="-180">M2</Token>
+      <Token axis="y" layerList="4" angle="-90">E</Token> <Token axis="y" layerList="4" angle="-180">E2</Token>
+      <Token axis="z" layerList="4" angle="90">S</Token> <Token axis="z" layerList="4" angle="180">S2</Token>
+      <Token axis="x" layerList="3,4,5" angle="-90">3m</Token> <Token axis="x" layerList="3,4,5" angle="-180">3m2</Token>
+      <Token axis="y" layerList="3,4,5" angle="-90">3e</Token> <Token axis="y" layerList="3,4,5" angle="-180">3e2</Token>
+      <Token axis="z" layerList="3,4,5" angle="90">3s</Token> <Token axis="z" layerList="3,4,5" angle="180">3s2</Token>
+      <Token axis="x" layerList="1,2,3,4,5,6,7" angle="90">x</Token> <Token axis="x" layerList="1,2,3,4,5,6,7" angle="180">x2</Token>
+      <Token axis="y" layerList="1,2,3,4,5,6,7" angle="90">y</Token> <Token axis="y" layerList="1,2,3,4,5,6,7" angle="180">y2</Token>
+      <Token axis="z" layerList="1,2,3,4,5,6,7" angle="90">z</Token> <Token axis="z" layerList="1,2,3,4,5,6,7" angle="180">z2</Token>
+      <Token axis="x" layerList="7" angle="90">R</Token> <Token axis="x" layerList="7" angle="180">R2</Token>
+      <Token axis="y" layerList="7" angle="90">U</Token> <Token axis="y" layerList="7" angle="180">U2</Token>
+      <Token axis="z" layerList="7" angle="90">F</Token> <Token axis="z" layerList="7" angle="180">F2</Token>
+      <Token axis="x" layerList="1" angle="-90">L</Token> <Token axis="x" layerList="1" angle="-180">L2</Token>
+      <Token axis="y" layerList="1" angle="-90">D</Token> <Token axis="y" layerList="1" angle="-180">D2</Token>
+      <Token axis="z" layerList="1" angle="-90">B</Token> <Token axis="z" layerList="1" angle="-180">B2</Token>
+      <Token axis="x" layerList="6,7" angle="90">r 2r</Token> <Token axis="x" layerList="6,7" angle="180">r2 2r2</Token>
+      <Token axis="y" layerList="6,7" angle="90">u 2u</Token> <Token axis="y" layerList="6,7" angle="180">u2 2u2</Token>
+      <Token axis="z" layerList="6,7" angle="90">f 2f</Token> <Token axis="z" layerList="6,7" angle="180">f2 2f2</Token>
+      <Token axis="x" layerList="1,2" angle="-90">l 2l</Token> <Token axis="x" layerList="1,2" angle="-180">l2 2l2</Token>
+      <Token axis="y" layerList="1,2" angle="-90">d 2d</Token> <Token axis="y" layerList="1,2" angle="-180">d2 2d2</Token>
+      <Token axis="z" layerList="1,2" angle="-90">b 2b</Token> <Token axis="z" layerList="1,2" angle="-180">b2 2b2</Token>
+    </Statement>
+    <Statement symbol="grouping">
+      <Token symbol="groupingBegin">(</Token>
+      <Token symbol="groupingEnd">)</Token>
+    </Statement>
+    <Statement syntax="suffix" symbol="inversion">
+      <Token symbol="invertor">&apos; -</Token>
+    </Statement>
+      <Statement syntax="precircumfix" symbol="conjugation">
+      <Token symbol="conjugationBegin">[</Token>
+      <Token symbol="conjugationEnd">]</Token>
+      <Token symbol="conjugationDelim">:</Token>
+    </Statement>
+    <Statement syntax="precircumfix" symbol="commutation">
+      <Token symbol="commutationBegin">[</Token>
+      <Token symbol="commutationEnd">]</Token>
+      <Token symbol="commutationDelim">,</Token>
+    </Statement>
+    <Statement syntax="precircumfix" symbol="permutation">
+      <Token symbol="permR">R</Token>
+      <Token symbol="permU">U</Token>
+      <Token symbol="permF">F</Token>
+      <Token symbol="permL">L</Token>
+      <Token symbol="permD">D</Token>
+      <Token symbol="permB">B</Token>
+      <Token symbol="permPlus">+</Token>
+      <Token symbol="permMinus">-</Token>
+      <Token symbol="permPlusPlus">++</Token>
+      <Token symbol="permBegin">(</Token>
+      <Token symbol="permEnd">)</Token>
+      <Token symbol="permDelim">,</Token>
+    </Statement>
+    <Statement syntax="suffix" symbol="repetition"/>
+  </Notation>
+</CubeMarkup>
