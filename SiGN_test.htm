@@ -1,9 +1,9 @@
 <html>
 <head>
-<title>alg.garron.us (v1.1.10beta)</title>
-<!-- Lucas Garron, 2009-03-25 -->
+<title>alg.garron.us (v1.1.11beta)</title>
+<!-- Lucas Garron, 20090629 -->
 <!-- Alg Animation Tool -->
-<!-- alg.garron.us (v1.1.10) -->
+<!-- alg.garron.us (v1.1.11) -->
 <!-- This file may be freely downloaded/modified/distributed, if it is marked as a derivative and the source is attributed.-->
 <!-- Applets by Werner Randelshofer (http://www.randelshofer.ch/) -->
 <!--
@@ -224,7 +224,7 @@ var displinescode="";
 if (p_displines!="")
 	displinescode='\n<param name="displayLines" value="'+p_displines+'">';
 
-var alghash=p_alg.replace(/'/g, "-").replace(/_/g, "").replace(/[^\w\d-]/g, "");
+var alghash=p_alg.replace(/-/g, "%2D").replace(/'/g, "-").replace(/_/g, "%20").replace(/[^\w\d-]/g, "");
 var alghash=alghash.substr(0,Math.min(alghash.length,12));
 
 righthalf.innerHTML='<span title="Link for forums"><input id="copyurl" type="text" name="copyurl" readonly="readonly" value="'+forumlink+'" onclick="this.focus();this.select();" size="30"/><\/span>'
