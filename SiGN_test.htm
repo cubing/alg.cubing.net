@@ -203,6 +203,9 @@ switch (stickerspec)
 	case "full": return stickerout(['1,1,1,1,1,1,1,1,1','2,2,2,2,2,2,2,2,2','3,3,3,3,3,3,3,3,3',
 		'4,4,4,4,4,4,4,4,4','5,5,5,5,5,5,5,5,5','6,6,6,6,6,6,6,6,6']); break;
   case "PLL": case "ZBLL": case "ZZLL": return stickerout(['1,1,1,8,8,8,8,8,8','2,2,2,9,9,9,9,9,9','3,3,3,10,10,10,10,10,10', '4,4,4,11,11,11,11,11,11','12,12,12,12,12,12,12,12,12','6,6,6,6,6,6,6,6,6']); break;
+  case "CP": return stickerout(['1,8,1,8,1,8,1,8,1','2,9,2,9,2,9,2,9,2','3,10,3,10,3,10,3,10,3','4,11,4,11,4,11,4,11,4','5,12,5,12,5,12,5,12,5','6,13,6,13,6,13,6,13,6']); break;
+	case "CO": return stickerout(['0,0,0,0,1,0,0,0,0','0,0,0,0,2,0,0,0,0','0,0,0,0,3,0,0,0,0', '0,0,0,0,4,0,0,0,0','5,0,5,0,5,0,5,0,5','6,0,6,0,6,0,6,0,6']); break;
+  case "EP": return stickerout(['8,1,8,1,1,1,8,1,8','9,2,9,2,2,2,9,2,9','10,3,10,3,3,3,10,3,10','11,4,11,4,4,4,11,4,11','12,5,12,5,5,5,12,5,12','13,6,13,6,6,6,13,6,13']); break;
   case "ELL": return stickerout(['8,1,8,8,8,8,8,8,8','9,2,9,9,9,9,9,9,9','10,3,10,10,10,10,10,10,10', '11,4,11,11,11,11,11,11,11','12,12,12,12,12,12,12,12,12','13,6,13,6,6,6,13,6,13']); break;
 	case "EO": return stickerout(['0,0,0,6,1,6,0,0,0','0,0,0,0,2,0,0,0,0','0,0,0,0,3,0,0,0,0',
 		'0,0,0,6,4,6,0,0,0','0,6,0,6,5,6,0,6,0','0,6,0,6,6,6,0,6,0']); break;
@@ -260,7 +263,7 @@ function escapealg(algstr){return algstr.replace(/\n/g, '%0A').replace(/-/g, '%2
 function unescapealg(algstr){return unescape(algstr.replace(/_/g,' ').replace(/\+/g,' ').replace(/-/g,'\''));}
 function unescapeapplet(algstr){return algstr.replace(/\n/g, '\\n');}
 function highlightinput(inputId) {inputId.focus(); inputId.select();}
-function nameedit() {document.getElementById("titlespan").innerHTML='<input id="titleinput" type="text" value="'+p_name+'" onload="javascript:this.focus();this.select();" onchange="javascript:p_name=this.value;" onblur="javascript:namesolidify()" style="font-size: 150%; text-align: center;"/>';}
+function nameedit() {document.getElementById("titlespan").innerHTML='<input id="titleinput" type="text" value="'+p_name+'" onload="javascript:this.focus();" onchange="javascript:p_name=this.value;" onblur="javascript:namesolidify()" style="font-size: 150%; text-align: center;"/>';} 
 function namesolidify() {document.getElementById("titlespan").innerHTML='<span id="titletext" style="font-size: 200%; font-weight: bold;" onclick="javascript:nameedit()">'+p_name+'<\/span>';}
   
 function loadapplet()
@@ -343,7 +346,7 @@ document.getElementById("righthalf").innerHTML='<span style="font-size: 200%; fo
 +'\n<li><u>Stage<\/u>: 3x3x3 ONLY - Gray out pieces to emphasize the pieces of a solving stage<\/li>'
 +'\n<ul style="text-align: left;">'
 +'\n<li>Full, F2L, PLL, OLL<\/li>'
-+'\n<li>Hidden: ZBLL, ELL, EO, EOLine, F2L, FRSlot, CLS, WVLS, ZBLS, VHLS, ELS, COLL, CLL, CMLL, L6E, Cross, FirstLayer, FirstLayerCorners, Corners, Triangle, DL2x2x3, DLPetrusStep4a.<\/li>'
++'\n<li>Hidden: ZBLL, ELL, CP, EP, CO, EO, EOLine, F2L, FRSlot, CLS, WVLS, ZBLS, VHLS, ELS, COLL, CLL, CMLL, L6E, Cross, FirstLayer, FirstLayerCorners, Corners, Triangle, DL2x2x3, DLPetrusStep4a.<\/li>'
 +'\n<\/ul>'
 +'\n'
 +'\n<li>Offline use is possible, but not "supported" yet.<\/li>'
