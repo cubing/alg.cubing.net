@@ -238,7 +238,7 @@ function paramadddef(paramname, paramval)
 
 //escape ampersand?
 function escapealg(algstr){return algstr.replace(/\n/g, '%0A').replace(/-/g, '%2D').replace(/\'/g, '-').replace(/ /g, '_');}
-function unescapealg(algstr){return unescape(algstr.replace(/_/g,' ').replace(/-/g,'\''));}
+function unescapealg(algstr){return unescape(algstr.replace(/_/g,' ').replace(/\+/g,' ').replace(/-/g,'\''));}
 function unescapeapplet(algstr){return algstr.replace(/\n/g, '\\n');}
 function highlightinput(inputId) {inputId.focus(); inputId.select();}
 function nameedit() {titlespan.innerHTML='<input id="titleinput" type="text" name="titleinput" value="'+p_name+'" onload="javascript:this.focus();" onchange="javascript:p_name=this.value;" onblur="javascript:namesolidify()" style="font-size: 150%; text-align: center;"/>';} 
