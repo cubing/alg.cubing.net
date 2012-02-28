@@ -1,4 +1,4 @@
-<html><head><title>SiGN Test 1.0.0</title>
+<html><head><title>SiGN Test 1.1.2</title>
 <!-- Lucas Garron, 2009-03-24 -->
 <!-- Alg Animation Tool-->
 
@@ -78,6 +78,8 @@ switch (stickerspec)
 {
 	case "none": case "ZBLL": case "ELL": return stickerout(['1,1,1,1,1,1,1,1,1','2,2,2,2,2,2,2,2,2','3,3,3,3,3,3,3,3,3',
 		'4,4,4,4,4,4,4,4,4','5,5,5,5,5,5,5,5,5','6,6,6,6,6,6,6,6,6']); break;
+	case "EOLine": return stickerout(['0,0,0,6,1,6,0,1,0','0,0,0,0,2,0,0,2,0','0,0,0,0,3,0,0,3,0',
+		'0,0,0,6,4,6,0,4,0','0,5,0,5,5,5,0,5,0','0,6,0,6,6,6,0,6,0']); break;
 	case "F2L": return stickerout(['0,0,0,1,1,1,1,1,1','0,0,0,2,2,2,2,2,2','0,0,0,3,3,3,3,3,3',
 		'0,0,0,4,4,4,4,4,4','5,5,5,5,5,5,5,5,5','0,0,0,0,6,0,0,0,0']); break;
 	case "FRSlot": return stickerout(['0,0,0,0,1,1,0,1,1','0,0,0,2,2,0,2,2,0','0,0,0,0,3,0,0,3,0',
@@ -126,7 +128,7 @@ function submitalg()
   {
   var url="?alg="+escapealg(document.getElementById('alg').value);
   url=url+paramadd('ini',escapealg(document.getElementById('ini').value),'');
-  url=url+paramadd('name',p_name,'alg.garron.us');
+  url=url+paramadd('name',escapealg(p_name),'alg.garron.us');
   url=url+paramadd('cube',p_cube,'3x3x3');
   url=url+paramadd('notation',p_notation,'sign');
   url=url+paramadd('animtype',p_animtype,'gen');
@@ -143,11 +145,11 @@ function highlightinput(inputId) {
 }
   
   
-function nameedit() {//alert(document.getElementById('titlespan').innerHTML);
+function nameedit() {
   titlespan.innerHTML='<input id="titleinput" type="text" name="titleinput" value="'+p_name+'" onload="javascript:this.focus();" onchange="javascript:p_name=this.value;" onblur="javascript:namesolidify()" style="font-size: 150%; text-align: center;"/>';
 } 
   
-function namesolidify() {//alert(document.getElementById('titlespan').innerHTML);
+function namesolidify() {
   titlespan.innerHTML='<span name="titletext" id="titletext" "style="font-size: 200%; font-weight: bold;" onclick="javascript:nameedit()">'+p_name+'<\/span>';
 }
  
