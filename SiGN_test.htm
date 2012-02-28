@@ -1,9 +1,9 @@
 <html>
 <head>
-<title>alg.garron.us (v1.2.1)</title>
+<title>alg.garron.us (v1.3.0)</title>
 <!-- Lucas Garron, 20090630 -->
 <!-- Alg Animation Tool -->
-<!-- alg.garron.us (v1.2) -->
+<!-- alg.garron.us (v1.3) -->
 <!-- This file may be freely downloaded/modified/distributed, if it is marked as a derivative and the source is attributed.-->
 <!-- Applets by Werner Randelshofer (http://www.randelshofer.ch/) -->
 <!--
@@ -25,6 +25,8 @@ Allow static image generation with iCube: http://software.rubikscube.info/icube/
 
 -->
 
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" /> 
+
 <!-- Skin CSS file -->
 <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/2.6.0/build/assets/skins/sam/resize.css">
 <!-- Utility Dependencies -->
@@ -33,8 +35,25 @@ Allow static image generation with iCube: http://software.rubikscube.info/icube/
 <script type="text/javascript" src="http://yui.yahooapis.com/2.6.0/build/element/element-beta-min.js"></script> 
 <!-- Source file for the Resize Utility -->
 <script src="http://yui.yahooapis.com/2.6.0/build/resize/resize-min.js"></script>
+
+
+<!-- I apologize dearly for the lack of CSS on this page. -->
 <style type="text/css" media="screen">
-    #appletdiv {height: 300px; width: 100%; padding: 2px; border: 1px solid black;}
+	body {margin: 0px; padding 0px; font-family: Helvetica, Tahoma, Arial;}
+    #appletdiv {height: 300px; width: 98%; padding: 2px; border: 1px dotted #888;}
+    table {border-collapse: collapse; border: none; margin: 0px;}
+    td {border: none;}
+	#titletext {
+    	font-size: 200%;
+    	font-weight: bold;
+    	text-decoration: underline;
+    }
+    #copyurl {
+    	 width: 90%;
+    	 text-align: center;
+    	 background: #FFE;
+    }
+    #copyurl:hover {background: #FFF;}
 </style>
 
 
@@ -241,8 +260,8 @@ function escapealg(algstr){return algstr.replace(/\n/g, '%0A').replace(/-/g, '%2
 function unescapealg(algstr){return unescape(algstr.replace(/_/g,' ').replace(/\+/g,' ').replace(/-/g,'\''));}
 function unescapeapplet(algstr){return algstr.replace(/\n/g, '\\n');}
 function highlightinput(inputId) {inputId.focus(); inputId.select();}
-function nameedit() {titlespan.innerHTML='<input id="titleinput" type="text" name="titleinput" value="'+p_name+'" onload="javascript:this.focus();" onchange="javascript:p_name=this.value;" onblur="javascript:namesolidify()" style="font-size: 150%; text-align: center;"/>';} 
-function namesolidify() {titlespan.innerHTML='<span name="titletext" id="titletext" "style="font-size: 200%; font-weight: bold;" onclick="javascript:nameedit()">'+p_name+'<\/span>';}
+function nameedit() {document.getElementById("titlespan").innerHTML='<input id="titleinput" type="text" value="'+p_name+'" onload="javascript:this.focus();" onchange="javascript:p_name=this.value;" onblur="javascript:namesolidify()" style="font-size: 150%; text-align: center;"/>';} 
+function namesolidify() {document.getElementById("titlespan").innerHTML='<span id="titletext" style="font-size: 200%; font-weight: bold;" onclick="javascript:nameedit()">'+p_name+'<\/span>';}
   
 function loadapplet()
 {
@@ -254,9 +273,9 @@ if (p_cube=='3x3x3') stickerappletcode=stickercube(p_stage);
 var URLparams = makeURLparams();
 var forumlink = '';
 if (URLparams=="?alg=")
-	forumlink='[url=http://alg.garron.us/]alg.garron.us[/url]';
+	forumlink='[url=&quot;http://alg.garron.us/&quot;]alg.garron.us[/url]';
 else
-	forumlink='[url=http://alg.garron.us/'+URLparams+']'+p_alg+'[/url]'; //p_alg covered by setalgs() in makeURLparams().
+	forumlink='[url=&quot;http://alg.garron.us/'+URLparams+'&quot;]'+p_alg+'[/url]'; //p_alg covered by setalgs() in makeURLparams().
 
 var displinescode="";
 if (p_displines!="")
@@ -265,17 +284,18 @@ if (p_displines!="")
 var alghash=p_alg.replace(/-/g, "%2D").replace(/'/g, "-").replace(/_/g, "%20").replace(/[^\w\d-]/g, "");
 var alghash=alghash.substr(0,Math.min(alghash.length,12));
 
-righthalf.innerHTML='<span title="Link for forums"><input id="copyurl" type="text" name="copyurl" readonly="readonly" value="'+forumlink+'" onclick="this.focus();this.select();" size="30"/><\/span>'
+document.getElementById("righthalf").innerHTML='<span title="Link for forums">Forum link: <input id="copyurl" type="text" readonly="readonly" value="'+forumlink+'" onclick="this.focus();this.select();"/><\/span>'
 	+'<form action="http://tinyurl.com/create.php" method="post" target="_blank">'
 	+'<input type="hidden" name="alias" size="30" value="alg'+alghash+'">'
 	+'<input type="hidden" name="url" size="30" value="http://alg.garron.us/'+URLparams+'">'
-	+'<input type="submit" name="submit" value="TinyURL">'
+	+'Or: <input type="submit" name="submit" value="TinyURL">'
 	+'<\/form>'
 	+'\n<div name="appletdiv" id="appletdiv">'
 	+'\n<applet code="'+jarfile+'.class" archive="applet/'+jarfile+'.jar" width="100%" height="100%">'
 	+'\n <param name="scriptType" value="'+p_animtype.replace('gen','Generator').replace('solve','Solver')+'">'
 	+'\n <param name="resourceFile" value="'+notationfile+'"/><param name="notation" value="'+p_cube+'"/>'
 	+'\n <param name="colorTable" value="'+hexscheme(p_scheme)+'"><param name="faces" value="1,2,3,4,5,6">'
+	+'\n <param name="backgroundColor" value="0xffffdd">'
 	+stickerappletcode
 	+displinescode
 	+'\n <param name="initScript" value="'+applet_ini+'">'
@@ -289,8 +309,8 @@ var resize = new YAHOO.util.Resize('appletdiv');
 
 function showhelp()
 {
-window.location.hash="#AlgTyper";
-righthalf.innerHTML='<span "style="font-size: 200%; font-weight: bold;">Help<\/span>'
+window.location.hash="#help";
+document.getElementById("righthalf").innerHTML='<span style="font-size: 200%; font-weight: bold;">Help<\/span>'
 +'\n<br>alg.garron.us is a tool for viewing and sharing algs.'
 +'\n<ul style="text-align: left;">'
 +'\n<li>Just type an alg into the lower textbox and click <i>Reload<\/i> or <i>Test<\/i>.<\/li>'
@@ -340,7 +360,7 @@ righthalf.innerHTML='<span "style="font-size: 200%; font-weight: bold;">Help<\/s
 function showAlgTyper()
 {
 window.location.hash="#AlgTyper";
-righthalf.innerHTML='<span "style="font-size: 200%; font-weight: bold;">AlgTyper (Beta)<\/span>'
+document.getElementById("righthalf").innerHTML='<span style="font-size: 200%; font-weight: bold;">AlgTyper (Beta)<\/span>'
 +'\n<p style="text-align: center;">Convenient <a href="http://www.ryanheise.com/cube/speed.html" target="new">Heise<\/a>-style alg input.'
 +'\n<br><button type="button" onclick="algtyper.reinitmove(\'\');">Clear<\/button>'
 +'\n<button type="button" onclick="algtyper.reinitmove(document.getElementById(\'ini\').value);">Scramble<\/button>'
@@ -399,8 +419,20 @@ function submitalg()
 
 
 </script>
- 
- 
+ <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-19943138-1']);
+  _gaq.push(['_setDomainName', '.garron.us']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
 </head>
 <body bgcolor="#ffffdd">
 <center>
@@ -409,71 +441,73 @@ function submitalg()
 
 <table width="100%" height="100%" style="text-align: center;" border="1" cellspacing="1" cellpadding="4">
 <tr width="50%">
-<td name="lefthalf" width="1*" style="vertical-align: top;">
-<span name="titlespan" id="titlespan"> 
-<script language="JavaScript">
-document.write('<span name="titletext" id="titletext" "style="font-size: 200%; font-weight: bold;" onclick="javascript:nameedit()">'+p_name+'<\/span>');
+<td id="lefthalf" width="1*" style="vertical-align: top; border-right: 1px double #888;">
+<span id="titlespan"> 
+<script type="text/javascript">
+document.write('<span id="titletext" style="font-size: 200%; font-weight: bold; font-family: Helvetica, Arial;" onclick="javascript:nameedit()">'+p_name+'<\/span>');
 </script>
 </span>
 
 <form  action="SiGN_test.htm" method="get">
 
-<span title="Cube Size">
-<script language="JavaScript">document.write('<u>Cube<\/u> - ');</script>
-<input type="radio" name="cube" id="cube2x2x2" value="2" onclick="p_cube='2x2x2'">2 
-<input type="radio" name="cube" id="cube3x3x3" value="3" onclick="p_cube='3x3x3'">3 
-<input type="radio" name="cube" id="cube4x4x4" value="4" onclick="p_cube='4x4x4'">4 
-<input type="radio" name="cube" id="cube5x5x5" value="5" onclick="p_cube='5x5x5'">5 
-<input type="radio" name="cube" id="cube6x6x6" value="6" onclick="p_cube='6x6x6'">6 
-<input type="radio" name="cube" id="cube7x7x7" value="7" onclick="p_cube='7x7x7'">7
-</span>
-
-
-<script language="JavaScript">
-document.write('<br><span title="Scramble"><textarea name="ini" id="ini" rows="2" cols="50" style="background: #ffffee;">'+p_ini+'<\/textarea></span>');
+<script type="text/javascript">
+document.write('<br><span title="Scramble"><textarea id="ini" rows="2" cols="50" style="background: #ffffee;">'+p_ini+'<\/textarea></span>');
 </script>
-<script language="JavaScript">
-document.write('<br><span title="Algorithm"><textarea name="alg" id="alg" rows="12" cols="50">'+p_alg+'<\/textarea></span>');
+<script type="text/javascript">
+document.write('<br><span title="Algorithm"><textarea id="alg" rows="12" cols="50">'+p_alg+'<\/textarea></span>');
 </script>
 <br>
-<span title="Refresh and reset the page."><button type="button" onclick="window.location='?'">Reset</button></a>
-<span title="Reload the page with the new alg."><button type="button" onclick="javascript:submitalg()">Reload!</button></a>
+<span title="Refresh and reset the page."><button type="button" onclick="window.location='?'">Reset</button></span>
+<span title="Reload the page with the new alg."><button type="button" onclick="javascript:submitalg()">Reload!</button></span>
 <span title="Refresh applet WITHOUT reloading the page."><button type="button" onclick="javascript:setalgs();loadapplet()">Test</button></a>
 <!--<input type="submit" value="Submit">-->
 
 <br>
 <span id="options">
+
+<br>
+<span title="Cube Size">
+<script type="text/javascript">document.write('<u>Cube<\/u> - ');</script>
+<input type="radio" name="cube" id="cube2x2x2" value="2" onclick="p_cube='2x2x2'">2&nbsp;&nbsp;&nbsp;
+<input type="radio" name="cube" id="cube3x3x3" value="3" onclick="p_cube='3x3x3'">3&nbsp;&nbsp;&nbsp;
+<input type="radio" name="cube" id="cube4x4x4" value="4" onclick="p_cube='4x4x4'">4&nbsp;&nbsp;&nbsp;
+<input type="radio" name="cube" id="cube5x5x5" value="5" onclick="p_cube='5x5x5'">5&nbsp;&nbsp;&nbsp;
+<input type="radio" name="cube" id="cube6x6x6" value="6" onclick="p_cube='6x6x6'">6&nbsp;&nbsp;&nbsp;
+<input type="radio" name="cube" id="cube7x7x7" value="7" onclick="p_cube='7x7x7'">7
+</span>
+
 <span title="Notation">
-<br><script language="JavaScript">document.write('<u>Notation<\/u>: ');</script>
+<br><script type="text/javascript">document.write('<u>Notation<\/u>: ');</script>
 <input type="radio" name="notation" id="notationsign" value="sign" onclick="p_notation='sign'">SiGN 
 <input type="radio" name="notation" id="notationWCA" value="WCA" onclick="p_notation='WCA'">WCA
 <input type="radio" name="notation" id="notationsuperset" value="superset" onclick="p_notation='superset'">Superset</span>
 
 <span title="Animation Type">
-<br><script language="JavaScript">document.write('<u>Animation Type<\/u>: ');</script>
+<br><script type="text/javascript">document.write('<u>Animation Type<\/u>: ');</script>
 <input type="radio" name="animtype" id="animtypesolve" value="solve" onclick="p_animtype='solve'">Solver 
 <input type="radio" name="animtype" id="animtypegen" value="gen" onclick="p_animtype='gen'">Generator
 </span>
 
 <span title="Color Scheme (FRLBDU)">
-<br><script language="JavaScript">document.write('<u>Color Scheme<\/u>: ');</script>
+<br><script type="text/javascript">document.write('<u>Color Scheme<\/u>: ');</script>
 <input type="radio" name="scheme" id="schemegrobyw" value="grobyw" onclick="p_scheme='grobyw';">BOY
 <input type="radio" name="scheme" id="schemegroybw" value="groybw" onclick="p_scheme='groybw';">Japanese
 <input type="radio" name="scheme" id="schemecustom" value="custom" onclick="p_scheme=schemeinput.value;highlightinput(schemeinput);">
 	<input id="schemeinput" type="text" name="schemeinput" value="" onclick="javascript:getElementById('colc').checked=true" onchange="javascript:p_scheme=this.value" size="6"/>
-	<script language="JavaScript">schemeinput.value=p_scheme</script>
+	<script type="text/javascript">schemeinput.value=p_scheme</script>
 </span>
 
 <span title="Stage (currently for 3x3x3 ONLY)">
-<br><script language="JavaScript">document.write('<u>Stage<\/u>: ');</script>
+<br><u>Stage (3x3x3)</u>:
 <input type="radio" name="stage" id="stagefull" value="full" onclick="p_stage='full';">Full
 <input type="radio" name="stage" id="stageF2L" value="F2L" onclick="p_stage='F2L';">F2L
 <input type="radio" name="stage" id="stagePLL" value="PLL" onclick="p_stage='PLL';">PLL
 <input type="radio" name="stage" id="stageOLL" value="OLL" onclick="p_stage='OLL';">OLL
 </span>
 </span>
+</span>
 
-<script language="JavaScript">
+<script type="text/javascript">
 document.getElementById('cube'+p_cube).checked="true";
 document.getElementById('notation'+p_notation).checked="true";
 document.getElementById('animtype'+p_animtype).checked="true";
@@ -485,12 +519,12 @@ document.getElementById('stage'+p_stage).checked="true";
 <button type="button" onclick="showhelp();" style="font-size: 125%">Show Help</button>
 <button type="button" onclick="showAlgTyper();" style="font-size: 125%">AlgTyper</button>
 <br><br>
-<span style="font-family: monospace" title="Everyone loves XKCD. Especially because of the hovertext.">alg.garron.us - v1.2beta - by Lucas Garron<br>Original applets by <a href="http://www.randelshofer.ch/">Werner Randelshofer</a> and <a href="http://www.rubikscube.info/">Josef Jelinek</a></span>
+<span style="font-family: monospace" title="Everyone loves XKCD. Especially because of the hovertext.">alg.garron.us - v1.3beta - by Lucas Garron<br>Original applets by <a href="http://www.randelshofer.ch/">Werner Randelshofer</a> and <a href="http://www.rubikscube.info/">Josef Jelinek</a></span>
 
 </td>
-<td name="righthalf" id="righthalf" width="50%" style="vertical-align: top;" >
+<td id="righthalf" width="50%" style="vertical-align: top;" >
 
-<span "style="font-size: 200%; font-weight: bold;">AlgTyper</span>
+<span style="font-size: 200%; font-weight: bold;">AlgTyper</span>
 <p style="text-align: center;">
  <button type="button" onclick="algtyper.reinitmove('');algtyper.repaint();">Clear</button>
  <button type="button" onclick="algtyper.reinitmove(document.getElementById('ini').value);">Scramble</button>
