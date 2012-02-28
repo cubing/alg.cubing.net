@@ -277,6 +277,12 @@
       <Token axis="x" layerList="1,2,3" angle="-90">3l</Token> <Token axis="x" layerList="1,2,3" angle="-180">3l2</Token>
       <Token axis="y" layerList="1,2,3" angle="-90">3d</Token> <Token axis="y" layerList="1,2,3" angle="-180">3d2</Token>
       <Token axis="z" layerList="1,2,3" angle="-90">3b</Token> <Token axis="z" layerList="1,2,3" angle="-180">3b2</Token>
+      <Token axis="x" layerList="2,3,4,5" angle="90">4r</Token> <Token axis="x" layerList="2,3,4,5" angle="180">4r2</Token>
+      <Token axis="y" layerList="2,3,4,5" angle="90">4u</Token> <Token axis="y" layerList="2,3,4,5" angle="180">4u2</Token>
+      <Token axis="z" layerList="2,3,4,5" angle="90">4f</Token> <Token axis="z" layerList="2,3,4,5" angle="180">4f2</Token>
+      <Token axis="x" layerList="1,2,3,4" angle="-90">4l</Token> <Token axis="x" layerList="1,2,3,4" angle="-180">4l2</Token>
+      <Token axis="y" layerList="1,2,3,4" angle="-90">4d</Token> <Token axis="y" layerList="1,2,3,4" angle="-180">4d2</Token>
+      <Token axis="z" layerList="1,2,3,4" angle="-90">4b</Token> <Token axis="z" layerList="1,2,3,4" angle="-180">4b2</Token>
       <Token axis="x" layerList="3,4" angle="90">2-3r</Token> <Token axis="x" layerList="3,4" angle="180">2-3r2</Token>
       <Token axis="y" layerList="3,4" angle="90">2-3u</Token> <Token axis="y" layerList="3,4" angle="180">2-3u2</Token>
       <Token axis="z" layerList="3,4" angle="90">2-3f</Token> <Token axis="z" layerList="3,4" angle="180">2-3f2</Token>
@@ -406,6 +412,12 @@
       <Token axis="x" layerList="1,2,3,4" angle="-90">4l</Token> <Token axis="x" layerList="1,2,3,4" angle="-180">4l2</Token>
       <Token axis="y" layerList="1,2,3,4" angle="-90">4d</Token> <Token axis="y" layerList="1,2,3,4" angle="-180">4d2</Token>
       <Token axis="z" layerList="1,2,3,4" angle="-90">4b</Token> <Token axis="z" layerList="1,2,3,4" angle="-180">4b2</Token>
+      <Token axis="x" layerList="2,3,4,5,6" angle="90">5r</Token> <Token axis="x" layerList="2,3,4,5,6" angle="180">5r2</Token>
+      <Token axis="y" layerList="2,3,4,5,6" angle="90">5u</Token> <Token axis="y" layerList="2,3,4,5,6" angle="180">5u2</Token>
+      <Token axis="z" layerList="2,3,4,5,6" angle="90">5f</Token> <Token axis="z" layerList="2,3,4,5,6" angle="180">5f2</Token>
+      <Token axis="x" layerList="1,2,3,4,5" angle="-90">5l</Token> <Token axis="x" layerList="1,2,3,4,5" angle="-180">5l2</Token>
+      <Token axis="y" layerList="1,2,3,4,5" angle="-90">5d</Token> <Token axis="y" layerList="1,2,3,4,5" angle="-180">5d2</Token>
+      <Token axis="z" layerList="1,2,3,4,5" angle="-90">5b</Token> <Token axis="z" layerList="1,2,3,4,5" angle="-180">5b2</Token>
       <Token axis="x" layerList="4,5" angle="90">2-3r</Token> <Token axis="x" layerList="4,5" angle="180">2-3r2</Token>
       <Token axis="y" layerList="4,5" angle="90">2-3u</Token> <Token axis="y" layerList="4,5" angle="180">2-3u2</Token>
       <Token axis="z" layerList="4,5" angle="90">2-3f</Token> <Token axis="z" layerList="4,5" angle="180">2-3f2</Token>
@@ -610,6 +622,12 @@
       <Token axis="x" layerList="1,2,3,4,5" angle="-90">5l</Token> <Token axis="x" layerList="1,2,3,4,5" angle="-180">5l2</Token>
       <Token axis="y" layerList="1,2,3,4,5" angle="-90">5d</Token> <Token axis="y" layerList="1,2,3,4,5" angle="-180">5d2</Token>
       <Token axis="z" layerList="1,2,3,4,5" angle="-90">5b</Token> <Token axis="z" layerList="1,2,3,4,5" angle="-180">5b2</Token>
+      <Token axis="x" layerList="2,3,4,5,6,7" angle="90">6r</Token> <Token axis="x" layerList="2,3,4,5,6,7" angle="180">6r2</Token>
+      <Token axis="y" layerList="2,3,4,5,6,7" angle="90">6u</Token> <Token axis="y" layerList="2,3,4,5,6,7" angle="180">6u2</Token>
+      <Token axis="z" layerList="2,3,4,5,6,7" angle="90">6f</Token> <Token axis="z" layerList="2,3,4,5,6,7" angle="180">6f2</Token>
+      <Token axis="x" layerList="1,2,3,4,5,6" angle="-90">6l</Token> <Token axis="x" layerList="1,2,3,4,5,6" angle="-180">6l2</Token>
+      <Token axis="y" layerList="1,2,3,4,5,6" angle="-90">6d</Token> <Token axis="y" layerList="1,2,3,4,5,6" angle="-180">6d2</Token>
+      <Token axis="z" layerList="1,2,3,4,5,6" angle="-90">6b</Token> <Token axis="z" layerList="1,2,3,4,5,6" angle="-180">6b2</Token>
       <Token axis="x" layerList="2,3,4,5,6" angle="-90">m 5m</Token> <Token axis="x" layerList="2,3,4,5,6" angle="-180">m2 5m2</Token>
       <Token axis="y" layerList="2,3,4,5,6" angle="-90">e 5e</Token> <Token axis="y" layerList="2,3,4,5,6" angle="-180">e2 5e2</Token>
       <Token axis="z" layerList="2,3,4,5,6" angle="90">s 5s</Token> <Token axis="z" layerList="2,3,4,5,6" angle="180">s2 5s2</Token>
