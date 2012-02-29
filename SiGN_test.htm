@@ -515,6 +515,12 @@ document.write('<br><span title="Algorithm"><textarea id="alg" rows="12" cols="5
 <input type="radio" name="stage" id="stagePLL" value="PLL" onclick="p_stage='PLL';">PLL
 <input type="radio" name="stage" id="stageOLL" value="OLL" onclick="p_stage='OLL';">OLL
 </span>
+
+<span title="Display alg in applet">
+<br><u>Display Alg in Applet</u>:
+<input type="radio" name="displines" id="displines_" value="yes" onclick="p_displines='';">Yes
+<input type="radio" name="displines" id="displines_0" value="no" onclick="p_displines='0';">No
+</span>
 </span>
 </span>
 
@@ -524,6 +530,7 @@ document.getElementById('notation'+p_notation).checked="true";
 document.getElementById('animtype'+p_animtype).checked="true";
 document.getElementById('scheme'+p_scheme).checked="true";
 document.getElementById('stage'+p_stage).checked="true";
+document.getElementById('displines_'+p_displines).checked="true";
 </script>
 <br>
 </form>
