@@ -265,6 +265,20 @@ function unescapeapplet(algstr){return algstr.replace(/\n/g, '\\n');}
 function highlightinput(inputId) {inputId.focus(); inputId.select();}
 function nameedit() {document.getElementById("titlespan").innerHTML='<input id="titleinput" type="text" value="'+p_name+'" onload="javascript:this.focus();" onchange="javascript:p_name=this.value;" onblur="javascript:namesolidify()" style="font-size: 150%; text-align: center;"/>';} 
 function namesolidify() {document.getElementById("titlespan").innerHTML='<span id="titletext" style="font-size: 200%; font-weight: bold;" onclick="javascript:nameedit()">'+p_name+'<\/span>';}
+
+function forumLinkText(URLparams) {
+  var numLines = p_alg.split(/\r?\n|\r/).length;
+  if (numLines == 1) {
+    return '[url=&quot;http://alg.garron.us/'+URLparams+'&quot;]'+p_alg+'[/url]';
+  }
+  console.log(numLines);
+  var algWithCommentsGreyed = (p_alg+"\n").replace(/(\/\/.*)[\n\r]/g, "[COLOR=\"gray\"]$1[/COLOR]\n").replace(/(\/\*[^(\*\/)]*\*\/)/g, "[COLOR=\"gray\"]$1[/COLOR]");
+  var text = algWithCommentsGreyed+'[COLOR="gray"]View at [url=&quot;http://alg.garron.us/'+URLparams+'&quot;]alg.garron.us[/url][/COLOR]';
+  if (p_ini !== "") {
+    text = p_ini + "\n\n" + text;
+  }
+  return text;
+}
   
 function loadapplet()
 {
@@ -276,9 +290,15 @@ if (p_cube=='3x3x3') stickerappletcode=stickercube(p_stage);
 var URLparams = makeURLparams();
 var forumlink = '';
 if (URLparams=="?alg=")
-	forumlink='[url=&quot;http://alg.garron.us/&quot;]alg.garron.us[/url]';
+  forumlink='[url=&quot;http://alg.garron.us/&quot;]alg.garron.us[/url]';
 else
-	forumlink='[url=&quot;http://alg.garron.us/'+URLparams+'&quot;]'+p_alg+'[/url]'; //p_alg covered by setalgs() in makeURLparams().
+  forumlink='[url=&quot;http://alg.garron.us/'+URLparams+'&quot;]'+p_alg+'[/url]'; //p_alg covered by setalgs() in makeURLparams().
+
+var forumlinklong = '';
+if (URLparams=="?alg=")
+  forumlinklong='[url=&quot;http://alg.garron.us/&quot;]alg.garron.us[/url]';
+else
+  forumlinklong=forumLinkText(URLparams); //p_alg covered by setalgs() in makeURLparams().
 
 var displinescode="";
 if (p_displines!="")
@@ -287,7 +307,8 @@ if (p_displines!="")
 var alghash=p_alg.replace(/-/g, "%2D").replace(/'/g, "-").replace(/_/g, "%20").replace(/[^\w\d-]/g, "");
 var alghash=alghash.substr(0,Math.min(alghash.length,12));
 
-document.getElementById("righthalf").innerHTML='<span title="Link for forums">Forum link: <input id="copyurl" type="text" readonly="readonly" value="'+forumlink+'" onclick="this.focus();this.select();"/><\/span>'
+document.getElementById("righthalf").innerHTML='<span title="Short link for forums">Short/Long Forum Links:<br><input id="copyurl" type="text" readonly="readonly" value="'+forumlink+'" onclick="this.focus();this.select();"/><\/span><br>'
+  +'<span title="Long link for forums"><textarea id="copyurl" type="text" readonly="readonly" onclick="this.focus();this.select();" rows="1"/>'+forumlinklong+'</textarea><\/span>'
 	+'<form action="http://tinyurl.com/create.php" method="post" target="_blank">'
 	+'<input type="hidden" name="alias" size="30" value="alg'+alghash+'">'
 	+'<input type="hidden" name="url" size="30" value="http://alg.garron.us/'+URLparams+'">'
