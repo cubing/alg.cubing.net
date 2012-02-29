@@ -1,0 +1,26 @@
+# Firefox search plugin for Algorithm Display -generator (garron.us)
+# Author: Lucas Garron (www.garron.us)
+# Created: June 25, 2007
+#
+# Version 0.0.0
+#
+# Known issues: None.
+# 
+
+<search
+version="0.0"
+name="Algorithm Search"
+description="Animate an alg"
+action="http://alg.garron.us/"
+searchForm="http://alg.garron.us/"
+method="GET" >
+
+<input name="alg" user>
+
+</search>
+
+<browser
+update="http://alg.garron.us/algsearch.src"
+updateIcon="http://cube.garron.us/tools/alg.png"
+updateCheckDays="365"
+>
