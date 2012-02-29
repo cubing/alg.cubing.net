@@ -307,14 +307,7 @@ if (p_displines!="")
 var alghash=p_alg.replace(/-/g, "%2D").replace(/'/g, "-").replace(/_/g, "%20").replace(/[^\w\d-]/g, "");
 var alghash=alghash.substr(0,Math.min(alghash.length,12));
 
-document.getElementById("righthalf").innerHTML='<span title="Short link for forums">Short/Long Forum Links:<br><input id="copyurl" type="text" readonly="readonly" value="'+forumlink+'" onclick="this.focus();this.select();"/><\/span><br>'
-  +'<span title="Long link for forums"><textarea id="copyurl" type="text" readonly="readonly" onclick="this.focus();this.select();" rows="1"/>'+forumlinklong+'</textarea><\/span>'
-	+'<form action="http://tinyurl.com/create.php" method="post" target="_blank">'
-	+'<input type="hidden" name="alias" size="30" value="alg'+alghash+'">'
-	+'<input type="hidden" name="url" size="30" value="http://alg.garron.us/'+URLparams+'">'
-	+'Or: <input type="submit" name="submit" value="TinyURL">'
-	+'<\/form>'
-	+'\n<div name="appletdiv" id="appletdiv">'
+document.getElementById("righthalf").innerHTML='\n<div name="appletdiv" id="appletdiv">'
 	+'\n<applet code="'+jarfile+'.class" archive="applet/'+jarfile+'.jar" width="100%" height="100%">'
 	+'\n <param name="scriptType" value="'+p_animtype.replace('gen','Generator').replace('solve','Solver')+'">'
 	+'\n <param name="resourceFile" value="'+notationfile+'"/><param name="notation" value="'+p_cube+'"/>'
@@ -326,6 +319,13 @@ document.getElementById("righthalf").innerHTML='<span title="Short link for foru
 	+'\n <param name="script" value="'+applet_alg+'">'
 	+'\n<\/applet>'
 	+'\n<\/div>'
+  +'<span title="Short link for forums">Short/Long Forum Links:<br><input id="copyurl" type="text" readonly="readonly" value="'+forumlink+'" onclick="this.focus();this.select();"/><\/span><br>'
+  +'<span title="Long link for forums"><textarea id="copyurl" type="text" readonly="readonly" onclick="this.focus();this.select();" rows="1"/>'+forumlinklong+'</textarea><\/span>'
+  +'<form action="http://tinyurl.com/create.php" method="post" target="_blank">'
+  +'<input type="hidden" name="alias" size="30" value="alg'+alghash+'">'
+  +'<input type="hidden" name="url" size="30" value="http://alg.garron.us/'+URLparams+'">'
+  +'Or: <input type="submit" name="submit" value="TinyURL">'
+  +'<\/form>'
 ;
 }
 
