@@ -1,7 +1,7 @@
 <CubeMarkup version="6">
   <Notation id="sign2" default="true" layerCount="2">
     <Name>2x2x2</Name>
-    <Description>SiGN, 2x2x2, version 0.3.2</Description>
+    <Description>SiGN, 2x2x2, version 0.3.3</Description>
     <Author>Lucas Garron</Author>
     <Date>2008-08-17</Date>
     <Statement symbol="comment">
@@ -58,7 +58,7 @@
   </Notation>
 <Notation id="sign3" default="true" layerCount="3">
     <Name>3x3x3</Name>
-    <Description>SiGN, 3x3x3, version 0.3.2</Description>
+    <Description>SiGN, 3x3x3, version 0.3.3</Description>
     <Author>Lucas Garron</Author>
     <Date>2008-08-17</Date>
     <Statement symbol="comment">
@@ -136,7 +136,7 @@
   </Notation>
 <Notation id="sign4" default="true" layerCount="4">
     <Name>4x4x4</Name>
-    <Description>SiGN, 4x4x4, version 0.3.2</Description>
+    <Description>SiGN, 4x4x4, version 0.3.3</Description>
     <Author>Lucas Garron</Author>
     <Date>2008-08-17</Date>
     <Statement symbol="comment">
@@ -175,6 +175,12 @@
       <Token axis="x" layerList="4" angle="-90">4L</Token> <Token axis="x" layerList="4" angle="-180">4L2</Token>
       <Token axis="y" layerList="4" angle="-90">4D</Token> <Token axis="y" layerList="4" angle="-180">4D2</Token>
       <Token axis="z" layerList="4" angle="-90">4B</Token> <Token axis="z" layerList="4" angle="-180">4B2</Token>
+      <Token axis="x" layerList="2,3,4" angle="90">3r</Token> <Token axis="x" layerList="2,3,4" angle="180">3r2</Token>
+      <Token axis="y" layerList="2,3,4" angle="90">3u</Token> <Token axis="y" layerList="2,3,4" angle="180">3u2</Token>
+      <Token axis="z" layerList="2,3,4" angle="90">3f</Token> <Token axis="z" layerList="2,3,4" angle="180">3f2</Token>
+      <Token axis="x" layerList="1,2,3" angle="-90">3l</Token> <Token axis="x" layerList="1,2,3" angle="-180">3l2</Token>
+      <Token axis="y" layerList="1,2,3" angle="-90">3d</Token> <Token axis="y" layerList="1,2,3" angle="-180">3d2</Token>
+      <Token axis="z" layerList="1,2,3" angle="-90">3b</Token> <Token axis="z" layerList="1,2,3" angle="-180">3b2</Token>
       <Token axis="x" layerList="2,3" angle="90">2-3r</Token> <Token axis="x" layerList="2,3" angle="180">2-3r2</Token>
       <Token axis="y" layerList="2,3" angle="90">2-3u</Token> <Token axis="y" layerList="2,3" angle="180">2-3u2</Token>
       <Token axis="z" layerList="2,3" angle="90">2-3f</Token> <Token axis="z" layerList="2,3" angle="180">2-3f2</Token>
@@ -226,7 +232,7 @@
   </Notation>
 <Notation id="sign5" default="true" layerCount="5">
     <Name>5x5x5</Name>
-    <Description>SiGN, 5x5x5, version 0.3.2</Description>
+    <Description>SiGN, 5x5x5, version 0.3.3</Description>
     <Author>Lucas Garron</Author>
     <Date>2008-08-17</Date>
     <Statement symbol="comment">
@@ -349,7 +355,7 @@
   </Notation>
 <Notation id="sign6" default="true" layerCount="6">
     <Name>6x6x6</Name>
-    <Description>SiGN, 6x6x6, version 0.3.2</Description>
+    <Description>SiGN, 6x6x6, version 0.3.3</Description>
     <Author>Lucas Garron</Author>
     <Date>2008-08-17</Date>
     <Statement symbol="comment">
@@ -502,7 +508,7 @@
   </Notation>
 <Notation id="sign7" default="true" layerCount="7">
     <Name>7x7x7</Name>
-    <Description>SiGN, 7x7x7, version 0.3.2</Description>
+    <Description>SiGN, 7x7x7, version 0.3.3</Description>
     <Author>Lucas Garron</Author>
     <Date>2008-08-17</Date>
     <Statement symbol="comment">

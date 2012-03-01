@@ -35,7 +35,7 @@
 
 
 (* ::Input:: *)
-(*version="0.3.2";*)
+(*version="0.3.3";*)
 (*"<CubeMarkup version=\"6\">\n  "<>*)
 (*Cube["sign2","2","2x2x2",version,StringJoin[Non["x",2,{1,2}],Non["R",2,{1}]  ]]<>*)
 (**)
@@ -50,6 +50,7 @@
 (*Non["x",4,{1,2,3,4}],*)
 (*Non["R",4,{1}],*)
 (*StringJoin@Table[Non[ToString[n]<>"R",4,{n}],{n,2,4}],*)
+(*StringJoin@Table[Non[ToString[n]<>"r",4,Range[n]],{n,3,3}],*)
 (*(Table[Non[ToString[n]<>"-"<>ToString[m]<>"r",4,Range[n,m]],{n,2,2},{m,n+1,3}]//Flatten//StringJoin),*)
 (*Non["m 2m",4,{2,3}],Non["r 2r",4,{1,2}]*)
 (*]]<>*)
@@ -81,7 +82,7 @@
 (*Non["R",7,{1}],Non["r 2r",7,{1,2}]*)
 (*]]<>*)
 (**)
-(*"</CubeMarkup>"*)
+(*"</CubeMarkup>";*)
 
 
 (* ::Input:: *)
