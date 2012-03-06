@@ -50,8 +50,8 @@
       <Token symbol="permPlus">+</Token>
       <Token symbol="permMinus">-</Token>
       <Token symbol="permPlusPlus">++</Token>
-      <Token symbol="permBegin">(</Token>
-      <Token symbol="permEnd">)</Token>
+      <Token symbol="permBegin">{{{</Token>
+      <Token symbol="permEnd">}}}</Token>
       <Token symbol="permDelim">,</Token>
     </Statement>
     <Statement syntax="suffix" symbol="repetition"/>
@@ -128,8 +128,8 @@
       <Token symbol="permPlus">+</Token>
       <Token symbol="permMinus">-</Token>
       <Token symbol="permPlusPlus">++</Token>
-      <Token symbol="permBegin">(</Token>
-      <Token symbol="permEnd">)</Token>
+      <Token symbol="permBegin">{{{</Token>
+      <Token symbol="permEnd">}}}</Token>
       <Token symbol="permDelim">,</Token>
     </Statement>
     <Statement syntax="suffix" symbol="repetition"/>
@@ -224,8 +224,8 @@
       <Token symbol="permPlus">+</Token>
       <Token symbol="permMinus">-</Token>
       <Token symbol="permPlusPlus">++</Token>
-      <Token symbol="permBegin">(</Token>
-      <Token symbol="permEnd">)</Token>
+      <Token symbol="permBegin">{{{</Token>
+      <Token symbol="permEnd">}}}</Token>
       <Token symbol="permDelim">,</Token>
     </Statement>
     <Statement syntax="suffix" symbol="repetition"/>
@@ -347,8 +347,8 @@
       <Token symbol="permPlus">+</Token>
       <Token symbol="permMinus">-</Token>
       <Token symbol="permPlusPlus">++</Token>
-      <Token symbol="permBegin">(</Token>
-      <Token symbol="permEnd">)</Token>
+      <Token symbol="permBegin">{{{</Token>
+      <Token symbol="permEnd">}}}</Token>
       <Token symbol="permDelim">,</Token>
     </Statement>
     <Statement syntax="suffix" symbol="repetition"/>
@@ -500,8 +500,8 @@
       <Token symbol="permPlus">+</Token>
       <Token symbol="permMinus">-</Token>
       <Token symbol="permPlusPlus">++</Token>
-      <Token symbol="permBegin">(</Token>
-      <Token symbol="permEnd">)</Token>
+      <Token symbol="permBegin">{{{</Token>
+      <Token symbol="permEnd">}}}</Token>
       <Token symbol="permDelim">,</Token>
     </Statement>
     <Statement syntax="suffix" symbol="repetition"/>
@@ -686,8 +686,8 @@
       <Token symbol="permPlus">+</Token>
       <Token symbol="permMinus">-</Token>
       <Token symbol="permPlusPlus">++</Token>
-      <Token symbol="permBegin">(</Token>
-      <Token symbol="permEnd">)</Token>
+      <Token symbol="permBegin">{{{</Token>
+      <Token symbol="permEnd">}}}</Token>
       <Token symbol="permDelim">,</Token>
     </Statement>
     <Statement syntax="suffix" symbol="repetition"/>
