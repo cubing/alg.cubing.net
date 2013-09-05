@@ -329,11 +329,17 @@ for (var i = 0; i < numSides; i++) {
         // TODO - sticker isn't really a good name for this --jfly
         var sticker = state[faceIndex][stickerIndex];
 
+        var layerStart = currentMove[0];
+        var layerEnd = currentMove[1];
+        if (layerEnd < 0) {
+          layerEnd = twisty["options"]["dimension"] + 1 + layerEnd;
+        }
+
         var layer = matrixVector3Dot(sticker[1].matrix, sidesNorm[currentMove[2]]);
         if (
-            layer < twisty["options"]["dimension"] - 2*currentMove[0] + 2.5
+            layer < twisty["options"]["dimension"] - 2*layerStart + 2.5
             &&
-            layer > twisty["options"]["dimension"] - 2*currentMove[1] - 0.5
+            layer > twisty["options"]["dimension"] - 2*layerEnd - 0.5
            ) {
              var roty = rott.clone();
              roty.multiply(sticker[0]);
