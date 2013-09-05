@@ -149,6 +149,9 @@ var twisty_js_beta = false;
 if (typeof localStorage !== "undefined" && localStorage.getItem("twisty_js_beta") == "1") {
   twisty_js_beta = true;
 }
+if (gup("beta", "0") === "1") {
+  twisty_js_beta_from_url = true;
+}
 
 function twisty_js_beta_update() {
   twisty_js_beta = document.getElementById("twisty_js_beta").checked;
@@ -157,6 +160,7 @@ function twisty_js_beta_update() {
   }
   else {
     localStorage.setItem("twisty_js_beta", "0");
+    twisty_js_beta_from_url = false;
   }
   loadapplet();
 }
@@ -326,7 +330,7 @@ if (p_displines!="")
 var alghash=p_alg.replace(/-/g, "%2D").replace(/'/g, "-").replace(/_/g, "%20").replace(/[^\w\d-]/g, "");
 var alghash=alghash.substr(0,Math.min(alghash.length,12));
 
-if (twisty_js_beta) {
+if (twisty_js_beta || twisty_js_beta_from_url) {
 
   document.getElementById("righthalf").innerHTML=''
     +'<center style="font-weight: bold; font-variant: small-caps; color: red; font-size: 200%"><u>WARNING</u>: Don\'t expect Twisty.JS beta to work perfectly yet.</center>'
