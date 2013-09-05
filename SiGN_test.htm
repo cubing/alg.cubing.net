@@ -337,6 +337,7 @@ if (twisty_js_beta || twisty_js_beta_from_url) {
     +'\n<div name="appletdiv" id="appletdiv" style=\"position: relative;\"><\/div>'
     +'<center>'
     +'<span title="Pause"><button id="rewind" style="font-size: 250%">&larr;</button></span>'
+    +'<span title="Step"><button id="step" style="font-size: 250%">&bull;</button></span>'
     +'<span title="Play"><button id="play" style="font-size: 250%">&#9654;</button></span>'
     +'<span title="Pause"><button id="pause" style="font-size: 250%">&#x2759;&#x2759;</button></span>'
     +'<span title="Pause"><button id="fast_forward" style="font-size: 250%">&rarr;</button></span>'
@@ -379,6 +380,10 @@ if (twisty_js_beta || twisty_js_beta_from_url) {
     twistyScene.cam(0.5)
 
     $("#play").click(twistyScene.startAnimation);
+    $("#step").click(function() {
+      twistyScene.startAnimation();
+      twistyScene.stopPlayback();
+    });
     $("#pause").click(twistyScene.stopPlayback);
     $("#rewind").click(function() {
       twistyScene.setIndex(-1);
