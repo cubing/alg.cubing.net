@@ -249,6 +249,10 @@ for (var i = 0; i < numSides; i++) {
   var lastMoveProgress = 0;
   var animateMoveCallback = function(twisty, currentMove, moveProgress) {
 
+    if (currentMove[2] == ".") {
+      return; // Pause
+    }
+
     var rott = new THREE.Matrix4();
     //rott.makeRotationAxis(sidesRotAxis[currentMove[2]], (moveProgress - lastMoveProgress) * currentMove[3] * Math.TAU/4);
     lastMoveProgress = moveProgress;
@@ -318,6 +322,10 @@ for (var i = 0; i < numSides; i++) {
   var cumulativeAlgorithm = [];
 
   var advanceMoveCallback = function(twisty, currentMove) {
+
+    if (currentMove[2] === ".") {
+      return; // Pause
+    }
 
     var rott = matrix4Power(sidesRot[currentMove[2]], currentMove[3]);
 

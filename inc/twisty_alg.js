@@ -8,7 +8,7 @@ var alg = (function (){
     //TODO 20110906: Slice moves.
     // Note: we need to use direct regexp syntax instead of the RegExp constructor,
     // else we seem to lose longest matches.
-    var pattern = /(((\d*)-)?(\d*)([UFRBLDufrbldxyz]w?)([\d]*)('?)|((\/\/)|(\/\*)|(\*\/)|(\n)))/g;
+    var pattern = /(((\d*)-)?(\d*)([UFRBLDufrbldxyz]w?)([\d]*)('?)|((\/\/)|(\/\*)|(\*\/)|(\n)|(\.)))/g;
     var pattern_move = /^((\d*)-)?(\d*)([UFRBLDufrbldxyz]w?)([\d]*)('?)$/;
 
     var move_uppercase = /^[UFRBLD]$/;
@@ -94,7 +94,8 @@ var alg = (function (){
 
 
         if (moveStrings[i] === "//") { inLineComment = true; continue; }
-        if (moveStrings[i] === "\n") { inLineComment = false; continue; }
+        if (moveStrings[i] === "\n") { inLineComment = false; alg.push([1, 1, ".", 1]); continue; }
+        if (moveStrings[i] === ".")  { alg.push([1, 1, ".", 1]); continue; }
         if (moveStrings[i] === "/*") { inLongComment = true; continue; }
         if (moveStrings[i] === "*/") { 
           if (debug && !inLongComment) { console.err("Closing a comment that wasn't opened!");}

@@ -440,6 +440,9 @@ twistyjs.TwistyScene = function() {
     stopPlaybackSoon = false;
     if(pendingAnimationLoop === null) {
       //log("Starting move queue: " + movesToString(moveList));
+      while (moveList[currentMoveIdx+1][2] === ".") {
+        currentMoveIdx++; // Don't start animating on a pause.
+      }
       startMove();
       pendingAnimationLoop = requestAnimFrame(animateLoop, twistyCanvas);
     }
