@@ -28,6 +28,13 @@ Allow static image generation with iCube: http://software.rubikscube.info/icube/
 <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" /> 
 <link rel="search" type="application/opensearchdescription+xml" href="./searchDescription.xml" title="alg.garron.us"/> 
 
+<script src="inc/jquery-1.6.min.js"></script>
+<script src="inc/RequestAnimationFrame.js"></script>
+<script src="inc/Three.js"></script>
+<script src="inc/twisty.js"></script>
+<script src="inc/twisty_alg.js"></script>
+<script src="inc/cube.js"></script>
+
 
 <!-- I apologize dearly for the lack of CSS on this page. -->
 <style type="text/css" media="screen">
@@ -35,7 +42,7 @@ Allow static image generation with iCube: http://software.rubikscube.info/icube/
     #appletdiv {
         height: 24em;
         width: 92%;
-        padding: 12px;
+        padding: 0px;
         margin: auto;
         resize: both;
         overflow: auto;
@@ -136,6 +143,23 @@ var p_animtype=gupdef('animtype');
 var p_scheme=gupdef('scheme');
 var p_stage=gupdef('stage');
 var p_displines=gupdef('displines');
+
+var twisty_js_beta = false;
+
+if (typeof localStorage !== "undefined" && localStorage.getItem("twisty_js_beta") == "1") {
+  twisty_js_beta = true;
+}
+
+function twisty_js_beta_update() {
+  twisty_js_beta = document.getElementById("twisty_js_beta").checked;
+  if (twisty_js_beta) {
+    localStorage.setItem("twisty_js_beta", "1");
+  }
+  else {
+    localStorage.setItem("twisty_js_beta", "0");
+  }
+  loadapplet();
+}
 
 if(p_name!=paramdefault('name'))
 	document.title=p_name+' - alg.garron.us';
@@ -302,26 +326,83 @@ if (p_displines!="")
 var alghash=p_alg.replace(/-/g, "%2D").replace(/'/g, "-").replace(/_/g, "%20").replace(/[^\w\d-]/g, "");
 var alghash=alghash.substr(0,Math.min(alghash.length,12));
 
-document.getElementById("righthalf").innerHTML='\n<div name="appletdiv" id="appletdiv">'
-	+'\n<applet code="'+jarfile+'.class" archive="applet/'+jarfile+'.jar" width="100%" height="100%">'
-	+'\n <param name="scriptType" value="'+p_animtype.replace('gen','Generator').replace('solve','Solver')+'">'
-	+'\n <param name="resourceFile" value="'+notationfile+'"/><param name="notation" value="'+p_cube+'"/>'
-	+'\n <param name="colorTable" value="'+hexscheme(p_scheme)+'"><param name="faces" value="1,2,3,4,5,6">'
-	+'\n <param name="backgroundColor" value="0xffffdd">'
-	+stickerappletcode
-	+displinescode
-	+'\n <param name="initScript" value="'+applet_ini+'">'
-	+'\n <param name="script" value="'+applet_alg+'">'
-	+'\n<\/applet>'
-	+'\n<\/div>'
-  +'<br><span title="Short link for forums">Short/Long Forum Links:<br><input id="copyurl" type="text" readonly="readonly" value="'+forumlink+'" onclick="this.focus();this.select();"/><\/span><br>'
-  +'<span title="Long link for forums"><textarea id="copyurl" type="text" readonly="readonly" onclick="this.focus();this.select();" rows="2"/>'+forumlinklong+'</textarea><\/span>'
-  +'<form action="http://tinyurl.com/create.php" method="post" target="_blank">'
-  +'<input type="hidden" name="alias" size="30" value="alg'+alghash+'">'
-  +'<input type="hidden" name="url" size="30" value="http://alg.garron.us/'+URLparams+'">'
-  +'Or: <input type="submit" name="submit" value="TinyURL">'
-  +'<\/form>'
-;
+if (twisty_js_beta) {
+
+  document.getElementById("righthalf").innerHTML='\n<div name="appletdiv" id="appletdiv" style=\"position: relative;\"><\/div>'
+    +'<center>'
+    +'<span title="Pause"><button id="rewind" style="font-size: 250%">&larr;</button></span>'
+    +'<span title="Play"><button id="play" style="font-size: 250%">&#9654;</button></span>'
+    +'<span title="Pause"><button id="pause" style="font-size: 250%">&#x2759;&#x2759;</button></span>'
+    +'<span title="Pause"><button id="fast_forward" style="font-size: 250%">&rarr;</button></span>'
+    +'</center>'
+    +'<br><span title="Short link for forums">Short/Long Forum Links:<br><input id="copyurl" type="text" readonly="readonly" value="'+forumlink+'" onclick="this.focus();this.select();"/><\/span><br>'
+    +'<span title="Long link for forums"><textarea id="copyurl" type="text" readonly="readonly" onclick="this.focus();this.select();" rows="2"/>'+forumlinklong+'</textarea><\/span>'
+    +'<form action="http://tinyurl.com/create.php" method="post" target="_blank">'
+    +'<input type="hidden" name="alias" size="30" value="alg'+alghash+'">'
+    +'<input type="hidden" name="url" size="30" value="http://alg.garron.us/'+URLparams+'">'
+    +'Or: <input type="submit" name="submit" value="TinyURL">'
+    +'<\/form>'
+  ;
+
+    var dimension = parseInt(p_cube[0]);
+
+    twistyScene = new twistyjs.TwistyScene();
+    $("#appletdiv").append($(twistyScene.getDomElement()));
+
+    twistyScene.initializeTwisty({
+      "type": "cube",
+      "dimension": dimension,
+      "stage": p_stage,
+      "allowDragging": true,
+        hintStickers: true
+    });
+
+    var init = alg.sign_w.stringToAlg(p_ini);
+    var algo = alg.sign_w.stringToAlg(p_alg);
+    var type = p_animtype;
+
+    twistyScene.setupAnimation(
+      algo,
+      {
+        init: init,
+        type: type
+      }
+    );
+
+    //twistyScene.cam(0.3)
+
+    $("#play").click(twistyScene.startAnimation);
+    $("#pause").click(twistyScene.stopPlayback);
+    $("#rewind").click(function() {
+      twistyScene.setIndex(-1);
+    });
+    $("#fast_forward").click(function() {
+      twistyScene.setIndex(twistyScene.getMoveList().length-1);
+    });
+
+  } else {
+
+    document.getElementById("righthalf").innerHTML='\n<div name="appletdiv" id="appletdiv">'
+      +'\n<applet code="'+jarfile+'.class" archive="applet/'+jarfile+'.jar" width="100%" height="100%">'
+      +'\n <param name="scriptType" value="'+p_animtype.replace('gen','Generator').replace('solve','Solver')+'">'
+      +'\n <param name="resourceFile" value="'+notationfile+'"/><param name="notation" value="'+p_cube+'"/>'
+      +'\n <param name="colorTable" value="'+hexscheme(p_scheme)+'"><param name="faces" value="1,2,3,4,5,6">'
+      +'\n <param name="backgroundColor" value="0xffffdd">'
+      +stickerappletcode
+      +displinescode
+      +'\n <param name="initScript" value="'+applet_ini+'">'
+      +'\n <param name="script" value="'+applet_alg+'">'
+      +'\n<\/applet>'
+      +'\n<\/div>'
+      +'<br><span title="Short link for forums">Short/Long Forum Links:<br><input id="copyurl" type="text" readonly="readonly" value="'+forumlink+'" onclick="this.focus();this.select();"/><\/span><br>'
+      +'<span title="Long link for forums"><textarea id="copyurl" type="text" readonly="readonly" onclick="this.focus();this.select();" rows="2"/>'+forumlinklong+'</textarea><\/span>'
+      +'<form action="http://tinyurl.com/create.php" method="post" target="_blank">'
+      +'<input type="hidden" name="alias" size="30" value="alg'+alghash+'">'
+      +'<input type="hidden" name="url" size="30" value="http://alg.garron.us/'+URLparams+'">'
+      +'Or: <input type="submit" name="submit" value="TinyURL">'
+      +'<\/form>';
+
+  }
 }
 
 function showhelp()
@@ -537,6 +618,16 @@ document.getElementById('displines_'+p_displines).checked="true";
 <button type="button" onclick="showAlgTyper();" style="font-size: 125%">AlgTyper</button>
 <br><br>
 <span style="font-family: monospace" title="Everyone loves XKCD. Especially because of the hovertext.">alg.garron.us - by Lucas Garron<br>Original applets by <a href="http://www.randelshofer.ch/">Werner Randelshofer</a> and <a href="http://www.rubikscube.info/">Josef Jelinek</a></span>
+
+<br><br>
+
+<input type="checkbox" id="twisty_js_beta" onchange="twisty_js_beta_update();"/>
+<label for="twisty_js_beta">twisty.js beta</label>
+<script>
+if (twisty_js_beta) {
+  document.getElementById("twisty_js_beta").checked = true;
+}
+</script>
 
 </td>
 <td id="righthalf" width="50%" style="vertical-align: top;" >
