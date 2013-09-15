@@ -274,7 +274,6 @@ twistyjs.TwistyScene = function() {
   function moveCameraPure(theta) {
     cameraTheta = theta;
     scale = twisty.cameraScale();
-    console.log(scale);
     camera.position.x = 2.5*Math.sin(theta) * scale;
     camera.position.y = 2 * scale;
     camera.position.z = 2.5*Math.cos(theta) * scale;
@@ -386,7 +385,7 @@ twistyjs.TwistyScene = function() {
 
   function stepAmount() {
     var factor = 3; // Tuned constant; equals the maximum ratio of a long move vs. a quarter turn.
-    var currentAmount = Math.abs(currentMove()[3]);
+    var currentAmount = Math.abs(currentMove().amount);
     return baseAnimationStep * currentAmount / (1 + (factor*(currentAmount - 1)));
   }
 
@@ -440,7 +439,7 @@ twistyjs.TwistyScene = function() {
     stopPlaybackSoon = false;
     if(pendingAnimationLoop === null) {
       //log("Starting move queue: " + movesToString(moveList));
-      while (moveList[currentMoveIdx+1][2] === ".") {
+      while (moveList[currentMoveIdx+1].base === ".") {
         currentMoveIdx++; // Don't start animating on a pause.
       }
       startMove();

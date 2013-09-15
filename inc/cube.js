@@ -88,7 +88,6 @@ function createCubeTwisty(twistyScene, twistyParameters) {
   ];
 
   var stickers = stageStickers["full"];
-  console.log("sdfsdf", cubeOptions["stage"] in stageStickers);
   if (cubeOptions["stage"] in stageStickers) {
     stickers = stageStickers[cubeOptions["stage"]];
   }
@@ -249,14 +248,16 @@ for (var i = 0; i < numSides; i++) {
   var lastMoveProgress = 0;
   var animateMoveCallback = function(twisty, currentMove, moveProgress) {
 
-    if (currentMove[2] == ".") {
+    var canonical = alg.sign_w.canonicalizeMove(currentMove);
+
+    if (canonical.base == ".") {
       return; // Pause
     }
 
     var rott = new THREE.Matrix4();
-    //rott.makeRotationAxis(sidesRotAxis[currentMove[2]], (moveProgress - lastMoveProgress) * currentMove[3] * Math.TAU/4);
+    //rott.makeRotationAxis(sidesRotAxis[canonical.base], (moveProgress - lastMoveProgress) * canonical.amount * Math.TAU/4);
     lastMoveProgress = moveProgress;
-    rott.makeRotationAxis(sidesRotAxis[currentMove[2]], moveProgress * currentMove[3] * Math.TAU/4);
+    rott.makeRotationAxis(sidesRotAxis[canonical.base], moveProgress * canonical.amount * Math.TAU/4);
 
     var state = twisty["cubePieces"];
 
@@ -269,13 +270,13 @@ for (var i = 0; i < numSides; i++) {
 
         // Support negative layer indices (e.g. for rotations)
         //TODO: Bug 20110906, if negative index ends up the same as start index, the animation is iffy. 
-        var layerStart = currentMove[0];
-        var layerEnd = currentMove[1];
+        var layerStart = canonical.startLayer;
+        var layerEnd = canonical.endLayer;
         if (layerEnd < 0) {
           layerEnd = twisty["options"]["dimension"] + 1 + layerEnd;
         }
 
-        var layer = matrixVector3Dot(sticker[1].matrix, sidesNorm[currentMove[2]]);
+        var layer = matrixVector3Dot(sticker[1].matrix, sidesNorm[canonical.base]);
         if (
             layer < twisty["options"]["dimension"] - 2*layerStart + 2.5
             &&
@@ -323,11 +324,13 @@ for (var i = 0; i < numSides; i++) {
 
   var advanceMoveCallback = function(twisty, currentMove) {
 
-    if (currentMove[2] === ".") {
+    var canonical = alg.sign_w.canonicalizeMove(currentMove);
+
+    if (canonical.base === ".") {
       return; // Pause
     }
 
-    var rott = matrix4Power(sidesRot[currentMove[2]], currentMove[3]);
+    var rott = matrix4Power(sidesRot[canonical.base], canonical.amount);
 
     var state = twisty["cubePieces"];
 
@@ -337,13 +340,13 @@ for (var i = 0; i < numSides; i++) {
         // TODO - sticker isn't really a good name for this --jfly
         var sticker = state[faceIndex][stickerIndex];
 
-        var layerStart = currentMove[0];
-        var layerEnd = currentMove[1];
+        var layerStart = canonical.startLayer;
+        var layerEnd = canonical.endLayer;
         if (layerEnd < 0) {
           layerEnd = twisty["options"]["dimension"] + 1 + layerEnd;
         }
 
-        var layer = matrixVector3Dot(sticker[1].matrix, sidesNorm[currentMove[2]]);
+        var layer = matrixVector3Dot(sticker[1].matrix, sidesNorm[canonical.base]);
         if (
             layer < twisty["options"]["dimension"] - 2*layerStart + 2.5
             &&
@@ -360,7 +363,7 @@ for (var i = 0; i < numSides; i++) {
       }
     }
 
-    cumulativeAlgorithm.push(currentMove);
+    cumulativeAlgorithm.push(canonical);
     if (twisty["options"]["algUpdateCallback"]) {
       twisty["options"]["algUpdateCallback"](cumulativeAlgorithm);
     }
@@ -391,32 +394,22 @@ for (var i = 0; i < numSides; i++) {
   var oS = 1;
   var iSi = cubeOptions["dimension"];
   var cubeKeyMapping = {
-    73: [iS, oS, "R", 1],
-    75: [iS, oS, "R", -1],
-    87: [iS, oS, "B", 1],
-    79: [iS, oS, "B", -1],
-    83: [iS, oS, "D", 1],
-    76: [iS, oS, "D", -1],
-    68: [iS, oS, "L", 1],
-    69: [iS, oS, "L", -1],
-    74: [iS, oS, "U", 1],
-    70: [iS, oS, "U", -1],
-    72: [iS, oS, "F", 1],
-    71: [iS, oS, "F", -1],
-    186: [iS, iSi, "U", 1],//y
-    59: [iS, iSi, "U", 1],//y (TODO - why is this needed for firefox?)
-    65: [iS, iSi, "U", -1],//y'
-    85: [iS, oS+1, "R", 1],
-    82: [iS, oS+1, "L", -1],
-    77: [iS, oS+1, "R", -1],
-    86: [iS, oS, "F", -1],
-    84: [iS, iSi, "L", -1],
-    89: [iS, iSi, "R", 1],
-    78: [iS, oS, "F", 1],
-    66: [iS, iSi, "L", 1],
-    190: [2, 2, "R", 1],//M'
-    80: [iS, iSi, "F", 1],//y
-    81: [iS, iSi, "F", -1],//y'
+    73: "R", 75: "R'",
+    87: "B", 79: "B'",
+    83: "D", 76: "D'",
+    68: "L", 69: "L'",
+    74: "U", 70: "U'",
+    72: "F", 71: "F'", // Heise
+    78: "F", 86: "F'", //Kirjava
+
+    67: "l", 82: "l'",
+    85: "r", 77: "r'",
+
+    84: "x", 89: "x", 66: "x'", // 84 (T) and 89 (Y) are alternatives.
+    186: "y", 59: "y", 65: "y'", // 186 is WebKit, 59 is Mozilla; see http://unixpapa.com/js/key.html
+    80: "z", 81: "z'",
+
+    190: "M'",
   }
   var keydownCallback = function(twisty, e) {
     if(e.altKey || e.ctrlKey) {
@@ -425,7 +418,8 @@ for (var i = 0; i < numSides; i++) {
 
     var keyCode = e.keyCode;
     if (keyCode in cubeKeyMapping) {
-      twistyScene.addMoves([cubeKeyMapping[keyCode]]);
+      var move = alg.sign_w.stringToAlg(cubeKeyMapping[keyCode]);
+      twistyScene.addMoves(move);
     }
   };
 
@@ -522,7 +516,7 @@ for (var i = 0; i < numSides; i++) {
   };
 
   var isInspectionLegalMove = function(twisty, move) {
-    if(move[0] == 1 && move[1] == twisty["options"]["dimension"]) {
+    if(move.startLayer == 1 && move.endLayer == twisty["options"]["dimension"]) {
       return true;
     }
     return false;
