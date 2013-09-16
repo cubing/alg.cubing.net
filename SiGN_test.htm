@@ -330,6 +330,9 @@ if (p_displines!="")
 var alghash=p_alg.replace(/-/g, "%2D").replace(/'/g, "-").replace(/_/g, "%20").replace(/[^\w\d-]/g, "");
 var alghash=alghash.substr(0,Math.min(alghash.length,12));
 
+var url = "http://alg.garron.us/" + URLparams;
+console.log(url);
+
 if (twisty_js_beta || twisty_js_beta_from_url) {
 
   document.getElementById("righthalf").innerHTML=''
@@ -342,6 +345,7 @@ if (twisty_js_beta || twisty_js_beta_from_url) {
     +'<span title="Pause"><button id="pause" style="font-size: 250%">&nbsp;&nbsp;&#x2759;&#x2759;&nbsp;&nbsp;</button></span>'
     +'<span title="Pause"><button id="fast_forward" style="font-size: 250%">&nbsp;&nbsp;&rarr;&nbsp;&nbsp;</button></span>'
     +'</center>'
+    +'<br><span title="URL">URL:<br><input id="copyurl" type="text" readonly="readonly" value="'+url+'" onclick="this.focus();this.select();"/><\/span><br>'
     +'<br><span title="Short link for forums">Short/Long Forum Links:<br><input id="copyurl" type="text" readonly="readonly" value="'+forumlink+'" onclick="this.focus();this.select();"/><\/span><br>'
     +'<span title="Long link for forums"><textarea id="copyurl" type="text" readonly="readonly" onclick="this.focus();this.select();" rows="2"/>'+forumlinklong+'</textarea><\/span>'
     +'<form action="http://tinyurl.com/create.php" method="post" target="_blank">'
