@@ -144,6 +144,11 @@ twistyjs.TwistyScene = function() {
     if(twistyType.showFps) {
       startStats();
     }
+
+    if (typeof(that.speed) === "undefined") {
+      that.speed = twistyType.speed || 1;
+    }
+
     // resize creates the camera and calls render()
     that.resize();
   }
@@ -383,10 +388,14 @@ twistyjs.TwistyScene = function() {
 
   }
 
+  this.setSpeed = function(speed) {
+    that.speed = speed;
+  }
+
   function stepAmount() {
     var factor = 3; // Tuned constant; equals the maximum ratio of a long move vs. a quarter turn.
     var currentAmount = Math.abs(currentMove().amount);
-    return baseAnimationStep * currentAmount / (1 + (factor*(currentAmount - 1)));
+    return baseAnimationStep * currentAmount / (1 + (factor*(currentAmount - 1))) * that.speed;
   }
 
   var baseAnimationStep = 0.1;
