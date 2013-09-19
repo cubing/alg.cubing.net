@@ -32,6 +32,7 @@ Allow static image generation with iCube: http://software.rubikscube.info/icube/
 <script src="inc/RequestAnimationFrame.js"></script>
 <script src="inc/Three.js"></script>
 <script src="inc/twisty.js"></script>
+<script src="inc/sign_w_jison.js"></script>
 <script src="inc/twisty_alg.js"></script>
 <script src="inc/cube.js"></script>
 
@@ -373,6 +374,9 @@ if (twisty_js_beta || twisty_js_beta_from_url) {
     var init = alg.sign_w.stringToAlg(p_ini);
     var algo = alg.sign_w.stringToAlg(p_alg);
     var type = p_animtype;
+
+    init = alg.sign_w.algToMoves(init);
+    algo = alg.sign_w.algToMoves(algo);
 
     twistyScene.setupAnimation(
       algo,

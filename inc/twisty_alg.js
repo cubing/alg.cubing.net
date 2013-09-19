@@ -45,97 +45,6 @@ var alg = (function (){
 
   var sign_w = (function(){
 
-    // Note: we need to use direct regexp syntax instead of the RegExp constructor,
-    // else we seem to lose longest matches.
-    var pattern = /(((\d*)-)?(\d*)([UFRBLDMESufrbldxyz]w?)([\d]*)('?)|((\/\/)|(\/\*)|(\*\/)|(\n)|(\.)))/g;
-    var pattern_move = /^((\d*)-)?(\d*)([UFRBLDMESufrbldxyz]w?)([\d]*)('?)$/;
-
-    function stringToMove(moveString) {
-
-      if (debug) console.log("[Move] " + moveString);
-      
-      var parts = pattern_move.exec(moveString);
-      if (debug) console.log(parts);
-
-      var move = {
-        // startLayer: 1,
-        // endLayer: 1,
-        base: parts[4],
-        amount: 1
-      }
-
-      if (patterns.single.test(move.base)) {
-        var layerParsed = parseInt(parts[3]);
-        if (!isNaN(layerParsed )) {
-          move.layer = layerParsed;
-        }
-      } else if (patterns.wide.test(move.base)) {
-
-        var outEndLayerParsed = parseInt(parts[3]);
-        if (!isNaN(outEndLayerParsed )) {
-          move.endLayer = outEndLayerParsed;
-
-          var outStartLayerParsed = parseInt(parts[2]);
-          if (!isNaN(outStartLayerParsed )) {
-            move.startLayer = outStartLayerParsed;
-          }
-        }
-      } else if (patterns.slice.test(move.base)) {
-        // pass
-      } else if (patterns.rotation.test(move.base)) {
-        // pass
-      }
-      
-      /* Amount */
-      
-      var amountParsed = parseInt(parts[5]);
-      if (!isNaN(amountParsed)) {
-        move.amount = amountParsed;
-      }
-      if (parts[6] == "'") {
-        move.amount *= -1;
-      }
-      
-      /* Return */
-      
-      return move;
-      
-    }
-
-    function stringToAlg(algString) {
-      
-      var moveStrings = algString.match(pattern);
-      var alg = [];
-      
-      if (debug) console.log(moveStrings);
-      
-      var inLineComment = false;
-      var inLongComment = false;
-
-      for (i in moveStrings) {
-
-
-        if (moveStrings[i] === "//") { inLineComment = true; continue; }
-        if (moveStrings[i] === "\n") { inLineComment = false; alg.push({base: ".", amount: 1}); continue; }
-        if (moveStrings[i] === ".")  { alg.push({base: ".", amount: 1}); continue; }
-        if (moveStrings[i] === "/*" && !inLineComment) { inLongComment = true; continue; }
-        if (moveStrings[i] === "*/") { 
-          if (debug && !inLongComment) { console.err("Closing a comment that wasn't opened!");}
-          inLongComment = false;
-          continue;
-        }
-        if (inLineComment || inLongComment) { continue; }
-
-        var move = stringToMove(moveStrings[i]);
-        alg.push(move);
-      }
-      
-      if (debug) console.log(alg);
-      
-      return alg;
-      
-    }
-
     function algSimplify(alg) {
       var algOut = [];
       for (var i = 0; i < alg.length; i++) {
@@ -158,49 +67,67 @@ var alg = (function (){
       return algOut;
     }
 
-    function algToString(algIn, dimension) {
+    var repeatableToString = {}
 
-      var alg = algSimplify(algIn);
-      
-      var moveStrings = [];
-      for (i in alg) {
-
-        var tL = alg[i].layer;
-        var sL = alg[i].startLayer;
-        var oL = alg[i].endLayer;
-        var move = alg[i].base;
-        var amount = Math.abs(alg[i].amount);
-        var amountDir = (alg[i].amount > 0) ? 1 : -1; // Mutable
+    repeatableToString["move"] = function(move) {
+        var tL = move.layer;
+        var sL = move.startLayer;
+        var oL = move.endLayer;
 
         var prefix = "";
-        var suffix = "";
 
         // Prefix logic
-        if (patterns.single.test(alg[i].base)) {
-          if (alg[i].layer) {
-            prefix = alg[i].layer.toString();
+        if (patterns.single.test(move.base)) {
+          if (move.layer) {
+            prefix = move.layer.toString();
           }
-        } else if (patterns.wide.test(alg[i].base)) {
-          if (alg[i].endLayer) {
-            prefix = alg[i].endLayer.toString();
-            if (alg[i].startLayer) {
-              prefix = alg[i].startLayer.toString() + "-" + prefix;
+        } else if (patterns.wide.test(move.base)) {
+          if (move.endLayer) {
+            prefix = move.endLayer.toString();
+            if (move.startLayer) {
+              prefix = move.startLayer.toString() + "-" + prefix;
             }
           }
         }
 
-        // Suffix Logic
-        if (amount == 0) {
-          continue;
-        } else if (amount > 1) {
-          suffix += "" + amount;
-        }
+        return prefix + move.base;
+    }
 
-        if (amountDir === -1) {
-          suffix += "'";
-        }
+    repeatableToString["commutator"] = function(commutator) {
+      return "[" + algToString(commutator.A) + ", " + algToString(commutator.B) + "]";
+    }
 
-        moveString = prefix + alg[i].base + suffix;
+    repeatableToString["conjugate"] = function(commutator) {
+      return "[" + algToString(commutator.A) + ", " + algToString(commutator.B) + "]";
+    }
+
+    repeatableToString["group"] = function(group) {
+      return "(" + algToString(group.A) + ")";
+    }
+
+    function suffix(repeated) {
+
+      var amount = Math.abs(repeated.amount);
+      var amountDir = (repeated.amount > 0) ? 1 : -1; // Mutable
+
+      var suffix = ""
+      // Suffix Logic
+      if (amount > 1) {
+        suffix += "" + amount;
+      }
+
+      if (amountDir === -1) {
+        suffix += "'";
+      }
+      return suffix;
+    }
+
+    function algToString(algIn, dimension) {
+      var alg = algSimplify(algIn);
+
+      var moveStrings = [];
+      for (i in alg) {
+        var moveString = repeatableToString[alg[i].type](alg[i]) + suffix(alg[i]);
         moveStrings.push(moveString);
       }
       return moveStrings.join(" ");
@@ -224,11 +151,73 @@ var alg = (function (){
       return algInverse.reverse();
     }
 
+    function repeatMoves(movesIn, accordingTo) {
+
+      var movesOnce = movesIn;
+
+      var amount = Math.abs(accordingTo.amount);
+      var amountDir = (accordingTo.amount > 0) ? 1 : -1; // Mutable
+
+      if (amountDir == -1) {
+        movesOnce = invert(movesOnce);
+      }
+
+      var movesOut = [];
+      for (var i = 0; i < amount; i++) {
+        movesOut = movesOut.concat(movesOnce);
+      }
+
+      return movesOut;
+    }
+
+    var repeatableToMoves = {};
+
+    repeatableToMoves["move"] = function(move) {
+      return [move];
+    }
+
+    repeatableToMoves["commutator"] = function(commutator) {
+      var once = [].concat(
+        algToMoves(commutator.A),
+        algToMoves(commutator.B),
+        invert(algToMoves(commutator.A)),
+        invert(algToMoves(commutator.B))
+      );
+      return repeatMoves(once, commutator);
+    }
+
+    repeatableToMoves["conjugate"] = function(conjugate) {
+      var once = [].concat(
+        algToMoves(conjugate.A),
+        algToMoves(conjugate.B),
+        invert(algToMoves(conjugate.A))
+      );
+      return repeatMoves(once, conjugate);
+    }
+
+    repeatableToMoves["group"] = function(group) {
+      var once = algToMoves(group.A);
+      return repeatMoves(once, group);
+    }
+
+    function algToMoves(algIn) {
+      var moves = [];
+      for (i in algIn) {
+        moves = moves.concat(repeatableToMoves[algIn[i].type](algIn[i]));
+      }
+      return moves;
+    }
+
+    function stringToAlg(algString) {
+      return sign_w_jison.parse(algString);
+    }
+
     return {
       algToString: algToString,
       stringToAlg: stringToAlg,
       invert: invert,
-      canonicalizeMove: canonicalizeMove
+      canonicalizeMove: canonicalizeMove,
+      algToMoves: algToMoves
     }
   })();
 
