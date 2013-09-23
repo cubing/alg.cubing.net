@@ -167,6 +167,10 @@ function twisty_js_beta_update() {
   loadapplet();
 }
 
+function use_twisty_js() {
+  return twisty_js_beta || twisty_js_beta_from_url;
+}
+
 if(p_name!=paramdefault('name'))
 	document.title=p_name+' - alg.garron.us';
 
@@ -335,7 +339,7 @@ var alghash=alghash.substr(0,Math.min(alghash.length,12));
 var url = "http://alg.garron.us/" + URLparams;
 console.log(url);
 
-if (twisty_js_beta || twisty_js_beta_from_url) {
+if (use_twisty_js()) {
 
   document.getElementById("righthalf").innerHTML=''
     +'\n<div name="appletdiv" id="appletdiv" style=\"position: relative;\"><\/div>'
@@ -672,7 +676,9 @@ if (twisty_js_beta) {
 <param name="speed" value="5">
 </applet>
 <script type="text/javascript">
+if (!use_twisty_js()) {
 	algtyper.reinitmove(document.getElementById('ini').value);
+}
 </script>
 <p style="text-align: center;">
  <button type="button" onclick="document.getElementById('alg').value=algtyper.GimmeAlg();">Alg it!</button>
