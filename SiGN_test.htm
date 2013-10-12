@@ -701,18 +701,6 @@ if (twisty_js_beta) {
  <button type="button" onclick="algtyper.reinitmove('');algtyper.repaint();">Clear</button>
  <button type="button" onclick="algtyper.reinitmove(document.getElementById('ini').value);">Scramble</button>
 </p>
-<applet code="AlgTyper.class" archive="applet/AlgTyper.jar" width="95%" height="256" name="algtyper" id="algtyper">
-<param name="mayscript" value="true">
-<param name="bgcolor" value="ffffdd">
-<param name="hint" value="0">
-<param name="colorscheme" value="wygbor">
-<param name="speed" value="5">
-</applet>
-<script type="text/javascript">
-if (!use_twisty_js()) {
-	algtyper.reinitmove(document.getElementById('ini').value);
-}
-</script>
 <p style="text-align: center;">
  <button type="button" onclick="document.getElementById('alg').value=algtyper.GimmeAlg();">Alg it!</button>
  <button type="button" onclick="document.getElementById('alg').value+=algtyper.GimmeAlg();">Append</button>
