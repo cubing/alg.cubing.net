@@ -339,6 +339,38 @@ var alghash=alghash.substr(0,Math.min(alghash.length,12));
 var url = "http://alg.garron.us/" + URLparams;
 console.log(url);
 
+colorMap = {
+  "y": 0xffff00,
+  "w": 0xffffff,
+  "b": 0x0000ff,
+  "g": 0x00ff00,
+  "o": 0xff8800,
+  "r": 0xff0000,
+  "x": 0x444444
+};
+
+lightColorMap = {
+  "y": 0x888800,
+  "w": 0xaaaaaa,
+  "b": 0x000088,
+  "g": 0x008800,
+  "o": 0x884400,
+  "r": 0x660000,
+  "x": 0x222222
+};
+
+function colorList(str) {
+  var out = [];
+  var outLight = [];
+  var str2 = ("x" + str).split("");
+  var reorder = [0, 6, 3, 1, 2, 4, 5];
+  for (var i in str2) {
+    out.push(colorMap[str2[reorder[i]]]);
+    outLight.push(lightColorMap[str2[reorder[i]]]);
+  }
+  return out.concat(outLight);
+}
+
 if (use_twisty_js()) {
 
   document.getElementById("righthalf").innerHTML=''
@@ -374,7 +406,8 @@ if (use_twisty_js()) {
       "stage": p_stage,
       "allowDragging": true,
       "hintStickers": true,
-      "stickerBorder": false
+      "stickerBorder": false,
+      "colors": colorList(p_scheme)
     });
 
     var init = alg.sign_w.stringToAlg(p_ini);
