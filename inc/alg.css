@@ -166,3 +166,12 @@ p {
 .sharetext:hover {
   background: #fff;
 }
+
+input.current_scheme {
+  font-size: 1em;
+  width: 5em;
+}
+
+input.current_scheme[readonly] {
+  color: #aaa;
+}
