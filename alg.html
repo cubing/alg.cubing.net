@@ -1,0 +1,93 @@
+
+<html>
+<head>
+  <link href="inc/alg.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+
+  <div id="display-wrapper">
+    <div id="viewer">
+    </div><div id="controls-wrapper"><center><div id="controls">
+
+      <input id="currentMove" type="range" min="0.1" max="3" step="0.01" value="1"><br>
+
+      <div class="control">
+        &larr;
+      </div><div class="control">
+        &bull;
+      </div><div class="control">
+        &#9654;
+      </div><div class="control">
+        &#x2759;&#x2759;
+      </div><div class="control">
+        &rarr;
+      </div>
+    </center></div>
+
+  </div><div id="info-wrapper"><div id="info">
+
+    <h1>alg.cubing.net<hr></h1>
+
+    <h2>Scramble</h2>
+    <textarea id="setup" class="moves">D2 U' R2 U F2 D2 U' R2 U' B' L2 R' B' D2 U B2 L' D' R2</textarea>
+
+    <h2>Solution</h2>
+    <textarea id="algorithm" class="moves">x y' // inspection
+F R D L F // cross
+U R U' R' d R' U R // 1st pair
+y U2' R' U' R // 2nd pair
+U L U' L' d R U' R' // 3rd pair
+y' U' R U R' U R U' R' // 4th pair (OLS)
+R2' U' R' U' R U R U R U' R U2' // PLL</textarea>
+
+    <h2>Settings</h2>
+    <div id="settings">
+      <select id="puzzle">
+        <option value="">2x2x2</option>
+        <option value="">3x3x3</option>
+        <option value="">4x4x4</option>
+        <option value="">5x5x5</option>
+        <option value="">6x6x6</option>
+        <option value="">7x7x7</option>
+      </select>
+
+      <select id="stage">
+        <option value="">Full</option>
+        <option value="">F2L</option>
+        <option value="">OLL</option>
+        <option value="">PLL</option>
+      </select>
+
+      <select id="type">
+        <option value="">Algorithm</option>
+        <option value="">Solution</option>
+        <option value="">Reconstruction</option>
+      </select>
+
+      <br>
+      Color Scheme:
+<input type="radio"> BOY
+<input type="radio"> Japanese
+<input type="radio"> <input type="text" value="groybw">
+      <br>
+      Speed: <input id="currentMove" type="range" min="0" step="1" value="0" style="vertical-align: middle;"> (1x)
+      <br>
+    </div>
+
+    <h2>Share</h2>
+      <input
+        type="text"
+        id="copyurl"
+        class="sharetext"
+        readonly="readonly" value="[url=&quot;http://alg.garron.us/?alg=R&amp;cube=4x4x4&amp;notation=WCA&amp;animtype=solve&amp;scheme=groybw&amp;stage=F2L&amp;displines=0&quot;]R[/url]" onclick="this.focus();this.select();"
+      >
+
+    <h2>About</h2>
+    <p>
+    <i>alg.cubing.net</i> is a tool by Lucas Garron.<br>
+    Contribute on <a href="https://github.com/lgarron/alg.garron.us">on GitHub</a> or discuss at <a href="http://www.speedsolving.com/forum/forum.php">speedsolving.com</a>
+    </p>
+
+  </div></div>
+  </body>
+</html>

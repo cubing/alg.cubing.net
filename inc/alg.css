@@ -1,0 +1,168 @@
+html {
+  font-family: Helvetica, Tacoma, sans-serif;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+#display-wrapper, #info-wrapper {
+  vertical-align: bottom;
+  display: inline-block;
+  width: 50%;
+  height: 100%;
+}
+
+#info-wrapper {
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: -5;
+  background: rgb(255, 245, 235);
+}
+
+@media (max-width: 640px) and (min-height: 640px), (orientation: portrait) {
+  #display-wrapper, #info-wrapper {width: 100%;}
+  #display-wrapper {height: 50%;}
+  #info-wrapper {height: 50%;}
+
+}
+
+#info {
+  padding: 0% 4%;
+}
+
+#viewer {
+  display: block;
+  width: 100%;
+  height: 80%;
+
+  background: url(cube.png);
+  background-size: contain;
+  background-position: top center;
+  background-repeat: no-repeat;
+}
+
+#controls-wrapper {
+  display: block;
+  width: 100%;
+  height: 20%;
+  /*background: linear-gradient(transparent 0%, rgba(0, 0, 0, 0.2) 20%);*/
+}
+
+#controls {
+  padding-top: 5%;
+  width: 100%;
+  background:;
+  position: absolute; bottom: 0; left: 0; 
+}
+
+#controls #currentMove {
+  width: 80%;
+  margin: 5px;
+}
+
+#controls .control {
+  font-size: 2.5em;
+  font-weight: bold;
+  display: inline-block;
+  border-radius: 8px;
+  vertical-align: middle;
+  background: rgba(220, 220, 220, 0.5);
+  border: 1px solid #bbb;
+  width: 17%;
+  overflow: hidden;
+  margin: 2% 0.5% 3%;
+}
+
+#controls .control:hover {
+  background: #fff;
+  cursor: pointer;
+}
+
+#info h1 {
+  font-variant: small-caps;
+  width: 100%;
+  text-align: center;
+  padding: 2%;
+}
+
+hr {
+
+  width: 70%;
+  margin: auto;
+  height: 1px;
+  border: none;
+
+  /* Slimming/Fading Effect */
+  background: linear-gradient(
+    90deg,
+    rgba(127, 127, 127,0) 0%,
+    rgba(127, 127, 127,1) 50%,
+    rgba(127, 127, 127,0) 100%
+  );
+}
+
+#display-wrapper {
+  position: relative;
+  background-color: #EAEAEA;
+  background-image: linear-gradient(45deg, #DDD 25%, transparent 25%, transparent 75%, #DDD 75%, #DDD),
+    linear-gradient(45deg, #DDD 25%, transparent 25%, transparent 75%, #DDD 75%, #DDD);
+  background-size: 32px 32px;
+  background-position: 0 0, 16px 16px;
+
+  box-shadow: 0 0 8px #000;
+  z-index: 5;
+}
+
+h2 {
+  font-size: 20px;
+}
+
+.moves {
+  width: 100%;
+  font-size: 1.25em;
+  margin: 8px 8px 12px;
+  padding: 0.6em;
+  background: rgb(255, 250, 245);
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  resize: vertical;
+  max-width: 32em;
+}
+
+#setup {
+  height: 3em;
+}
+
+#algorithm {
+  height: 10em;
+}
+
+#settings {
+  margin: 8px;
+  line-height: 2em;
+}
+
+select {
+  font-size: 1em;
+  background: rgb(255, 250, 245);
+}
+
+p {
+  padding: 8px;
+}
+
+.sharetext {
+  font-size: 1em;
+  margin: 8px;
+  padding: 2px 8px;
+  background: rgb(255, 250, 245);
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  text-overflow: ellipsis;
+}
+
+.sharetext:hover {
+  background: #fff;
+}
