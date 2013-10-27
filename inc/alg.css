@@ -1,4 +1,4 @@
-html {
+html, textarea {
   font-family: Helvetica, Tacoma, sans-serif;
 }
 
@@ -36,11 +36,6 @@ html {
   display: block;
   width: 100%;
   height: 80%;
-
-  background: url(cube.png);
-  background-size: contain;
-  background-position: top center;
-  background-repeat: no-repeat;
 }
 
 #controls-wrapper {
@@ -73,6 +68,7 @@ html {
   width: 17%;
   overflow: hidden;
   margin: 2% 0.5% 3%;
+ outline:none;
 }
 
 #controls .control:hover {

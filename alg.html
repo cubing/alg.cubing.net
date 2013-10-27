@@ -4,6 +4,14 @@
   <script src="inc/alg.js"></script>
   <link href="inc/alg.css" rel="stylesheet" type="text/css" />
 
+  <!-- Includes for twisty.s development: -->
+  <script src="inc/jquery-1.6.min.js"></script>
+  <script src="inc/RequestAnimationFrame.js"></script>
+  <script src="inc/Three.js"></script>
+  <script src="inc/twisty.js"></script>
+  <script src="inc/sign_w_jison.js"></script>
+  <script src="inc/twisty_alg.js"></script>
+  <script src="inc/cube.js"></script>
 </head>
 <body>
 
@@ -11,29 +19,29 @@
     <div id="viewer">
     </div><div id="controls-wrapper"><center><div id="controls">
 
-      <input id="currentMove" type="range" min="0.1" max="3" step="0.01" value="1"><br>
+      <input id="currentMove" ng-model="current_move" type="range" min="0" max="1"><br>
 
-      <div class="control">
+      <button class="control" id="rewind">
         &larr;
-      </div><div class="control">
+      </button><button class="control" id="step">
         &bull;
-      </div><div class="control">
+      </button><button class="control" id="play">
         &#9654;
-      </div><div class="control">
+      </button><button class="control" id="pause">
         &#x2759;&#x2759;
-      </div><div class="control">
+      </button><button class="control" id="fast_forward">
         &rarr;
-      </div>
+      </button>
     </center></div>
 
   </div><div id="info-wrapper"><div id="info">
 
     <h1>alg.cubing.net<hr></h1>
 
-    <h2>Scramble</h2>
+    <h2>{{animtype.setup}}</h2>
     <textarea id="setup" class="moves" ng-model="setup"></textarea>
 
-    <h2>Solution</h2>
+    <h2>{{animtype.alg}}</h2>
     <textarea id="algorithm" class="moves" ng-model="alg"></textarea>
 
     <h2>Settings</h2>
@@ -58,7 +66,7 @@
       <input class="current_scheme" type="text" ng-show="!scheme.custom" ng-readonly="true" ng-value="scheme.scheme"/>
 
       <br>
-      Speed: <input id="currentMove" type="range" min="0.1" max="3" step="0.01" style="vertical-align: middle;" ng-model="speed"> ({{speed}}x)
+      Speed: <input id="currentMove" type="range" min="0.1" max="3" step="0.1" style="vertical-align: middle;" ng-model="speed"> ({{speed}}x)&nbsp;&nbsp;&nbsp;<button ng-click="speed = 1">Reset</button>
       <br>
     </div>
 
@@ -73,7 +81,7 @@
     <h2>About</h2>
     <p>
     <i>alg.cubing.net</i> is a tool by Lucas Garron.<br>
-    Contribute on <a href="https://github.com/lgarron/alg.garron.us">on GitHub</a> or discuss at <a href="http://www.speedsolving.com/forum/forum.php">speedsolving.com</a>
+    Contribute <a href="https://github.com/lgarron/alg.garron.us">on GitHub</a> or discuss at <a href="http://www.speedsolving.com/forum/forum.php">speedsolving.com</a>
     </p>
 
   </div></div>
