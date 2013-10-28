@@ -88,7 +88,6 @@ html, textarea {
   font-size: 1.25em;
   margin: 4px 8px 4px;
   padding: 0.4em 0.6em;
-  resize: vertical;
   max-width: 32em;
 }
 
@@ -109,6 +108,7 @@ html, textarea {
   border-radius: 12px;
   border: 1px solid transparent;
   line-height: 1.2em;
+  resize: none;
 }
 
 #title:hover, #title:focus, .moves:hover, .moves:focus  {

@@ -37,7 +37,7 @@
 
   </div><div id="info-wrapper"><div id="info">
 
-    <h1><input id="title" ng-model="title" placeholder="alg.garron.us"></h1>
+    <h1><textarea id="title" rows="{{title | num_lines}}" ng-trim="false" ng-model="title" placeholder="alg.garron.us"></textarea>
 
     <h2>{{type.alg}}</h2>
     <textarea id="algorithm" rows="{{alg | num_lines}}" ng-trim="false" class="moves" ng-model="alg" placeholder="[Click here to add {{type.alg | lowercase}} moves.]"
