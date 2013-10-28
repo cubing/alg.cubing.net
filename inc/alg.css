@@ -167,6 +167,7 @@ h2 {
 select {
   font-size: 1em;
   background: rgb(255, 250, 245);
+  border: 1px solid #ddd;
 }
 
 p {
