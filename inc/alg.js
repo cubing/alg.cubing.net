@@ -94,6 +94,21 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     $location.search(name, (value == _default) ? null : value);
   }
 
+  function forumLinkText(url) {
+    var algWithCommentsGreyed = ($scope.alg+"\n").replace(
+      /(\/\/.*)[\n\r]/g, "[COLOR=\"gray\"]$1[/COLOR]\n").replace(
+      /(\/\*[^(\*\/)]*\*\/)/g, "[COLOR=\"gray\"]$1[/COLOR]"
+    );
+    var text = algWithCommentsGreyed +
+      '[COLOR="gray"]View at [url=&quot;' +
+      url +
+      '&quot;]alg.cubing.net[/url][/COLOR]';
+    if ($scope.setup !== "") {
+      text = $scope.setup + "\n\n" + text;
+    }
+    return text.trim(); // The trim is redundant for angular.js, but let's keep it just in case.
+  }
+
   $scope.updateLocation = function() {
     $location.replace();
     setWithDefault("alg", $scope.alg);
@@ -104,6 +119,10 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     setWithDefault("scheme", $scope.scheme.id);
     setWithDefault("stage", $scope.stage.id);
     //TODO: Update sharing links
+
+    $scope.share_url = "http://alg.cubing.net" + $location.url();
+    $scope.share_forum_short = "[url=" + $scope.share_url + "]" + $scope.alg + "[/url]";
+    $scope.share_forum_long = forumLinkText($scope.share_url);
   };
 
   var colorMap = {

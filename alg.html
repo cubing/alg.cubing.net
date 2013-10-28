@@ -71,14 +71,9 @@
       <br>
     </div>
 
-    <h2>Share</h2>
-      <input
-        type="text"
-        id="copyurl"
-        class="sharetext"
-        readonly="readonly" value="[url=&quot;http://alg.garron.us/?alg=R&amp;cube=4x4x4&amp;notation=WCA&amp;animtype=solve&amp;scheme=groybw&amp;stage=F2L&amp;displines=0&quot;]R[/url]" onclick="this.focus();this.select();"
-      >
-
+    <h2>Forum Link</h2>
+      <span ng-show="type.id != 'reconstruction'"><input type="text" class="sharetext" readonly="readonly" ng-model="share_forum_short" onclick="this.focus(); this.select();" /></span>
+      <span ng-show="type.id == 'reconstruction'"><textarea class="sharetext" readonly="readonly" onclick="this.focus(); this.select();">{{share_forum_long}}</textarea></span>
     <h2>About</h2>
     <p>
     <i>alg.cubing.net</i> is a tool by Lucas Garron.<br>

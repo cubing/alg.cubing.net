@@ -182,6 +182,12 @@ p {
   border: 1px solid #ddd;
   border-radius: 5px;
   text-overflow: ellipsis;
+  vertical-align: middle;
+  width: 80%;
+}
+
+textarea.sharetext {
+  height: 2em;
 }
 
 .sharetext:hover {
