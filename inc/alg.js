@@ -35,46 +35,46 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     return obj;
   }
 
-  function initParameter(ngName, key, param, fallback, list) {
+  function initParameter(ngName, param, fallback, list) {
     var ngNamePlural = ngName + "s"; // Should work for all our cases.
     $scope[ngNamePlural] = list;
-    var obj = indexBy(list, key);
+    var obj = indexBy(list, "id");
     console.log(obj);
     $scope[ngName] = obj[search[param]] || obj[fallback];
   }
 
 
-  initParameter("puzzle", "name", "puzzle", "3x3x3", [
-    {name: "2x2x2", group: "Cube", dimension: 2},
-    {name: "3x3x3", group: "Cube", dimension: 3},
-    {name: "4x4x4", group: "Cube", dimension: 4},
-    {name: "5x5x5", group: "Cube", dimension: 5},
-    {name: "6x6x6", group: "Cube", dimension: 6},
-    {name: "7x7x7", group: "Cube", dimension: 7}
+  initParameter("puzzle", "puzzle", "3x3x3", [
+    {id: "2x2x2", name: "2x2x2", group: "Cube", dimension: 2},
+    {id: "3x3x3", name: "3x3x3", group: "Cube", dimension: 3},
+    {id: "4x4x4", name: "4x4x4", group: "Cube", dimension: 4},
+    {id: "5x5x5", name: "5x5x5", group: "Cube", dimension: 5},
+    {id: "6x6x6", name: "6x6x6", group: "Cube", dimension: 6},
+    {id: "7x7x7", name: "7x7x7", group: "Cube", dimension: 7}
   ]);
 
-  initParameter("stage", "stage", "stage", "full", [
-    {name: "Full", group: "Stage", "stage": "full"},
-    {name: "PLL", group: "Stage", "stage": "PLL"},
-    {name: "OLL", group: "Stage", "stage": "OLL"},
-    {name: "F2L", group: "Stage", "stage": "F2L"}
+  initParameter("stage", "stage", "full", [
+    {"id": "full", name: "Full", group: "Stage"},
+    {"id": "PLL", name: "PLL", group: "Stage"},
+    {"id": "OLL", name: "OLL", group: "Stage"},
+    {"id": "F2L", name: "F2L", group: "Stage"}
   ]);
 
-  initParameter("animtype", "type", "type", "algorithm", [
-    {name: "Algorithm", group: "Animation Type", type: "algorithm", setup: "Setup", alg: "Algorithm"},
-    {name: "Solution", group: "Animation Type", type: "solution", setup: "Setup", alg: "Solution"},
-    {name: "Reconstruction", group: "Animation Type", type: "reconstruction", setup: "Scramble", alg: "Solve"}
+  initParameter("animtype", "type", "algorithm", [
+    {id: "algorithm", name: "Algorithm", group: "Animation Type", setup: "Setup", alg: "Algorithm"},
+    {id: "solution", name: "Solution", group: "Animation Type", setup: "Setup", alg: "Solution"},
+    {id: "reconstruction", name: "Reconstruction", group: "Animation Type", setup: "Scramble", alg: "Solve"}
   ]);
 
   console.log($scope.animtype.type);
 
   // TODO: BOY/Japanese translations.
-  initParameter("scheme", "scheme", "scheme", "grobyw", [
-    {name: "BOY", type: "Color Scheme", scheme: "grobyw", display: "BOY", custom: false},
-    {name: "Japanese", type: "Color Scheme", scheme: "groybw", display: "Japanese", custom: false},
-    {name: "Custom:", type: "Color Scheme", scheme: "grobyw", display: "", custom: true}
+  initParameter("scheme", "scheme", "boy", [
+    {id: "boy", name: "BOY", type: "Color Scheme", scheme: "grobyw", display: "BOY", custom: false},
+    {id: "japanese", name: "Japanese", type: "Color Scheme", scheme: "groybw", display: "Japanese", custom: false},
+    {id: "custom", name: "Custom:", type: "Color Scheme", scheme: "grobyw", display: "", custom: true}
   ]);
-  $scope.custom_scheme = $scope.scheme.scheme;
+  $scope.custom_scheme = "";
 
   $scope.speed = 1;
   $scope.current_move = 0;
@@ -93,10 +93,10 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     $location.search('alg',  $scope.alg);
     $location.search('title',  $scope.title);
     $location.search('setup', $scope.setup);
-    $location.search('puzzle', $scope.puzzle.name);
-    $location.search('type', $scope.animtype.type);
-    $location.search('scheme', $scope.scheme);
-    $location.search('stage', $scope.stage.stage);
+    $location.search('puzzle', $scope.puzzle.id);
+    $location.search('type', $scope.animtype.id);
+    $location.search('scheme', $scope.scheme.id);
+    $location.search('stage', $scope.stage.id);
     //TODO: Update sharing links
   };
 
