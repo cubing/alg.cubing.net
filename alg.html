@@ -47,14 +47,14 @@
 
     <h2>Settings</h2>
     <div id="settings">
-      <select ng-model="puzzle" ng-options="p.name group by p.group for p in puzzles"></select>
-      <select ng-model="stage" ng-options="s.name group by s.group for s in stages" ng-show="puzzle.name == '3x3x3'"></select>
-      <select ng-model="animtype" ng-options="a.name group by a.group for a in animtypes"></select>
+      <select ng-model="puzzle" ng-options="p.name group by p.group for p in puzzle_list"></select>
+      <select ng-model="stage" ng-options="s.name group by s.group for s in stage_list" ng-show="puzzle.name == '3x3x3'"></select>
+      <select ng-model="animtype" ng-options="a.name group by a.group for a in animtype_list"></select>
 
       <br>
       Color Scheme:
 
-      <select ng-model="scheme" ng-options="s.name for s in schemes"></select>
+      <select ng-model="scheme" ng-options="s.name for s in scheme_list"></select>
       <!--label ng-repeat="s in schemes">
         <input
           type="radio"

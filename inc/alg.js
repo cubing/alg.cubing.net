@@ -36,7 +36,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
   }
 
   function initParameter(ngName, param, fallback, list) {
-    var ngNamePlural = ngName + "s"; // Should work for all our cases.
+    var ngNamePlural = ngName + "_list"; // Should work for all our cases.
     $scope[ngNamePlural] = list;
     var obj = indexBy(list, "id");
     console.log(obj);
