@@ -89,8 +89,18 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     $scope.title = search["title"];
   }
 
+  function escape_alg(alg) {
+    if (!alg) {return alg;}
+    return alg.replace(/_/g, '&#95;').replace(/ /g, '_');
+  }
+
+  function unescape_alg(alg) {
+    if (!alg) {return alg;}
+    return alg.replace(/_/g, ' ').replace(/&#95;/g, '_');
+  }
+
   $scope.alg_default = "";
-  $scope.alg = search["alg"] || $scope.alg_default;
+  $scope.alg = unescape_alg(search["alg"]) || $scope.alg_default;
   $scope.setup_default = "";
   $scope.setup = search["setup"] || $scope.setup_default;
 
@@ -118,7 +128,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
 
   $scope.updateLocation = function() {
     $location.replace();
-    setWithDefault("alg", $scope.alg);
+    setWithDefault("alg", escape_alg($scope.alg));
     setWithDefault("title", $scope.title);
     setWithDefault("setup", $scope.setup);
     setWithDefault("puzzle", $scope.puzzle.id);
