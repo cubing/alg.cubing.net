@@ -96,7 +96,7 @@ html, textarea {
   font-variant: small-caps;
 }
 
-#title:hover, #title:focus {
+#title:hover, #title:focus, .moves  {
   background: rgb(255, 250, 245);
   border-radius: 12px;
   border: 1px solid #ddd;
@@ -108,6 +108,15 @@ html, textarea {
 
 #title:focus::-webkit-input-placeholder {
   color: transparent;
+}
+
+.moves {
+  width: 100%;
+  font-size: 1.25em;
+  margin: 8px 8px 12px;
+  padding: 0.6em;
+  resize: vertical;
+  max-width: 32em;
 }
 
 hr {
@@ -140,18 +149,6 @@ hr {
 
 h2 {
   font-size: 20px;
-}
-
-.moves {
-  width: 100%;
-  font-size: 1.25em;
-  margin: 8px 8px 12px;
-  padding: 0.6em;
-  background: rgb(255, 250, 245);
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  resize: vertical;
-  max-width: 32em;
 }
 
 #setup {
