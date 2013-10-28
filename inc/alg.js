@@ -79,12 +79,19 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
   $scope.speed = 1;
   $scope.current_move = 0;
 
+  var default_title = "";
+  $scope.title = default_title;
+  if ("title" in search) {
+    $scope.title = search["title"];
+  }
+
   $scope.alg = search["alg"] || "";
   $scope.setup = search["setup"] || "";
 
   $scope.updateLocation = function() {
     $location.replace();
     $location.search('alg',  $scope.alg);
+    $location.search('title',  $scope.title);
     $location.search('setup', $scope.setup);
     $location.search('puzzle', $scope.puzzle.name);
     $location.search('type', $scope.animtype.type);
@@ -216,7 +223,8 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     "puzzle",
     "stage",
     "animtype",
-    "scheme"
+    "scheme",
+    "title"
   ].map(function(prop){
     $scope.$watch(prop, $scope.twisty_init);
   });

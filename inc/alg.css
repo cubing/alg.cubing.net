@@ -83,6 +83,33 @@ html, textarea {
   padding: 2%;
 }
 
+#title {
+  font-weight: bold;
+  font-size: 1em;
+  background: none;
+  border: none;
+  text-align: center;
+  width: 100%;
+  border: 1px solid transparent;
+  padding: 0 8px;
+  text-overflow: ellipsis;
+  font-variant: small-caps;
+}
+
+#title:hover, #title:focus {
+  background: rgb(255, 250, 245);
+  border-radius: 12px;
+  border: 1px solid #ddd;
+}
+
+#title::-webkit-input-placeholder {
+  color: #000;
+}
+
+#title:focus::-webkit-input-placeholder {
+  color: transparent;
+}
+
 hr {
 
   width: 70%;
