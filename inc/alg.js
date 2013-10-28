@@ -1,44 +1,97 @@
 var s;
+var l;
 
-function algxController($scope) {
-  $scope.puzzles = [
-    {name:"2x2x2", type: "Cube", dimension: 2},
-   $scope.puzzle =
-    {name:"3x3x3", type: "Cube", dimension: 3},
-    {name:"4x4x4", type: "Cube", dimension: 4},
-    {name:"5x5x5", type: "Cube", dimension: 5},
-    {name:"6x6x6", type: "Cube", dimension: 6},
-    {name:"7x7x7", type: "Cube", dimension: 7}
-  ];
 
-  $scope.stages = [
-   $scope.stage =
-    {name:"Full", type: "Stage", "stage": "full"},
-    {name:"PLL", type: "Stage", "stage": "PLL"},
-    {name:"OLL", type: "Stage", "stage": "OLL"},
-    {name:"F2L", type: "Stage", "stage": "F2L"}
-  ];
+var algxApp = angular.module('algxApp', [
+  'algxControllers'
+]);
 
-  $scope.animtypes = [
-   $scope.animtype =
-    {name:"Algorithm", gruop: "Animation Type", type: "gen", setup: "Setup", alg: "Algorithm"},
-    {name:"Solution", gruop: "Animation Type", type: "solve", setup: "Setup", alg: "Solution"},
-    {name:"Reconstruction", gruop: "Animation Type", type: "gen", setup: "Scramble", alg: "Solve"}
-  ];
+algxApp.config(['$locationProvider',
+  function($locationProvider) {
+    $locationProvider.html5Mode(true);
+}]);
 
-  $scope.schemes = [
-   $scope.scheme =
-    {name:"BOY", type: "Color Scheme", scheme: "grobyw", display: "BOY", custom: false},
-    {name:"Japanese", type: "Color Scheme", scheme: "groybw", display: "Japanese", custom: false},
-    {name:"Custom:", type: "Color Scheme", display: "", custom: true}
-  ];
-  $scope.custom_scheme = "grobyw";
+
+algxApp.filter('abbreviate', function() {
+  return function(input) {
+    if (input.length > 20) {
+       return input.slice(0, 20) + (input.slice(20, 30) + " ").split(" ")[0] + "...";
+    }
+    return input;
+  };
+});
+
+var algxControllers = angular.module('algxControllers', []);
+
+algxControllers.controller('algxController', ["$scope", "$location", function($scope, $location) {
+
+  var search = $location.search();
+
+  function indexBy(list, key) {
+    var obj = {};
+    for(var i in list) {
+      obj[list[i][key]] = list[i];
+    }
+    return obj;
+  }
+
+  function initParameter(ngName, key, param, fallback, list) {
+    var ngNamePlural = ngName + "s"; // Should work for all our cases.
+    $scope[ngNamePlural] = list;
+    var obj = indexBy(list, key);
+    console.log(obj);
+    $scope[ngName] = obj[search[param]] || obj[fallback];
+  }
+
+
+  initParameter("puzzle", "name", "puzzle", "3x3x3", [
+    {name: "2x2x2", group: "Cube", dimension: 2},
+    {name: "3x3x3", group: "Cube", dimension: 3},
+    {name: "4x4x4", group: "Cube", dimension: 4},
+    {name: "5x5x5", group: "Cube", dimension: 5},
+    {name: "6x6x6", group: "Cube", dimension: 6},
+    {name: "7x7x7", group: "Cube", dimension: 7}
+  ]);
+
+  initParameter("stage", "stage", "stage", "full", [
+    {name: "Full", group: "Stage", "stage": "full"},
+    {name: "PLL", group: "Stage", "stage": "PLL"},
+    {name: "OLL", group: "Stage", "stage": "OLL"},
+    {name: "F2L", group: "Stage", "stage": "F2L"}
+  ]);
+
+  initParameter("animtype", "type", "type", "algorithm", [
+    {name: "Algorithm", group: "Animation Type", type: "algorithm", setup: "Setup", alg: "Algorithm"},
+    {name: "Solution", group: "Animation Type", type: "solution", setup: "Setup", alg: "Solution"},
+    {name: "Reconstruction", group: "Animation Type", type: "reconstruction", setup: "Scramble", alg: "Solve"}
+  ]);
+
+  console.log($scope.animtype.type);
+
+  // TODO: BOY/Japanese translations.
+  initParameter("scheme", "scheme", "scheme", "grobyw", [
+    {name: "BOY", type: "Color Scheme", scheme: "grobyw", display: "BOY", custom: false},
+    {name: "Japanese", type: "Color Scheme", scheme: "groybw", display: "Japanese", custom: false},
+    {name: "Custom:", type: "Color Scheme", scheme: "grobyw", display: "", custom: true}
+  ]);
+  $scope.custom_scheme = $scope.scheme.scheme;
 
   $scope.speed = 1;
   $scope.current_move = 0;
 
-  $scope.alg = "x y' // inspection\nF R D L F // cross\nU R U' R' d R' U R // 1st pair\ny U2' R' U' R // 2nd pair\nU L U' L' d R U' R' // 3rd pair\ny' U' R U R' U R U' R' // 4th pair (OLS)\nR2' U' R' U' R U R U R U' R U2' // PLL";
-  $scope.setup = "D2 U' R2 U F2 D2 U' R2 U' B' L2 R' B' D2 U B2 L' D' R2";
+  $scope.alg = search["alg"] || "";
+  $scope.setup = search["setup"] || "";
+
+  $scope.updateLocation = function() {
+    $location.replace();
+    $location.search('alg',  $scope.alg);
+    $location.search('setup', $scope.setup);
+    $location.search('puzzle', $scope.puzzle.name);
+    $location.search('type', $scope.animtype.type);
+    $location.search('scheme', $scope.scheme);
+    $location.search('stage', $scope.stage.stage);
+    //TODO: Update sharing links
+  };
 
   var colorMap = {
     "y": 0xffff00,
@@ -106,6 +159,8 @@ function algxController($scope) {
 
     twistyScene.cam(0.5);
 
+    $(window).resize(twistyScene.resize);
+
     $("#moveIndex").val(0); //TODO: Move into twisty.js
 
     $("#play").click(twistyScene.startAnimation);
@@ -151,6 +206,8 @@ function algxController($scope) {
     $scope.$watch('speed', function() {
       twistyScene.setSpeed($scope.speed);
     }); // initialize the watch
+
+    $scope.updateLocation();
   };
 
   [
@@ -168,4 +225,4 @@ function algxController($scope) {
   s = function() {
     return $scope;
   };
-}
+}]);

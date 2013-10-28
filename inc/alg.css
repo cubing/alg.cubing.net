@@ -171,3 +171,14 @@ input.current_scheme {
 input.current_scheme[readonly] {
   color: #aaa;
 }
+
+.beta {
+  display: inline-block;
+  vertical-align: top;
+  font-weight: normal;
+  color: rgb(255, 245, 235);
+  background: #000;
+  padding: 1px 8px;
+  font-size: 50%;
+  border-radius: 8px;
+}

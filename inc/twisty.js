@@ -122,6 +122,7 @@ twistyjs.TwistyScene = function() {
      */
 
     rendererType = twistyType.renderer || THREE.CanvasRenderer; // TODO: Standardize option handling in this function.
+    console.log("foo");
     renderer = new rendererType({antialias: true});
     twistyCanvas = renderer.domElement;
 

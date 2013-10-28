@@ -1,5 +1,6 @@
-<html ng-app ng-controller="algxController">
+<html ng-app="algxApp" ng-controller="algxController">
 <head>
+  <title ng-bind="alg | abbreviate">alg.cubing.net</title>
   <script src="inc/angular.js"></script>
   <script src="inc/alg.js"></script>
   <link href="inc/alg.css" rel="stylesheet" type="text/css" />
@@ -36,19 +37,19 @@
 
   </div><div id="info-wrapper"><div id="info">
 
-    <h1>alg.cubing.net<hr></h1>
+    <h1>alg.cubing.net <div class="beta">alpha</div><hr></h1>
 
     <h2>{{animtype.setup}}</h2>
-    <textarea id="setup" class="moves" ng-model="setup"></textarea>
+    <textarea id="setup" class="moves" ng-model="setup" placeholder="Click here to add {{animtype.setup | lowercase}} moves."></textarea>
 
     <h2>{{animtype.alg}}</h2>
-    <textarea id="algorithm" class="moves" ng-model="alg"></textarea>
+    <textarea id="algorithm" class="moves" ng-model="alg" placeholder="Click here to add {{animtype.alg | lowercase}} moves."></textarea>
 
     <h2>Settings</h2>
     <div id="settings">
-      <select ng-model="puzzle" ng-options="p.name group by p.type for p in puzzles"></select>
-      <select ng-model="stage" ng-options="s.name group by s.type for s in stages"></select>
-      <select ng-model="animtype" ng-options="a.name group by a.type for a in animtypes"></select>
+      <select ng-model="puzzle" ng-options="p.name group by p.group for p in puzzles"></select>
+      <select ng-model="stage" ng-options="s.name group by s.group for s in stages" ng-show="puzzle.name == '3x3x3'"></select>
+      <select ng-model="animtype" ng-options="a.name group by a.group for a in animtypes"></select>
 
       <br>
       Color Scheme:
