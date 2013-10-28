@@ -236,7 +236,6 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
   });
 
   // For debugging.
-  s = function() {
-    return $scope;
-  };
+  s = $scope;
+  l = $location;
 }]);
