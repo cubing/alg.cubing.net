@@ -21,6 +21,12 @@ algxApp.filter('abbreviate', function() {
   };
 });
 
+algxApp.filter('num_lines', function() {
+  return function(input) {
+    return input.split("\n").length;
+  };
+});
+
 var algxControllers = angular.module('algxControllers', []);
 
 algxControllers.controller('algxController', ["$scope", "$location", function($scope, $location) {

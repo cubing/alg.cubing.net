@@ -11737,7 +11737,7 @@ function isEmpty(value) {
 function textInputType(scope, element, attr, ctrl, $sniffer, $browser) {
 
   var listener = function() {
-    var value = trim(element.val());
+    var value = element.val();
 
     if (ctrl.$viewValue !== value) {
       scope.$apply(function() {
