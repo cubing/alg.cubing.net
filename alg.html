@@ -48,7 +48,7 @@
     <h2>Settings</h2>
     <div id="settings">
       <select ng-model="puzzle" ng-options="p.name group by p.group for p in puzzle_list"></select>
-      <select ng-model="stage" ng-options="s.name group by s.group for s in stage_list" ng-show="puzzle.name == '3x3x3'"></select>
+      <select ng-model="stage" ng-options="s.name group by s.group for s in stage_list" ng-disabled="puzzle.name != '3x3x3'"></select>
       <select ng-model="type" ng-options="a.name group by a.group for a in type_list"></select>
 
       <br>
