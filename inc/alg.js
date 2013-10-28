@@ -102,7 +102,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
   $scope.alg_default = "";
   $scope.alg = unescape_alg(search["alg"]) || $scope.alg_default;
   $scope.setup_default = "";
-  $scope.setup = search["setup"] || $scope.setup_default;
+  $scope.setup = unescape_alg(search["setup"]) || $scope.setup_default;
 
   function setWithDefault(name, value) {
     var _default = $scope[name + "_default"];
@@ -129,12 +129,12 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
   $scope.updateLocation = function() {
     $location.replace();
     setWithDefault("alg", escape_alg($scope.alg));
-    setWithDefault("title", $scope.title);
-    setWithDefault("setup", $scope.setup);
+    setWithDefault("setup", escape_alg($scope.setup));
     setWithDefault("puzzle", $scope.puzzle.id);
     setWithDefault("type", $scope.type.id);
     setWithDefault("scheme", $scope.scheme.id);
     setWithDefault("stage", $scope.stage.id);
+    setWithDefault("title", $scope.title);
     //TODO: Update sharing links
 
     $scope.share_url = "http://alg.cubing.net" + $location.url();
