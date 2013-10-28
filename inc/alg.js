@@ -184,7 +184,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     twistyScene.initializeTwisty({
       "type": "cube",
       "dimension": $scope.puzzle.dimension,
-      "stage": $scope.stage.stage,
+      "stage": $scope.stage.id,
       "allowDragging": true,
       // "hintStickers": true,
       "stickerBorder": false,
