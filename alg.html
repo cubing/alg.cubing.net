@@ -39,12 +39,12 @@
 
     <h1><input id="title" ng-model="title" placeholder="alg.garron.us"></h1>
 
-    <h2>{{type.setup}}</h2>
-    <textarea id="setup" rows="{{setup | num_lines}}" ng-trim="false" class="moves" ng-model="setup" placeholder="Click here to add {{type.setup | lowercase}} moves."
+    <h2>{{type.alg}}</h2>
+    <textarea id="algorithm" rows="{{alg | num_lines}}" ng-trim="false" class="moves" ng-model="alg" placeholder="[Click here to add {{type.alg | lowercase}} moves.]"
     ></textarea>
 
-    <h2>{{type.alg}}</h2>
-    <textarea id="algorithm" rows="{{alg | num_lines}}" ng-trim="false" class="moves" ng-model="alg" placeholder="Click here to add {{type.alg | lowercase}} moves."
+    <h2 ng-show="setup != ''">{{type.setup}}</h2>
+    <textarea id="setup" rows="{{setup | num_lines}}" ng-trim="false" class="moves" ng-model="setup" placeholder="[Click here to add {{type.setup | lowercase}} moves.]"
     ></textarea>
 
     <h2>Settings</h2>

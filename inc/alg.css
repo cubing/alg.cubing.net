@@ -83,6 +83,15 @@ html, textarea {
   padding: 2%;
 }
 
+.moves {
+  width: 100%;
+  font-size: 1.25em;
+  margin: 4px 8px 4px;
+  padding: 0.4em 0.6em;
+  resize: vertical;
+  max-width: 32em;
+}
+
 #title {
   font-weight: bold;
   font-size: 1em;
@@ -90,15 +99,20 @@ html, textarea {
   border: none;
   text-align: center;
   width: 100%;
-  border: 1px solid transparent;
   padding: 0 8px;
   text-overflow: ellipsis;
   font-variant: small-caps;
 }
 
-#title:hover, #title:focus, .moves  {
-  background: rgb(255, 250, 245);
+#title, .moves {
+  background: transparent;
   border-radius: 12px;
+  border: 1px solid transparent;
+  line-height: 1.2em;
+}
+
+#title:hover, #title:focus, .moves:hover, .moves:focus  {
+  background: rgb(255, 250, 245);
   border: 1px solid #ddd;
 }
 
@@ -108,15 +122,6 @@ html, textarea {
 
 #title:focus::-webkit-input-placeholder {
   color: transparent;
-}
-
-.moves {
-  width: 100%;
-  font-size: 1.25em;
-  margin: 8px 8px 12px;
-  padding: 0.6em;
-  resize: vertical;
-  max-width: 32em;
 }
 
 hr {
