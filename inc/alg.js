@@ -35,16 +35,15 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     return obj;
   }
 
-  function initParameter(ngName, param, fallback, list) {
-    var ngNamePlural = ngName + "_list"; // Should work for all our cases.
-    $scope[ngNamePlural] = list;
+  function initParameter(param, fallback, list) {
     var obj = indexBy(list, "id");
-    console.log(obj);
-    $scope[ngName] = obj[search[param]] || obj[fallback];
+    $scope[param] = obj[search[param]] || obj[fallback];
+    $scope[param + "_list"] = list;
+    $scope[param + "_default"] = fallback;
   }
 
 
-  initParameter("puzzle", "puzzle", "3x3x3", [
+  initParameter("puzzle", "3x3x3", [
     {id: "2x2x2", name: "2x2x2", group: "Cube", dimension: 2},
     {id: "3x3x3", name: "3x3x3", group: "Cube", dimension: 3},
     {id: "4x4x4", name: "4x4x4", group: "Cube", dimension: 4},
@@ -53,23 +52,21 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     {id: "7x7x7", name: "7x7x7", group: "Cube", dimension: 7}
   ]);
 
-  initParameter("stage", "stage", "full", [
+  initParameter("stage", "full", [
     {"id": "full", name: "Full", group: "Stage"},
     {"id": "PLL", name: "PLL", group: "Stage"},
     {"id": "OLL", name: "OLL", group: "Stage"},
     {"id": "F2L", name: "F2L", group: "Stage"}
   ]);
 
-  initParameter("animtype", "type", "algorithm", [
+  initParameter("type", "algorithm", [
     {id: "algorithm", name: "Algorithm", group: "Animation Type", setup: "Setup", alg: "Algorithm"},
     {id: "solution", name: "Solution", group: "Animation Type", setup: "Setup", alg: "Solution"},
     {id: "reconstruction", name: "Reconstruction", group: "Animation Type", setup: "Scramble", alg: "Solve"}
   ]);
 
-  console.log($scope.animtype.type);
-
   // TODO: BOY/Japanese translations.
-  initParameter("scheme", "scheme", "boy", [
+  initParameter("scheme", "boy", [
     {id: "boy", name: "BOY", type: "Color Scheme", scheme: "grobyw", display: "BOY", custom: false},
     {id: "japanese", name: "Japanese", type: "Color Scheme", scheme: "groybw", display: "Japanese", custom: false},
     {id: "custom", name: "Custom:", type: "Color Scheme", scheme: "grobyw", display: "", custom: true}
@@ -79,24 +76,33 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
   $scope.speed = 1;
   $scope.current_move = 0;
 
-  var default_title = "";
-  $scope.title = default_title;
+  $scope.title_default = "";
+  $scope.title = $scope.title_default;
   if ("title" in search) {
     $scope.title = search["title"];
   }
 
-  $scope.alg = search["alg"] || "";
-  $scope.setup = search["setup"] || "";
+  $scope.alg_default = "";
+  $scope.alg = search["alg"] || $scope.alg_default;
+  $scope.setup_default = "";
+  $scope.setup = search["setup"] || $scope.setup_default;
+
+  function setWithDefault(name, value) {
+    var _default = $scope[name + "_default"];
+    console.log(name);
+    console.log(_default);
+    $location.search(name, (value == _default) ? null : value);
+  }
 
   $scope.updateLocation = function() {
     $location.replace();
-    $location.search('alg',  $scope.alg);
-    $location.search('title',  $scope.title);
-    $location.search('setup', $scope.setup);
-    $location.search('puzzle', $scope.puzzle.id);
-    $location.search('type', $scope.animtype.id);
-    $location.search('scheme', $scope.scheme.id);
-    $location.search('stage', $scope.stage.id);
+    setWithDefault("alg", $scope.alg);
+    setWithDefault("title", $scope.title);
+    setWithDefault("setup", $scope.setup);
+    setWithDefault("puzzle", $scope.puzzle.id);
+    setWithDefault("type", $scope.type.id);
+    setWithDefault("scheme", $scope.scheme.id);
+    setWithDefault("stage", $scope.stage.id);
     //TODO: Update sharing links
   };
 
@@ -151,7 +157,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
 
     var init = alg.sign_w.stringToAlg($scope.setup);
     var algo = alg.sign_w.stringToAlg($scope.alg);
-    var type = $scope.animtype.type;
+    var type = $scope.type.type;
 
     init = alg.sign_w.algToMoves(init);
     algo = alg.sign_w.algToMoves(algo);
@@ -222,7 +228,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     "alg",
     "puzzle",
     "stage",
-    "animtype",
+    "type",
     "scheme",
     "title"
   ].map(function(prop){

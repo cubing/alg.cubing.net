@@ -39,17 +39,17 @@
 
     <h1><input id="title" ng-model="title" placeholder="alg.garron.us"></h1>
 
-    <h2>{{animtype.setup}}</h2>
-    <textarea id="setup" class="moves" ng-model="setup" placeholder="Click here to add {{animtype.setup | lowercase}} moves."></textarea>
+    <h2>{{type.setup}}</h2>
+    <textarea id="setup" class="moves" ng-model="setup" placeholder="Click here to add {{type.setup | lowercase}} moves."></textarea>
 
-    <h2>{{animtype.alg}}</h2>
-    <textarea id="algorithm" class="moves" ng-model="alg" placeholder="Click here to add {{animtype.alg | lowercase}} moves."></textarea>
+    <h2>{{type.alg}}</h2>
+    <textarea id="algorithm" class="moves" ng-model="alg" placeholder="Click here to add {{type.alg | lowercase}} moves."></textarea>
 
     <h2>Settings</h2>
     <div id="settings">
       <select ng-model="puzzle" ng-options="p.name group by p.group for p in puzzle_list"></select>
       <select ng-model="stage" ng-options="s.name group by s.group for s in stage_list" ng-show="puzzle.name == '3x3x3'"></select>
-      <select ng-model="animtype" ng-options="a.name group by a.group for a in animtype_list"></select>
+      <select ng-model="type" ng-options="a.name group by a.group for a in type_list"></select>
 
       <br>
       Color Scheme:
