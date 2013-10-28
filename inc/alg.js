@@ -67,9 +67,9 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
   ]);
 
   initParameter("type", "algorithm", [
-    {id: "algorithm", name: "Algorithm", group: "Animation Type", setup: "Setup", alg: "Algorithm"},
-    {id: "solution", name: "Solution", group: "Animation Type", setup: "Setup", alg: "Solution"},
-    {id: "reconstruction", name: "Reconstruction", group: "Animation Type", setup: "Scramble", alg: "Solve"}
+    {id: "algorithm", name: "Algorithm", group: "End Solved", setup: "Setup", alg: "Algorithm", type: "solve", moves: "algorithm moves"},
+    {id: "moves", name: "Moves", group: "Start from Setup", setup: "Setup", alg: "Moves", type: "gen", moves: "moves"},
+    {id: "reconstruction", name: "Reconstruction", group: "Start from Setup", setup: "Scramble", alg: "Solve", type: "gen", moves: "reconstruction moves"}
   ]);
 
   // TODO: BOY/Japanese translations.

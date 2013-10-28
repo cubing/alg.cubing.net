@@ -39,12 +39,12 @@
 
     <h1><textarea id="title" rows="{{title | num_lines}}" ng-trim="false" ng-model="title" placeholder="alg.cubing.net"></textarea>
 
-    <h2 ng-show="setup != ''">{{type.setup}}</h2>
-    <textarea id="setup" rows="{{setup | num_lines}}" ng-trim="false" class="moves" ng-model="setup" placeholder="[Click here to add {{type.setup | lowercase}} moves.]"
+    <h2 ng-show="type.id != 'algorithm'">{{type.setup}}</h2>
+    <textarea id="setup" ng-show="type.id != 'algorithm'" rows="{{setup | num_lines}}" ng-trim="false" class="moves" ng-model="setup" placeholder="[Click here to add {{type.setup | lowercase}} moves.]"
     ></textarea>
 
     <h2>{{type.alg}}</h2>
-    <textarea id="algorithm" rows="{{alg | num_lines}}" ng-trim="false" class="moves" ng-model="alg" placeholder="[Click here to add {{type.alg | lowercase}} moves.]"
+    <textarea id="algorithm" rows="{{alg | num_lines}}" ng-trim="false" class="moves" ng-model="alg" placeholder="[Click here to add {{type.moves}}.]"
     ></textarea>
 
     <h2>Settings</h2>
