@@ -39,11 +39,11 @@
 
     <h1><textarea id="title" rows="{{title | num_lines}}" ng-trim="false" ng-model="title" placeholder="alg.cubing.net"></textarea>
 
-    <h2 ng-show="type.id != 'algorithm'">{{type.setup}}</h2>
+    <h2 ng-show="type.id != 'algorithm'" ng-bind="type.setup">Setup</h2>
     <textarea id="setup" ng-show="type.id != 'algorithm'" rows="{{setup | num_lines}}" ng-trim="false" class="moves" ng-model="setup" placeholder="[Click here to add {{type.setup | lowercase}} moves.]"
     ></textarea>
 
-    <h2>{{type.alg}}</h2>
+    <h2 ng-bind="type.alg">Algorithm</h2>
     <textarea id="algorithm" rows="{{alg | num_lines}}" ng-trim="false" class="moves" ng-model="alg" placeholder="[Click here to add {{type.moves}}.]"
     ></textarea>
 
@@ -69,13 +69,13 @@
       <input class="current_scheme" type="text" ng-show="!scheme.custom" ng-readonly="true" ng-value="scheme.scheme"/>
 
       <br>
-      Speed: <input id="currentMove" type="range" min="0.1" max="3" step="0.1" style="vertical-align: middle;" ng-model="speed"> ({{speed}}x)
+      Speed: <input id="currentMove" type="range" min="0.1" max="3" step="0.1" style="vertical-align: middle;" ng-model="speed"> (<span ng-bind="speed">1</span>x)
       <br>
     </div>
 
     <h2>Forum Link</h2>
-      <span ng-show="type.id != 'reconstruction'"><input type="text" class="sharetext" readonly="readonly" ng-model="share_forum_short" onclick="this.focus(); this.select();" /></span>
-      <span ng-show="type.id == 'reconstruction'"><textarea class="sharetext" readonly="readonly" onclick="this.focus(); this.select();">{{share_forum_long}}</textarea></span>
+      <span ng-show="type.id != 'reconstruction'"><input type="text" class="sharetext" readonly="readonly" ng-model="share_forum_short" onclick="this.focus(); this.select();" value="[Short forum link will appear here.]"/></span>
+      <span ng-show="type.id == 'reconstruction'"><textarea class="sharetext" readonly="readonly" onclick="this.focus(); this.select();" ng-bind="share_forum_long">[Long forum link will appear here.]</textarea></span>
     <h2>About</h2>
     <p>
     <i>alg.cubing.net</i> is a tool by Lucas Garron.<br>
