@@ -122,7 +122,6 @@ twistyjs.TwistyScene = function() {
      */
 
     rendererType = twistyType.renderer || THREE.CanvasRenderer; // TODO: Standardize option handling in this function.
-    console.log("foo");
     renderer = new rendererType({antialias: true});
     twistyCanvas = renderer.domElement;
 
@@ -187,16 +186,14 @@ twistyjs.TwistyScene = function() {
   this.resize = function() {
     // This function should be called after setting twistyContainer
     // to the desired size.
-    var w = $(twistyContainer).width();
-    var h = $(twistyContainer).height();
-    camera = new THREE.PerspectiveCamera( 30, w/h, 0.001, 1000 );
+    var min = Math.min($(twistyContainer).width(), $(twistyContainer).height());
+    camera = new THREE.PerspectiveCamera( 30, 1, 0.001, 1000 );
 
     moveCameraDelta(0);
-    renderer.setSize(w, h);
+    renderer.setSize(min, min);
     $(twistyCanvas).css('position', 'absolute');
-    $(twistyCanvas).css('top', 0);
-    $(twistyCanvas).css('left', 0);
-
+    $(twistyCanvas).css('top', ($(twistyContainer).height()-min)/2);
+    $(twistyCanvas).css('left', ($(twistyContainer).width()-min)/2);
 
     render();
   };
