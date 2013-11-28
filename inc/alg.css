@@ -156,7 +156,7 @@ h2 {
   font-size: 20px;
 }
 
-#settings {
+#settings, #tools {
   margin: 8px;
   line-height: 2em;
 }
@@ -165,6 +165,11 @@ select {
   font-size: 1em;
   background: rgb(255, 250, 245);
   border: 1px solid #ddd;
+}
+
+button {
+  font-size: 1em;
+  padding: 0.2em 0.5em;
 }
 
 p {

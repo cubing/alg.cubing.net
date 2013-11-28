@@ -89,6 +89,13 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     $scope.title = search["title"];
   }
 
+  $scope.expand = function() {
+    var algo = alg.sign_w.stringToAlg($scope.alg);
+    var moves = alg.sign_w.algToMoves(algo);
+    var expandedAlgStr = alg.sign_w.algToString(moves);
+    $scope.alg = expandedAlgStr;
+  }
+
   function escape_alg(alg) {
     if (!alg) {return alg;}
     return alg.replace(/_/g, '&#95;').replace(/ /g, '_');
