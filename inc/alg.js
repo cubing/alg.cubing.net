@@ -90,11 +90,11 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
   }
 
   $scope.expand = function() {
-    $scope.addHistoryCheckpoint();
     var algo = alg.sign_w.stringToAlg($scope.alg);
     var moves = alg.sign_w.algToMoves(algo);
     var expandedAlgStr = alg.sign_w.algToString(moves);
     $scope.alg = expandedAlgStr;
+    $scope.addHistoryCheckpoint = true;
   }
 
   function escape_alg(alg) {
@@ -134,8 +134,11 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     return text.trim(); // The trim is redundant for angular.js, but let's keep it just in case.
   }
 
-  $scope.location = function(checkpoint) {
-    if (!checkpoint) {
+  $scope.addHistoryCheckpoint = false;
+  $scope.location = function() {
+    if ($scope.addHistoryCheckpoint) {
+      $scope.addHistoryCheckpoint = false;
+    } else {
       $location.replace();
     }
     setWithDefault("alg", escape_alg($scope.alg));
@@ -151,10 +154,6 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     $scope.share_forum_short = "[url=" + $scope.share_url + "]" + $scope.alg + "[/url]";
     $scope.share_forum_long = forumLinkText($scope.share_url);
   };
-
-  $scope.addHistoryCheckpoint = function() {
-    $scope.location(true);
-  }
 
   var colorMap = {
     "y": 0xffff00,
