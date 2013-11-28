@@ -90,6 +90,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
   }
 
   $scope.expand = function() {
+    $scope.addHistoryCheckpoint();
     var algo = alg.sign_w.stringToAlg($scope.alg);
     var moves = alg.sign_w.algToMoves(algo);
     var expandedAlgStr = alg.sign_w.algToString(moves);
@@ -133,8 +134,10 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     return text.trim(); // The trim is redundant for angular.js, but let's keep it just in case.
   }
 
-  $scope.updateLocation = function() {
-    $location.replace();
+  $scope.location = function(checkpoint) {
+    if (!checkpoint) {
+      $location.replace();
+    }
     setWithDefault("alg", escape_alg($scope.alg));
     setWithDefault("setup", escape_alg($scope.setup));
     setWithDefault("puzzle", $scope.puzzle.id);
@@ -148,6 +151,10 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     $scope.share_forum_short = "[url=" + $scope.share_url + "]" + $scope.alg + "[/url]";
     $scope.share_forum_long = forumLinkText($scope.share_url);
   };
+
+  $scope.addHistoryCheckpoint = function() {
+    $scope.location(true);
+  }
 
   var colorMap = {
     "y": 0xffff00,
@@ -263,7 +270,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
       twistyScene.setSpeed($scope.speed);
     }); // initialize the watch
 
-    $scope.updateLocation();
+    $scope.location();
   };
 
   [
