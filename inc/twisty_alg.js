@@ -1,4 +1,3 @@
-
 var alg = (function (){
 
   var debug = false;
@@ -43,6 +42,15 @@ var alg = (function (){
     return move;
   }
 
+  function round(x) {
+    // We want to round:
+    //    2.6 to  3
+    //    2.5 to  2
+    //   -2.5 to -2
+    var antiSignish = x < 0 ? 1 : -1; // When can we haz ES6?
+    return Math.round(-Math.abs(x)) * antiSignish;
+  }
+
   var sign_w = (function(){
 
     function algSimplify(alg) {
@@ -53,10 +61,15 @@ var alg = (function (){
             algOut[algOut.length-1].startLayer == move.startLayer &&
             algOut[algOut.length-1].endLayer == move.endLayer &&
             algOut[algOut.length-1].base == move.base) {
-          algOut[algOut.length-1].amount += move[3];
-          algOut[algOut.length-1].amount = (((algOut[algOut.length-1][3] + 1 % 4) + 4) % 4) -1; // TODO: R2'
-          if (algOut[algOut.length-1].amount == 0) {
+          var amount = algOut[algOut.length-1].amount + move.amount;
+          // Mod to [-2, -1, 0, 1, 2]
+          // x | 0 truncates x towards 0.
+          amount = amount - 4 * round(amount / 4);
+          if (amount == 0) {
             algOut.pop();
+          }
+          else {
+            algOut[algOut.length-1].amount = amount;
           }
         }
         else {
@@ -122,8 +135,7 @@ var alg = (function (){
       return suffix;
     }
 
-    function algToString(algIn, dimension) {
-      var alg = algSimplify(algIn);
+    function algToString(alg, dimension) {
 
       var moveStrings = [];
       for (i in alg) {
@@ -214,6 +226,7 @@ var alg = (function (){
 
     return {
       algToString: algToString,
+      algSimplify: algSimplify,
       stringToAlg: stringToAlg,
       invert: invert,
       canonicalizeMove: canonicalizeMove,
