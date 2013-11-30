@@ -96,6 +96,14 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     $scope.alg = expandedAlgStr;
   }
 
+  $scope.simplify = function() {
+    var algo = alg.sign_w.stringToAlg($scope.alg);
+    var simplifiedAlg = alg.sign_w.algSimplify(algo);
+    var simplifiedAlgStr = alg.sign_w.algToString(simplifiedAlg);
+    $scope.alg = simplifiedAlgStr;
+    $scope.addHistoryCheckpoint = true;
+  }
+
   function escape_alg(alg) {
     if (!alg) {return alg;}
     return alg.replace(/_/g, '&#95;').replace(/ /g, '_');
