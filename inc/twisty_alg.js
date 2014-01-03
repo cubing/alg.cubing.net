@@ -237,10 +237,10 @@ var alg = (function (){
     // Metric
 
     var moveCountScalars = {
-      "obtm": {rotation: [0, 0], outer: [1, 0], inner: [2, 0]},
-       "btm": {rotation: [0, 0], outer: [1, 0], inner: [1, 0]},
-      "oqtm": {rotation: [0, 0], outer: [0, 1], inner: [0, 2]},
-       "etm": {rotation: [1, 0], outer: [1, 0], inner: [1, 0]}
+       "obtm": {rotation: [0, 0], outer: [1, 0], inner: [2, 0]},
+        "btm": {rotation: [0, 0], outer: [1, 0], inner: [1, 0]},
+      "obqtm": {rotation: [0, 0], outer: [0, 1], inner: [0, 2]},
+        "etm": {rotation: [1, 0], outer: [1, 0], inner: [1, 0]}
     }
 
     function moveScale(amount, scalars) {
