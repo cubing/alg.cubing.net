@@ -286,6 +286,16 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     $scope.$watch(prop, $scope.twisty_init);
   });
 
+  function updateMetrics() {
+    var algo = alg.sign_w.stringToAlg($scope.alg);
+    var metrics = ["obtm", "btm", "oqtm", "etm"];
+    for (i in metrics) {
+      var metric = metrics[i];
+      $scope[metric] = alg.sign_w.countMoves(algo, metric, $scope.puzzle.dimension);
+    }
+  }
+  $scope.$watch("alg", updateMetrics);
+
   // For debugging.
   s = $scope;
   l = $location;

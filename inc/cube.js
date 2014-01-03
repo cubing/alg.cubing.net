@@ -248,7 +248,7 @@ for (var i = 0; i < numSides; i++) {
   var lastMoveProgress = 0;
   var animateMoveCallback = function(twisty, currentMove, moveProgress) {
 
-    var canonical = alg.sign_w.canonicalizeMove(currentMove);
+    var canonical = alg.sign_w.canonicalizeMove(currentMove, cubeOptions["dimension"]);
 
     if (canonical.base == ".") {
       return; // Pause
@@ -324,7 +324,7 @@ for (var i = 0; i < numSides; i++) {
 
   var advanceMoveCallback = function(twisty, currentMove) {
 
-    var canonical = alg.sign_w.canonicalizeMove(currentMove);
+    var canonical = alg.sign_w.canonicalizeMove(currentMove, cubeOptions["dimension"]);
 
     if (canonical.base === ".") {
       return; // Pause

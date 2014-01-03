@@ -6,8 +6,18 @@ var alg = (function (){
     single: /^[UFRBLD]$/,
     wide: /^([ufrbld])|([UFRBLD]w)$/,
     slice: /^[MES]$/,
-    rotation: /^[xyz]$/
+    rotation: /^[xyz]$/,
+    pause: /^\.$/
   };
+
+  function moveKind(moveString) {
+    for (s in patterns) {
+      if (patterns[s].test(moveString)) {
+        return s;
+      }
+    }
+    return "UNKNOWN";
+  }
 
   var directionMap = {
     "U": "U", "Uw": "U", "u": "U",           "y": "U",
@@ -19,7 +29,7 @@ var alg = (function (){
     ".": "."
   };
 
-  function canonicalizeMove(orig) {
+  function canonicalizeMove(orig, dimension) {
     var move = {};
 
     move.amount = orig.amount;
@@ -33,10 +43,10 @@ var alg = (function (){
       move.endLayer = orig.endLayer || 2;
     } else if (patterns.slice.test(orig.base)) {
       move.startLayer = 2;
-      move.endLayer = -2;
+      move.endLayer = dimension - 1;
     } else if (patterns.rotation.test(orig.base)) {
       move.startLayer = 1;
-      move.endLayer = -1;
+      move.endLayer = dimension;
     }
 
     return move;
@@ -224,13 +234,64 @@ var alg = (function (){
       return sign_w_jison.parse(algString);
     }
 
+    // Metric
+
+    var moveCountScalars = {
+      "obtm": {rotation: [0, 0], outer: [1, 0], inner: [2, 0]},
+       "btm": {rotation: [0, 0], outer: [1, 0], inner: [1, 0]},
+      "oqtm": {rotation: [0, 0], outer: [0, 1], inner: [0, 2]},
+       "etm": {rotation: [1, 0], outer: [1, 0], inner: [1, 0]}
+    }
+
+    function moveScale(amount, scalars) {
+      if (amount == 0) {
+        return 0; //TODO: ETM?
+      }
+      return scalars[0] + Math.abs(amount) * scalars[1];
+    }
+
+    function countMove(move, metric, dimension) {
+      // Assumes `move` is a valid move.
+      var can = canonicalizeMove(move, dimension);
+
+      var mKind = moveKind(can.base);
+      if (mKind === "pause") {
+        return 0;
+      }
+
+      var scalarKind;
+      if (can.startLayer === 1 && can.endLayer === dimension) {
+        scalarKind = "rotation";
+      } else if (can.startLayer === 1 || can.endLayer === dimension) {
+        scalarKind = "outer";
+      } else if (1 < can.startLayer && can.startLayer <= can.endLayer && can.endLayer < dimension) {
+        scalarKind = "inner";
+      } else {
+        throw "Unkown move.";
+      }
+      var scalars = moveCountScalars[metric][scalarKind];
+      return moveScale(can.amount, scalars);
+    }
+
+    function countMoves(algo, metric, dimension) {
+      var moves = algToMoves(algo); // TODO: multiple dispatch to avoid expanding algs
+      var moveCount = 0;
+      for (move in moves) {
+        moveCount += countMove(moves[move], metric, dimension);
+      }
+      return moveCount;
+    }
+
+    // Exports
+
     return {
       algToString: algToString,
       algSimplify: algSimplify,
       stringToAlg: stringToAlg,
       invert: invert,
       canonicalizeMove: canonicalizeMove,
-      algToMoves: algToMoves
+      algToMoves: algToMoves,
+      countMoves: countMoves
     }
   })();
 
