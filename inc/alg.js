@@ -246,6 +246,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     //   twistyScene.setIndex(currentMove - 1);
     // });
 
+    twistyScene.setIndex(-1);
 
     var fire = true;
     twistyScene.addMoveListener(function() {
