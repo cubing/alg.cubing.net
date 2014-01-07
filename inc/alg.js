@@ -136,7 +136,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
       url +
       '&quot;]alg.cubing.net[/url][/COLOR]';
     if ($scope.setup !== "") {
-      text = $scope.setup + "\n\n" + text;
+      text = "Scramble: " + $scope.setup + "\n\n" + text;
     }
     return text.trim(); // The trim is redundant for angular.js, but let's keep it just in case.
   }
