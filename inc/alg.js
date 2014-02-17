@@ -1,4 +1,4 @@
-var s;
+var ss;
 var l;
 
 
@@ -68,8 +68,8 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
 
   initParameter("type", "algorithm", [
     {id: "algorithm", name: "Algorithm", group: "End Solved", setup: "Setup", alg: "Algorithm", type: "solve", moves: "algorithm moves"},
-    {id: "moves", name: "Moves", group: "Start from Setup", setup: "Setup", alg: "Moves", type: "gen", moves: "moves"},
-    {id: "reconstruction", name: "Reconstruction", group: "Start from Setup", setup: "Scramble", alg: "Solve", type: "gen", moves: "reconstruction moves"}
+    {id: "moves", name: "Moves", group: "Start from Setup", setup: "Setup", alg: "Moves", type: "generator", moves: "moves"},
+    {id: "reconstruction", name: "Reconstruction", group: "Start from Setup", setup: "Scramble", alg: "Solve", type: "generator", moves: "reconstruction moves"}
   ]);
 
   // TODO: BOY/Japanese translations.
@@ -124,8 +124,8 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
 
   function setWithDefault(name, value) {
     var _default = $scope[name + "_default"];
-    console.log(name);
-    console.log(_default);
+    // console.log(name);
+    // console.log(_default);
     $location.search(name, (value == _default) ? null : value);
   }
 
@@ -196,14 +196,15 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
 
     $("#viewer").empty();
 
-    twistyScene = new twistyjs.TwistyScene();
+    twistyScene = new twistyjs.TwistyScene({
+      "allowDragging": true
+    });
     $("#viewer").append($(twistyScene.getDomElement()));
 
     twistyScene.initializeTwisty({
       "type": "cube",
       "dimension": $scope.puzzle.dimension,
       "stage": $scope.stage.id,
-      "allowDragging": true,
       // "hintStickers": true,
       "stickerBorder": false,
       "colors": colorList($scope.scheme.scheme)
@@ -238,47 +239,63 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
       }
     );
 
-    twistyScene.cam(0.5);
+    twistyScene.setCameraTheta(0.5);
 
     $(window).resize(twistyScene.resize);
 
     $("#moveIndex").val(0); //TODO: Move into twisty.js
 
-    $("#play").click(twistyScene.startAnimation);
-    $("#step").click(function() {
-      twistyScene.startAnimation();
-      twistyScene.stopPlayback();
-    });
-    $("#pause").click(twistyScene.stopPlayback);
-    $("#rewind").click(function() {
-      twistyScene.setIndex(-1);
-      $("#currentMove").val(0); //TODO: Move into twisty.js
-    });
-    $("#fast_forward").click(function() {
-      twistyScene.setIndex(twistyScene.getMoveList().length-1);
-    });
+    function getCurrentMove() {
+      // console.log(twistyScene.debug.getIndex());
+      var idx = twistyScene.getPosition();
+      var val = $scope.current_move;
+      if (idx != val && fire) {
+        $scope.$apply("current_move = " + idx);
+      }
+    }
+
+    function gettingCurrentMove(f) {
+      return function() {
+        f();
+        getCurrentMove();
+      }
+    }
+
+    // TODO: With a single twistyScene this own't be necessary
+    $("#reset").unbind("click");
+    $("#back").unbind("click");
+    $("#play").unbind("click");
+    $("#pause").unbind("click");
+    $("#forward").unbind("click");
+    $("#skip").unbind("click");
+
+    $("#reset").click(gettingCurrentMove(twistyScene.play.reset));
+    $("#back").click(gettingCurrentMove(twistyScene.play.back));
+    $("#play").click(gettingCurrentMove(twistyScene.play.start));
+    $("#pause").click(gettingCurrentMove(twistyScene.play.pause));
+    $("#forward").click(gettingCurrentMove(twistyScene.play.forward));
+    $("#skip").click(gettingCurrentMove(twistyScene.play.skip));
+
     $("#currentMove").attr("max", algo.length);
     // $("#currentMove").bind("change", function() {
     //   var currentMove = $('#currentMove')[0].valueAsNumber;
     //   twistyScene.setIndex(currentMove - 1);
     // });
 
-    twistyScene.setIndex(-1);
+    // twistyScene.play.reset();
+    twistyScene.addListener("animating", function(animating) {
+      $scope.animating = animating
+    });
 
     var fire = true;
-    twistyScene.addMoveListener(function() {
-      // console.log(twistyScene.debug.getIndex());
-      var idx = twistyScene.debug.getIndex() + 1;
-      var val = $scope.current_move;
-      if (idx != val && fire) {
-        $scope.$apply("current_move = " + idx);
-      }
-    });
+    twistyScene.addListener("position", getCurrentMove);
     $scope.$watch('current_move', function() {
-      var idx = twistyScene.debug.getIndex() + 1;
+      var idx = twistyScene.getPosition();
       var val = $scope.current_move;
       if (idx != val && fire) {
-        twistyScene.setIndex($scope.current_move - 1);
+        // We need to parse the string.
+        // See https://github.com/angular/angular.js/issues/1189 and linked issue/discussion.
+        twistyScene.setPosition(parseFloat($scope.current_move));
       }
     });
     $scope.$watch('speed', function() {
@@ -312,6 +329,6 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
   $scope.$watch("alg", updateMetrics);
 
   // For debugging.
-  s = $scope;
+  ss = $scope;
   l = $location;
 }]);

@@ -1,9 +1,12 @@
 /*
  * Rubik's Cube NxNxN
  */
+
+"use strict";
+
 function createCubeTwisty(twistyScene, twistyParameters) {
 
-  log("Creating cube twisty.");
+  // log("Creating cube twisty.");
 
   // Cube Variables
   var cubeObject = new THREE.Object3D();
@@ -28,9 +31,9 @@ function createCubeTwisty(twistyScene, twistyParameters) {
 
 
   // Passed Parameters
-  for (option in cubeOptions) {
+  for (var option in cubeOptions) {
     if(option in twistyParameters) {
-      log("Setting option \"" + option + "\" to " + twistyParameters[option]);
+      // log("Setting option \"" + option + "\" to " + twistyParameters[option]);
       cubeOptions[option] = twistyParameters[option];
     }
   };
@@ -161,13 +164,13 @@ var innerTemplate = new THREE.Mesh(innerGeometry);
 
 var hintGeometry = innerGeometry.clone();
 var hintTemplate = new THREE.Mesh(hintGeometry);
-hintTemplate.rotateY(Math.TAU/2);
+hintTemplate.rotateY(Math.PI);
 hintTemplate.translateZ(-3);
 
 var w = 1.95;
 var cubieGeometry = new THREE.CubeGeometry(w, w, w);
 var cubieMaterial = new THREE.MeshBasicMaterial( { color: 0x000000, overdraw: 0.5 });
-cubieTemplate = new THREE.Mesh(cubieGeometry, cubieMaterial);
+var cubieTemplate = new THREE.Mesh(cubieGeometry, cubieMaterial);
 cubieTemplate.translateZ(-1);
 
 var side = cubeOptions["doubleSided"] ? "doubleSided" : "singleSided";
@@ -198,7 +201,7 @@ for (var i = 0; i < numSides; i++) {
   for (var su = 0; su < cubeOptions["dimension"]; su++) {
     for (var sv = 0; sv < cubeOptions["dimension"]; sv++) {
 
-      sticker = stickerTemplate.clone();
+      var sticker = stickerTemplate.clone();
 
       var material = materials[side][i+1];
       var material2 = materials["singleSided"][i+1];
@@ -248,16 +251,16 @@ for (var i = 0; i < numSides; i++) {
   var lastMoveProgress = 0;
   var animateMoveCallback = function(twisty, currentMove, moveProgress) {
 
-    var canonical = alg.sign_w.canonicalizeMove(currentMove, cubeOptions["dimension"]);
+    var canonical = alg.sign_w.canonicalizeMove(currentMove, twisty["options"]["dimension"]);
 
     if (canonical.base == ".") {
       return; // Pause
     }
 
     var rott = new THREE.Matrix4();
-    //rott.makeRotationAxis(sidesRotAxis[canonical.base], (moveProgress - lastMoveProgress) * canonical.amount * Math.TAU/4);
+    //rott.makeRotationAxis(sidesRotAxis[canonical.base], (moveProgress - lastMoveProgress) * canonical.amount * Math.PI/2);
     lastMoveProgress = moveProgress;
-    rott.makeRotationAxis(sidesRotAxis[canonical.base], moveProgress * canonical.amount * Math.TAU/4);
+    rott.makeRotationAxis(sidesRotAxis[canonical.base], moveProgress * canonical.amount * Math.PI/2);
 
     var state = twisty["cubePieces"];
 
@@ -324,7 +327,7 @@ for (var i = 0; i < numSides; i++) {
 
   var advanceMoveCallback = function(twisty, currentMove) {
 
-    var canonical = alg.sign_w.canonicalizeMove(currentMove, cubeOptions["dimension"]);
+    var canonical = alg.sign_w.canonicalizeMove(currentMove, twisty["options"]["dimension"]);
 
     if (canonical.base === ".") {
       return; // Pause
@@ -419,7 +422,8 @@ for (var i = 0; i < numSides; i++) {
     var keyCode = e.keyCode;
     if (keyCode in cubeKeyMapping) {
       var move = alg.sign_w.stringToAlg(cubeKeyMapping[keyCode]);
-      twistyScene.addMoves(move);
+      twistyScene.queueMoves(move);
+      twistyScene.play.start();
     }
   };
 
@@ -538,4 +542,4 @@ for (var i = 0; i < numSides; i++) {
 
 }
 
-twistyjs.registerTwisty("cube", createCubeTwisty);
+twistyjs.twisties["cube"] = createCubeTwisty;

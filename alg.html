@@ -20,18 +20,20 @@
     <div id="viewer">
     </div><div id="controls-wrapper"><center><div id="controls">
 
-      <input id="currentMove" ng-model="current_move" type="range" min="0" max="1"><br>
+      <input id="currentMove" ng-model="current_move" type="range" min="0" max="1" step="0.01"><br>
 
-      <button class="control" id="rewind">
+      <button class="control" id="reset">
+        &#9664;&#9664;
+      </button><button class="control" id="back">
         &larr;
-      </button><button class="control" id="step">
-        &bull;
-      </button><button class="control" id="play">
+      </button><button class="control" id="play" ng-show="!animating">
         &#9654;
-      </button><button class="control" id="pause">
+      </button><button class="control" id="pause" ng-show="animating">
         &#x2759;&#x2759;
-      </button><button class="control" id="fast_forward">
+      </button><button class="control" id="forward">
         &rarr;
+      </button><button class="control" id="skip">
+        &#9654;&#9654;
       </button>
     </center></div>
 

@@ -82,7 +82,7 @@ performAction: function anonymous(yytext, yyleng, yylineno, yy, yystate /* actio
 
 var $0 = $$.length - 1;
 switch (yystate) {
-case 1: typeof console !== 'undefined' ? console.log($$[$0-1]) : print($$[$0-1]); return $$[$0-1]; 
+case 1: return $$[$0-1]; 
 break;
 case 2: return []; 
 break;
@@ -114,7 +114,7 @@ case 27:$$[$0-1].amount = $$[$0]; this.$ = $$[$0-1];
 break;
 case 28:this.$ = {type: "move", base: ".", amount: 1};
 break;
-case 29:this.$ = [$$[$0-1]];
+case 29:this.$ = [$$[$0-1]]; $$[$0-1].location = _$[$0-1];
 break;
 case 30:this.$ = $$[$0-1].concat($$[$0]);
 break;
@@ -631,7 +631,7 @@ case 20:return 'INVALID'
 break;
 }
 },
-rules: [/^(?:[^\S\r\n]+)/,/^(?:[0-9]+)/,/^(?:-)/,/^(?:Rw|Fw|Uw|Bw|Lw|Dw|Dw\b)/,/^(?:R|F|U|B|L|D|D\b)/,/^(?:r|f|u|b|l|d|d\b)/,/^(?:x|y|z|z\b)/,/^(?:M|E|S|S\b)/,/^(?:')/,/^(?:\.)/,/^(?:\/\/[^\n\r]*)/,/^(?:\/\*[^]*?\*\/)/,/^(?:[\n\r])/,/^(?:\[)/,/^(?:\])/,/^(?:\()/,/^(?:\))/,/^(?:,)/,/^(?::)/,/^(?:$)/,/^(?:.)/],
+rules: [/^(?:[^\S\r\n]+)/,/^(?:[0-9]+)/,/^(?:-)/,/^(?:(Rw|Fw|Uw|Bw|Lw|Dw))/,/^(?:(R|F|U|B|L|D))/,/^(?:(r|f|u|b|l|d))/,/^(?:(x|y|z))/,/^(?:(M|E|S))/,/^(?:')/,/^(?:\.)/,/^(?:\/\/[^\n\r]*)/,/^(?:\/\*[^]*?\*\/)/,/^(?:[\n\r])/,/^(?:\[)/,/^(?:\])/,/^(?:\()/,/^(?:\))/,/^(?:,)/,/^(?::)/,/^(?:$)/,/^(?:.)/],
 conditions: {"INITIAL":{"rules":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],"inclusive":true}}
 };
 return lexer;
