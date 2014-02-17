@@ -83,6 +83,9 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
   $scope.speed = 1;
   $scope.current_move = 0;
 
+  $scope.setupValid = true;
+  $scope.algValid = true;
+
   $scope.title_default = "";
   $scope.title = $scope.title_default;
   if ("title" in search) {
@@ -206,8 +209,22 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
       "colors": colorList($scope.scheme.scheme)
     });
 
-    var init = alg.sign_w.stringToAlg($scope.setup);
-    var algo = alg.sign_w.stringToAlg($scope.alg);
+    try {
+      var algo = alg.sign_w.stringToAlg($scope.alg);
+      $scope.algValid = true;
+    } catch (e) {
+      $scope.algValid = false;
+      throw e;
+    }
+
+    try {
+      var init = alg.sign_w.stringToAlg($scope.setup);
+      $scope.setupValid = true;
+    } catch (e) {
+      $scope.setupValid = false;
+      throw e;
+    }
+
     var type = $scope.type.type;
 
     init = alg.sign_w.algToMoves(init);
@@ -254,18 +271,14 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
       var idx = twistyScene.debug.getIndex() + 1;
       var val = $scope.current_move;
       if (idx != val && fire) {
-        fire = false;
         $scope.$apply("current_move = " + idx);
-        fire = true;
       }
     });
     $scope.$watch('current_move', function() {
       var idx = twistyScene.debug.getIndex() + 1;
       var val = $scope.current_move;
       if (idx != val && fire) {
-        fire = false;
         twistyScene.setIndex($scope.current_move - 1);
-        fire = true;
       }
     });
     $scope.$watch('speed', function() {

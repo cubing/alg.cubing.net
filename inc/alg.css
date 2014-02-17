@@ -76,6 +76,16 @@ html, textarea {
   cursor: pointer;
 }
 
+.moves.invalid {
+  border: 1px solid red;
+  background: rgba(255, 0, 0, 0.1);
+}
+
+.moves.invalid, .moves.invalid:hover, .moves.invalid:focus {
+  border: 1px solid red;
+  background: rgba(255, 0, 0, 0.1);
+}
+
 #info h1 {
   font-variant: small-caps;
   width: 100%;
