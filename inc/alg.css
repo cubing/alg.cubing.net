@@ -76,6 +76,10 @@ html, textarea {
   height: 20%;
 }
 
+#currentMove:hover {
+  cursor: ew-resize;
+}
+
 #currentMove:focus {
   outline: none;
 }
