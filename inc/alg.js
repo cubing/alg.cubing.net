@@ -284,7 +284,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
 
     // twistyScene.play.reset();
     twistyScene.addListener("animating", function(animating) {
-      $scope.animating = animating
+      $scope.$apply("animating = " + animating);
     });
 
     var fire = true;
