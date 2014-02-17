@@ -140,7 +140,7 @@ twistyjs.TwistyScene = function(options) {
     view.scene = new THREE.Scene();
     view.camera = new THREE.PerspectiveCamera( 30, 1, 0.001, 1000 );
 
-    view.renderer = new Renderer({antialias: true});
+    view.renderer = new Renderer({antialias: true, alpha: true});
 
     var canvas = view.renderer.domElement;
     $(canvas).css('position', 'absolute').css('top', 0).css('left', 0);

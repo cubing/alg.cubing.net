@@ -219,8 +219,13 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
 
     $("#viewer").empty();
 
+    var webgl = ( function () { try { var canvas = document.createElement( 'canvas' ); return !! window.WebGLRenderingContext && ( canvas.getContext( 'webgl' ) || canvas.getContext( 'experimental-webgl' ) ); } catch( e ) { return false; } } )();
+    var Renderer = webgl ? THREE.WebGLRenderer : THREE.CanvasRenderer;
+
     twistyScene = new twistyjs.TwistyScene({
-      "allowDragging": true
+      "allowDragging": true,
+      renderer: Renderer,
+      antialiasing: true
     });
     $("#viewer").append($(twistyScene.getDomElement()));
 
