@@ -311,6 +311,11 @@ twistyjs.TwistyScene = function(options) {
 
   function animFrame() {
 
+    if (model.position >= totalLength()) {
+      model.position = totalLength();
+      setAnimating(false);
+    }
+
     if (control.animating) {
 
       var prevTime = model.time;
@@ -334,11 +339,6 @@ twistyjs.TwistyScene = function(options) {
       else {
         var currentMove = model.moveList[Math.floor(model.position)];
         model.twisty["animateMoveCallback"](model.twisty, currentMove, model.position % 1);
-      }
-
-      if (model.position >= totalLength()) {
-        model.position = totalLength();
-        setAnimating(false);
       }
     }
 
