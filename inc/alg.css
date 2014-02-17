@@ -49,16 +49,54 @@ html, textarea {
   padding-top: 5%;
   width: 100%;
   background:;
+  height: 20%;
   position: absolute; bottom: 0; left: 0; 
 }
 
 #controls #currentMove {
-  width: 80%;
-  margin: 5px;
+  width: 90%;
+  margin: 1%;
+  padding: 0px;
+}
+
+#currentMove {
+  -webkit-appearance: none;
+  background-color: rgba(196, 196, 196, 0.5);
+  height: 20%;
+  border-radius: 1em;
+}
+
+#currentMove::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background: rgba(100, 100, 100, 0.8);
+  border: none;
+  opacity: 0.5;
+  width: 10%;
+  height: 100%;
+  border-radius: 1em;
+}
+
+#currentMove::-moz-range-thumb {
+  background: rgba(100, 100, 100, 0.8);
+  border: none;
+  opacity: 0.5;
+  width: 3em;
+  height: 3em;
+  border-radius: 1em;
+}
+
+#currentMove::-webkit-slider-thumb:hover, #currentMove::-webkit-slider-thumb:active {
+  -webkit-appearance: none;
+  background: white;
+}
+
+#currentMove::-moz-range-thumb:hover, #currentMove::-moz-range-thumb:active {
+  background-color: white;
 }
 
 #controls .control {
-  font-size: 2.5em;
+  height: 40%;
+  font-size: 1.5em;
   font-weight: bold;
   display: inline-block;
   border-radius: 8px;
@@ -68,7 +106,12 @@ html, textarea {
   width: 17%;
   overflow: hidden;
   margin: 2% 0.5% 3%;
- outline:none;
+  outline:none;
+  padding: 0px;
+
+  /* Override to match slider. */
+  border: none;
+  background-color: rgba(196, 196, 196, 0.5);
 }
 
 #controls .control:hover {
