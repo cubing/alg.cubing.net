@@ -405,10 +405,11 @@ twistyjs.TwistyScene = function(options) {
   }
 
   this.play.pause = function() {
-    control.stopAfterNextMove = true;
+    setAnimating(false);
   }
 
   this.play.skip = function() {
+    setAnimating(false);
     that.setIndex(model.moveList.length);
   }
 
@@ -418,7 +419,7 @@ twistyjs.TwistyScene = function(options) {
   }
 
   this.play.back = function() {
-    var index = that.getIndex();
+    var index = Math.ceil(that.getPosition());
     if (index > 0) {
       that.setIndex(index - 1);
     }
@@ -444,7 +445,7 @@ twistyjs.TwistyScene = function(options) {
 
     model.position = position;
 
-    if (position > 0 && position < totalLength()) {
+    if (position < totalLength()) {
       var currentMove = model.moveList[Math.floor(model.position)];
       model.twisty["animateMoveCallback"](model.twisty, currentMove, model.position % 1);
     }
