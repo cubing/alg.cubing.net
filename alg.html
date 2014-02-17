@@ -22,19 +22,19 @@
 
       <input id="currentMove" ng-model="current_move" type="range" min="0" max="1" step="0.01"><br>
 
-      <button class="control" id="cycleView" ng-click="nextView()">
+      <button class="control" id="cycleView" ng-click="nextView()" title="Change View">
         &#x2328;
-      </button><button class="control" id="reset">
+      </button><button class="control" id="reset" title="Reset">
         &#9664;&#9664;
-      </button><button class="control" id="back">
+      </button><button class="control" id="back" title="Back (1 ove)">
         &larr;
-      </button><button class="control" id="play" ng-show="!animating">
+      </button><button class="control" id="play" ng-show="!animating" title="Play">
         &#9654;
-      </button><button class="control" id="pause" ng-show="animating">
+      </button><button class="control" id="pause" ng-show="animating" title="Pause">
         &#x2759;&#x2759;
-      </button><button class="control" id="forward">
+      </button><button class="control" id="forward" title="Step forward (1 move)">
         &rarr;
-      </button><button class="control" id="skip">
+      </button><button class="control" id="skip" title="Skip to End">
         &#9654;&#9654;
       </button>
     </center></div>
