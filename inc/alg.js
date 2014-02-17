@@ -86,10 +86,23 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
   $scope.setupValid = true;
   $scope.algValid = true;
 
+  initParameter("view", "editor", [
+    {id:     "editor", next:   "playback", fullscreen: false, infoPane:  true, extraControls:  true, hightlightMoveFields:  true},
+    {id:   "playback", next: "fullscreen", fullscreen: false, infoPane:  true, extraControls: false, hightlightMoveFields: false},
+    {id: "fullscreen", next:     "editor", fullscreen:  true, infoPane: false, extraControls: false, hightlightMoveFields: false}
+  ]);
+
   $scope.title_default = "";
   $scope.title = $scope.title_default;
   if ("title" in search) {
     $scope.title = search["title"];
+  }
+
+  $scope.nextView = function() {
+    // TODO: Is there a better way to do view cycling?
+    var idx = $scope.view_list.indexOf($scope.view);
+    $scope.view = $scope.view_list[(idx + 1) % ($scope.view_list.length)];
+    $scope.updateLocation();
   }
 
   $scope.expand = function() {
@@ -153,6 +166,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     setWithDefault("scheme", $scope.scheme.id);
     setWithDefault("stage", $scope.stage.id);
     setWithDefault("title", $scope.title);
+    setWithDefault("view", $scope.view.id);
     //TODO: Update sharing links
 
     $scope.share_url = "http://alg.cubing.net" + $location.url();
@@ -190,6 +204,15 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
       outLight.push(lightColorMap[str2[reorder[i]]]);
     }
     return out.concat(outLight);
+  }
+
+  function locationToIndex(text, line, column) {
+    var lines = $scope.alg.split("\n");
+    var index = 0;
+    for (var i = 0; i < line-1; i++) {
+      index += lines[i].length + 1;
+    }
+    return index + column;
   }
 
   $scope.twisty_init = function() {
@@ -239,9 +262,26 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
       }
     );
 
+    function highlightCurrentMove() {
+      // TODO: Make a whole lot more efficient.
+      if (Math.floor($scope.current_move) >= algo.length) {
+        return;
+      }
+      var current_move = algo[Math.floor($scope.current_move)];
+      newStart = locationToIndex($scope.alg, current_move.location.first_line, current_move.location.first_column);
+      newEnd = locationToIndex($scope.alg, current_move.location.last_line, current_move.location.last_column);
+      if (document.getElementById("algorithm").selectionStart !== newStart) {
+        document.getElementById("algorithm").selectionStart = newStart;
+      }
+      if (document.getElementById("algorithm").selectionEnd !== newEnd) {
+        document.getElementById("algorithm").selectionEnd = newEnd;
+      }
+    }
+
     twistyScene.setCameraTheta(0.5);
 
     $(window).resize(twistyScene.resize);
+    $scope.$watch("view", twistyScene.resize);
 
     $("#moveIndex").val(0); //TODO: Move into twisty.js
 
@@ -251,6 +291,8 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
       var val = $scope.current_move;
       if (idx != val && fire) {
         $scope.$apply("current_move = " + idx);
+        // TODO: Move listener to detect index change.
+        highlightCurrentMove();
       }
     }
 
@@ -293,6 +335,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
       var idx = twistyScene.getPosition();
       var val = $scope.current_move;
       if (idx != val && fire) {
+        highlightCurrentMove();
         // We need to parse the string.
         // See https://github.com/angular/angular.js/issues/1189 and linked issue/discussion.
         twistyScene.setPosition(parseFloat($scope.current_move));

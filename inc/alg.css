@@ -26,6 +26,15 @@ html, textarea {
   #display-wrapper {height: 50%;}
   #info-wrapper {height: 50%;}
 
+  #controls .control {
+    font-size: 1.5em;
+    font-size: 6vw;
+  }
+}
+
+#display-wrapper.fullscreen {
+  width: 100%;
+  height: 100%;
 }
 
 #info {
@@ -42,6 +51,7 @@ html, textarea {
   display: block;
   width: 100%;
   height: 20%;
+  background: rgba(127, 127, 127, 0.2);
   /*background: linear-gradient(transparent 0%, rgba(0, 0, 0, 0.2) 20%);*/
 }
 
@@ -54,8 +64,9 @@ html, textarea {
 }
 
 #controls #currentMove {
-  width: 90%;
-  margin: 1%;
+  width: 100%;
+  height: 50%;
+  margin: 0%;
   padding: 0px;
 }
 
@@ -63,7 +74,10 @@ html, textarea {
   -webkit-appearance: none;
   background-color: rgba(196, 196, 196, 0.5);
   height: 20%;
-  border-radius: 1em;
+}
+
+#currentMove:focus {
+  outline: none;
 }
 
 #currentMove::-webkit-slider-thumb {
@@ -73,7 +87,6 @@ html, textarea {
   opacity: 0.5;
   width: 10%;
   height: 100%;
-  border-radius: 1em;
 }
 
 #currentMove::-moz-range-thumb {
@@ -82,7 +95,6 @@ html, textarea {
   opacity: 0.5;
   width: 3em;
   height: 3em;
-  border-radius: 1em;
 }
 
 #currentMove::-webkit-slider-thumb:hover, #currentMove::-webkit-slider-thumb:active {
@@ -95,23 +107,24 @@ html, textarea {
 }
 
 #controls .control {
-  height: 40%;
+  height: 50%;
   font-size: 1.5em;
+  font-size: 3vw;
   font-weight: bold;
   display: inline-block;
-  border-radius: 8px;
   vertical-align: middle;
   background: rgba(220, 220, 220, 0.5);
+  background: rgba(127, 127, 127, 0.2);
   border: 1px solid #bbb;
-  width: 17%;
   overflow: hidden;
-  margin: 2% 0.5% 3%;
+  margin: 0%;
   outline:none;
   padding: 0px;
+  width: 16.66%;
 
   /* Override to match slider. */
   border: none;
-  background-color: rgba(196, 196, 196, 0.5);
+  background: rgba(127, 127, 127, 0.6);
 }
 
 #controls .control:hover {
@@ -165,6 +178,10 @@ html, textarea {
 }
 
 #title:hover, #title:focus, .moves:hover, .moves:focus  {
+  outline: none;
+}
+
+.moves.hoverHighlight:hover, .moves.hoverHighlight:focus  {
   background: rgb(255, 250, 245);
   border: 1px solid #ddd;
 }

@@ -16,13 +16,15 @@
 </head>
 <body>
 
-  <div id="display-wrapper">
+  <div id="display-wrapper" ng-class="{'fullscreen': view.fullscreen}">
     <div id="viewer">
     </div><div id="controls-wrapper"><center><div id="controls">
 
       <input id="currentMove" ng-model="current_move" type="range" min="0" max="1" step="0.01"><br>
 
-      <button class="control" id="reset">
+      <button class="control" id="cycleView" ng-click="nextView()">
+        &#x2328;
+      </button><button class="control" id="reset">
         &#9664;&#9664;
       </button><button class="control" id="back">
         &larr;
@@ -37,17 +39,19 @@
       </button>
     </center></div>
 
-  </div><div id="info-wrapper"><div id="info">
+  </div><div id="info-wrapper" ng-show="view.infoPane"><div id="info">
 
     <h1><textarea id="title" rows="{{title | num_lines}}" ng-trim="false" ng-model="title" placeholder="alg.cubing.net"></textarea>
 
     <h2 ng-show="type.id != 'algorithm'" ng-bind="type.setup">Setup</h2>
-    <textarea id="setup" ng-show="type.id != 'algorithm'" rows="{{setup | num_lines}}" ng-trim="false" class="moves" ng-model="setup" placeholder="[Click here to add {{type.setup | lowercase}} moves.]" ng-class="{'invalid': !setupValid}"
+    <textarea id="setup" ng-show="type.id != 'algorithm'" rows="{{setup | num_lines}}" ng-trim="false" class="moves" ng-model="setup" placeholder="[Click here to add {{type.setup | lowercase}} moves.]" ng-class="{'invalid': !setupValid, 'hoverHighlight': view.hightlightMoveFields}"
     ></textarea>
 
     <h2 ng-bind="type.alg">Algorithm</h2>
-    <textarea id="algorithm" rows="{{alg | num_lines}}" ng-trim="false" class="moves" ng-model="alg" placeholder="[Click here to add {{type.moves}}.]" ng-class="{'invalid': !algValid}"
+    <textarea id="algorithm" rows="{{alg | num_lines}}" ng-trim="false" class="moves" ng-model="alg" placeholder="[Click here to add {{type.moves}}.]" ng-class="{'invalid': !algValid, 'hoverHighlight': view.hightlightMoveFields}"
     ></textarea>
+
+    <div ng-show="view.extraControls">
 
     <h2>Settings</h2>
     <div id="settings">
@@ -96,6 +100,8 @@
     <i>alg.cubing.net</i> is a tool by Lucas Garron.<br>
     Contribute <a href="https://github.com/lgarron/alg.cubing.net">on GitHub</a> or discuss at <a href="http://www.speedsolving.com/forum/forum.php">speedsolving.com</a>.
     </p>
+
+    </div>
 
   </div></div>
   </body>
