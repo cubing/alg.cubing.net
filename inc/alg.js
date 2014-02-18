@@ -120,6 +120,15 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     $scope.addHistoryCheckpoint = true;
   }
 
+  $scope.invert = function() {
+    // TODO: Invert inside commutator. (Current behaviour is correct, just not as useful).
+    var algo = alg.sign_w.stringToAlg($scope.alg);
+    var invertedAlg = alg.sign_w.invert(algo);
+    var invertedAlgStr = alg.sign_w.algToString(invertedAlg);
+    $scope.alg = invertedAlgStr;
+    $scope.addHistoryCheckpoint = true;
+  }
+
   function escape_alg(alg) {
     if (!alg) {return alg;}
     return alg.replace(/_/g, '&#95;').replace(/ /g, '_');
@@ -297,7 +306,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
       if (idx != val && fire) {
         $scope.$apply("current_move = " + idx);
         // TODO: Move listener to detect index change.
-        highlightCurrentMove();
+        // highlightCurrentMove();
       }
     }
 
@@ -340,7 +349,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
       var idx = twistyScene.getPosition();
       var val = $scope.current_move;
       if (idx != val && fire) {
-        highlightCurrentMove();
+        // highlightCurrentMove();
         // We need to parse the string.
         // See https://github.com/angular/angular.js/issues/1189 and linked issue/discussion.
         twistyScene.setPosition(parseFloat($scope.current_move));
