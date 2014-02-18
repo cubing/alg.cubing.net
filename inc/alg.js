@@ -32,6 +32,8 @@ var algxControllers = angular.module('algxControllers', []);
 
 algxControllers.controller('algxController', ["$scope", "$location", function($scope, $location) {
 
+  var touchBrowser = ("ontouchstart" in document.documentElement);
+
   var search = $location.search();
 
   function indexBy(list, key) {
@@ -301,6 +303,9 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     );
 
     function highlightCurrentMove() {
+      if (touchBrowser) {
+        return;
+      }
       // TODO: Make a whole lot more efficient.
       if (Math.floor($scope.current_move) >= algo.length) {
         return;
@@ -330,7 +335,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
       if (idx != val && fire) {
         $scope.$apply("current_move = " + idx);
         // TODO: Move listener to detect index change.
-        // highlightCurrentMove();
+        highlightCurrentMove();
       }
     }
 
@@ -373,7 +378,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
       var idx = twistyScene.getPosition();
       var val = $scope.current_move;
       if (idx != val && fire) {
-        // highlightCurrentMove();
+        highlightCurrentMove();
         // We need to parse the string.
         // See https://github.com/angular/angular.js/issues/1189 and linked issue/discussion.
         twistyScene.setPosition(parseFloat($scope.current_move));
