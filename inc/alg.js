@@ -138,7 +138,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
   }
 
   $scope.image = function() {
-      var canvas = twistyScene.getCanvas();
+      var canvas = document.getElementsByTagName("canvas")[0];
       var img = canvas.toDataURL("image/png");
       $("#canvasPNG").fadeTo(0, 0);
       $("#canvasPNG").html('<a href="' + img + '" target="blank"><img src="'+img+'"/></a>');
@@ -254,10 +254,8 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
 
     $("#viewer").empty();
 
-    // var webgl = ( function () { try { var canvas = document.createElement( 'canvas' ); return !! window.WebGLRenderingContext && ( canvas.getContext( 'webgl' ) || canvas.getContext( 'experimental-webgl' ) ); } catch( e ) { return false; } } )();
-    // var Renderer = webgl ? THREE.WebGLRenderer : THREE.CanvasRenderer;
-    // Always use canvas for now. It looks better. WebGL is usuallmainly available on desktop, where it won't make a big difference for speed.
-    var Renderer = THREE.CanvasRenderer;
+    var webgl = ( function () { try { var canvas = document.createElement( 'canvas' ); return !! window.WebGLRenderingContext && ( canvas.getContext( 'webgl' ) || canvas.getContext( 'experimental-webgl' ) ); } catch( e ) { return false; } } )();
+    var Renderer = webgl ? THREE.WebGLRenderer : THREE.CanvasRenderer;
 
     twistyScene = new twistyjs.TwistyScene({
       "allowDragging": true,
@@ -271,8 +269,10 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
       "dimension": $scope.puzzle.dimension,
       "stage": $scope.stage.id,
       "hintStickers": $scope.hint_stickers,
-      "stickerBorder": true,
-      "borderWidth": 1,
+      "cubies": !$scope.hollow,
+      "stickerBorder": false,
+      "doubleSided": !$scope.hint_stickers,
+      // "borderWidth": 1,
       "colors": colorList($scope.scheme.scheme)
     });
 
@@ -428,7 +428,8 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     "type",
     "scheme",
     "title",
-    "hint_stickers"
+    "hint_stickers",
+    "hollow"
   ].map(function(prop){
     $scope.$watch(prop, $scope.twisty_init);
   });
