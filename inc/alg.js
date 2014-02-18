@@ -149,6 +149,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     if (!alg) {return alg;}
     var escaped = alg;
     escaped = escaped.replace(/_/g, "&#95;").replace(/ /g, "_");
+    escaped = escaped.replace(/\+/g, "&#2b;");
     // TODO: Don't escape inside comments or moves like 3-5Rw
     // Probably done best by having a URL escaping mechanism in the alg.sign_w if the alg is parseable
     // escaped = escaped.replace(/-/g, "&#45;").replace(/'/g, "-");
@@ -157,8 +158,9 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
 
   function unescape_alg(alg) {
     if (!alg) {return alg;}
-    var unescaped = alg
+    var unescaped = alg;
     // unescaped = unescaped.replace(/-/g, "'").replace(/&#45;/g, "-");
+    unescaped = unescaped.replace(/\+/g, " ").replace(/&#2b;/g, "+"); // Recognize + as space. Many URL encodings will do this.
     unescaped = unescaped.replace(/_/g, " ").replace(/&#95;/g, "_");
     return unescaped;
   }
