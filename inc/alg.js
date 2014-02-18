@@ -118,25 +118,25 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
   }
 
   $scope.expand = function() {
-    var algo = alg.sign_w.stringToAlg($scope.alg);
-    var moves = alg.sign_w.algToMoves(algo);
-    var expandedAlgStr = alg.sign_w.algToString(moves);
+    var algo = alg.cube.stringToAlg($scope.alg);
+    var moves = alg.cube.algToMoves(algo);
+    var expandedAlgStr = alg.cube.algToString(moves);
     $scope.alg = expandedAlgStr;
   }
 
   $scope.simplify = function() {
-    var algo = alg.sign_w.stringToAlg($scope.alg);
-    var simplifiedAlg = alg.sign_w.algSimplify(algo);
-    var simplifiedAlgStr = alg.sign_w.algToString(simplifiedAlg);
+    var algo = alg.cube.stringToAlg($scope.alg);
+    var simplifiedAlg = alg.cube.algSimplify(algo);
+    var simplifiedAlgStr = alg.cube.algToString(simplifiedAlg);
     $scope.alg = simplifiedAlgStr;
     $scope.addHistoryCheckpoint = true;
   }
 
   $scope.invert = function() {
     // TODO: Invert inside commutator. (Current behaviour is correct, just not as useful).
-    var algo = alg.sign_w.stringToAlg($scope.alg);
-    var invertedAlg = alg.sign_w.invert(algo);
-    var invertedAlgStr = alg.sign_w.algToString(invertedAlg);
+    var algo = alg.cube.stringToAlg($scope.alg);
+    var invertedAlg = alg.cube.invert(algo);
+    var invertedAlgStr = alg.cube.algToString(invertedAlg);
     $scope.alg = invertedAlgStr;
     $scope.addHistoryCheckpoint = true;
   }
@@ -155,7 +155,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     escaped = escaped.replace(/_/g, "&#95;").replace(/ /g, "_");
     escaped = escaped.replace(/\+/g, "&#2b;");
     // TODO: Don't escape inside comments or moves like 3-5Rw
-    // Probably done best by having a URL escaping mechanism in the alg.sign_w if the alg is parseable
+    // Probably done best by having a URL escaping mechanism in the alg.cube if the alg is parseable
     // escaped = escaped.replace(/-/g, "&#45;").replace(/'/g, "-");
     return escaped;
   }
@@ -280,7 +280,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     });
 
     try {
-      var algo = alg.sign_w.stringToAlg($scope.alg);
+      var algo = alg.cube.stringToAlg($scope.alg);
       $scope.algValid = true;
     } catch (e) {
       $scope.algValid = false;
@@ -288,7 +288,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     }
 
     try {
-      var init = alg.sign_w.stringToAlg($scope.setup);
+      var init = alg.cube.stringToAlg($scope.setup);
       $scope.setupValid = true;
     } catch (e) {
       $scope.setupValid = false;
@@ -297,8 +297,8 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
 
     var type = $scope.type.type;
 
-    init = alg.sign_w.algToMoves(init);
-    algo = alg.sign_w.algToMoves(algo);
+    init = alg.cube.algToMoves(init);
+    algo = alg.cube.algToMoves(algo);
 
     twistyScene.setupAnimation(
       algo,
@@ -440,10 +440,10 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
   var metrics = ["obtm", "btm", "obqtm", "etm"];
 
   function updateMetrics() {
-    var algo = alg.sign_w.stringToAlg($scope.alg);
+    var algo = alg.cube.stringToAlg($scope.alg);
     for (i in metrics) {
       var metric = metrics[i];
-      $scope[metric] = alg.sign_w.countMoves(algo, metric, $scope.puzzle.dimension);
+      $scope[metric] = alg.cube.countMoves(algo, metric, $scope.puzzle.dimension);
     }
   }
   $scope.$watch("alg", updateMetrics);
