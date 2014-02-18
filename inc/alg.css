@@ -88,14 +88,14 @@ html, textarea {
   -webkit-appearance: none;
   background-color: rgba(196, 196, 196, 0.75);
   border: none;
-  width: 10%;
+  width: 16.66%;
   height: 100%;
 }
 
 #currentMove::-moz-range-thumb {
   background-color: rgba(196, 196, 196, 0.75);
   border: none;
-  width: 10%;
+  width: 16.66%;
   height: 100%;
 }
 
