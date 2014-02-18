@@ -44,6 +44,15 @@ twistyjs.TwistyScene = function(options) {
   // that=this is a Crockford convention for accessing "this" inside of methods.
   var that = this;
 
+
+  /******** Constants ********/
+
+  var CONSTANTS = {
+    CAMERA_STICKY_MIN: 2,
+    CAMERA_STICKY_MAX: 4,
+  }
+
+
   /******** Instance Variables ********/
 
   var model = {
@@ -64,7 +73,10 @@ twistyjs.TwistyScene = function(options) {
 
   var control = {
     cameraTheta: null,
+    cameraHeight: CONSTANTS.CAMERA_STICKY_MAX,
+
     mouseXLast: null,
+    mouseYLast: null,
 
     listeners: {
       animating: [],
@@ -128,7 +140,7 @@ twistyjs.TwistyScene = function(options) {
     var min = Math.min(width, height);
     view.camera.setViewOffset(min,  min, (min - width)/2, (min - height)/2, width, height);
 
-    moveCameraDelta(0);
+    moveCameraDelta(0, 0);
     view.renderer.setSize(width, height);
     renderOnce();
   };
@@ -170,17 +182,26 @@ twistyjs.TwistyScene = function(options) {
   /******** View: Camera ********/
 
 
-  this.setCameraTheta = function(theta) {
+  this.setCameraPosition = function(theta, height) {
     control.cameraTheta = theta;
-    var scale = model.twisty.cameraScale();
+
+    if (typeof height !== "undefined") {
+      control.cameraHeight = Math.max(-CONSTANTS.CAMERA_STICKY_MAX, Math.min(CONSTANTS.CAMERA_STICKY_MAX, height));
+    }
+
+    // We allow the height to enter a buffer from 2 to 3, but clip the display at 2.
+    var actualHeight = Math.max(-CONSTANTS.CAMERA_STICKY_MIN, Math.min(CONSTANTS.CAMERA_STICKY_MIN, control.cameraHeight));
+
+    var scale = model.twisty.cameraScale() + 1 - Math.pow(Math.abs(actualHeight)/CONSTANTS.CAMERA_STICKY_MIN, 2);
+
     view.camera.position.x = 2.5*Math.sin(theta) * scale;
-    view.camera.position.y = 2 * scale;
+    view.camera.position.y = actualHeight * scale;
     view.camera.position.z = 2.5*Math.cos(theta) * scale;
-    view.camera.lookAt(new THREE.Vector3(0, -0.075 * scale, 0));
+    view.camera.lookAt(new THREE.Vector3(0, -0.075 * scale * (actualHeight + 0.5)/CONSTANTS.CAMERA_STICKY_MIN, 0));
   }
 
-  function moveCameraDelta(deltaTheta) {
-    that.setCameraTheta(control.cameraTheta + deltaTheta);
+  function moveCameraDelta(deltaTheta, deltaHeight) {
+    that.setCameraPosition(control.cameraTheta + deltaTheta, control.cameraHeight + deltaHeight);
   }
 
 
@@ -220,8 +241,10 @@ twistyjs.TwistyScene = function(options) {
     if (kind !== "touch" || event.touches.length === 1) {
 
       control.mouseXLast = (kind == "mouse") ? event.clientX : event.touches[0].pageX;
-      event.preventDefault();
+      control.mouseYLast = (kind == "mouse") ? event.clientY : event.touches[0].pageY;
+
       renderOnce();
+      event.preventDefault();
 
       for (listener in listeners[kind]) {
         window.addEventListener(listener, listeners[kind][listener], false);
@@ -232,16 +255,32 @@ twistyjs.TwistyScene = function(options) {
   function onMove(event) {
     var kind = eventKind(event);
 
-    mouseX = (kind == "mouse") ? event.clientX : event.touches[0].pageX;
-    event.preventDefault();
-    moveCameraDelta((control.mouseXLast - mouseX)/256);
+    var mouseX = (kind == "mouse") ? event.clientX : event.touches[0].pageX;
+    var mouseY = (kind == "mouse") ? event.clientY : event.touches[0].pageY;
+
+    var deltaX = (control.mouseXLast - mouseX)/256;
+    var deltaY = -(control.mouseYLast - mouseY)/60;
+
+    moveCameraDelta(deltaX, deltaY);
+
     control.mouseXLast = mouseX;
+    control.mouseYLast = mouseY;
 
     renderOnce();
+    event.preventDefault();
   }
 
   function onEnd(event) {
     var kind = eventKind(event);
+
+    // Snap camera height to end of sticky region.
+    if (control.cameraHeight >= CONSTANTS.CAMERA_STICKY_MIN) {
+      control.cameraHeight = CONSTANTS.CAMERA_STICKY_MAX;
+    }
+    else if (control.cameraHeight <= -CONSTANTS.CAMERA_STICKY_MIN) {
+      control.cameraHeight = -CONSTANTS.CAMERA_STICKY_MAX;
+    }
+
     for (listener in listeners[kind]) {
       window.removeEventListener(listener, listeners[kind][listener], false);
     }

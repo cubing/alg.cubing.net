@@ -316,7 +316,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
       }
     }
 
-    twistyScene.setCameraTheta(0.5);
+    twistyScene.setCameraPosition(0.5, 3);
 
     $(window).resize(twistyScene.resize);
     $scope.$watch("view", twistyScene.resize);
