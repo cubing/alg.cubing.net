@@ -129,6 +129,14 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     $scope.addHistoryCheckpoint = true;
   }
 
+  $scope.image = function() {
+      var canvas = twistyScene.getCanvas();
+      var img = canvas.toDataURL("image/png");
+      $("#canvasPNG").fadeTo(0, 0);
+      $("#canvasPNG").html('<a href="' + img + '" target="blank"><img src="'+img+'"/></a>');
+      $("#canvasPNG").fadeTo("slow", 1);
+  }
+
   function escape_alg(alg) {
     if (!alg) {return alg;}
     var escaped = alg;

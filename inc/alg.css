@@ -242,6 +242,21 @@ h2 {
   line-height: 2em;
 }
 
+#canvasPNG {
+  text-align: center;
+}
+
+#canvasPNG img {
+  max-height: 200px;
+  max-width: 75%;
+  background: rgba(255, 127, 0, 0.05);
+  border: 1px solid #F80;
+}
+
+#canvasPNG img:hover {
+  background: rgba(255, 127, 0, 0.1);
+}
+
 select {
   font-size: 1em;
   background: rgb(255, 250, 245);
