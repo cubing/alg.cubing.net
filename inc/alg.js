@@ -263,8 +263,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
 
     twistyScene = new twistyjs.TwistyScene({
       "allowDragging": true,
-      renderer: Renderer,
-      antialiasing: true
+      renderer: Renderer
     });
     $("#viewer").append($(twistyScene.getDomElement()));
 
