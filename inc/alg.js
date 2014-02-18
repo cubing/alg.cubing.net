@@ -56,7 +56,10 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     {id: "4x4x4", name: "4x4x4", group: "Cube", dimension: 4},
     {id: "5x5x5", name: "5x5x5", group: "Cube", dimension: 5},
     {id: "6x6x6", name: "6x6x6", group: "Cube", dimension: 6},
-    {id: "7x7x7", name: "7x7x7", group: "Cube", dimension: 7}
+    {id: "7x7x7", name: "7x7x7", group: "Cube", dimension: 7},
+    {id: "8x8x8", name: "8x8x8", group: "Cube", dimension: 8},
+    {id: "9x9x9", name: "9x9x9", group: "Cube", dimension: 9},
+    {id: "17x17x17", name: "17x17x17", group: "Cube", dimension: 17} // Over the top!
   ]);
 
   initParameter("stage", "full", [
