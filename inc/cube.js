@@ -25,7 +25,7 @@ function createCubeTwisty(twistyScene, twistyParameters) {
     "dimension": 3,
     "colors": [0x444444, 0xffffff, 0xff8800, 0x00ff00, 0xff0000, 0x0000ff, 0xffff00,
     // TODO: Handle extra colors procedurally
-               0x222222, 0xaaaaaa, 0x884400, 0x008800, 0x660000, 0x000088, 0x888800],
+               0x222222, 0x888888, 0x884400, 0x008800, 0x660000, 0x000088, 0x888800],
     "stage": "full",
     "scale": 1,
   };
@@ -89,6 +89,22 @@ function createCubeTwisty(twistyScene, twistyParameters) {
     [0,0,0,4,4,4,4,4,4],
     [0,0,0,5,5,5,5,5,5],
     [6,6,6,6,6,6,6,6,6]
+  ];
+  stageStickers["CLS"] = [
+    [1,8,1,8,8,8,1,8,1],
+    [0,0,0,9,9,9,9,9,9],
+    [0,0,0,10,10,10,10,10,3],
+    [0,0,0,11,11,11,4,11,11],
+    [0,0,0,12,12,12,12,12,12],
+    [13,13,6,13,13,13,13,13,13]
+  ];
+  stageStickers["ELS"] = [
+    [0,1,0,1,1,1,0,1,0],
+    [0,0,0,9,9,9,9,9,9],
+    [0,0,0,10,10,3,10,10,0],
+    [0,0,0,4,11,11,0,11,11],
+    [0,0,0,12,12,12,12,12,12],
+    [13,13,0,13,13,13,13,13,13]
   ];
 
   var stickers = stageStickers["full"];

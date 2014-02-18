@@ -63,7 +63,9 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     {"id": "full", name: "Full", group: "Stage"},
     {"id": "PLL", name: "PLL", group: "Stage"},
     {"id": "OLL", name: "OLL", group: "Stage"},
-    {"id": "F2L", name: "F2L", group: "Stage"}
+    {"id": "F2L", name: "F2L", group: "Stage"},
+    {"id": "CLS", name: "CLS", group: "More"},
+    {"id": "ELS", name: "ELS", group: "More"}
   ]);
 
   initParameter("type", "algorithm", [
