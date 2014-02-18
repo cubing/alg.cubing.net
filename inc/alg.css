@@ -21,6 +21,16 @@ html, textarea {
   background: rgb(255, 245, 235);
 }
 
+#feedback {
+  background: rgba(196, 196, 196, 0.95);
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 0px;
+  padding: 0.5em 1em;
+  border-top-left-radius: 5px;
+}
+
 @media (max-width: 640px) and (min-height: 640px), (orientation: portrait) {
   #display-wrapper, #info-wrapper {width: 100%;}
   #display-wrapper {height: 50%;}

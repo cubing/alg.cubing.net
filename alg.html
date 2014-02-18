@@ -41,7 +41,7 @@
 
   </div><div id="info-wrapper" ng-show="view.infoPane"><div id="info">
 
-    <h1><textarea id="title" rows="{{title | num_lines}}" ng-trim="false" ng-model="title" placeholder="alg.cubing.net"></textarea>
+    <h1><textarea id="title" rows="{{title | num_lines}}" ng-trim="false" ng-model="title" placeholder="alg.cubing.net [beta]"></textarea></h1>
 
     <h2 ng-show="type.id != 'algorithm'" ng-bind="type.setup">Setup</h2>
     <textarea id="setup" ng-show="type.id != 'algorithm'" rows="{{setup | num_lines}}" ng-trim="false" class="moves" ng-model="setup" placeholder="[Click here to add {{type.setup | lowercase}} moves.]" ng-class="{'invalid': !setupValid, 'hoverHighlight': view.hightlightMoveFields}"
@@ -102,6 +102,12 @@
     Contribute <a href="https://github.com/lgarron/alg.cubing.net">on GitHub</a> or discuss at <a href="http://www.speedsolving.com/forum/forum.php">speedsolving.com</a>.
     </p>
 
+    </div>
+
+    <div id="feedback">
+    <center>
+      <a href="https://docs.google.com/forms/d/185FAYdA9MWAgZ87WjTFIMDxNLFwDlysqbL7tyRVb9C4/viewform" target="_blank">Got Feedback?</a>
+    </center>
     </div>
 
   </div></div>
