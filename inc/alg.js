@@ -33,6 +33,7 @@ var algxControllers = angular.module('algxControllers', []);
 algxControllers.controller('algxController', ["$scope", "$location", function($scope, $location) {
 
   var touchBrowser = ("ontouchstart" in document.documentElement);
+  var fire = true;
 
   var search = $location.search();
 
@@ -302,8 +303,8 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
       }
     );
 
-    function highlightCurrentMove() {
-      if (touchBrowser) {
+    function highlightCurrentMove(force) {
+      if (!force && (touchBrowser || !$scope.animating)) {
         return;
       }
       // TODO: Make a whole lot more efficient.
@@ -353,6 +354,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     $("#pause").unbind("click");
     $("#forward").unbind("click");
     $("#skip").unbind("click");
+    $(document).unbind("selectionchange");
 
     $("#reset").click(gettingCurrentMove(twistyScene.play.reset));
     $("#back").click(gettingCurrentMove(twistyScene.play.back));
@@ -367,18 +369,43 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     //   twistyScene.setIndex(currentMove - 1);
     // });
 
+    var selectionStart = algorithm.selectionStart;
+    function followSelection(apply) {
+      selectionStart = algorithm.selectionStart;
+      for (var i = 0; i < algo.length; i++) {
+        var move = algo[i];
+        var loc = locationToIndex($scope.alg, move.location.first_line, move.location.first_column);
+        if (loc >= selectionStart) {
+          break;
+        }
+      }
+      fire = false;
+      if(apply) {
+        $scope.$apply("current_move = " + i);
+      }
+      twistyScene.setPosition(parseFloat($scope.current_move));
+      fire = true;
+      return;
+    }
+
+    $(document).bind("selectionchange", function() {
+      if (selectionStart != algorithm.selectionStart) {
+        followSelection(true);
+      }
+    });
+
+    followSelection(false);
+
     // twistyScene.play.reset();
     twistyScene.addListener("animating", function(animating) {
       $scope.$apply("animating = " + animating);
     });
-
-    var fire = true;
     twistyScene.addListener("position", getCurrentMove);
     $scope.$watch('current_move', function() {
       var idx = twistyScene.getPosition();
       var val = $scope.current_move;
       if (idx != val && fire) {
-        highlightCurrentMove();
+        highlightCurrentMove(true);
         // We need to parse the string.
         // See https://github.com/angular/angular.js/issues/1189 and linked issue/discussion.
         twistyScene.setPosition(parseFloat($scope.current_move));
