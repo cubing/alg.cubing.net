@@ -35,6 +35,10 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
   var touchBrowser = ("ontouchstart" in document.documentElement);
   var fire = true;
 
+  if (touchBrowser) {
+    $scope.hollow = true;
+  }
+
   var search = $location.search();
 
   function indexBy(list, key) {
