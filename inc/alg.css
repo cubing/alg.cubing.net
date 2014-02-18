@@ -19,6 +19,7 @@ html, textarea {
   overflow-x: hidden;
   z-index: -5;
   background: rgb(255, 245, 235);
+  -webkit-overflow-scrolling: touch;
 }
 
 #feedback {
