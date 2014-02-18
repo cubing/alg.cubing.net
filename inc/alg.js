@@ -131,12 +131,18 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
 
   function escape_alg(alg) {
     if (!alg) {return alg;}
-    return alg.replace(/_/g, '&#95;').replace(/ /g, '_');
+    var escaped = alg;
+    escaped = escaped.replace(/_/g, "&#95;").replace(/ /g, "_");
+    escaped = escaped.replace(/-/g, "&#45;").replace(/'/g, "-"); // TODO: Don't escape inside comments.
+    return escaped;
   }
 
   function unescape_alg(alg) {
     if (!alg) {return alg;}
-    return alg.replace(/_/g, ' ').replace(/&#95;/g, '_');
+    var unescaped = alg
+    unescaped = unescaped.replace(/-/g, "'").replace(/&#45;/g, "-");
+    unescaped = unescaped.replace(/_/g, " ").replace(/&#95;/g, "_");
+    return unescaped;
   }
 
   $scope.alg_default = "";
