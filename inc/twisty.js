@@ -216,12 +216,16 @@ twistyjs.TwistyScene = function(options) {
   function onStart(event) {
     var kind = eventKind(event);
 
-    control.mouseXLast = (kind == "mouse") ? event.clientX : event.touches[0].pageX;
-    event.preventDefault();
-    renderOnce();
+    // Ignore multi-finger touches (e.g. pinch to zoom).
+    if (kind !== "touch" || event.touches.length === 1) {
 
-    for (listener in listeners[kind]) {
-      window.addEventListener(listener, listeners[kind][listener], false);
+      control.mouseXLast = (kind == "mouse") ? event.clientX : event.touches[0].pageX;
+      event.preventDefault();
+      renderOnce();
+
+      for (listener in listeners[kind]) {
+        window.addEventListener(listener, listeners[kind][listener], false);
+      }
     }
   }
 
