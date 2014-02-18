@@ -15,6 +15,7 @@ function createCubeTwisty(twistyScene, twistyParameters) {
   //Defaults
   var cubeOptions = {
     "stickerBorder": true,
+    "borderWidth": 8,
     "cubies": false,
     "stickerWidth": 1.8,
     "doubleSided": true,
@@ -156,7 +157,7 @@ borderGeometry.vertices.push( new THREE.Vector3(+c, -c, 0) );
 borderGeometry.vertices.push( new THREE.Vector3(+c, +c, 0) );
 borderGeometry.vertices.push( new THREE.Vector3(-c, +c, 0) );
 borderGeometry.vertices.push( new THREE.Vector3(-c, -c, 0) );
-var borderMaterial = new THREE.LineBasicMaterial({color: 0x000000, linewidth: 8, opacity: cubeOptions.opacity});
+var borderMaterial = new THREE.LineBasicMaterial({color: 0x000000, linewidth: cubeOptions["borderWidth"], opacity: cubeOptions.opacity});
 var borderTemplate = new THREE.Line(borderGeometry, borderMaterial);
 
 var innerGeometry = new THREE.PlaneGeometry(cubeOptions["stickerWidth"], cubeOptions["stickerWidth"]);

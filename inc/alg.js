@@ -260,6 +260,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
       "stage": $scope.stage.id,
       "hintStickers": $scope.hint_stickers,
       "stickerBorder": true,
+      "borderWidth": 4,
       "colors": colorList($scope.scheme.scheme)
     });
 
