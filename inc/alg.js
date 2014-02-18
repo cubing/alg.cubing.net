@@ -194,13 +194,13 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
   };
 
   var lightColorMap = {
-    "y": 0x888800,
-    "w": 0xaaaaaa,
-    "b": 0x000088,
-    "g": 0x008800,
-    "o": 0x884400,
-    "r": 0x660000,
-    "x": 0x222222
+    "y": 0xdddd00,
+    "w": 0xcccccc,
+    "b": 0x000099,
+    "g": 0x00bb00,
+    "o": 0xbb6600,
+    "r": 0xaa0000,
+    "x": 0x333333
   };
 
   function colorList(str) {
