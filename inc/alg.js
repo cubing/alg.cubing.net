@@ -258,7 +258,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
       "type": "cube",
       "dimension": $scope.puzzle.dimension,
       "stage": $scope.stage.id,
-      // "hintStickers": true,
+      "hintStickers": $scope.hint_stickers,
       "stickerBorder": true,
       "colors": colorList($scope.scheme.scheme)
     });
@@ -385,7 +385,8 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     "stage",
     "type",
     "scheme",
-    "title"
+    "title",
+    "hint_stickers"
   ].map(function(prop){
     $scope.$watch(prop, $scope.twisty_init);
   });
