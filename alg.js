@@ -186,9 +186,12 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
       /(\/\/.*)[\n\r]/g, "[COLOR=\"gray\"]$1[/COLOR]\n").replace(
       /(\/\*[^(\*\/)]*\*\/)/g, "[COLOR=\"gray\"]$1[/COLOR]"
     );
+    // TODO: Inject playback view into paramters properly.
+    // Right now it's fine because the view paramater is hidden in editor view, which is the only time you see a forum link.
     var text = algWithCommentsGreyed +
       '[COLOR="gray"]View at [url="' +
       url +
+      '&view=playback' +
       '"]alg.cubing.net[/url][/COLOR]';
     if ($scope.setup !== "") {
       text = "Scramble: " + $scope.setup + "\n\n" + text;
@@ -208,7 +211,8 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     setWithDefault("view", $scope.view.id);
     //TODO: Update sharing links
 
-    $scope.share_url = "http://alg.cubing.net" + $location.url();
+    // TODO: See comment above about adding playback to URL.
+    $scope.share_url = "http://alg.cubing.net" + $location.url() + '&view=playback';
     $scope.share_forum_short = "[url=" + $scope.share_url + "]" + $scope.alg + "[/url]";
     $scope.share_forum_long = forumLinkText($scope.share_url);
   };
