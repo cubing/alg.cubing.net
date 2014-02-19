@@ -78,8 +78,8 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     {"id": "ELS", name: "ELS", group: "More"}
   ]);
 
-  initParameter("type", "algorithm", [
-    {id: "algorithm", name: "Algorithm", group: "End Solved / End with Setup", setup: "Setup", alg: "Algorithm", type: "solve", moves: "algorithm moves"},
+  initParameter("type", "moves", [
+    {id: "alg", name: "Algorithm", group: "End Solved / End with Setup", setup: "Setup", alg: "Algorithm", type: "solve", moves: "algorithm moves"},
     {id: "moves", name: "Moves", group: "Start from Setup", setup: "Setup", alg: "Moves", type: "generator", moves: "moves"},
     {id: "reconstruction", name: "Reconstruction", group: "Start from Setup", setup: "Scramble", alg: "Solve", type: "generator", moves: "reconstruction moves"}
   ]);
