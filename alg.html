@@ -43,7 +43,7 @@
 
     <h1><textarea id="title" rows="{{title | num_lines}}" ng-trim="false" ng-model="title" placeholder="alg.cubing.net [beta]"></textarea></h1>
 
-    <div ng-show="!(type.id == 'algorithm' && view.id == 'playback' && setup == '')">
+    <div ng-show="!(view.id == 'playback' && setup == '')">
     <h2 ng-bind="type.setup">Setup</h2>
     <textarea id="setup" rows="{{setup | num_lines}}" ng-trim="false" class="moves" ng-model="setup" placeholder="[Click here to add {{type.setup | lowercase}} moves.]" ng-class="{'invalid': !setupValid, 'hoverHighlight': view.hightlightMoveFields}"
     ></textarea>
