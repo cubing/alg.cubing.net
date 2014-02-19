@@ -17,128 +17,163 @@
 <body>
 
   <div id="display-wrapper" ng-class="{'fullscreen': view.fullscreen}">
+
     <div id="viewer">
-    </div><div id="controls-wrapper"><center><div id="controls">
-
-      <input id="currentMove" ng-model="current_move" type="range" min="0" max="1" step="0.01"><br>
-
-      <button class="control" id="cycleView" title="Change View" ng-click="nextView()">
-        &#x2328;
-      </button>
-      <button class="control" id="reset" title="Reset">
-        &#x2759;&#9664;
-      </button>
-      <button class="control" id="back" title="Back (1 move)">
-        &larr;
-      </button>
-      <button class="control" id="play" title="Play" ng-show="!animating">
-        &#9654;
-      </button>
-      <button class="control" id="pause" title="Pause" ng-show="animating">
-        &#x2759;&#x2759;
-      </button>
-      <button class="control" id="forward" title="Step forward (1 move)">
-        &rarr;
-      </button>
-      <button class="control" id="skip" title="Skip to End">
-        &#9654;&#x2759;
-      </button>
-    </center></div>
-
-  </div><div id="info-wrapper" ng-show="view.infoPane"><div id="info">
-
-    <h1><textarea id="title" rows="{{title | num_lines}}" ng-trim="false" ng-model="title" placeholder="alg.cubing.net [beta]"></textarea></h1>
-
-    <div ng-show="!(view.id == 'playback' && setup == '')">
-    <h2 ng-bind="type.setup">Setup</h2>
-    <textarea
-      id="setup"
-      class="moves"
-      ng-model="setup"
-      ng-trim="false"
-      ng-class="{'invalid': !setupValid, 'hoverHighlight': view.hightlightMoveFields}"
-      rows="{{setup | num_lines}}"gs
-      placeholder="[Click here to add {{type.setup | lowercase}} moves.]"
-    ></textarea>
     </div>
 
-    <h2 ng-bind="type.alg">Algorithm</h2>
-    <textarea
-      id="algorithm"
-      class="moves"
-      ng-model="alg"
-      ng-trim="false"
-      ng-class="{'invalid': !algValid, 'hoverHighlight': view.hightlightMoveFields}"
-      rows="{{alg | num_lines}}"
-      placeholder="[Click here to add {{type.moves}}.]"
-      autofocus
-    ></textarea>
+    <div id="controls-wrapper">
+      <center>
+        <div id="controls">
 
-    <div ng-show="view.extraControls">
+          <input id="currentMove" ng-model="current_move" type="range" min="0" max="1" step="0.01"><br>
 
-    <h2>Settings</h2>
-    <div id="settings">
-      <select ng-model="puzzle" ng-options="p.name group by p.group for p in puzzle_list"></select>
-      <select ng-model="stage" ng-options="s.name group by s.group for s in stage_list" ng-disabled="puzzle.name != '3x3x3'"></select>
-      <select ng-model="type" ng-options="a.name group by a.group for a in type_list"></select>
-
-      <br>
-      Color Scheme:
-
-      <select ng-model="scheme" ng-options="s.name for s in scheme_list"></select>
-      <!--label ng-repeat="s in schemes">
-        <input
-          type="radio"
-          ng-model="$parent.scheme"
-          ng-value="s"
-        />
-        {{s.display}}
-      </label-->
-      <input class="current_scheme" type="text" ng-model="custom_scheme" ng-show="scheme.custom" ng-value="scheme.scheme"/>
-      <input class="current_scheme" type="text" ng-show="!scheme.custom" ng-readonly="true" ng-value="scheme.scheme"/>
-
-    <h2>Playback Options</h2>
-    <div id="playback_options">
-      Speed: <input type="range" min="0.1" max="3" step="0.1" style="vertical-align: middle;" ng-model="speed"> (<span ng-bind="speed">1</span>x)<br>
-      <input id="hint_stickers" type="checkbox" ng-model="hint_stickers" /> <label for="hint_stickers">Hint Stickers</label>
-      <input id="hollow" type="checkbox" ng-model="hollow" /> <label for="hollow">Hollow</label>
+          <button class="control" id="cycleView" title="Change View" ng-click="nextView()">
+            &#x2328;
+          </button><button class="control" id="reset" title="Reset">
+            &#x2759;&#9664;
+          </button><button class="control" id="back" title="Back (1 move)">
+            &larr;
+          </button><button class="control" id="play" title="Play" ng-show="!animating">
+            &#9654;
+          </button><button class="control" id="pause" title="Pause" ng-show="animating">
+            &#x2759;&#x2759;
+          </button><button class="control" id="forward" title="Step forward (1 move)">
+            &rarr;
+          </button><button class="control" id="skip" title="Skip to End">
+            &#9654;&#x2759;
+          </button>
+        </div>
+      </center>
     </div>
 
-    <h2>Tools</h2>
+  </div><div id="info-wrapper" ng-show="view.infoPane">
+    <div id="info">
 
-    <div id="tools">
-      <span title="h = obtm, q = obqtm, s = btm, e = etm">Moves:
-        <span ng-bind="obtm">0</span>h,
-        <span ng-bind="obqtm">0</span>q,
-        <span ng-bind="btm">0</span>s,
-        <span ng-bind="etm">0</span>e
-      </span><br>
-      <button ng-click="expand();">Expand</button>
-      <button ng-click="simplify();">Simplify</button>
-      <button ng-click="invert();">Invert</button>
-      <button ng-click="image();">Image</button>
-      <div id="canvasPNG"></div>
-    </div>
+      <h1>
+        <textarea
+          id="title"
+          rows="{{title | num_lines}}"
+          ng-trim="false"
+          ng-model="title"
+          placeholder="alg.cubing.net [beta]"
+        ></textarea>
+      </h1>
 
-    <h2>Forum Link</h2>
-      <span ng-show="type.id != 'reconstruction'"><input type="text" class="sharetext" readonly="readonly" ng-model="share_forum_short" onclick="this.focus(); this.select();" value="[Short forum link will appear here.]"/></span>
-      <span ng-show="type.id == 'reconstruction'"><textarea class="sharetext" readonly="readonly" onclick="this.focus(); this.select();" ng-bind="share_forum_long">[Long forum link will appear here.]</textarea></span>
-    <h2>About</h2>
-    <p>
-    <a href="https://github.com/cubing/alg.cubing.net/issues/51" target="_blank">List of features</a>.
-    <br>
-    Contribute <a href="https://github.com/cubing/alg.cubing.net">on GitHub</a> or discuss at <a href="http://www.speedsolving.com/forum/forum.php">speedsolving.com</a>.
-    </p>
+      <div ng-show="!(view.id == 'playback' && setup == '')">
+        <h2 ng-bind="type.setup">Setup</h2>
+        <textarea
+          id="setup"
+          class="moves"
+          ng-model="setup"
+          ng-trim="false"
+          ng-class="{'invalid': !setupValid, 'hoverHighlight': view.hightlightMoveFields}"
+          rows="{{setup | num_lines}}"gs
+          placeholder="[Click here to add {{type.setup | lowercase}} moves.]"
+        ></textarea>
+      </div>
 
-    </div>
+      <div>
+        <h2 ng-bind="type.alg">Algorithm</h2>
+        <textarea
+          id="algorithm"
+          class="moves"
+          ng-model="alg"
+          ng-trim="false"
+          ng-class="{'invalid': !algValid, 'hoverHighlight': view.hightlightMoveFields}"
+          rows="{{alg | num_lines}}"
+          placeholder="[Click here to add {{type.moves}}.]"
+          autofocus
+        ></textarea>
+        </div>
+
+      <div ng-show="view.extraControls">
+
+        <div>
+
+          <h2>Settings</h2>
+          <div class="section">
+            <select ng-model="puzzle" ng-options="p.name group by p.group for p in puzzle_list"></select>
+            <select ng-model="stage" ng-options="s.name group by s.group for s in stage_list" ng-disabled="puzzle.name != '3x3x3'"></select>
+            <select ng-model="type" ng-options="a.name group by a.group for a in type_list"></select>
+
+            <br>
+            Color Scheme:
+
+            <select ng-model="scheme" ng-options="s.name for s in scheme_list"></select>
+            <!--label ng-repeat="s in schemes">
+              <input
+                type="radio"
+                ng-model="$parent.scheme"
+                ng-value="s"
+              />
+              {{s.display}}
+            </label-->
+            <input class="current_scheme" type="text" ng-model="custom_scheme" ng-show="scheme.custom" ng-value="scheme.scheme"/>
+            <input class="current_scheme" type="text" ng-show="!scheme.custom" ng-readonly="true" ng-value="scheme.scheme"/>
+          </div>
+
+          <div>
+            <h2>Playback Options</h2>
+            <div class="section">
+              Speed: <input type="range" min="0.1" max="3" step="0.1" style="vertical-align: middle;" ng-model="speed"> (<span ng-bind="speed">1</span>x)<br>
+              <input id="hint_stickers" type="checkbox" ng-model="hint_stickers" /> <label for="hint_stickers">Hint Stickers</label>
+              <input id="hollow" type="checkbox" ng-model="hollow" /> <label for="hollow">Hollow</label>
+            </div>
+          </div>
+
+          <div>
+            <h2>Tools</h2>
+            <div class="section">
+              <span title="h = obtm, q = obqtm, s = btm, e = etm">Moves:
+                <span ng-bind="obtm">0</span>h,
+                <span ng-bind="obqtm">0</span>q,
+                <span ng-bind="btm">0</span>s,
+                <span ng-bind="etm">0</span>e
+              </span><br>
+              <button ng-click="expand();">Expand</button>
+              <button ng-click="simplify();">Simplify</button>
+              <button ng-click="invert();">Invert</button>
+              <button ng-click="image();">Image</button>
+              <div id="canvasPNG"></div>
+            </div>
+          </div>
+
+          <h2>Forum Link</h2>
+          <div ng-show="type.id != 'reconstruction'">
+            <input type="text"
+              class="sharetext"
+              readonly="readonly"
+              ng-model="share_forum_short"
+              onclick="this.focus(); this.select();"
+              value="[Short forum link will appear here.]"/>
+          </div>
+          <div ng-show="type.id == 'reconstruction'">
+            <textarea class="sharetext"
+              readonly="readonly"
+              onclick="this.focus(); this.select();"
+              ng-bind="share_forum_long"
+            >
+              [Long forum link will appear here.]
+            </textarea>
+          </div>
+
+          <h2>About</h2>
+          <div class="section">
+            <a href="https://github.com/cubing/alg.cubing.net/issues/51" target="_blank">List of features</a>.
+            <br>
+            Contribute <a href="https://github.com/cubing/alg.cubing.net">on GitHub</a> or discuss at <a href="http://www.speedsolving.com/forum/forum.php">speedsolving.com</a>.
+          </div>
+
+        </div>
+      </div>
     </div>
 
     <div id="feedback">
-    <center>
-      <a href="https://docs.google.com/forms/d/185FAYdA9MWAgZ87WjTFIMDxNLFwDlysqbL7tyRVb9C4/viewform" target="_blank">Got Feedback?</a>
-    </center>
+      <center>
+        <a href="https://docs.google.com/forms/d/185FAYdA9MWAgZ87WjTFIMDxNLFwDlysqbL7tyRVb9C4/viewform" target="_blank">Got Feedback?</a>
+      </center>
     </div>
 
-  </div>
+    </div>
   </body>
 </html>

@@ -238,9 +238,9 @@ h2 {
   font-size: 20px;
 }
 
-#settings, #tools {
-  margin: 8px;
+.section {
   line-height: 2em;
+  margin: 8px;
 }
 
 #canvasPNG {
