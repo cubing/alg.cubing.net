@@ -258,8 +258,10 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
 
     $("#viewer").empty();
 
-    var webgl = ( function () { try { var canvas = document.createElement( 'canvas' ); return !! window.WebGLRenderingContext && ( canvas.getContext( 'webgl' ) || canvas.getContext( 'experimental-webgl' ) ); } catch( e ) { return false; } } )();
-    var Renderer = webgl ? THREE.WebGLRenderer : THREE.CanvasRenderer;
+    // var webgl = ( function () { try { var canvas = document.createElement( 'canvas' ); return !! window.WebGLRenderingContext && ( canvas.getContext( 'webgl' ) || canvas.getContext( 'experimental-webgl' ) ); } catch( e ) { return false; } } )();
+    // var Renderer = webgl ? THREE.WebGLRenderer : THREE.CanvasRenderer;
+    // I can't get the WebGLRenderer to look nice as consistently, so let's use CanvasRenderer all the time.
+    var Renderer = THREE.CanvasRenderer;
 
     twistyScene = new twistyjs.TwistyScene({
       "allowDragging": true,
