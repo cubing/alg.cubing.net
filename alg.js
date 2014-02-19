@@ -187,9 +187,9 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
       /(\/\*[^(\*\/)]*\*\/)/g, "[COLOR=\"gray\"]$1[/COLOR]"
     );
     var text = algWithCommentsGreyed +
-      '[COLOR="gray"]View at [url=&quot;' +
+      '[COLOR="gray"]View at [url="' +
       url +
-      '&quot;]alg.cubing.net[/url][/COLOR]';
+      '"]alg.cubing.net[/url][/COLOR]';
     if ($scope.setup !== "") {
       text = "Scramble: " + $scope.setup + "\n\n" + text;
     }
