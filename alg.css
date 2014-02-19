@@ -1,6 +1,11 @@
 html, textarea {
-  font-family: Helvetica, Tacoma, sans-serif;
+  font-family: Helvetica, Verdana, Tahoma, sans-serif;
 }
+
+textarea {
+font-family: Verdana, Helvetica, Tahoma, sans-serif;
+}
+
 
 * {
   margin: 0;
