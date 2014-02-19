@@ -45,12 +45,27 @@
 
     <div ng-show="!(view.id == 'playback' && setup == '')">
     <h2 ng-bind="type.setup">Setup</h2>
-    <textarea id="setup" rows="{{setup | num_lines}}" ng-trim="false" class="moves" ng-model="setup" placeholder="[Click here to add {{type.setup | lowercase}} moves.]" ng-class="{'invalid': !setupValid, 'hoverHighlight': view.hightlightMoveFields}"
+    <textarea
+      id="setup"
+      class="moves"
+      ng-model="setup"
+      ng-trim="false"
+      ng-class="{'invalid': !setupValid, 'hoverHighlight': view.hightlightMoveFields}"
+      rows="{{setup | num_lines}}"
+      placeholder="[Click here to add {{type.setup | lowercase}} moves.]"
     ></textarea>
     </div>
 
     <h2 ng-bind="type.alg">Algorithm</h2>
-    <textarea id="algorithm" rows="{{alg | num_lines}}" ng-trim="false" class="moves" ng-model="alg" placeholder="[Click here to add {{type.moves}}.]" ng-class="{'invalid': !algValid, 'hoverHighlight': view.hightlightMoveFields}" autofocus
+    <textarea
+      id="algorithm"
+      class="moves"
+      ng-model="alg"
+      ng-trim="false"
+      ng-class="{'invalid': !algValid, 'hoverHighlight': view.hightlightMoveFields}"
+      rows="{{alg | num_lines}}"
+      placeholder="[Click here to add {{type.moves}}.]"
+      autofocus
     ></textarea>
 
     <div ng-show="view.extraControls">
