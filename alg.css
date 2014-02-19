@@ -23,13 +23,27 @@ html, textarea {
 }
 
 #feedback {
-  background: rgba(196, 196, 196, 0.95);
-  position: absolute;
+  background: rgba(255, 180, 180, 0.95);
+  position: fixed;
   bottom: 0;
   right: 0;
   margin: 0px;
+  padding: 0em 0em;
+  border-top-left-radius: 0.5em;
+
   padding: 0.5em 1em;
-  border-top-left-radius: 5px;
+  color: rgba(128, 0, 0, 1);
+
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+#feedback:hover {
+  font-variant: small-caps;
+  background: #F00;
+  color: rgba(0, 0, 0, 1);
+  font-size: 32px;
+  border-top-left-radius: 1em;
 }
 
 @media (max-width: 640px) and (min-height: 640px), (orientation: portrait) {
