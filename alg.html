@@ -50,7 +50,7 @@
     </div>
 
     <h2 ng-bind="type.alg">Algorithm</h2>
-    <textarea id="algorithm" rows="{{alg | num_lines}}" ng-trim="false" class="moves" ng-model="alg" placeholder="[Click here to add {{type.moves}}.]" ng-class="{'invalid': !algValid, 'hoverHighlight': view.hightlightMoveFields}"
+    <textarea id="algorithm" rows="{{alg | num_lines}}" ng-trim="false" class="moves" ng-model="alg" placeholder="[Click here to add {{type.moves}}.]" ng-class="{'invalid': !algValid, 'hoverHighlight': view.hightlightMoveFields}" autofocus
     ></textarea>
 
     <div ng-show="view.extraControls">
