@@ -2,11 +2,6 @@ html, textarea {
   font-family: Helvetica, Verdana, Tahoma, sans-serif;
 }
 
-textarea {
-font-family: Verdana, Helvetica, Tahoma, sans-serif;
-}
-
-
 * {
   margin: 0;
   padding: 0;
@@ -171,6 +166,7 @@ font-family: Verdana, Helvetica, Tahoma, sans-serif;
   margin: 4px 8px 4px;
   padding: 0.4em 0.6em;
   max-width: 32em;
+  font-family: Verdana, Helvetica, Tahoma, sans-serif;
 }
 
 #title {
