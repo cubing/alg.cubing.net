@@ -1,3 +1,5 @@
+"use strict";
+
 var ss;
 var l;
 
@@ -254,6 +256,10 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     return index + column;
   }
 
+  // We set this variable outside so that it will be overwritten.
+  // This currently helps with performance, presumably due to garbage collection.
+  var twistyScene;
+
   $scope.twisty_init = function() {
 
     $("#viewer").empty();
@@ -319,8 +325,8 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
         return;
       }
       var current_move = algo[Math.floor($scope.current_move)];
-      newStart = locationToIndex($scope.alg, current_move.location.first_line, current_move.location.first_column);
-      newEnd = locationToIndex($scope.alg, current_move.location.last_line, current_move.location.last_column);
+      var newStart = locationToIndex($scope.alg, current_move.location.first_line, current_move.location.first_column);
+      var newEnd = locationToIndex($scope.alg, current_move.location.last_line, current_move.location.last_column);
       if (document.getElementById("algorithm").selectionStart !== newStart) {
         document.getElementById("algorithm").selectionStart = newStart;
       }
@@ -443,7 +449,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
 
   function updateMetrics() {
     var algo = alg.cube.stringToAlg($scope.alg);
-    for (i in metrics) {
+    for (var i in metrics) {
       var metric = metrics[i];
       $scope[metric] = alg.cube.countMoves(algo, metric, $scope.puzzle.dimension);
     }
