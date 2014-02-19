@@ -22,19 +22,25 @@
 
       <input id="currentMove" ng-model="current_move" type="range" min="0" max="1" step="0.01"><br>
 
-      <button class="control" id="cycleView" ng-click="nextView()" title="Change View">
+      <button class="control" id="cycleView" title="Change View" ng-click="nextView()">
         &#x2328;
-      </button><button class="control" id="reset" title="Reset">
+      </button>
+      <button class="control" id="reset" title="Reset">
         &#x2759;&#9664;
-      </button><button class="control" id="back" title="Back (1 move)">
+      </button>
+      <button class="control" id="back" title="Back (1 move)">
         &larr;
-      </button><button class="control" id="play" ng-show="!animating" title="Play">
+      </button>
+      <button class="control" id="play" title="Play" ng-show="!animating">
         &#9654;
-      </button><button class="control" id="pause" ng-show="animating" title="Pause">
+      </button>
+      <button class="control" id="pause" title="Pause" ng-show="animating">
         &#x2759;&#x2759;
-      </button><button class="control" id="forward" title="Step forward (1 move)">
+      </button>
+      <button class="control" id="forward" title="Step forward (1 move)">
         &rarr;
-      </button><button class="control" id="skip" title="Skip to End">
+      </button>
+      <button class="control" id="skip" title="Skip to End">
         &#9654;&#x2759;
       </button>
     </center></div>
@@ -51,7 +57,7 @@
       ng-model="setup"
       ng-trim="false"
       ng-class="{'invalid': !setupValid, 'hoverHighlight': view.hightlightMoveFields}"
-      rows="{{setup | num_lines}}"
+      rows="{{setup | num_lines}}"gs
       placeholder="[Click here to add {{type.setup | lowercase}} moves.]"
     ></textarea>
     </div>
