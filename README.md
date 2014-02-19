@@ -1,6 +1,7 @@
 # alg.cubing.net
 
-The new generation of alg/reconstruction viewing and sharing.
+The new generation of alg/reconstruction viewing and sharing.  
+Built on [`twisty.js`](https://github.com/cubing/twisty.js).
 
 ## Examples
 
