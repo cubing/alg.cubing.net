@@ -1,6 +1,6 @@
-<html ng-app="algxApp" ng-controller="algxController">
+<html data-ng-app="algxApp" data-ng-controller="algxController">
 <head>
-  <title ng-bind="alg | title:title">alg.cubing.net</title>
+  <title data-ng-bind="alg | title:title">alg.cubing.net</title>
   <script src="lib/angular.js"></script>
   <script src="alg.js"></script>
   <link href="alg.css" rel="stylesheet" type="text/css" />
@@ -16,108 +16,106 @@
 </head>
 <body>
 
-  <div id="display-wrapper" ng-class="{'fullscreen': view.fullscreen}">
+  <div id="display-wrapper" data-ng-class="{'fullscreen': view.fullscreen}">
 
     <div id="viewer">
     </div>
 
     <div id="controls-wrapper">
-      <center>
-        <div id="controls">
+      <div id="controls">
 
-          <input id="currentMove" ng-model="current_move" type="range" min="0" max="1" step="0.01"><br>
+        <input id="currentMove" data-ng-model="current_move" type="range" min="0" max="1" step="0.01"><br>
 
-          <button class="control" id="cycleView" title="Change View" ng-click="nextView()">
-            &#x2328;
-          </button><button class="control" id="reset" title="Reset">
-            &#x2759;&#9664;
-          </button><button class="control" id="back" title="Back (1 move)">
-            &larr;
-          </button><button class="control" id="play" title="Play" ng-show="!animating">
-            &#9654;
-          </button><button class="control" id="pause" title="Pause" ng-show="animating">
-            &#x2759;&#x2759;
-          </button><button class="control" id="forward" title="Step forward (1 move)">
-            &rarr;
-          </button><button class="control" id="skip" title="Skip to End">
-            &#9654;&#x2759;
-          </button>
-        </div>
-      </center>
+        <button class="control" id="cycleView" title="Change View" data-ng-click="nextView()">
+          &#x2328;
+        </button><button class="control" id="reset" title="Reset">
+          &#x2759;&#9664;
+        </button><button class="control" id="back" title="Back (1 move)">
+          &larr;
+        </button><button class="control" id="play" title="Play" data-ng-show="!animating">
+          &#9654;
+        </button><button class="control" id="pause" title="Pause" data-ng-show="animating">
+          &#x2759;&#x2759;
+        </button><button class="control" id="forward" title="Step forward (1 move)">
+          &rarr;
+        </button><button class="control" id="skip" title="Skip to End">
+          &#9654;&#x2759;
+        </button>
+      </div>
     </div>
 
-  </div><div id="info-wrapper" ng-show="view.infoPane">
+  </div><div id="info-wrapper" data-ng-show="view.infoPane">
     <div id="info">
 
       <h1>
         <textarea
           id="title"
           rows="{{title | num_lines}}"
-          ng-trim="false"
-          ng-model="title"
+          data-ng-trim="false"
+          data-ng-model="title"
           placeholder="alg.cubing.net [beta]"
         ></textarea>
       </h1>
 
-      <div ng-show="!(view.id == 'playback' && setup == '')">
-        <h2 ng-bind="type.setup">Setup</h2>
+      <div data-ng-show="!(view.id == 'playback' && setup == '')">
+        <h2 data-ng-bind="type.setup">Setup</h2>
         <textarea
           id="setup"
           class="moves"
-          ng-model="setup"
-          ng-trim="false"
-          ng-class="{'invalid': !setupValid, 'hoverHighlight': view.hightlightMoveFields}"
-          rows="{{setup | num_lines}}"gs
+          data-ng-model="setup"
+          data-ng-trim="false"
+          data-ng-class="{'invalid': !setupValid, 'hoverHighlight': view.hightlightMoveFields}"
+          rows="{{setup | num_lines}}"
           placeholder="[Click here to add {{type.setup | lowercase}} moves.]"
         ></textarea>
       </div>
 
       <div>
-        <h2 ng-bind="type.alg">Algorithm</h2>
+        <h2 data-ng-bind="type.alg">Algorithm</h2>
         <textarea
           id="algorithm"
           class="moves"
-          ng-model="alg"
-          ng-trim="false"
-          ng-class="{'invalid': !algValid, 'hoverHighlight': view.hightlightMoveFields}"
+          data-ng-model="alg"
+          data-ng-trim="false"
+          data-ng-class="{'invalid': !algValid, 'hoverHighlight': view.hightlightMoveFields}"
           rows="{{alg | num_lines}}"
           placeholder="[Click here to add {{type.moves}}.]"
           autofocus
         ></textarea>
         </div>
 
-      <div ng-show="view.extraControls">
+      <div data-ng-show="view.extraControls">
 
         <div>
 
           <h2>Settings</h2>
           <div class="section">
-            <select ng-model="puzzle" ng-options="p.name group by p.group for p in puzzle_list"></select>
-            <select ng-model="stage" ng-options="s.name group by s.group for s in stage_list" ng-disabled="puzzle.name != '3x3x3'"></select>
-            <select ng-model="type" ng-options="a.name group by a.group for a in type_list"></select>
+            <select data-ng-model="puzzle" data-ng-options="p.name group by p.group for p in puzzle_list"></select>
+            <select data-ng-model="stage" data-ng-options="s.name group by s.group for s in stage_list" data-ng-disabled="puzzle.name != '3x3x3'"></select>
+            <select data-ng-model="type" data-ng-options="a.name group by a.group for a in type_list"></select>
 
             <br>
             Color Scheme:
 
-            <select ng-model="scheme" ng-options="s.name for s in scheme_list"></select>
-            <!--label ng-repeat="s in schemes">
+            <select data-ng-model="scheme" data-ng-options="s.name for s in scheme_list"></select>
+            <!--label data-ng-repeat="s in schemes">
               <input
                 type="radio"
-                ng-model="$parent.scheme"
-                ng-value="s"
+                data-ng-model="$parent.scheme"
+                data-ng-value="s"
               />
               {{s.display}}
             </label-->
-            <input class="current_scheme" type="text" ng-model="custom_scheme" ng-show="scheme.custom" ng-value="scheme.scheme"/>
-            <input class="current_scheme" type="text" ng-show="!scheme.custom" ng-readonly="true" ng-value="scheme.scheme"/>
+            <input class="current_scheme" type="text" data-ng-model="custom_scheme" data-ng-show="scheme.custom" data-ng-value="scheme.scheme"/>
+            <input class="current_scheme" type="text" data-ng-show="!scheme.custom" data-ng-readonly="true" data-ng-value="scheme.scheme"/>
           </div>
 
           <div>
             <h2>Playback Options</h2>
             <div class="section">
-              Speed: <input type="range" min="0.1" max="3" step="0.1" style="vertical-align: middle;" ng-model="speed"> (<span ng-bind="speed">1</span>x)<br>
-              <input id="hint_stickers" type="checkbox" ng-model="hint_stickers" /> <label for="hint_stickers">Hint Stickers</label>
-              <input id="hollow" type="checkbox" ng-model="hollow" /> <label for="hollow">Hollow</label>
+              Speed: <input type="range" min="0.1" max="3" step="0.1" style="vertical-align: middle;" data-ng-model="speed"> (<span data-ng-bind="speed">1</span>x)<br>
+              <input id="hint_stickers" type="checkbox" data-ng-model="hint_stickers" /> <label for="hint_stickers">Hint Stickers</label>
+              <input id="hollow" type="checkbox" data-ng-model="hollow" /> <label for="hollow">Hollow</label>
             </div>
           </div>
 
@@ -125,33 +123,33 @@
             <h2>Tools</h2>
             <div class="section">
               <span title="h = obtm, q = obqtm, s = btm, e = etm">Moves:
-                <span ng-bind="obtm">0</span>h,
-                <span ng-bind="obqtm">0</span>q,
-                <span ng-bind="btm">0</span>s,
-                <span ng-bind="etm">0</span>e
+                <span data-ng-bind="obtm">0</span>h,
+                <span data-ng-bind="obqtm">0</span>q,
+                <span data-ng-bind="btm">0</span>s,
+                <span data-ng-bind="etm">0</span>e
               </span><br>
-              <button ng-click="expand();">Expand</button>
-              <button ng-click="simplify();">Simplify</button>
-              <button ng-click="invert();">Invert</button>
-              <button ng-click="image();">Image</button>
+              <button data-ng-click="expand();">Expand</button>
+              <button data-ng-click="simplify();">Simplify</button>
+              <button data-ng-click="invert();">Invert</button>
+              <button data-ng-click="image();">Image</button>
               <div id="canvasPNG"></div>
             </div>
           </div>
 
           <h2>Forum Link</h2>
-          <div ng-show="type.id != 'reconstruction'">
+          <div data-ng-show="type.id != 'reconstruction'">
             <input type="text"
               class="sharetext"
               readonly="readonly"
-              ng-model="share_forum_short"
+              data-ng-model="share_forum_short"
               onclick="this.focus(); this.select();"
               value="[Short forum link will appear here.]"/>
           </div>
-          <div ng-show="type.id == 'reconstruction'">
+          <div data-ng-show="type.id == 'reconstruction'">
             <textarea class="sharetext"
               readonly="readonly"
               onclick="this.focus(); this.select();"
-              ng-bind="share_forum_long"
+              data-ng-bind="share_forum_long"
             >
               [Long forum link will appear here.]
             </textarea>
