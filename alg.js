@@ -73,17 +73,18 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
 
   initParameter("stage", "full", [
     {"id": "full", name: "Full", group: "Stage"},
-    {"id": "PLL", name: "PLL", group: "Stage"},
-    {"id": "OLL", name: "OLL", group: "Stage"},
-    {"id": "F2L", name: "F2L", group: "Stage"},
-    {"id": "CLS", name: "CLS", group: "More"},
-    {"id": "ELS", name: "ELS", group: "More"}
+    {"id": "PLL", name: "PLL", group: "Fridrich"},
+    {"id": "OLL", name: "OLL", group: "Fridrich"},
+    {"id": "F2L", name: "F2L", group: "Fridrich"},
+    {"id": "CLS", name: "CLS", group: "MGLS"},
+    {"id": "ELS", name: "ELS", group: "MGLS"}
   ]);
 
   initParameter("type", "moves", [
     {id: "moves", name: "Moves", group: "Start from Setup", setup: "Setup", alg: "Moves", type: "generator", moves: "moves"},
     {id: "reconstruction", name: "Reconstruction", group: "Start from Setup", setup: "Scramble", alg: "Solve", type: "generator", moves: "reconstruction moves"},
-    {id: "alg", name: "Algorithm", group: "End Solved / End with Setup", setup: "Setup", alg: "Algorithm", type: "solve", moves: "algorithm moves"}
+    {id: "alg", name: "Algorithm", group: "End Solved / End with Setup", setup: "Setup", alg: "Algorithm", type: "solve", moves: "algorithm moves"},
+    {id: "reconstruction-no-scramble", name: "Reconstruction (no scramble)", group: "End Solved / End with Setup", setup: "Setup", alg: "Solve", type: "generator", moves: "reconstruction moves"}
   ]);
 
   // TODO: BOY/Japanese translations.
