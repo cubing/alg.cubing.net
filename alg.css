@@ -7,10 +7,30 @@ html, textarea {
   padding: 0;
 }
 
+
+/******** Pane Layout ********/
+
 #display-wrapper, #info-wrapper {
   vertical-align: bottom;
   display: inline-block;
   width: 50%;
+  height: 100%;
+}
+
+#display-wrapper {
+  position: relative;
+  background-color: #EAEAEA;
+  background-image: linear-gradient(45deg, #DDD 25%, transparent 25%, transparent 75%, #DDD 75%, #DDD),
+    linear-gradient(45deg, #DDD 25%, transparent 25%, transparent 75%, #DDD 75%, #DDD);
+  background-size: 32px 32px;
+  background-position: 0 0, 16px 16px;
+
+  box-shadow: 0 0 8px #000;
+  z-index: 5;
+}
+
+#display-wrapper.fullscreen {
+  width: 100%;
   height: 100%;
 }
 
@@ -20,30 +40,6 @@ html, textarea {
   z-index: -5;
   background: rgb(255, 245, 235);
   -webkit-overflow-scrolling: touch;
-}
-
-#feedback {
-  background: rgba(255, 180, 180, 0.95);
-  position: fixed;
-  bottom: 0;
-  right: 0;
-  margin: 0px;
-  padding: 0em 0em;
-  border-top-left-radius: 0.5em;
-
-  padding: 0.5em 1em;
-  color: rgba(128, 0, 0, 1);
-
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
-}
-
-#feedback:hover {
-  font-variant: small-caps;
-  background: #F00;
-  color: rgba(0, 0, 0, 1);
-  font-size: 32px;
-  border-top-left-radius: 1em;
 }
 
 @media (max-width: 640px) and (min-height: 640px), (orientation: portrait) {
@@ -57,14 +53,8 @@ html, textarea {
   }
 }
 
-#display-wrapper.fullscreen {
-  width: 100%;
-  height: 100%;
-}
 
-#info {
-  padding: 0% 4%;
-}
+/******** Display Pane ********/
 
 #viewer {
   display: block;
@@ -87,18 +77,13 @@ html, textarea {
   position: absolute; bottom: 0; left: 0; 
 }
 
-#controls #currentMove {
+#currentMove {
+  -webkit-appearance: none;
+  background: none;
   width: 100%;
   height: 50%;
   margin: 0%;
   padding: 0px;
-}
-
-#currentMove {
-  -webkit-appearance: none;
-  background-color: rgba(196, 196, 196, 0.75);
-  background: none;
-  height: 20%;
 }
 
 #currentMove:hover {
@@ -157,14 +142,11 @@ html, textarea {
   cursor: pointer;
 }
 
-.moves.invalid {
-  border: 1px solid red;
-  background: rgba(255, 0, 0, 0.1);
-}
 
-.moves.invalid, .moves.invalid:hover, .moves.invalid:focus {
-  border: 1px solid red;
-  background: rgba(255, 0, 0, 0.1);
+/******** Info Pane ********/
+
+#info {
+  padding: 0% 4%;
 }
 
 #info h1 {
@@ -174,14 +156,28 @@ html, textarea {
   padding: 2%;
 }
 
-.moves {
-  width: 100%;
-  font-size: 1.25em;
-  margin: 4px 8px 4px;
-  padding: 0.4em 0.6em;
-  max-width: 32em;
-  font-family: Verdana, Helvetica, Tahoma, sans-serif;
+#info h2 {
+  font-size: 20px;
 }
+
+#info select {
+  font-size: 1em;
+  background: rgb(255, 250, 245);
+  border: 1px solid #ddd;
+}
+
+#info button {
+  font-size: 1em;
+  padding: 0.2em 0.5em;
+}
+
+.section {
+  line-height: 2em;
+  margin: 8px;
+}
+
+
+/******** Info Pane Components ********/
 
 #title {
   font-weight: bold;
@@ -195,12 +191,39 @@ html, textarea {
   font-variant: small-caps;
 }
 
+#title::-webkit-input-placeholder {
+  color: #000;
+}
+
+#title:focus::-webkit-input-placeholder {
+  color: transparent;
+}
+
 #title, .moves {
   background: transparent;
   border-radius: 12px;
   border: 1px solid transparent;
   line-height: 1.2em;
   resize: none;
+}
+
+.moves {
+  width: 100%;
+  font-size: 1.25em;
+  margin: 4px 8px 4px;
+  padding: 0.4em 0.6em;
+  max-width: 32em;
+  font-family: Verdana, Helvetica, Tahoma, sans-serif;
+}
+
+.moves.invalid {
+  border: 1px solid red;
+  background: rgba(255, 0, 0, 0.1);
+}
+
+.moves.invalid, .moves.invalid:hover, .moves.invalid:focus {
+  border: 1px solid red;
+  background: rgba(255, 0, 0, 0.1);
 }
 
 #title:hover, #title:focus, .moves:hover, .moves:focus  {
@@ -212,15 +235,16 @@ html, textarea {
   border: 1px solid #ddd;
 }
 
-#title::-webkit-input-placeholder {
-  color: #000;
+input.current_scheme {
+  font-size: 1em;
+  width: 5em;
 }
 
-#title:focus::-webkit-input-placeholder {
-  color: transparent;
+input.current_scheme[readonly] {
+  color: #aaa;
 }
 
-hr {
+/*hr {
 
   width: 70%;
   margin: auto;
@@ -234,28 +258,7 @@ hr {
     rgba(127, 127, 127,1) 50%,
     rgba(127, 127, 127,0) 100%
   );
-}
-
-#display-wrapper {
-  position: relative;
-  background-color: #EAEAEA;
-  background-image: linear-gradient(45deg, #DDD 25%, transparent 25%, transparent 75%, #DDD 75%, #DDD),
-    linear-gradient(45deg, #DDD 25%, transparent 25%, transparent 75%, #DDD 75%, #DDD);
-  background-size: 32px 32px;
-  background-position: 0 0, 16px 16px;
-
-  box-shadow: 0 0 8px #000;
-  z-index: 5;
-}
-
-h2 {
-  font-size: 20px;
-}
-
-.section {
-  line-height: 2em;
-  margin: 8px;
-}
+}*/
 
 #canvasPNG {
   text-align: center;
@@ -270,21 +273,6 @@ h2 {
 
 #canvasPNG img:hover {
   background: rgba(255, 127, 0, 0.1);
-}
-
-select {
-  font-size: 1em;
-  background: rgb(255, 250, 245);
-  border: 1px solid #ddd;
-}
-
-button {
-  font-size: 1em;
-  padding: 0.2em 0.5em;
-}
-
-p {
-  padding: 8px;
 }
 
 .sharetext {
@@ -307,22 +295,29 @@ textarea.sharetext {
   background: #fff;
 }
 
-input.current_scheme {
-  font-size: 1em;
-  width: 5em;
+
+/******** Big Red Feedback Button ********/
+
+#feedback {
+  background: rgba(255, 180, 180, 0.95);
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin: 0px;
+  padding: 0em 0em;
+  border-top-left-radius: 0.5em;
+
+  padding: 0.5em 1em;
+  color: rgba(128, 0, 0, 1);
+
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
 }
 
-input.current_scheme[readonly] {
-  color: #aaa;
-}
-
-.beta {
-  display: inline-block;
-  vertical-align: top;
-  font-weight: normal;
-  color: rgb(255, 245, 235);
-  background: #000;
-  padding: 1px 8px;
-  font-size: 50%;
-  border-radius: 8px;
+#feedback:hover {
+  font-variant: small-caps;
+  background: #F00;
+  color: rgba(0, 0, 0, 1);
+  font-size: 32px;
+  border-top-left-radius: 1em;
 }
