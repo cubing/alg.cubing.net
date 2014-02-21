@@ -77,7 +77,8 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     {"id": "OLL", name: "OLL", group: "Fridrich"},
     {"id": "F2L", name: "F2L", group: "Fridrich"},
     {"id": "CLS", name: "CLS", group: "MGLS"},
-    {"id": "ELS", name: "ELS", group: "MGLS"}
+    {"id": "ELS", name: "ELS", group: "MGLS"},
+    {"id": "L6E", name: "L6E", group: "Roux"}
   ]);
 
   initParameter("type", "moves", [
