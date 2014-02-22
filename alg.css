@@ -288,6 +288,7 @@ input.current_scheme[readonly] {
 
 textarea.sharetext {
   height: 2em;
+  resize: none
 }
 
 .sharetext:hover {
