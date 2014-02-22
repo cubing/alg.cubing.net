@@ -92,7 +92,8 @@
           <div class="section">
             <select data-ng-model="puzzle" data-ng-options="p.name group by p.group for p in puzzle_list"></select>
             <select data-ng-model="stage" data-ng-options="s.name group by s.group for s in stage_list" data-ng-disabled="puzzle.name != '3x3x3'"></select>
-            <select data-ng-model="type" data-ng-options="a.name group by a.group for a in type_list"></select>
+            <select data-ng-model="type" data-ng-options="(a.name) for a in type_list"></select>
+            <select data-ng-model="setup_at" data-ng-options="setup_name(s, type) for s in setup_at_list"></select>
 
             <br>
             Color Scheme:

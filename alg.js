@@ -81,11 +81,31 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     {"id": "L6E", name: "L6E", group: "Roux"}
   ]);
 
-  initParameter("type", "moves", [
-    {id: "moves", name: "Moves", group: "Start from Setup", setup: "Setup", alg: "Moves", type: "generator", moves: "moves"},
-    {id: "reconstruction", name: "Reconstruction", group: "Start from Setup", setup: "Scramble", alg: "Solve", type: "generator", moves: "reconstruction moves"},
-    {id: "alg", name: "Algorithm", group: "End Solved / End with Setup", setup: "Setup", alg: "Algorithm", type: "solve", moves: "algorithm moves"},
-    {id: "reconstruction-no-scramble", name: "Reconstruction (no scramble)", group: "End Solved / End with Setup", setup: "Setup", alg: "Solve", type: "generator", moves: "reconstruction moves"}
+  $scope.setup_name = function(setup, type) {
+    var out = setup.id;
+    out += "ing ";
+    out += {
+      "start": "from",
+      "end": "at"
+    }[setup.id];
+    out += " ";
+    if (setup.id === "start" && type.id === "reconstruction") {
+      out += "scramble";
+    }
+    else {
+      out += "setup";
+    }
+    return out;
+  }
+
+  initParameter("setup_at", "start", [
+    {id: "start", name: "Start"},
+    {id: "end", name: "End"},
+  ]);
+
+  initParameter("type", "alg", [
+    {id: "alg", name: "Algorithm", setup: "Setup", alg: "Algorithm", type: "solve", moves: "algorithm moves"},
+    {id: "reconstruction", name: "Reconstruction", setup: "Scramble", alg: "Solve", type: "generator", moves: "reconstruction moves"},
   ]);
 
   // TODO: BOY/Japanese translations.
@@ -207,6 +227,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     setWithDefault("setup", escape_alg($scope.setup));
     setWithDefault("puzzle", $scope.puzzle.id);
     setWithDefault("type", $scope.type.id);
+    setWithDefault("setup_at", $scope.setup_at.id);
     setWithDefault("scheme", $scope.scheme.id);
     setWithDefault("stage", $scope.stage.id);
     setWithDefault("title", $scope.title);
@@ -214,8 +235,9 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     //TODO: Update sharing links
 
     // TODO: See comment above about adding playback to URL.
+    var alg_text = $scope.alg || "alg.cubing.net";
     $scope.share_url = "http://alg.cubing.net" + $location.url() + '&view=playback';
-    $scope.share_forum_short = "[url=" + $scope.share_url + "]" + $scope.alg + "[/url]";
+    $scope.share_forum_short = "[url=" + $scope.share_url + "]" + alg_text + "[/url]";
     $scope.share_forum_long = forumLinkText($scope.share_url);
   };
 
@@ -307,7 +329,12 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
       throw e;
     }
 
-    var type = $scope.type.type;
+    var type = {
+      "start": "generator",
+      "end": "solve"
+    }[$scope.setup_at.id];
+
+    console.log(type);
 
     init = alg.cube.algToMoves(init);
     algo = alg.cube.algToMoves(algo);
@@ -441,6 +468,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     "puzzle",
     "stage",
     "type",
+    "setup_at",
     "scheme",
     "title",
     "hint_stickers",
