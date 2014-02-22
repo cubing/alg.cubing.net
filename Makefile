@@ -1,4 +1,4 @@
-all: deploy
+all: deploy open
 
 .PHONY: deploy
 deploy:
