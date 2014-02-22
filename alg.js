@@ -24,13 +24,7 @@ algxApp.filter('title', function() {
   };
 });
 
-algxApp.filter('num_lines', function() {
-  return function(input) {
-    return input.split("\n").length;
-  };
-});
-
-var algxControllers = angular.module('algxControllers', []);
+var algxControllers = angular.module('algxControllers', ['monospaced.elastic']);
 
 algxControllers.controller('algxController', ["$scope", "$location", function($scope, $location) {
 
