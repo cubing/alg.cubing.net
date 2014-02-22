@@ -138,7 +138,7 @@
           </div>
 
           <h2>Forum Link</h2>
-          <div data-ng-show="type.id != 'reconstruction'">
+          <div data-ng-show="! type.reconstruction">
             <input type="text"
               class="sharetext"
               readonly="readonly"
@@ -146,7 +146,7 @@
               onclick="this.focus(); this.select();"
               value="[Short forum link will appear here.]"/>
           </div>
-          <div data-ng-show="type.id == 'reconstruction'">
+          <div data-ng-show="type.reconstruction">
             <textarea class="sharetext"
               readonly="readonly"
               onclick="this.focus(); this.select();"
