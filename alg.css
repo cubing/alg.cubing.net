@@ -216,6 +216,11 @@ html, textarea {
   font-family: Verdana, Helvetica, Tahoma, sans-serif;
 }
 
+.moves.hoverHighlight:hover, .moves.hoverHighlight:focus  {
+  background: rgb(255, 250, 245);
+  border: 1px solid #ddd;
+}
+
 .moves.invalid {
   border: 1px solid red;
   background: rgba(255, 0, 0, 0.1);
@@ -228,11 +233,6 @@ html, textarea {
 
 #title:hover, #title:focus, .moves:hover, .moves:focus  {
   outline: none;
-}
-
-.moves.hoverHighlight:hover, .moves.hoverHighlight:focus  {
-  background: rgb(255, 250, 245);
-  border: 1px solid #ddd;
 }
 
 input.current_scheme {

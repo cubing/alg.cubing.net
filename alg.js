@@ -336,7 +336,6 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
       $scope.algValid = true;
     } catch (e) {
       $scope.algValid = false;
-      throw e;
     }
 
     try {
@@ -344,7 +343,6 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
       $scope.setupValid = true;
     } catch (e) {
       $scope.setupValid = false;
-      throw e;
     }
 
     var type = $scope.type.type;
