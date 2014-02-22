@@ -204,6 +204,7 @@ html, textarea {
   border-radius: 12px;
   border: 1px solid transparent;
   line-height: 1.2em;
+  height: 1.2em;
   resize: none;
 }
 
