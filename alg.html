@@ -1,5 +1,6 @@
 <html data-ng-app="algxApp" data-ng-controller="algxController">
 <head>
+  <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
   <title data-ng-bind="alg | title:title">alg.cubing.net</title>
   <script src="lib/angular.js"></script>
   <script src="lib/elastic.js"></script>
@@ -51,7 +52,7 @@
       <h1>
         <textarea
           id="title"
-          msd-elastic
+          data-msd-elastic
           data-ng-trim="false"
           data-ng-model="title"
           placeholder="alg.cubing.net [beta]"
@@ -66,7 +67,7 @@
           data-ng-model="setup"
           data-ng-trim="false"
           data-ng-class="{'invalid': !setupValid, 'hoverHighlight': view.hightlightMoveFields}"
-          msd-elastic
+          data-msd-elastic
           placeholder="[Click here to add {{type.setup_moves}}.]"
         ></textarea>
       </div>
@@ -79,7 +80,7 @@
           data-ng-model="alg"
           data-ng-trim="false"
           data-ng-class="{'invalid': !algValid, 'hoverHighlight': view.hightlightMoveFields}"
-          msd-elastic
+          data-msd-elastic
           placeholder="[Click here to add {{type.alg_moves}}.]"
           autofocus
         ></textarea>
