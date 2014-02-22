@@ -66,7 +66,7 @@
           data-ng-trim="false"
           data-ng-class="{'invalid': !setupValid, 'hoverHighlight': view.hightlightMoveFields}"
           rows="{{setup | num_lines}}"
-          placeholder="[Click here to add {{type.setup | lowercase}} moves.]"
+          placeholder="[Click here to add {{type.setup_moves}}.]"
         ></textarea>
       </div>
 
@@ -79,7 +79,7 @@
           data-ng-trim="false"
           data-ng-class="{'invalid': !algValid, 'hoverHighlight': view.hightlightMoveFields}"
           rows="{{alg | num_lines}}"
-          placeholder="[Click here to add {{type.moves}}.]"
+          placeholder="[Click here to add {{type.alg_moves}}.]"
           autofocus
         ></textarea>
         </div>

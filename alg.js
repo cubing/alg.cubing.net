@@ -82,10 +82,50 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
   ]);
 
   initParameter("type", "moves", [
-    {id: "moves", name: "Moves", group: "Start from Setup", setup: "Setup", alg: "Moves", type: "generator", moves: "moves"},
-    {id: "reconstruction", name: "Reconstruction", group: "Start from Setup", setup: "Scramble", alg: "Solve", type: "generator", moves: "reconstruction moves"},
-    {id: "alg", name: "Algorithm", group: "End Solved / End with Setup", setup: "Setup", alg: "Algorithm", type: "solve", moves: "algorithm moves"},
-    {id: "reconstruction-end-with-setup", name: "Reconstruction (no scramble)", group: "End Solved / End with Setup", setup: "Setup", alg: "Solve", type: "generator", moves: "reconstruction moves"}
+    {
+      id: "moves",
+      name: "Moves",
+      group: "Start from Setup",
+      setup: "Setup",
+      alg: "Moves",
+      type: "generator",
+      setup_moves: "setup moves",
+      alg_moves: "moves",
+      reconstruction: false
+    },
+    {
+      id: "reconstruction",
+      name: "Reconstruction",
+      group: "Start from Setup",
+      setup: "Scramble",
+      alg: "Solve",
+      type: "generator",
+      setup_moves: "scramble moves",
+      alg_moves: "reconstruction moves",
+      reconstruction: true
+    },
+    {
+      id: "alg",
+      name: "Algorithm",
+      group: "End Solved / End with Setup",
+      setup: "Setup",
+      alg: "Algorithm",
+      type: "solve",
+      setup_moves: "setup moves for end position",
+      alg_moves: "algorithm moves",
+      reconstruction: false
+    },
+    {
+      id: "reconstruction-end-with-setup",
+      name: "Reconstruction (no scramble)",
+      group: "End Solved / End with Setup",
+      setup: "Setup",
+      alg: "Solve",
+      type: "solve",
+      setup_moves: "setup moves for end position",
+      alg_moves: "reconstruction moves",
+      reconstruction: true
+    }
   ]);
 
   // TODO: BOY/Japanese translations.
