@@ -85,7 +85,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     {id: "moves", name: "Moves", group: "Start from Setup", setup: "Setup", alg: "Moves", type: "generator", moves: "moves"},
     {id: "reconstruction", name: "Reconstruction", group: "Start from Setup", setup: "Scramble", alg: "Solve", type: "generator", moves: "reconstruction moves"},
     {id: "alg", name: "Algorithm", group: "End Solved / End with Setup", setup: "Setup", alg: "Algorithm", type: "solve", moves: "algorithm moves"},
-    {id: "reconstruction-no-scramble", name: "Reconstruction (no scramble)", group: "End Solved / End with Setup", setup: "Setup", alg: "Solve", type: "generator", moves: "reconstruction moves"}
+    {id: "reconstruction-end-with-setup", name: "Reconstruction (no scramble)", group: "End Solved / End with Setup", setup: "Setup", alg: "Solve", type: "generator", moves: "reconstruction moves"}
   ]);
 
   // TODO: BOY/Japanese translations.
