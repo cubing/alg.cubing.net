@@ -359,7 +359,6 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     function isNested(alg) {
       for (var move in alg) {
         var type = alg[move].type;
-        console.log("t", type);
         if (type == "commutator" || type == "conjugate" || type == "group") {
           return true;
         }
@@ -435,7 +434,6 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     // });
 
     function followSelection(apply) {
-      console.log("bla");
       selectionStart = document.getElementById("algorithm").selectionStart;
       for (var i = 0; i < algo.length; i++) {
         var move = algo[i];
@@ -444,7 +442,6 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
           break;
         }
       }
-      console.log("a", i, apply);
       fire = false;
       if(apply) {
         $scope.$apply("current_move = " + i);
@@ -455,7 +452,6 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     }
 
     $(document).bind("selectionchange", function(event) {
-      console.log("change", selectionStart, document.getElementById("algorithm").selectionStart);
       if (selectionStart != document.getElementById("algorithm").selectionStart) {
         followSelection(true);
       }
