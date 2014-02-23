@@ -299,6 +299,8 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
   // This currently helps with performance, presumably due to garbage collection.
   var twistyScene;
 
+  var selectionStart = document.getElementById("algorithm").selectionStart;
+
   $scope.twisty_init = function() {
 
     $("#viewer").empty();
@@ -327,7 +329,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     });
 
     try {
-      var algo = alg.cube.stringToAlg($scope.alg);
+      var algoFull = alg.cube.stringToAlg($scope.alg);
       $scope.algValid = true;
     } catch (e) {
       $scope.algValid = false;
@@ -343,7 +345,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     var type = $scope.type.type;
 
     init = alg.cube.algToMoves(init);
-    algo = alg.cube.algToMoves(algo);
+    var algo = alg.cube.algToMoves(algoFull);
 
     twistyScene.setupAnimation(
       algo,
@@ -353,8 +355,21 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
       }
     );
 
+    // Temporary hack to work around highlighting bug.
+    function isNested(alg) {
+      for (var move in alg) {
+        var type = alg[move].type;
+        console.log("t", type);
+        if (type == "commutator" || type == "conjugate" || type == "group") {
+          return true;
+        }
+      }
+      return false;
+    }
+    var algNested = isNested(algoFull);
+
     function highlightCurrentMove(force) {
-      if (!force && (touchBrowser || !$scope.animating)) {
+      if (!force && (algNested || touchBrowser || !$scope.animating)) {
         return;
       }
       // TODO: Make a whole lot more efficient.
@@ -419,9 +434,9 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     //   twistyScene.setIndex(currentMove - 1);
     // });
 
-    var selectionStart = algorithm.selectionStart;
     function followSelection(apply) {
-      selectionStart = algorithm.selectionStart;
+      console.log("bla");
+      selectionStart = document.getElementById("algorithm").selectionStart;
       for (var i = 0; i < algo.length; i++) {
         var move = algo[i];
         var loc = locationToIndex($scope.alg, move.location.first_line, move.location.first_column);
@@ -429,6 +444,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
           break;
         }
       }
+      console.log("a", i, apply);
       fire = false;
       if(apply) {
         $scope.$apply("current_move = " + i);
@@ -438,13 +454,14 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
       return;
     }
 
-    $(document).bind("selectionchange", function() {
-      if (selectionStart != algorithm.selectionStart) {
+    $(document).bind("selectionchange", function(event) {
+      console.log("change", selectionStart, document.getElementById("algorithm").selectionStart);
+      if (selectionStart != document.getElementById("algorithm").selectionStart) {
         followSelection(true);
       }
     });
 
-    followSelection(false);
+    // followSelection(false);
 
     // twistyScene.play.reset();
     twistyScene.addListener("animating", function(animating) {
