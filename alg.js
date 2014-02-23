@@ -308,13 +308,13 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     // I can't get the WebGLRenderer to look nice as consistently, so let's use CanvasRenderer all the time.
     var Renderer = THREE.CanvasRenderer;
 
-    twistyScene = new twistyjs.TwistyScene({
+    twistyScene = new twisty.scene({
       "allowDragging": true,
       renderer: Renderer
     });
     $("#viewer").append($(twistyScene.getDomElement()));
 
-    twistyScene.initializeTwisty({
+    twistyScene.initializePuzzle({
       "type": "cube",
       "dimension": $scope.puzzle.dimension,
       "stage": $scope.stage.id,
