@@ -223,9 +223,9 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
       /(\/\*[^(\*\/)]*\*\/)/g, "[COLOR=\"gray\"]$1[/COLOR]"
     );
     var text = algWithCommentsGreyed +
-      '[COLOR="gray"]View at [url="' +
+      '[COLOR="gray"]View at [URL="' +
       url +
-      '"]alg.cubing.net[/url][/COLOR]';
+      '"]alg.cubing.net[/URL][/COLOR]';
     if ($scope.setup !== "") {
       text = "Scramble: " + $scope.setup + "\n\n" + text;
     }
@@ -250,7 +250,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     if ($location.url().indexOf("?") !== -1) {
       $scope.share_url += '&view=playback';
     }
-    $scope.share_forum_short = "[url=\"" + $scope.share_url + "\"]" + $scope.alg + "[/url]";
+    $scope.share_forum_short = "[URL=\"" + $scope.share_url + "\"]" + $scope.alg + "[/URL]";
     $scope.share_forum_long = forumLinkText($scope.share_url);
   };
 
