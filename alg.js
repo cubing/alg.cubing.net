@@ -223,11 +223,14 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
       /(\/\*[^(\*\/)]*\*\/)/g, "[COLOR=\"gray\"]$1[/COLOR]"
     );
     var text = algWithCommentsGreyed +
-      '[COLOR="gray"]View at [URL="' +
+      '\n[COLOR="gray"]// View at [URL="' +
       url +
       '"]alg.cubing.net[/URL][/COLOR]';
     if ($scope.setup !== "") {
-      text = "Scramble: " + $scope.setup + "\n\n" + text;
+      text = "[COLOR=\"gray\"]/* Scramble */[/COLOR]\n" +
+        $scope.setup +
+        "\n\n [COLOR=\"gray\"]/* Solve */[/COLOR]\n" +
+        text
     }
     return text.trim(); // The trim is redundant for angular.js, but let's keep it just in case.
   }
