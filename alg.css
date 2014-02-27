@@ -1,10 +1,14 @@
-html, textarea {
-  font-family: Helvetica, Verdana, Tahoma, sans-serif;
-}
-
 * {
   margin: 0;
   padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+html, textarea {
+  font-family: Helvetica, Verdana, Tahoma, sans-serif;
 }
 
 
