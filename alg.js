@@ -378,15 +378,15 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
       if (Math.floor($scope.current_move) >= algo.length) {
         return;
       }
-      var current_move = algo[Math.floor($scope.current_move)];
-      var newStart = locationToIndex($scope.alg, current_move.location.first_line, current_move.location.first_column);
-      var newEnd = locationToIndex($scope.alg, current_move.location.last_line, current_move.location.last_column);
-      if (document.getElementById("algorithm").selectionStart !== newStart) {
-        document.getElementById("algorithm").selectionStart = newStart;
-      }
-      if (document.getElementById("algorithm").selectionEnd !== newEnd) {
-        document.getElementById("algorithm").selectionEnd = newEnd;
-      }
+      // var current_move = algo[Math.floor($scope.current_move)];
+      // var newStart = locationToIndex($scope.alg, current_move.location.first_line, current_move.location.first_column);
+      // var newEnd = locationToIndex($scope.alg, current_move.location.last_line, current_move.location.last_column);
+      // if (document.getElementById("algorithm").selectionStart !== newStart) {
+      //   document.getElementById("algorithm").selectionStart = newStart;
+      // }
+      // if (document.getElementById("algorithm").selectionEnd !== newEnd) {
+      //   document.getElementById("algorithm").selectionEnd = newEnd;
+      // }
     }
 
     twistyScene.setCameraPosition(0.5, 3);
