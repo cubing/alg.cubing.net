@@ -1,13 +1,13 @@
 <html data-ng-app="algxApp" data-ng-controller="algxController">
 <head>
   <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
   <title data-ng-bind="alg | title:title">alg.cubing.net</title>
-  <script src="lib/angular.js"></script>
-  <script src="lib/elastic.js"></script>
-  <script src="alg.js"></script>
+  <link rel="search" type="application/opensearchdescription+xml" href="searchDescription.xml" title="alg.cubing.net"/>
+
   <link href="alg.css" rel="stylesheet" type="text/css" />
 
-  <!-- Includes for twisty.js development: -->
+  <!-- twisty.js libraries and code -->
   <script src="twisty.js/lib/jquery-1.11.0.min.js"></script>
   <script src="twisty.js/lib/RequestAnimationFrame.js"></script>
   <script src="twisty.js/lib/Three.js"></script>
@@ -16,7 +16,11 @@
   <script src="twisty.js/alg.js"></script>
   <script src="twisty.js/puzzles/cube.js"></script>
 
-  <link rel="search" type="application/opensearchdescription+xml" href="searchDescription.xml" title="alg.cubing.net"/>
+  <!-- alg.cubing.net libraries and code -->
+  <script src="lib/angular.js"></script>
+  <script src="lib/elastic.js"></script>
+  <script src="alg.js"></script>
+
 </head>
 <body>
 
@@ -168,7 +172,6 @@
         </div>
       </div>
     </div>
-
-    </div>
-  </body>
+  </div>
+</body>
 </html>
