@@ -97,9 +97,17 @@
 
           <h2>Settings</h2>
           <div class="section">
-            <select data-ng-model="puzzle" data-ng-options="p.name group by p.group for p in puzzle_list"></select>
-            <select data-ng-model="stage" data-ng-options="s.name group by s.group for s in stage_list" data-ng-disabled="puzzle.name != '3x3x3'"></select>
-            <select data-ng-model="type" data-ng-options="a.name group by a.group for a in type_list"></select>
+            <select
+              data-ng-model="puzzle"
+              data-ng-options="p.name group by p.group for p in puzzle_list"
+            ></select><select
+              data-ng-model="stage"
+              data-ng-options="s.name group by s.group for s in stage_list"
+              data-ng-disabled="puzzle.name != '3x3x3'"
+            ></select><select
+              data-ng-model="type"
+              data-ng-options="a.name group by a.group for a in type_list"
+            ></select>
 
             <br>
             Color Scheme:
@@ -135,10 +143,10 @@
                 <span data-ng-bind="btm">0</span>s,
                 <span data-ng-bind="etm">0</span>e
               </span><br>
-              <button data-ng-click="expand();">Expand</button>
-              <button data-ng-click="simplify();">Simplify</button>
-              <button data-ng-click="invert();">Invert</button>
-              <button data-ng-click="image();">Image</button>
+              <button data-ng-click="expand();">Expand</button><button
+                data-ng-click="simplify();">Simplify</button><button
+                data-ng-click="invert();">Invert</button><button
+                data-ng-click="image();">Image</button>
               <div id="canvasPNG"></div>
             </div>
           </div>

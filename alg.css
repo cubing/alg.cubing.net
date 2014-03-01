@@ -167,13 +167,33 @@ html, textarea {
 
 #info select {
   font-size: 1em;
-  background: rgb(255, 250, 245);
-  border: 1px solid #ddd;
+  background: rgba(255, 250, 245, 1);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  margin: 0px 0px;
+
+  -webkit-appearance: none;
+
+  border-radius: 0px;
+  padding: 4px;
+  cursor: context-menu;
 }
 
 #info button {
+  -webkit-appearance: none;
+  background: rgba(255, 250, 245, 1);
+  border: 1px solid rgba(0, 0, 0, 0.2);
   font-size: 1em;
   padding: 0.2em 0.5em;
+}
+
+#info select:hover, #info button:hover {
+  background: rgb(255,235,215);
+  border: 1px solid #888;
+}
+
+#info select:active, #info button:active {
+  background: rgb(255, 255, 255);
+  border: 1px solid #888;
 }
 
 .section {
