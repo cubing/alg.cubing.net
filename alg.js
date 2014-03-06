@@ -423,21 +423,15 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     $("#skip").unbind("click");
     $(document).unbind("selectionchange");
 
-    $("#reset").click(gettingCurrentMove(twistyScene.play.reset));
+    var start = gettingCurrentMove(twistyScene.play.start);
+    var reset = gettingCurrentMove(twistyScene.play.reset);
+
+    $("#reset").click(reset);
     $("#back").click(gettingCurrentMove(twistyScene.play.back));
     $("#play").click(function() {
-      // We create two packed functions inside the listener's scope
-      var start = gettingCurrentMove(twistyScene.play.start);
-      var reset = gettingCurrentMove(twistyScene.play.reset);
-      
-      // And if we are on the last move, we reset the animation
-      return function() {
-        if ($scope.current_move === algo.length) {
-          reset();
-        }
-        start(); 
-      }
-    }());
+      if ($scope.current_move === algo.length || $("#currentMove")[0].valueAsNumber === algo.length) { reset(); }
+      start();
+    });
     $("#pause").click(gettingCurrentMove(twistyScene.play.pause));
     $("#forward").click(gettingCurrentMove(twistyScene.play.forward));
     $("#skip").click(gettingCurrentMove(twistyScene.play.skip));
