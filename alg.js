@@ -429,7 +429,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     $("#reset").click(reset);
     $("#back").click(gettingCurrentMove(twistyScene.play.back));
     $("#play").click(function() {
-      if ($scope.current_move === algo.length) { reset(); }
+      if (parseInt($scope.current_move, 10) === algo.length) { reset(); }
       start();
     };
     $("#pause").click(gettingCurrentMove(twistyScene.play.pause));
