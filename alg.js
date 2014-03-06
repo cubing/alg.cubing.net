@@ -431,7 +431,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     $("#play").click(function() {
       if ($scope.current_move === algo.length) { reset(); }
       start();
-    };
+    });
     $("#pause").click(gettingCurrentMove(twistyScene.play.pause));
     $("#forward").click(gettingCurrentMove(twistyScene.play.forward));
     $("#skip").click(gettingCurrentMove(twistyScene.play.skip));
