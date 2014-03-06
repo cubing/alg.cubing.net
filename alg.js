@@ -131,7 +131,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
   $scope.custom_scheme = "";
 
   $scope.speed = 1;
-  $scope.current_move = 0;
+  $scope.current_move = "0";
 
   $scope.setupValid = true;
   $scope.algValid = true;
@@ -375,7 +375,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
         return;
       }
       // TODO: Make a whole lot more efficient.
-      if (Math.floor($scope.current_move) >= algo.length) {
+      if (Math.floor(parseFloat($scope.current_move)) >= algo.length) {
         return;
       }
       // var current_move = algo[Math.floor($scope.current_move)];
@@ -399,7 +399,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     function getCurrentMove() {
       // console.log(twistyScene.debug.getIndex());
       var idx = twistyScene.getPosition();
-      var val = $scope.current_move;
+      var val = parseFloat($scope.current_move);
       if (idx != val && fire) {
         $scope.$apply("current_move = " + idx);
         // TODO: Move listener to detect index change.
@@ -429,7 +429,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     $("#reset").click(reset);
     $("#back").click(gettingCurrentMove(twistyScene.play.back));
     $("#play").click(function() {
-      if ($scope.current_move === algo.length) { reset(); }
+      if (parseFloat($scope.current_move) === algo.length) { reset(); }
       start();
     });
     $("#pause").click(gettingCurrentMove(twistyScene.play.pause));
@@ -475,7 +475,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     twistyScene.addListener("position", getCurrentMove);
     $scope.$watch('current_move', function() {
       var idx = twistyScene.getPosition();
-      var val = $scope.current_move;
+      var val = parseFloat($scope.current_move);
       if (idx != val && fire) {
         highlightCurrentMove(true);
         // We need to parse the string.
