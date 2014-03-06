@@ -425,7 +425,6 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
 
     var start = gettingCurrentMove(twistyScene.play.start);
     var reset = gettingCurrentMove(twistyScene.play.reset);
-    var currentMoveElement = $("#currentMove");
 
     $("#reset").click(reset);
     $("#back").click(gettingCurrentMove(twistyScene.play.back));
@@ -437,7 +436,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     $("#forward").click(gettingCurrentMove(twistyScene.play.forward));
     $("#skip").click(gettingCurrentMove(twistyScene.play.skip));
 
-    currentMoveElement.attr("max", algo.length);
+    $("#currentMove").attr("max", algo.length);
     // $("#currentMove").bind("change", function() {
     //   var currentMove = $('#currentMove')[0].valueAsNumber;
     //   twistyScene.setIndex(currentMove - 1);
