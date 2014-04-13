@@ -24,11 +24,6 @@ html, textarea {
 
 #display-wrapper {
   position: relative;
-  background-color: #EAEAEA;
-  background-image: linear-gradient(45deg, #DDD 25%, transparent 25%, transparent 75%, #DDD 75%, #DDD),
-    linear-gradient(45deg, #DDD 25%, transparent 25%, transparent 75%, #DDD 75%, #DDD);
-  background-size: 32px 32px;
-  background-position: 0 0, 16px 16px;
 
   box-shadow: 0 0 8px #000;
   z-index: 5;
@@ -103,14 +98,14 @@ html, textarea {
   -webkit-appearance: none;
   background-color: rgba(196, 196, 196, 0.75);
   border: none;
-  width: 16.66%;
+  width: 20%;
   height: 100%;
 }
 
 #currentMove::-moz-range-thumb {
   background-color: rgba(196, 196, 196, 0.75);
   border: none;
-  width: 16.66%;
+  width: 20%;
   height: 100%;
 }
 
@@ -135,7 +130,7 @@ html, textarea {
   margin: 0%;
   outline:none;
   padding: 0px;
-  width: 16.66%;
+  width: 20%;
 
   /* Override to match slider. */
   border: none;
