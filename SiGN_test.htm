@@ -276,22 +276,6 @@ switch (stickerspec)
 }
 }
 
-function paramadd(paramname, paramval, paramdefaultval)
-{
-  if ((paramval=="")||(paramval==paramdefaultval))
-  	return "";
-  else
-  		return "&"+paramname+"="+paramval;
-}
-
-function paramadddef(paramname, paramval)
-{
-  if ((paramval=="")||(paramval==paramdefault(paramname)))
-  	return "";
-  else
-  		return "&"+paramname+"="+paramval;
-}
-
 //escape ampersand?
 function escapealg(algstr){return algstr.replace(/\n/g, '%0A').replace(/-/g, '%2D').replace(/\'/g, '-').replace(/ /g, '_');}
 function unescapealg(algstr){return unescape(algstr.replace(/_/g,' ').replace(/\+/g,' ').replace(/-/g,'\''));}
@@ -577,6 +561,22 @@ p_ini=document.getElementById('ini').value;
 p_alg=document.getElementById('alg').value;
 }
 
+function paramadd(paramname, paramval, paramdefaultval)
+{
+  if ((paramval=="")||(paramval==paramdefaultval))
+    return "";
+  else
+      return "&"+paramname+"="+paramval;
+}
+
+function paramadddef(paramname, paramval)
+{
+  if ((paramval=="")||(paramval==paramdefault(paramname)))
+    return "";
+  else
+      return "&"+paramname+"="+paramval;
+}
+
 function makeURLparams()
 {
 	setalgs();
@@ -598,8 +598,45 @@ function submitalg()
 {
 	window.location=makeURLparams();
 }
-  
 
+
+// From alg.cubing.net
+function acn_escape_alg(alg) {
+  if (!alg) {return alg;}
+  var escaped = alg;
+  escaped = escaped.replace(/_/g, "&#95;").replace(/ /g, "_");
+  escaped = escaped.replace(/\+/g, "&#2b;");
+  escaped = escaped.replace(/-/g, "&#45;").replace(/'/g, "-");
+  return escaped;
+}
+
+
+function algCubingNet() {
+  // TODO: Validation against XSS.
+
+  setalgs();
+
+  var typeTranslation = {
+    "solve": "alg",
+    "gen": "moves"
+  }
+
+  var redirectURL = "http://alg.cubing.net/?";
+  redirectURL += "alg=" + encodeURIComponent(acn_escape_alg(p_alg));
+  redirectURL += "&setup=" + encodeURIComponent(acn_escape_alg(p_ini));
+  redirectURL += "&title=" + encodeURIComponent(p_name);
+  redirectURL += "&puzzle=" + p_cube;
+  redirectURL += "&type=" + typeTranslation[p_animtype];
+  redirectURL += "&scheme=" + p_scheme;
+
+  var p_stage_url=p_stage;
+  if (p_cube !== "3x3x3") {
+    redirectURL += "&stage=" + encodeURIComponent(acn_escape_alg(p_stage));
+  }
+
+  console.log(redirectURL);
+  window.location = redirectURL;
+}
 
 </script>
  
@@ -635,7 +672,9 @@ document.write('<br><span title="Algorithm"><textarea id="alg" rows="12" cols="5
 </script>
 <br>
 <span title="Reload the page with the new alg."><button type="button" onclick="javascript:submitalg()">Reload</button></span>
+<span title="View at alg.cubing.net."><button type="button" onclick="algCubingNet();">View at alg.cubing.net</button>
 <span title="Refresh applet WITHOUT reloading the page."><button type="button" onclick="javascript:setalgs();loadapplet()">View</button></a>
+<br>
 <!--<input type="submit" value="Submit">-->
 
 <br>
