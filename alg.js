@@ -179,6 +179,14 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     $scope.addHistoryCheckpoint = true;
   }
 
+  $scope.mirrorAcrossM = function() {
+    var algo = alg.cube.stringToAlg($scope.alg);
+    var mirroredAlg = alg.cube.mirrorAcrossM(algo);
+    var mirroredAlgStr = alg.cube.algToString(mirroredAlg);
+    $scope.alg = mirroredAlgStr;
+    $scope.addHistoryCheckpoint = true;
+  }
+
   $scope.image = function() {
       var canvas = document.getElementsByTagName("canvas")[0];
       var img = canvas.toDataURL("image/png");
