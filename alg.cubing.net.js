@@ -140,9 +140,9 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
   $scope.algValid = true;
 
   initParameter("view", "editor", [
-    {id:     "editor", next:   "playback", fullscreen: false, infoPane:  true, extraControls:  true, hightlightMoveFields:  true},
-    {id:   "playback", next: "fullscreen", fullscreen: false, infoPane:  true, extraControls: false, hightlightMoveFields: false},
-    {id: "fullscreen", next:     "editor", fullscreen:  true, infoPane: false, extraControls: false, hightlightMoveFields: false}
+    {id:     "editor", next:   "playback", fullscreen: false, infoPane:  true, extraControls:  true, highlightMoveFields:  true},
+    {id:   "playback", next: "fullscreen", fullscreen: false, infoPane:  true, extraControls: false, highlightMoveFields: false},
+    {id: "fullscreen", next:     "editor", fullscreen:  true, infoPane: false, extraControls: false, highlightMoveFields: false}
   ]);
 
   $scope.title_default = "";
