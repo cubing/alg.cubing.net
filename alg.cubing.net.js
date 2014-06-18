@@ -562,6 +562,18 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
   }
   $scope.$watch("alg", updateMetrics);
 
+  $scope.setupDelayed = false;
+  $scope.setupDebounce = function(event) {
+    console.log("foo")
+    $scope.setupDelayed = (event == "delayed");
+  }
+
+  $scope.algDelayed = false;
+  $scope.algDebounce = function(event) {
+    console.log("goo")
+    $scope.algDelayed = (event == "delayed")
+  }
+
   // For debugging.
   ss = $scope;
   l = $location;

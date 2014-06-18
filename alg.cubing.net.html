@@ -26,7 +26,10 @@
 
   <div id="display-wrapper" data-ng-class="{'fullscreen': view.fullscreen}">
 
-    <div id="viewer">
+    <div
+      id="viewer"
+      data-ng-class="{'algDelayed': algDelayed || setupDelayed}"
+    >
     </div>
 
     <div id="controls-wrapper">
@@ -76,7 +79,8 @@
           data-ng-class="{'invalid': !setupValid, 'hoverHighlight': view.hightlightMoveFields}"
           data-msd-elastic
           placeholder="[Click here to add {{type.setup_moves}}.]"
-          debounce="500"
+          data-debounce="500"
+          data-debounce-callback="setupDebounce"
         ></textarea>
       </div>
 
@@ -93,7 +97,8 @@
           data-msd-elastic
           placeholder="[Click here to add {{type.alg_moves}}.]"
           autofocus
-          debounce="500"
+          data-debounce="500"
+          data-debounce-callback="algDebounce"
         ></textarea>
         </div>
 
