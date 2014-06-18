@@ -488,7 +488,7 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
       for (var i = 0; i < algo.length; i++) {
         var move = algo[i];
         var loc = locationToIndex($scope.alg, move.location.first_line, move.location.first_column);
-        if (loc == selectionStart) {
+        if (loc == selectionStart && loc !== 0) {
           // Show the beginning of the current move if our cursor is... at the beginning.
           // TODO: Handle moves like R1000 properly.
           i += 0.2;
@@ -564,13 +564,11 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
 
   $scope.setupDelayed = false;
   $scope.setupDebounce = function(event) {
-    console.log("foo")
     $scope.setupDelayed = (event == "delayed");
   }
 
   $scope.algDelayed = false;
   $scope.algDebounce = function(event) {
-    console.log("goo")
     $scope.algDelayed = (event == "delayed")
   }
 
