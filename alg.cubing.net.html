@@ -24,11 +24,10 @@
 </head>
 <body>
 
-  <div id="display-wrapper" data-ng-class="{'fullscreen': view.fullscreen}">
+  <div id="display-wrapper" data-ng-class="{'fullscreen': view.fullscreen, 'algDelayed': algDelayed || setupDelayed, 'invalid': !setupValid || !algValid}">
 
     <div
       id="viewer"
-      data-ng-class="{'algDelayed': algDelayed || setupDelayed}"
     >
     </div>
 
@@ -87,7 +86,10 @@
       <div>
         <h2 data-ng-bind="type.alg">Algorithm</h2>
         <div id="algorithm_wrapper">
-        <div id="algorithm_shadow" class="moves"></div>
+        <div id="algorithm_shadow" class="moves"><span id="start">
+          </span><span id="middle" class="highlight">
+          </span><span id="end">
+          </span></div>
         <textarea
           id="algorithm"
           class="moves"

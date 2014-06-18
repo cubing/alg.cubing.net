@@ -72,10 +72,27 @@ html, textarea {
   opacity: 0.3;
 }
 
+#display-wrapper.invalid {
+  transition: 0.2s;
+}
+
+#display-wrapper.invalid {
+  background: rgba(255, 0, 0, 0.3);
+}
+
+#display-wrapper.invalid #viewer {
+  opacity: 0.3;
+}
+
+#display-wrapper.invalid #controls-wrapper {
+  opacity: 0.3;
+}
+
 #controls-wrapper {
   display: block;
   width: 100%;
   height: 20%;
+  transition: 0.2s;
   /*background: rgba(127, 127, 127, 0.2);*/
   /*background: linear-gradient(transparent 0%, rgba(0, 0, 0, 0.2) 20%);*/
 }
@@ -263,7 +280,11 @@ html, textarea {
   pointer-events: none;
 }
 
-#algorithm_shadow .highlight {
+#algorithm_shadow span {
+  display: inline;
+}
+
+#algorithm_shadow span.highlight {
   background: #F80;
   opacity: 0.3;
   padding: 0.1em 0.2em;

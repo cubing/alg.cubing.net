@@ -390,6 +390,8 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
     }
     var algNested = isNested(algoFull);
 
+    var previousStart = 0;
+    var previousEnd = 0;
     function highlightCurrentMove(force) {
       // if (!force && (algNested || touchBrowser || !$scope.animating)) {
       //   return;
@@ -404,7 +406,7 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
       }
       var current_move = algo[idx];
       if (typeof current_move === "undefined") {
-        $("#algorithm_shadow").html("");
+        $("#algorithm_shadow").find("span").text("");
         return;
       }
 
@@ -416,19 +418,25 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
       // if (document.getElementById("algorithm").selectionEnd !== newEnd) {
       //   document.getElementById("algorithm").selectionEnd = newEnd;
       // }
-      var start = $scope.alg.slice(0, newStart);
-      var middle = $scope.alg.slice(newStart, newEnd);
-      var end = $scope.alg.slice(newEnd);
-      $("#algorithm_shadow").width($("#algorithm").width());
-      $("#algorithm_shadow").html("");
-      $("#algorithm_shadow").append($("<span>").text(start));
-      $("#algorithm_shadow").append($("<span>").text(middle).addClass("highlight"));
-      $("#algorithm_shadow").append($("<span>").text(end));
+
+      if (newStart == previousStart && newEnd == previousEnd) {
+        return;
+      }
+
+      $("#algorithm_shadow").find("#start" ).text($scope.alg.slice(0, newStart));
+      $("#algorithm_shadow").find("#middle").text($scope.alg.slice(newStart, newEnd));
+      $("#algorithm_shadow").find("#end"   ).text($scope.alg.slice(newEnd));
+
+      previousStart = newStart;
+      previousEnd = newEnd;
     }
 
     twistyScene.setCameraPosition(0.5, 3);
 
-    $(window).resize(twistyScene.resize);
+    $(window).resize(function() {
+      twistyScene.resize();
+      $("#algorithm_shadow").width($("#algorithm").width());
+    });
     $scope.$watch("view", twistyScene.resize);
 
     $("#moveIndex").val(0); //TODO: Move into twisty.js
