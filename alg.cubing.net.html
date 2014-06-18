@@ -86,9 +86,8 @@
       <div>
         <h2 data-ng-bind="type.alg">Algorithm</h2>
         <div id="algorithm_wrapper">
-        <div id="algorithm_shadow" class="moves"><span id="start">
-          </span><span id="middle" class="highlight">
-          </span><span id="end">
+        <div id="algorithm_shadow" class="moves"><span id="start" data-ng-bind="highlightStart">
+          </span><span id="middle" class="highlight" data-ng-bind="highlightMiddle">
           </span></div>
         <textarea
           id="algorithm"
