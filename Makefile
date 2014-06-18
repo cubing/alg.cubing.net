@@ -24,7 +24,7 @@ ZIP_TEMP=${SOURCE_TARGET}/zip-temp
 .PHONY: alg.cubing.net.zip
 alg.cubing.net.zip:
 	rm -rf ./${ZIP_TEMP}
-	rm -rf alg.cubing.net*.zip
+	rm -rf ./${SOURCE_TARGET}/alg.cubing.net*.zip
 
 	git checkout-index -a --prefix=./${ZIP_TEMP}/
 	cd twisty.js && git checkout-index -a --prefix=../${ZIP_TEMP}/twisty.js/ && cd ..
@@ -33,7 +33,7 @@ alg.cubing.net.zip:
 	cd ./${ZIP_TEMP}/ && zip -r "../${ZIP_NAME}" . && cd ..
 	rm -rf ./${ZIP_TEMP}
 
-	echo "Redirect 302 	/alg.cubing.net.zip /source/${ZIP_NAME}" > ./${SOURCE_TARGET}/.htaccess
+	echo "Redirect 302 	/alg.cubing.net.zip /${SOURCE_TARGET}/${ZIP_NAME}" > ./${SOURCE_TARGET}/.htaccess
 
 clean:
 	rm -rf ./${ZIP_TEMP}
