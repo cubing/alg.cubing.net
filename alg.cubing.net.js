@@ -48,6 +48,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
   function initParameter(param, fallback, list) {
     var obj = indexBy(list, "id");
     $scope[param] = obj[search[param]] || obj[fallback];
+    $scope[param + "_map"] = obj;
     $scope[param + "_list"] = list;
     $scope[param + "_default"] = fallback;
   }
@@ -165,17 +166,34 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     $scope.addHistoryCheckpoint = true;
   }
 
+  var inverseTypeMap = {
+    "moves": "alg",
+    "reconstruction": "reconstruction-end-with-setup",
+    "alg": "moves",
+    "reconstruction-end-with-setup": "reconstruction"
+  }
   $scope.invert = function() {
+
+    // The setup stays the same. It's like magic!
     $scope.alg = alg.cube.invert($scope.alg);
+
+    var currentPosition = twistyScene.getPosition();
+    var maxPosition = twistyScene.getMaxPosition();
+    $scope.current_move =  maxPosition - currentPosition;
+
+    $scope.type = $scope.type_map[inverseTypeMap[$scope.type.id]];
+
     $scope.addHistoryCheckpoint = true;
   }
 
   $scope.mirrorAcrossM = function() {
+    $scope.setup = alg.cube.mirrorAcrossM($scope.setup);
     $scope.alg = alg.cube.mirrorAcrossM($scope.alg);
     $scope.addHistoryCheckpoint = true;
   }
 
   $scope.mirrorAcrossS = function() {
+    $scope.setup = alg.cube.mirrorAcrossS($scope.setup);
     $scope.alg = alg.cube.mirrorAcrossS($scope.alg);
     $scope.addHistoryCheckpoint = true;
   }
