@@ -390,22 +390,39 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     var algNested = isNested(algoFull);
 
     function highlightCurrentMove(force) {
-      if (!force && (algNested || touchBrowser || !$scope.animating)) {
-        return;
-      }
+      // if (!force && (algNested || touchBrowser || !$scope.animating)) {
+      //   return;
+      // }
       // TODO: Make a whole lot more efficient.
-      if (Math.floor(parseFloat($scope.current_move)) >= algo.length) {
+      if (Math.floor(parseFloat($scope.current_move)) > algo.length) {
         return;
       }
-      // var current_move = algo[Math.floor($scope.current_move)];
-      // var newStart = locationToIndex($scope.alg, current_move.location.first_line, current_move.location.first_column);
-      // var newEnd = locationToIndex($scope.alg, current_move.location.last_line, current_move.location.last_column);
+      var idx = Math.ceil($scope.current_move) - 1;
+      if (idx == -1) {
+        idx = 0;
+      }
+      var current_move = algo[idx];
+      if (typeof current_move === "undefined") {
+        $("#algorithm_shadow").html("");
+        return;
+      }
+
+      var newStart = locationToIndex($scope.alg, current_move.location.first_line, current_move.location.first_column);
+      var newEnd = locationToIndex($scope.alg, current_move.location.last_line, current_move.location.last_column);
       // if (document.getElementById("algorithm").selectionStart !== newStart) {
       //   document.getElementById("algorithm").selectionStart = newStart;
       // }
       // if (document.getElementById("algorithm").selectionEnd !== newEnd) {
       //   document.getElementById("algorithm").selectionEnd = newEnd;
       // }
+      var start = $scope.alg.slice(0, newStart);
+      var middle = $scope.alg.slice(newStart, newEnd);
+      var end = $scope.alg.slice(newEnd);
+      $("#algorithm_shadow").width($("#algorithm").width());
+      $("#algorithm_shadow").html("");
+      $("#algorithm_shadow").append($("<span>").text(start));
+      $("#algorithm_shadow").append($("<span>").text(middle).addClass("highlight"));
+      $("#algorithm_shadow").append($("<span>").text(end));
     }
 
     twistyScene.setCameraPosition(0.5, 3);
@@ -473,6 +490,12 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
       for (var i = 0; i < algo.length; i++) {
         var move = algo[i];
         var loc = locationToIndex($scope.alg, move.location.first_line, move.location.first_column);
+        if (loc == selectionStart) {
+          // Show the beginning of the current move if our cursor is... at the beginning.
+          // TODO: Handle moves like R1000 properly.
+          i += 0.2;
+          break;
+        }
         if (loc >= selectionStart) {
           break;
         }
@@ -502,12 +525,12 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     $scope.$watch('current_move', function() {
       var idx = twistyScene.getPosition();
       var val = parseFloat($scope.current_move);
-      if (idx != val && fire) {
-        highlightCurrentMove(true);
+      // if (idx != val && fire) {
         // We need to parse the string.
         // See https://github.com/angular/angular.js/issues/1189 and linked issue/discussion.
         twistyScene.setPosition(parseFloat($scope.current_move));
-      }
+      highlightCurrentMove(true);
+      // }
     });
     $scope.$watch('speed', function() {
       twistyScene.setSpeed($scope.speed);

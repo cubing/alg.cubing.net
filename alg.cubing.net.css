@@ -241,6 +241,32 @@ html, textarea {
   font-family: Verdana, Helvetica, Tahoma, sans-serif;
 }
 
+#algorithm {
+  z-index: 100;
+}
+
+#algorithm_wrapper {
+  position: relative;
+}
+
+#algorithm_shadow {
+  position: absolute;
+  color: transparent;
+
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  pointer-events: none;
+}
+
+#algorithm_shadow .highlight {
+  background: #F80;
+  opacity: 0.3;
+  padding: 0.1em 0.2em;
+  margin: -0.1em -0.2em;
+  border-radius: 8px;
+  /*text-shadow: 0px 0px 2px #000;*/
+}
+
 .moves.hoverHighlight:hover, .moves.hoverHighlight:focus  {
   background: rgb(255, 250, 245);
   border: 1px solid #ddd;
