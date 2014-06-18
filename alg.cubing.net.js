@@ -392,8 +392,6 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
 
     var previousStart = 0;
     var previousEnd = 0;
-    $scope.highlightStart = "";
-    $scope.highlightMiddle = "";
     function highlightCurrentMove(force) {
       // if (!force && (algNested || touchBrowser || !$scope.animating)) {
       //   return;
@@ -425,9 +423,9 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
         return;
       }
 
-      $scope.highlightStart = $scope.alg.slice(0, newStart);
-      $scope.highlightMiddle = $scope.alg.slice(newStart, newEnd);
-      // $scope.highlightEnd.text($scope.alg.slice(newEnd));
+      $("#algorithm_shadow").find("#start" ).text($scope.alg.slice(0, newStart));
+      $("#algorithm_shadow").find("#middle").text($scope.alg.slice(newStart, newEnd));
+      // $("#algorithm_shadow").find("#end"   ).text($scope.alg.slice(newEnd));
 
       previousStart = newStart;
       previousEnd = newEnd;
@@ -521,8 +519,6 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
     }
     $(document).bind("selectionchange", function(event) {
       followSelection(true);
-
-      $scope.$digest();
     });
 
     followSelection(false);
