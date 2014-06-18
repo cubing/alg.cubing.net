@@ -30,3 +30,4 @@ THE SOFTWARE.
 - [`twisty.js`](https://github.com/cubing/twisty.js/blob/master/LICENSE.md)
 - [`angular.js`](https://github.com/angular/angular.js/blob/master/LICENSE)
 - [`angular-elastic`](https://github.com/monospaced/angular-elastic/blob/master/elastic.js)
+- [`angular-debounce`](https://github.com/shahata/angular-debounce)

@@ -17,6 +17,7 @@
 
   <!-- alg.cubing.net libraries and code -->
   <script src="lib/angular.js"></script>
+  <script src="lib/angular-debounce.js"></script>
   <script src="lib/elastic.js"></script>
   <script src="alg.cubing.net.js"></script>
 
@@ -74,6 +75,7 @@
           data-ng-class="{'invalid': !setupValid, 'hoverHighlight': view.hightlightMoveFields}"
           data-msd-elastic
           placeholder="[Click here to add {{type.setup_moves}}.]"
+          debounce="500"
         ></textarea>
       </div>
 
@@ -90,6 +92,7 @@
           data-msd-elastic
           placeholder="[Click here to add {{type.alg_moves}}.]"
           autofocus
+          debounce="500"
         ></textarea>
         </div>
 

@@ -5,7 +5,8 @@ var l;
 
 
 var algxApp = angular.module('algxApp', [
-  'algxControllers'
+  'algxControllers',
+  'debounce'
 ]);
 
 algxApp.config(['$locationProvider',
@@ -26,7 +27,7 @@ algxApp.filter('title', function() {
 
 var algxControllers = angular.module('algxControllers', ['monospaced.elastic']);
 
-algxControllers.controller('algxController', ["$scope", "$location", function($scope, $location) {
+algxControllers.controller('algxController', ["$scope", "$location", "debounce", function($scope, $location, debounce) {
 
   var touchBrowser = ("ontouchstart" in document.documentElement);
   var fire = true;
@@ -480,12 +481,9 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     $("#skip").click(gettingCurrentMove(twistyScene.play.skip));
 
     $("#currentMove").attr("max", algo.length);
-    // $("#currentMove").bind("change", function() {
-    //   var currentMove = $('#currentMove')[0].valueAsNumber;
-    //   twistyScene.setIndex(currentMove - 1);
-    // });
 
-    function followSelection(apply) {
+    function followSelection(apply, debKind) {
+
       selectionStart = document.getElementById("algorithm").selectionStart;
       for (var i = 0; i < algo.length; i++) {
         var move = algo[i];
@@ -501,21 +499,21 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
         }
       }
       fire = false;
-      if(apply) {
-        $scope.$apply("current_move = " + i);
-      }
+      // console.log(apply)
+      // if (apply) {
+      $scope.current_move = i;
+        // $scope.$apply("current_move = " + i);
+      // }
       twistyScene.setPosition(parseFloat($scope.current_move));
       fire = true;
+      highlightCurrentMove();
       return;
     }
-
     $(document).bind("selectionchange", function(event) {
-      if (selectionStart != document.getElementById("algorithm").selectionStart) {
-        followSelection(true);
-      }
+      followSelection(true);
     });
 
-    // followSelection(false);
+    followSelection(false);
 
     // twistyScene.play.reset();
     twistyScene.addListener("animating", function(animating) {
@@ -525,12 +523,12 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     $scope.$watch('current_move', function() {
       var idx = twistyScene.getPosition();
       var val = parseFloat($scope.current_move);
-      // if (idx != val && fire) {
+      if (fire) {
         // We need to parse the string.
         // See https://github.com/angular/angular.js/issues/1189 and linked issue/discussion.
         twistyScene.setPosition(parseFloat($scope.current_move));
-      highlightCurrentMove(true);
-      // }
+      }
+      highlightCurrentMove();
     });
     $scope.$watch('speed', function() {
       twistyScene.setSpeed($scope.speed);
