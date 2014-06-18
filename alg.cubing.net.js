@@ -157,34 +157,26 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
   }
 
   $scope.expand = function() {
-    var algo = alg.cube.stringToAlg($scope.alg);
-    var moves = alg.cube.algToMoves(algo);
-    var expandedAlgStr = alg.cube.algToString(moves);
-    $scope.alg = expandedAlgStr;
+    $scope.alg = alg.cube.expand($scope.alg);
   }
 
   $scope.simplify = function() {
-    var algo = alg.cube.stringToAlg($scope.alg);
-    var simplifiedAlg = alg.cube.algSimplify(algo);
-    var simplifiedAlgStr = alg.cube.algToString(simplifiedAlg);
-    $scope.alg = simplifiedAlgStr;
+    $scope.alg = alg.cube.simplify($scope.alg);
     $scope.addHistoryCheckpoint = true;
   }
 
   $scope.invert = function() {
-    // TODO: Invert inside commutator. (Current behaviour is correct, just not as useful).
-    var algo = alg.cube.stringToAlg($scope.alg);
-    var invertedAlg = alg.cube.invert(algo);
-    var invertedAlgStr = alg.cube.algToString(invertedAlg);
-    $scope.alg = invertedAlgStr;
+    $scope.alg = alg.cube.invert($scope.alg);
     $scope.addHistoryCheckpoint = true;
   }
 
   $scope.mirrorAcrossM = function() {
-    var algo = alg.cube.stringToAlg($scope.alg);
-    var mirroredAlg = alg.cube.mirrorAcrossM(algo);
-    var mirroredAlgStr = alg.cube.algToString(mirroredAlg);
-    $scope.alg = mirroredAlgStr;
+    $scope.alg = alg.cube.mirrorAcrossM($scope.alg);
+    $scope.addHistoryCheckpoint = true;
+  }
+
+  $scope.mirrorAcrossS = function() {
+    $scope.alg = alg.cube.mirrorAcrossS($scope.alg);
     $scope.addHistoryCheckpoint = true;
   }
 
@@ -341,14 +333,14 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
     });
 
     try {
-      var algoFull = alg.cube.stringToAlg($scope.alg);
+      var algoFull = alg.cube.fromString($scope.alg);
       $scope.algValid = true;
     } catch (e) {
       $scope.algValid = false;
     }
 
     try {
-      var init = alg.cube.stringToAlg($scope.setup);
+      var init = alg.cube.fromString($scope.setup);
       $scope.setupValid = true;
     } catch (e) {
       $scope.setupValid = false;
@@ -356,8 +348,8 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
 
     var type = $scope.type.type;
 
-    init = alg.cube.algToMoves(init);
-    var algo = alg.cube.algToMoves(algoFull);
+    init = alg.cube.toMoves(init);
+    var algo = alg.cube.toMoves(algoFull);
 
     twistyScene.setupAnimation(
       algo,
@@ -523,7 +515,7 @@ algxControllers.controller('algxController', ["$scope", "$location", function($s
   var metrics = ["obtm", "btm", "obqtm", "etm"];
 
   function updateMetrics() {
-    var algo = alg.cube.stringToAlg($scope.alg);
+    var algo = alg.cube.fromString($scope.alg);
     for (var i in metrics) {
       var metric = metrics[i];
       $scope[metric] = alg.cube.countMoves(algo, metric, $scope.puzzle.dimension);

@@ -1,9 +1,8 @@
 <html data-ng-app="algxApp" data-ng-controller="algxController">
-<head>
+
   <meta http-equiv="Content-type" content="text/html;charset=UTF-8">
   <meta name="viewport" content="minimal-ui" />
 
-  <title data-ng-bind="alg | title:title">alg.cubing.net</title>
   <link rel="search" type="application/opensearchdescription+xml" href="searchDescription.xml" title="alg.cubing.net"/>
 
   <link href="alg.cubing.net.css" rel="stylesheet" type="text/css" />
@@ -146,7 +145,8 @@
               <button data-ng-click="expand();">Expand</button><button
                 data-ng-click="simplify();">Simplify</button><button
                 data-ng-click="invert();">Invert</button><button
-                data-ng-click="mirrorAcrossM();">M-Mirror</button><button
+                data-ng-click="mirrorAcrossM();">|>M<|</button><button
+                data-ng-click="mirrorAcrossS();">|>S<|</button><button
                 data-ng-click="image();">Image</button>
               <div id="canvasPNG"></div>
             </div>
