@@ -481,17 +481,21 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
     $("#reset").click(reset);
     $("#back").click(gettingCurrentMove(twistyScene.play.back));
     $("#play").click(function() {
-      var algEnded = (parseFloat($scope.current_move) === algo.length);
-      if (algEnded) {
-        $(document.getElementById("viewer").children[0].children[0])
-          .fadeOut(100, reset)
-          .fadeIn(400, start);
+      if ($scope.animating) {
+        twistyScene.play.pause();
       }
       else {
-        start();
+        var algEnded = (parseFloat($scope.current_move) === algo.length);
+        if (algEnded) {
+          $(document.getElementById("viewer").children[0].children[0])
+            .fadeOut(100, reset)
+            .fadeIn(400, start);
+        }
+        else {
+          start();
+        }
       }
     });
-    $("#pause").click(gettingCurrentMove(twistyScene.play.pause));
     $("#forward").click(gettingCurrentMove(twistyScene.play.forward));
     $("#skip").click(gettingCurrentMove(twistyScene.play.skip));
 
