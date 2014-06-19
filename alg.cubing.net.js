@@ -407,8 +407,10 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
       var current_move = algo[idx];
       if (typeof current_move === "undefined") {
         $("#algorithm_shadow").find("span").text("");
+        $("#algorithm_shadow").find("#middle").hide();
         return;
       }
+      $("#algorithm_shadow").find("#middle").show();
 
       var newStart = locationToIndex($scope.alg, current_move.location.first_line, current_move.location.first_column);
       var newEnd = locationToIndex($scope.alg, current_move.location.last_line, current_move.location.last_column);
