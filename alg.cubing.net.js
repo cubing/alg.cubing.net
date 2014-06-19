@@ -406,19 +406,13 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
       }
       var current_move = algo[idx];
       if (typeof current_move === "undefined") {
-        $("#algorithm_shadow").find("#start", "#middle").hide();
+        $("#algorithm_shadow").find("#middle").hide();
         return;
       }
-        $("#algorithm_shadow").find("#start", "#middle").show();
+      $("#algorithm_shadow").find("#middle").show();
 
       var newStart = locationToIndex($scope.alg, current_move.location.first_line, current_move.location.first_column);
       var newEnd = locationToIndex($scope.alg, current_move.location.last_line, current_move.location.last_column);
-      // if (document.getElementById("algorithm").selectionStart !== newStart) {
-      //   document.getElementById("algorithm").selectionStart = newStart;
-      // }
-      // if (document.getElementById("algorithm").selectionEnd !== newEnd) {
-      //   document.getElementById("algorithm").selectionEnd = newEnd;
-      // }
 
       if (newStart == previousStart && newEnd == previousEnd) {
         return;
