@@ -25,9 +25,12 @@ THE SOFTWARE.
 
 ## Libraries
 
-`alg.cubing.net` includes libraries from the following projects. All of them are also MIT licensed:
+`alg.cubing.net` includes libraries from the following projects. All of them are also MIT licensed unless otherwise noted:
 
 - [`twisty.js`](https://github.com/cubing/twisty.js/blob/master/LICENSE.md)
 - [`angular.js`](https://github.com/angular/angular.js/blob/master/LICENSE)
 - [`angular-elastic`](https://github.com/monospaced/angular-elastic/blob/master/elastic.js)
 - [`angular-debounce`](https://github.com/shahata/angular-debounce)
+- [`font-awesome`](http://fontawesome.io/) by Dave Gandy
+  - The CSS is MIT-licensed
+  - The fonts themselves are Open Font Licensed (OFL).
