@@ -6,6 +6,7 @@
   <link rel="search" type="application/opensearchdescription+xml" href="searchDescription.xml" title="alg.cubing.net"/>
 
   <link href="alg.cubing.net.css" rel="stylesheet" type="text/css" />
+  <link href="lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 
   <!-- twisty.js libraries and code -->
   <script src="twisty.js/lib/jquery-1.11.0.min.js"></script>
@@ -37,19 +38,17 @@
         <input id="currentMove" data-ng-model="current_move" type="range" min="0" max="1" step="0.01"><br>
 
         <button class="control" id="cycleView" title="Change View" data-ng-click="nextView()">
-          &#x2328;
+          <i class="fa fa-cube"></i>
         </button><button class="control" id="reset" title="Reset">
-          &#x2759;&#9664;
+          <i class="fa fa-fast-backward"></i>
         </button><button class="control" id="back" title="Back (1 move)">
-          &larr;
-        </button><button class="control" id="play" title="Play" data-ng-show="!animating">
-          &#9654;
-        </button><button class="control" id="pause" title="Pause" data-ng-show="animating">
-          &#x2759;&#x2759;
+          <i class="fa fa-mail-reply"></i>
+        </button><button class="control" id="play" title="Play">
+          <i class="fa fa-play" data-ng-show="!animating"></i><i class="fa fa-pause" data-ng-show="animating"></i>
         </button><button class="control" id="forward" title="Step forward (1 move)">
-          &rarr;
+          <i class="fa fa-mail-forward"></i>
         </button><button class="control" id="skip" title="Skip to End">
-          &#9654;&#x2759;
+          <i class="fa fa-fast-forward"></i>
         </button>
       </div>
     </div>
@@ -157,10 +156,10 @@
               </span><br>
               <button data-ng-click="expand();">Expand</button><button
                 data-ng-click="simplify();">Simplify</button><button
-                data-ng-click="invert();">Invert</button><button
-                data-ng-click="mirrorAcrossM();">|>M<|</button><button
-                data-ng-click="mirrorAcrossS();">|>S<|</button><button
-                data-ng-click="image();">Image</button>
+                data-ng-click="image();"><i class="fa fa-image"></i> Image</button><br><button
+                data-ng-click="invert();"><i class="fa fa-backward"></i> Invert</button><button
+                data-ng-click="mirrorAcrossM();" title="Mirror across M"><i class="fa fa-arrows-h"></i> Mirror (M)</button><button
+                data-ng-click="mirrorAcrossS();" title="Mirror across S"><i class="fa fa-expand"></i> Mirror (S)</button>
               <div id="canvasPNG"></div>
             </div>
           </div>

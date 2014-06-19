@@ -47,15 +47,22 @@ html, textarea {
   -webkit-overflow-scrolling: touch;
 }
 
+#controls .control {
+  font-size: 5vh;
+}
+
 @media (max-width: 640px) and (min-height: 640px), (orientation: portrait) {
   #display-wrapper, #info-wrapper {width: 100%;}
   #display-wrapper {height: 50%;}
   #info-wrapper {height: 50%;}
 
   #controls .control {
-    font-size: 1.5em;
-    font-size: 6vw;
+    font-size: 3vh;
   }
+}
+
+#display-wrapper.fullscreen #controls .control {
+  font-size: 5vh;
 }
 
 
@@ -147,8 +154,6 @@ html, textarea {
 
 #controls .control {
   height: 50%;
-  font-size: 1.5em;
-  font-size: 3vw;
   font-weight: bold;
   display: inline-block;
   vertical-align: middle;
@@ -166,9 +171,15 @@ html, textarea {
 
 #controls .control:hover {
   background: #fff;
+  color: #840;
+  text-shadow: 0px 0px 10px rgba(255, 127, 0, 1);
   cursor: pointer;
 }
 
+#controls .control .fa, #controls .control .fa::before {
+  max-height: 100%;
+  max-width: 100%;
+}
 
 /******** Info Pane ********/
 
@@ -205,12 +216,18 @@ html, textarea {
   background: rgba(255, 250, 245, 1);
   border: 1px solid rgba(0, 0, 0, 0.2);
   font-size: 1em;
-  padding: 0.2em 0.5em;
+  padding: 0.4em 0.6em;
+  width: 8em;
+  white-space: nowrap;
+  margin: 0.2em;
 }
 
 #info select:hover, #info button:hover {
-  background: rgb(255,235,215);
+  background: rgba(255, 127, 0, 0.3);
   border: 1px solid #888;
+  box-shadow: 0px 0px 2px rgba(255, 127, 0, 1);
+  color: #840;
+  cursor: pointer;
 }
 
 #info select:active, #info button:active {
