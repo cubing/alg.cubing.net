@@ -168,7 +168,7 @@
           <h2>Forum Link</h2>
 
           <div data-ng-show="! type.reconstruction">
-            <button id="copyShort" style="display: inline; width: 2em"><i class="fa fa-clipboard"></i></button><input type="text"
+            <button id="copyShort" class="clipboard" style="display: none; width: 2em"><i class="fa fa-clipboard"></i></button><input type="text"
               class="sharetext"
               readonly="readonly"
               data-ng-model="share_forum_short"
@@ -176,7 +176,7 @@
               value="[Short forum link will appear here.]"/>
           </div>
           <div data-ng-show="type.reconstruction">
-            <button id="copyLong" style="display: inline; width: 2em"><i class="fa fa-clipboard"></i></button><textarea class="sharetext"
+            <button id="copyLong" class="clipboard" style="display: none; width: 2em"><i class="fa fa-clipboard"></i></button><textarea class="sharetext"
               readonly="readonly"
               onclick="this.focus(); this.select();"
               data-ng-bind="share_forum_long"

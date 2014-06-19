@@ -595,11 +595,27 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
   new ZeroClipboard($("#copyShort")).on("copy", function (event) {
     event.clipboardData.setData("text/plain", $scope.share_forum_short);
     $("body").fadeOut(100).fadeIn(500);
+    console.log("Copying to clipboard", $scope.share_forum_short)
   });
   new ZeroClipboard($("#copyLong")).on("copy", function (event) {
     event.clipboardData.setData("text/plain", $scope.share_forum_long);
     $("body").fadeOut(100).fadeIn(500);
+    console.log("Copying to clipboard", $scope.share_forum_long)
   });
+
+  // If the page was opened locally, copying to clipboard won't work.
+  // This seems to be a bad heuristic, because I've only ever seen it work in Chrome.
+  try {
+  $.ajax("lib/ZeroClipboard.swf", {
+    success: function() {
+      console.log("XHR test succeeded. Enabling clipboard buttons.");
+      $("button.clipboard").show();
+    },
+    error: function() {
+      console.error("XHR test failed. Disabling clipboard buttons.");
+    }
+  });
+  } catch(e) {}
 
   // For debugging.
   ss = $scope;
