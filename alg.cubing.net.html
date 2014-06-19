@@ -156,11 +156,13 @@
                 <span data-ng-bind="etm">0</span>e
               </span><br>
               <button data-ng-click="expand();">Expand</button><button
-                data-ng-click="simplify();">Simplify</button><button
-                data-ng-click="image();"><i class="fa fa-image"></i> Image</button><br><button
+                data-ng-click="simplify();">Simplify</button><br><button
+                data-ng-click="clear();">Clear</button><button
+                data-ng-click="reset();">Reset</button><br><button
                 data-ng-click="invert();"><i class="fa fa-backward"></i> Invert</button><button
                 data-ng-click="mirrorAcrossM();" title="Mirror across M"><i class="fa fa-arrows-h"></i> Mirror (M)</button><button
-                data-ng-click="mirrorAcrossS();" title="Mirror across S"><i class="fa fa-expand"></i> Mirror (S)</button>
+                data-ng-click="mirrorAcrossS();" title="Mirror across S"><i class="fa fa-expand"></i> Mirror (S)</button><br><button
+                data-ng-click="image();"><i class="fa fa-image"></i> Image</button>
               <div id="canvasPNG"></div>
             </div>
           </div>
@@ -189,7 +191,7 @@
           <div class="section">
             <a href="https://github.com/cubing/alg.cubing.net/issues/51" target="_blank">Features</a> &bull;
             <a href="https://github.com/cubing/alg.cubing.net">GitHub</a> &bull;
-            <a href="http://www.speedsolving.com/forum/showthread.php?46468-alg-cubing-net">speedsolving.com</a> &bull; <a href="http://alg.cubing.net/?type=reconstruction&alg=x_y-_%2F%2F_inspection%0AF_R_D_L_F_%2F%2F_cross%0AU_R_U-_R-_d_R-_U_R_%2F%2F_1st_pair%0Ay_U2-_R-_U-_R_%2F%2F_2nd_pair%0AU_L_U-_L-_d_R_U-_R-_%2F%2F_3rd_pair%0Ay-_U-_R_U_R-_U_R_U-_R-_%2F%2F_4th_pair_(OLS)%0AR2-_U-_R-_U-_R_U_R_U_R_U-_R_U2-_%2F%2F_PLL&setup=D2_U-_R2_U_F2_D2_U-_R2_U-_B-_L2_R-_B-_D2_U_B2_L-_D-_R2&title=Mats%20Valk,%205.55%20WR">WR</a> &bull; <a href="./source/alg.cubing.net.zip" target="_blank">Download</a>
+            <a href="http://www.speedsolving.com/forum/showthread.php?46468-alg-cubing-net">speedsolving.com</a> &bull; <a href="" data-ng-click="demoWR();">WR</a> &bull; <a href="./source/alg.cubing.net.zip" target="_blank">Download</a>
           </div>
 
         </div>

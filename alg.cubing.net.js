@@ -46,12 +46,31 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
     return obj;
   }
 
+  var param_defaults = [];
+
+  $scope.clear = function() {
+    $scope.alg = "";
+    $scope.setup = "";
+    $scope.current_move = 0;
+    $scope.title = "";
+  }
+
+  $scope.reset = function() {
+    for (var param in param_defaults) {
+      console.log(param, param_defaults[param]);
+      $scope[param] = param_defaults[param];
+    }
+    $scope.speed = 1;
+    $scope.clear();
+  }
+
   function initParameter(param, fallback, list) {
     var obj = indexBy(list, "id");
     $scope[param] = obj[search[param]] || obj[fallback];
     $scope[param + "_map"] = obj;
     $scope[param + "_list"] = list;
     $scope[param + "_default"] = fallback;
+    param_defaults[param] = obj[fallback];
   }
 
 
@@ -611,6 +630,15 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
     }
   });
   } catch(e) {}
+
+  $scope.demoWR = function() {
+    $scope.reset();
+    $scope.puzzle = $scope.puzzle_map["3x3x3"];
+    $scope.type = $scope.type_map["reconstruction"];
+    $scope.title = "Mats Valk, 5.55 WR";
+    $scope.setup = "D2 U' R2 U F2 D2 U' R2 U' B' L2 R' B' D2 U B2 L' D' R2";
+    $scope.alg = "x y' // inspection\nF R D L F // cross\nU R U' R' d R' U R // 1st pair\ny U2' R' U' R // 2nd pair\nU L U' L' d R U' R' // 3rd pair\ny' U' R U R' U R U' R' // 4th pair (OLS)\nR2' U' R' U' R U R U R U' R U2' // PLL";
+  }
 
   // For debugging.
   ss = $scope;
