@@ -433,11 +433,18 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
 
     twistyScene.setCameraPosition(0.5, 3);
 
-    $(window).resize(function() {
-      twistyScene.resize();
+    var resizeFunction = function() {
       $("#algorithm_shadow").width($("#algorithm").width());
-    });
-    $scope.$watch("view", twistyScene.resize);
+      twistyScene.resize();
+      // Force redraw. iOS Safari until iOS 7 has a bug where vh units are not recalculated.
+      // Hiding and then showing immediately was the first thing I tried that forces a recalculation.
+      $("#controls").find("button").hide().show();
+      // Also fixes an iOS Safari reorientation bug.
+      window.scrollTo(0, 0);
+    };
+    var debounceResize = debounce(resizeFunction, 0);
+    $(window).resize(resizeFunction);
+    $scope.$watch("view", resizeFunction);
 
     $("#moveIndex").val(0); //TODO: Move into twisty.js
 
