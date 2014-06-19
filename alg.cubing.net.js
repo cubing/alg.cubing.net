@@ -591,6 +591,16 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
     $scope.algDelayed = (event == "delayed")
   }
 
+  ZeroClipboard.config( { swfPath: "lib/ZeroClipboard.swf" } );
+  new ZeroClipboard($("#copyShort")).on("copy", function (event) {
+    event.clipboardData.setData("text/plain", $scope.share_forum_short);
+    $("body").fadeOut(100).fadeIn(500);
+  });
+  new ZeroClipboard($("#copyLong")).on("copy", function (event) {
+    event.clipboardData.setData("text/plain", $scope.share_forum_long);
+    $("body").fadeOut(100).fadeIn(500);
+  });
+
   // For debugging.
   ss = $scope;
   l = $location;
