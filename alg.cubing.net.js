@@ -156,8 +156,8 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
   $scope.speed = 1;
   $scope.current_move = "0";
 
-  $scope.setupValid = true;
-  $scope.algValid = true;
+  $scope.setupStatus = "valid";
+  $scope.algStatus = "valid";
 
   initParameter("view", "editor", [
     {id:     "editor", next:   "playback", fullscreen: false, infoPane:  true, extraControls:  true, highlightMoveFields:  true},
@@ -373,16 +373,25 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
 
     try {
       var algoFull = alg.cube.fromString($scope.alg);
-      $scope.algValid = true;
+      $scope.algStatus = "valid";
+      var algoCanonical = alg.cube.toString(algoFull);
+      if (algoCanonical !== $scope.alg) {
+        console.log(algoCanonical, $scope.alg);
+        $scope.algStatus = "uncanonical";
+      }
     } catch (e) {
-      $scope.algValid = false;
+      $scope.algStatus = "invalid";
     }
 
     try {
       var init = alg.cube.fromString($scope.setup);
-      $scope.setupValid = true;
+      $scope.setupStatus = "valid";
+      var setupCanonical = alg.cube.toString(init);
+      if (setupCanonical !== $scope.setup) {
+        $scope.setupStatus = "uncanonical";
+      }
     } catch (e) {
-      $scope.setupValid = false;
+      $scope.setupStatus = "invalid";
     }
 
     var type = $scope.type.type;

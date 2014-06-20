@@ -29,7 +29,7 @@
 </head>
 <body>
 
-  <div id="display-wrapper" data-ng-class="{'fullscreen': view.fullscreen, 'algDelayed': algDelayed || setupDelayed, 'invalid': !setupValid || !algValid}">
+  <div id="display-wrapper" data-ng-class="{'fullscreen': view.fullscreen, 'algDelayed': algDelayed || setupDelayed, 'invalid': algStatus == 'invalid' || setupStatus == 'invalid'}">
 
     <div
       id="viewer"
@@ -78,6 +78,7 @@
           class="moves"
           data-ng-model="setup"
           data-ng-trim="false"
+          data-ng-class="[setupStatus]"
           data-ng-class="{'invalid': !setupValid, 'hoverHighlight': view.highlightMoveFields}"
           data-msd-elastic
           placeholder="[Click here to add {{type.setup_moves}}.]"
@@ -97,7 +98,8 @@
           class="moves"
           data-ng-model="alg"
           data-ng-trim="false"
-          data-ng-class="{'invalid': !algValid, 'hoverHighlight': view.highlightMoveFields}"
+          data-ng-class="[algStatus]"
+          data-ng-class="{'hoverHighlight': view.highlightMoveFields}"
           data-msd-elastic
           placeholder="[Click here to add {{type.alg_moves}}.]"
           autofocus
