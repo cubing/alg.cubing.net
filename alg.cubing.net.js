@@ -641,13 +641,42 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
   });
   } catch(e) {}
 
-  $scope.demoWR = function() {
-    $scope.reset();
-    $scope.puzzle = $scope.puzzle_map["3x3x3"];
-    $scope.type = $scope.type_map["reconstruction"];
-    $scope.title = "Mats Valk, 5.55 WR";
-    $scope.setup = "D2 U' R2 U F2 D2 U' R2 U' B' L2 R' B' D2 U B2 L' D' R2";
-    $scope.alg = "x y' // inspection\nF R D L F // cross\nU R U' R' d R' U R // 1st pair\ny U2' R' U' R // 2nd pair\nU L U' L' d R U' R' // 3rd pair\ny' U' R U R' U R U' R' // 4th pair (OLS)\nR2' U' R' U' R U R U R U' R U2' // PLL";
+  // TODO: Use IFs for puzzle/type
+  var demos = {
+    "mats-5.55": {
+      puzzle: $scope.puzzle_map["3x3x3"],
+      type: $scope.type_map["reconstruction"],
+      title: "Mats Valk, 5.55 WR",
+      setup: "D2 U' R2 U F2 D2 U' R2 U' B' L2 R' B' D2 U B2 L' D' R2",
+      alg: "x y' // inspection\nF R D L F // cross\nU R U' R' d R' U R // 1st pair\ny U2' R' U' R // 2nd pair\nU L U' L' d R U' R' // 3rd pair\ny' U' R U R' U R U' R' // 4th pair (OLS)\nR2' U' R' U' R U R U R U' R U2' // PLL"
+    },
+    "T-Perm": {
+      type: $scope.type_map["alg"],
+      title: "T-Perm",
+      setup: "",
+      alg: "R U R' U' R' F R2 U' R' U' R U R' F'"
+    },
+    "Sune": {
+      type: $scope.type_map["alg"],
+      title: "Sune",
+      setup: "",
+      alg: "[R U R2, R U R']"
+    },
+    "notation": {
+      puzzle: $scope.puzzle_map["5x5x5"],
+      type: $scope.type_map["moves"],
+      title: "Notation Stress Test",
+      setup: "M2 U M2 U2 M2 U M2",
+      alg: "R L U D B F // Single moves, variable spacing.\nB' F' D' U' L' R' // Inverses.\nR L2 R3 L2' R5 L8' R7 // Move amount\nU . U . U . U // Pauses.\nM' E2 S2 M S2 E2 // Slice turns.\nM2' U' M2' U2' M2' U' M2' // H'perm.\nx y z // Rotations.\nR2 L2 R2' L2' // Half turns.\nRw r' // Wide turns.\n4Rw x L' // Very wide turns\n2-3Lw 3-4r // Wide block turns\n[[R: U], D2] // commutator/conjugate/nesting\n([R: U'] D2)2' [R: U2] // Grouping and repetition"
+    }
+  }
+
+  $scope.demo = function(name) {
+    // $scope.reset();
+    var demo = demos[name];
+    for (i in demo) {
+      $scope[i] = demo[i];
+    }
   }
 
   // For debugging.
