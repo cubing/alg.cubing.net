@@ -600,7 +600,10 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
     var algo = alg.cube.fromString($scope.alg);
     for (var i in metrics) {
       var metric = metrics[i];
-      $scope[metric] = alg.cube.countMoves(algo, metric, $scope.puzzle.dimension);
+      $scope[metric] = alg.cube.countMoves(algo, {
+        metric: metric,
+        dimension: $scope.puzzle.dimension
+      });
     }
   }
   $scope.$watch("alg", updateMetrics);
