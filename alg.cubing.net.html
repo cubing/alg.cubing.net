@@ -82,7 +82,7 @@
           data-ng-class="{'invalid': !setupValid, 'hoverHighlight': view.highlightMoveFields}"
           data-msd-elastic
           placeholder="[Click here to add {{type.setup_moves}}.]"
-          data-debounce="500"
+          data-debounce="1000"
           data-debounce-callback="setupDebounce"
           style="height: 2em;"
         ></textarea>
@@ -104,7 +104,7 @@
           data-msd-elastic
           placeholder="[Click here to add {{type.alg_moves}}.]"
           autofocus
-          data-debounce="500"
+          data-debounce="1000"
           data-debounce-callback="algDebounce"
           style="height: 2em;"
         ></textarea>

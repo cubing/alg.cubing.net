@@ -376,7 +376,6 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
       $scope.algStatus = "valid";
       var algoCanonical = alg.cube.toString(algoFull);
       if (algoCanonical !== $scope.alg) {
-        console.log(algoCanonical, $scope.alg);
         $scope.algStatus = "uncanonical";
       }
     } catch (e) {
@@ -553,7 +552,9 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
       return;
     }
     $(document).bind("selectionchange", function(event) {
-      followSelection(true);
+      if (!$scope.algDelayed){
+        followSelection(true);
+      }
     });
 
     followSelection(false);
