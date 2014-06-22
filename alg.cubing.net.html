@@ -84,6 +84,7 @@
           placeholder="[Click here to add {{type.setup_moves}}.]"
           data-debounce="500"
           data-debounce-callback="setupDebounce"
+          style="height: 2em;"
         ></textarea>
       </div>
 
@@ -105,6 +106,7 @@
           autofocus
           data-debounce="500"
           data-debounce-callback="algDebounce"
+          style="height: 2em;"
         ></textarea>
         </div>
       </div>
@@ -187,9 +189,7 @@
               readonly="readonly"
               onclick="this.focus(); this.select();"
               data-ng-bind="share_forum_long"
-            >
-              [Long forum link will appear here.]
-            </textarea>
+            >[Long forum link will appear here.]</textarea>
           </div>
 
           <h2>Examples</h2>
