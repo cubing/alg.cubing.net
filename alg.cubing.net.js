@@ -158,6 +158,7 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
 
   $scope.setupStatus = "valid";
   $scope.algStatus = "valid";
+  $scope.hint_stickers = true;
 
   initParameter("view", "editor", [
     {id:     "editor", next:   "playback", fullscreen: false, infoPane:  true, extraControls:  true, highlightMoveFields:  true},
