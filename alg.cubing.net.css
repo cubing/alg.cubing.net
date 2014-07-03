@@ -71,7 +71,7 @@ html, textarea {
 #viewer {
   display: block;
   width: 100%;
-  height: 80%;
+  height: 90%;
   transition: 0.2s;
 }
 
