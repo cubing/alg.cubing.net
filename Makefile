@@ -11,6 +11,17 @@ deploy: alg.cubing.net.zip
 		alg.cubing.net:~/alg.cubing.net/live/
 	echo "\nDone deploying. Go to https://alg.cubing.net/\n"
 
+.PHONY: deploy-test
+deploy-test:
+	rsync -avz \
+		--exclude .DS_Store \
+		--exclude .git \
+		--exclude .gitignore \
+		--exclude .gitmodules \
+		./ \
+		alg.cubing.net:~/alg.cubing.net/live/test/
+	echo "\nDone deploying. Go to https://alg.cubing.net/test/\n"
+
 .PHONY: open
 open:
 	open "https://alg.cubing.net/"
