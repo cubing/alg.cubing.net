@@ -322,12 +322,14 @@ html, textarea {
 }
 
 #metrics {
-  "font-weight: normal;
+  font-weight: normal;
   font-variant: normal;
-  margin: 5px 20px 15px;
   font-family: Verdana;
-  /*font-size: 1.25em;*/
+  font-size: 0.9em;
   color: #888;
+  float: right;
+  right: 10;
+  position: absolute;
 }
 
 .moves.invalid {
