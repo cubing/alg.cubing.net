@@ -270,7 +270,7 @@ html, textarea {
 
 #title, .moves {
   background: transparent;
-  border-radius: 12px;
+  /*border-radius: 12px;*/
   border: 1px solid transparent;
   line-height: 1.2em;
   height: 1.2em;
@@ -280,8 +280,8 @@ html, textarea {
 .moves {
   width: 100%;
   font-size: 1.25em;
-  margin: 4px 8px 4px;
-  padding: 0.4em 0.6em;
+  /*margin: 4px 8px 4px;*/
+  padding: 0.8em 1em;
   font-family: Verdana, Helvetica, Tahoma, sans-serif;
 }
 
@@ -316,27 +316,32 @@ html, textarea {
 }
 
 .moves:hover, .moves:focus  {
-  background: rgb(255, 250, 245);
-  border: 1px solid #ddd;
+  background: rgb(255, 253, 251);
+  border-top: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
 }
 
 .moves.invalid {
-  border: 1px solid red;
+  border-top: 1px solid red;
+  border-bottom: 1px solid red;
   background: rgba(255, 0, 0, 0.1);
 }
 
 .moves.invalid, .moves.invalid:hover, .moves.invalid:focus {
-  border: 1px solid red;
+  border-top: 1px solid red;
+  border-bottom: 1px solid red;
   background: rgba(255, 0, 0, 0.1);
 }
 
 .moves.uncanonical {
-  border: 1px solid rgba(200, 200, 0, 0.5);
+  border-top: 1px solid rgba(200, 200, 0, 0.5);
+  border-bottom: 1px solid rgba(200, 200, 0, 0.5);
   background: rgba(255, 255, 0, 0.1);
 }
 
 .moves.uncanonical, .moves.uncanonical:hover, .moves.uncanonical:focus {
-  border: 1px solid rgba(200, 200, 0, 0.5);
+  border-top: 1px solid rgba(200, 200, 0, 0.5);
+  border-bottom: 1px solid rgba(200, 200, 0, 0.5);
   background: rgba(255, 255, 0, 0.1);
 }
 
