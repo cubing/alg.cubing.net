@@ -109,6 +109,14 @@
           style="height: 2em;"
         ></textarea>
         </div>
+
+        <div title="h = obtm, q = obqtm, s = btm, e = etm" id="metrics" data-ng-show="view.extraControls">
+                (<span data-ng-bind="obtm">0</span>h,
+                <span data-ng-bind="obqtm">0</span>q,
+                <span data-ng-bind="btm">0</span>s,
+                <span data-ng-bind="etm">0</span>e)
+              </div>
+
       </div>
       <div data-ng-show="view.extraControls">
 
@@ -156,12 +164,6 @@
           <div>
             <h2>Tools</h2>
             <div class="section">
-              <span title="h = obtm, q = obqtm, s = btm, e = etm">Moves:
-                <span data-ng-bind="obtm">0</span>h,
-                <span data-ng-bind="obqtm">0</span>q,
-                <span data-ng-bind="btm">0</span>s,
-                <span data-ng-bind="etm">0</span>e
-              </span><br>
               <button data-ng-click="expand();">Expand</button><button
                 data-ng-click="simplify();">Simplify</button><br><button
                 data-ng-click="clear();"><i class="fa fa-square-o"></i> Clear</button><button

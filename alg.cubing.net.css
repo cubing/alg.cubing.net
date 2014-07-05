@@ -321,6 +321,15 @@ html, textarea {
   border-bottom: 1px solid #ddd;
 }
 
+#metrics {
+  "font-weight: normal;
+  font-variant: normal;
+  margin: 5px 20px 15px;
+  font-family: Verdana;
+  /*font-size: 1.25em;*/
+  color: #888;
+}
+
 .moves.invalid {
   border-top: 1px solid red;
   border-bottom: 1px solid red;
