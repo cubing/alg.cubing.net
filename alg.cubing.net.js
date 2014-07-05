@@ -57,7 +57,6 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
 
   $scope.reset = function() {
     for (var param in param_defaults) {
-      console.log(param, param_defaults[param]);
       $scope[param] = param_defaults[param];
     }
     $scope.speed = 1;
