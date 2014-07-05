@@ -174,11 +174,11 @@
             </div>
           </div>
 
-          <h2>Forum Link</h2>
+          <h2>Forum Link <button id="copyShort" class="clipboard" style="display: none; margin: 0; padding: 2px 6px; width: 2em; font-size: 0.75em"><i class="fa fa-clipboard"></i></button></h2>
 
-          <div class="section">
+          <div class="section" id="share">
           <div data-ng-show="! type.reconstruction">
-            <button id="copyShort" class="clipboard" style="display: none; width: 2em"><i class="fa fa-clipboard"></i></button><input type="text"
+            <input type="text"
               class="sharetext"
               readonly="readonly"
               data-ng-model="share_forum_short"

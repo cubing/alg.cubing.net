@@ -227,7 +227,7 @@ html, textarea {
   margin: 0.2em;
 }
 
-#info .section.buttons {
+#info .section.buttons, #info .section#share {
   padding: 0;
 }
 
@@ -416,18 +416,20 @@ input.current_scheme[readonly] {
 
 .sharetext {
   font-size: 1em;
-  margin: 8px;
-  padding: 2px 8px;
+  /*margin: 8px;*/
+  padding: 10px 10px;
   background: rgb(255, 250, 245);
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  /*border: 1px solid #ddd;*/
+  /*border-radius: 5px;*/
+  border: none;
   text-overflow: ellipsis;
   vertical-align: middle;
-  width: 80%;
+  width: 100%;
+  color: #666;
 }
 
 textarea.sharetext {
-  height: 2em;
+  height: 2.5em;
   resize: none
 }
 
