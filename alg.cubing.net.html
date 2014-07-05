@@ -161,7 +161,7 @@
 
           <div>
             <h2>Tools</h2>
-            <div class="section" id="tools">
+            <div class="section buttons" id="tools">
               <button data-ng-click="expand();">Expand</button><button
                 data-ng-click="simplify();">Simplify</button><br><button
                 data-ng-click="clear();"><i class="fa fa-square-o"></i> Clear</button><button
@@ -195,30 +195,22 @@
           </div>
 
           <h2>Examples</h2>
-          <div class="section">
-            <a href="" data-ng-click="demo('mats-5.55');">WR</a>
-             &bull;
-            <a href="" data-ng-click="demo('T-Perm');">T</a>
-             &bull;
-            <a href="" data-ng-click="demo('Sune');">Sune</a>
-             &bull;
-            <a href="" data-ng-click="demo('notation');">Notation</a>
-             &bull;
-            <a href="http://www.speedsolving.com/wiki/index.php/OLL" target="_blank">OLLs</a>
-             &bull;
-            <a href="http://www.speedsolving.com/wiki/index.php/PLL" target="_blank">PLLs</a>
+          <div class="section buttons" id="examples">
+            <button href="" data-ng-click="demo('mats-5.55');">WR
+            </button><button href="" data-ng-click="demo('T-Perm');">T
+            </button><button href="" data-ng-click="demo('Sune');">Sune
+            </button><button href="" data-ng-click="demo('notation');">Notation
+            </button><button onclick="location.href = 'http://www.speedsolving.com/wiki/index.php/OLL'">OLLs
+            </button><button onclick="location.href = 'http://www.speedsolving.com/wiki/index.php/PLL'">PLLs</button>
           </div>
 
           <h2>Info</h2>
-          <div class="section">
-            <a href="https://github.com/cubing/alg.cubing.net/issues/51" target="_blank">Features</a>
-             &bull;
-            <a href="https://github.com/cubing/alg.cubing.net">GitHub</a>
-             &bull;
-            <a href="http://www.speedsolving.com/forum/showthread.php?46468-alg-cubing-net">speedsolving.com</a>
-             &bull;
-            <a href="./source/alg.cubing.net.zip" target="_blank">Download</a><br>
-
+          <div class="section buttons" id="info-section">
+            <button onclick="location.href = 'https://github.com/cubing/alg.cubing.net/issues/51'">Features
+            </button><button onclick="location.href = 'https://github.com/cubing/alg.cubing.net'">GitHub
+            </button><button onclick="location.href = 'http://www.speedsolving.com/forum/showthread.php?46468-alg-cubing-net'">speedsolving.com
+            </button><button onclick="location.href = './source/alg.cubing.net.zip'">Download
+            </button>
         </div>
       </div>
     </div>

@@ -227,14 +227,18 @@ html, textarea {
   margin: 0.2em;
 }
 
-#info #tools.section {
+#info .section.buttons {
   padding: 0;
 }
 
-#info #tools button {
-  margin: 0px 0px 0px 0px;
-  width: 50%;
+#info .section.buttons button {
+  margin: 0;
 }
+
+#info        #tools.section.buttons button {width: 50%;}
+#info     #examples.section.buttons button {width: 16.66666%;}
+#info #info-section.section.buttons button {width: 25%;}
+
 
 #info select:hover, #info button:hover {
   background: rgba(255, 127, 0, 0.3);
