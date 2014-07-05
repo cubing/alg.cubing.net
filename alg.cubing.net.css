@@ -6,6 +6,7 @@
 html, body {
   height: 100%;
   overflow: hidden;
+  background: #987;
 }
 
 html, textarea {
@@ -76,7 +77,7 @@ html, textarea {
 }
 
 .algDelayed {
-  opacity: 0.3;
+  opacity: 0.4;
 }
 
 #display-wrapper.invalid {
