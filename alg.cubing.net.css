@@ -227,6 +227,15 @@ html, textarea {
   margin: 0.2em;
 }
 
+#info #tools.section {
+  padding: 0;
+}
+
+#info #tools button {
+  margin: 0px 0px 0px 0px;
+  width: 50%;
+}
+
 #info select:hover, #info button:hover {
   background: rgba(255, 127, 0, 0.3);
   border: 1px solid #888;
@@ -390,6 +399,7 @@ input.current_scheme[readonly] {
 }
 
 #canvasPNG img {
+  margin: 10px auto;
   max-height: 200px;
   max-width: 75%;
   background: rgba(255, 127, 0, 0.05);
