@@ -39,8 +39,6 @@
     <div id="controls-wrapper">
       <div id="controls">
 
-        <input id="currentMove" data-ng-model="current_move" type="range" min="0" max="1" step="0.01"><br>
-
         <button class="control" id="cycleView" title="Change View" data-ng-click="nextView()">
           <i class="fa fa-cube"></i>
         </button><button class="control" id="reset" title="Reset">
@@ -54,7 +52,11 @@
         </button><button class="control" id="skip" title="Skip to End">
           <i class="fa fa-fast-forward"></i>
         </button>
+
+        <br>
+
       </div>
+        <input id="currentMove" data-ng-model="current_move" type="range" min="0" max="1" step="0.01"><br>
     </div>
 
   </div><div id="info-wrapper" data-ng-show="view.infoPane">
