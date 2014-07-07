@@ -132,6 +132,7 @@
   z-index: 1;
   /*position: absolute;*/
   bottom: 8%;
+  border-radius: 0;
 }
 
 #currentMove::-webkit-slider-thumb {
