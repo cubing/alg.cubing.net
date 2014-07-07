@@ -32,9 +32,9 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
   var touchBrowser = ("ontouchstart" in document.documentElement);
   var fire = true;
 
-  if (touchBrowser) {
-    $scope.hollow = true;
-  }
+  // if (touchBrowser) {
+  //   $scope.hollow = true;
+  // }
 
   var search = $location.search();
 
