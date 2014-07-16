@@ -212,7 +212,7 @@ html, textarea {
   color: #888;
   float: right;
   right: 10;
-  position: absolute;
+  position: relative;
 }
 
 .moves.invalid {
