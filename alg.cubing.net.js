@@ -353,7 +353,8 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
 
     twistyScene = new twisty.scene({
       "allowDragging": true,
-      renderer: Renderer
+      renderer: Renderer,
+      cachedRenderer: true
     });
     $("#viewer").append($(twistyScene.getDomElement()));
 
