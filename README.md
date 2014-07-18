@@ -3,6 +3,8 @@
 The new generation of alg/reconstruction viewing and sharing.  
 Built on [`twisty.js`](https://github.com/cubing/twisty.js).
 
+![Screenshot](./screenshot.png)
+
 ## Examples
 
 - [Mats Valk's 5.55 world record](http://alg.cubing.net/?type=reconstruction&alg=x_y%27_%2F%2F_inspection%0AF_R_D_L_F_%2F%2F_cross%0AU_R_U%27_R%27_d_R%27_U_R_%2F%2F_1st_pair%0Ay_U2%27_R%27_U%27_R_%2F%2F_2nd_pair%0AU_L_U%27_L%27_d_R_U%27_R%27_%2F%2F_3rd_pair%0Ay%27_U%27_R_U_R%27_U_R_U%27_R%27_%2F%2F_4th_pair_%28OLS%29%0AR2%27_U%27_R%27_U%27_R_U_R_U_R_U%27_R_U2%27_%2F%2F_PLL&setup=D2_U%27_R2_U_F2_D2_U%27_R2_U%27_B%27_L2_R%27_B%27_D2_U_B2_L%27_D%27_R2&title=Mats%20Valk,%205.55%20WR) (reconstructed by Rob Stuart)
