@@ -642,11 +642,11 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
   try {
   $.ajax("lib/ZeroClipboard.swf", {
     success: function() {
-      console.log("XHR test succeeded. Enabling clipboard buttons.");
+      console.log("XHR test succeeded. Enabling clipboard button.");
       $("button.clipboard").show();
     },
     error: function() {
-      console.error("XHR test failed. Disabling clipboard buttons.");
+      console.warn("XHR test failed. Disabling clipboard button.");
     }
   });
   } catch(e) {}
