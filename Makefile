@@ -38,7 +38,8 @@ alg.cubing.net.zip:
 	rm -rf ./${SOURCE_TARGET}/alg.cubing.net*.zip
 
 	git checkout-index -a --prefix=./${ZIP_TEMP}/
-	cd twisty.js && git checkout-index -a --prefix=../${ZIP_TEMP}/twisty.js/ && cd ..
+	cd twisty.js     && git checkout-index -a    --prefix=../${ZIP_TEMP}/twisty.js/     && cd ..
+	cd twisty.js/alg && git checkout-index -a --prefix=../../${ZIP_TEMP}/twisty.js/alg/ && cd ..
 	echo ${HASH} > ./${ZIP_TEMP}/HASH.txt
 
 	cd ./${ZIP_TEMP}/ && zip -r "../${ZIP_NAME}" . && cd ..
