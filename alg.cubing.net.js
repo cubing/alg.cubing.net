@@ -568,8 +568,8 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
       $("#currentMove").css({"background": "linear-gradient(to right, \
         #cc181e 0%, \
         #cc181e " + (($scope.current_move / $("#currentMove").attr("max"))*100) + "%, \
-        #444 " + (($scope.current_move / $("#currentMove").attr("max"))*100) + "%, \
-        #444 100%)"
+        #AAA " + (($scope.current_move / $("#currentMove").attr("max"))*100) + "%, \
+        #AAA 100%)"
       });
       var idx = twistyScene.getPosition();
       var val = parseFloat($scope.current_move);
