@@ -214,6 +214,12 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
     $scope.addHistoryCheckpoint = true;
   }
 
+  $scope.removeComments = function() {
+    $scope.setup = alg.cube.removeComments($scope.setup);
+    $scope.alg = alg.cube.removeComments($scope.alg);
+    $scope.addHistoryCheckpoint = true;
+  }
+
   $scope.mirrorAcrossS = function() {
     $scope.setup = alg.cube.mirrorAcrossS($scope.setup);
     $scope.alg = alg.cube.mirrorAcrossS($scope.alg);
