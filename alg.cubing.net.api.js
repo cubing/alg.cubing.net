@@ -19,6 +19,65 @@ var PRESET_PLL = {
 };
 
 
+// Main class for the API
+//Just call it with the URL of the site;
+
+var CubingAPI(baseSite){
+
+	this.PRESET_OLL = {
+		'view' : 'playback',
+		'type' : 'alg',
+		'puzzle' : '3x3x3',
+		'stage' : 'OLL'
+	};
+
+	this.PRESET_PLL = {
+		'view' : 'playback',
+		'type' : 'alg',
+		'puzzle' : '3x3x3',
+		'stage' : 'PLL'
+	};
+	
+	this.baseSite = baseSite;
+
+	this.escape_alg = function(alg) {
+    		if (!alg) {return alg;}
+    		var escaped = alg;
+    		escaped = escaped.replace(/_/g, "&#95;").replace(/ /g, "_");
+    		escaped = escaped.replace(/\+/g, "&#2b;");
+    		escaped = escaped.replace(/-/g, "&#45;").replace(/'/g, "-");
+    		return escaped;
+	}
+
+	this.toBeEscaped = ['alg', 'scramble']; // We set here the var that should be escaped with escape_alg;
+
+	this.generateLink(infos, preset){
+		
+
+	}
+	this.generateOLL(){
+
+	}
+	this.generatePLL(){
+
+	}
+
+	// Encode a query string from datas
+	this.encode_query(data){
+		var ret = [];
+		for(var d in data){
+			if(d in this.toBeEscaped){
+				data[d] = this.escape_alg(data[d]);		
+			}
+			ret.push(encodeURIComponent(d) + "=" + encodeURIComponent(data[d]));	
+		
+		}
+		return ret.join("&");
+	}
+}
+
+
+
 function generateLink(infos, preset){
 	if(infos != undefined){
 		//We handle the presets:
@@ -31,10 +90,18 @@ function generateLink(infos, preset){
 				}
 			}
 		}
+
+
 		var param_list = '/?';
+
+		// We place every type to be escaped here
+		var to_be_escaped = ['alg', 'scramble'];
+
+
+
 		for(var key in infos){
 			if(key == "alg"){
-				param_list += (key+'='+encode_alg(infos[key])+'&');
+				param_list += (key+'='+escape_alg(infos[key])+'&');
 			} else {
 				param_list += (key+'='+encodeURIComponent(infos[key])+'&');
 			}
@@ -45,13 +112,4 @@ function generateLink(infos, preset){
 		return site_base;
 	}
 }
-function encode_alg(alg){
-	alg = alg.trim();
-	move_list = alg.split(' ');
-	for(var key in move_list){
-		move_list[key] = move_list[key].replace("'", '-');
-	}
-	alg = move_list.join('_');
-	console.log(alg);
-	return encodeURIComponent(alg);
-}
+
