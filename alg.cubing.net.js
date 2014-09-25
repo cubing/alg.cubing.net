@@ -95,7 +95,8 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
     {"id": "CLS", name: "CLS", group: "MGLS"},
     {"id": "ELS", name: "ELS", group: "MGLS"},
     {"id": "L6E", name: "L6E", group: "Roux"},
-    {"id": "WV", name: "WV", group: "Variation"}
+    {"id": "WV", name: "WV", group: "Variation"},
+    {"id": "void", name: "Void Cube", group: "Puzzle"},
   ]);
 
   initParameter("type", "moves", [
