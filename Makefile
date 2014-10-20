@@ -45,7 +45,7 @@ alg.cubing.net.zip:
 	cd ./${ZIP_TEMP}/ && zip -r "../${ZIP_NAME}" . && cd ..
 	rm -rf ./${ZIP_TEMP}
 
-	echo "Redirect 302 	/alg.cubing.net.zip /${SOURCE_TARGET}/${ZIP_NAME}" > ./${SOURCE_TARGET}/.htaccess
+	echo "Redirect 302 	/source/alg.cubing.net.zip /${SOURCE_TARGET}/${ZIP_NAME}" > ./${SOURCE_TARGET}/.htaccess
 
 clean:
 	rm -rf ./${ZIP_TEMP}
