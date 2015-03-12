@@ -297,7 +297,7 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
 
     // TODO: Inject playback view into parameters properly.
     // Right now it's fine because the view paramater is hidden in editor view, which is the only time you see a forum link.
-    $scope.share_url = "http://alg.cubing.net" + $location.url();
+    $scope.share_url = "https://alg.cubing.net" + $location.url();
     if ($location.url().indexOf("?") !== -1) {
       $scope.share_url += '&view=playback';
     }
