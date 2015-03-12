@@ -307,7 +307,7 @@ textarea.sharetext {
   background: #fff;
 }
 
-#toast, #toastError {
+#toast {
   display: flex;
 
   align-items: center;
@@ -328,11 +328,11 @@ textarea.sharetext {
 
   text-align: center;
 
-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   position: absolute;
+  min-height: 4em;
 }
 
-#toastError {
+#toast.error {
   background: rgba(192, 0, 0, 0.8);
-  min-height: 4em;
 }

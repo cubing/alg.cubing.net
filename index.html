@@ -32,8 +32,7 @@
 </head>
 <body>
 
-  <div id="toast" style="display:none;">The forum link has been copied to your clipboard.</div>
-  <div id="toastError" style="display:none;">ERROR: Could not copy the forum link.<br>(Your browser might not support web clipboard API yet.)</div>
+  <div id="toast" style="display:none;">Message.</div>
 
   <div id="display-wrapper" data-ng-class="{'fullscreen': view.fullscreen, 'algDelayed': algDelayed || setupDelayed, 'invalid': algStatus == 'invalid' || setupStatus == 'invalid'}">
 
@@ -178,7 +177,8 @@
                 data-ng-click="mirrorAcrossS();" title="Mirror across S"><i class="fa fa-expand"></i> Mirror (S)</button><br><button
                 data-ng-click="invert();"><i class="fa fa-backward"></i> Invert</button><button
                 data-ng-click="removeComments();">Remove Comments</button><br><button
-                data-ng-click="image();"><i class="fa fa-image"></i> Image</button>
+                data-ng-click="image();"><i class="fa fa-image"></i> Image</button><button
+                data-ng-click="toggleServiceWorker();"><i class="fa fa-wifi"></i> Offline</button>
               <center><div id="canvasPNG"></div></center>
             </div>
           </div>

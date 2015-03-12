@@ -632,20 +632,27 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
     $scope.algDelayed = (event == "delayed")
   }
 
+  function displayToast(message) {
+    $("#toast").html(message).finish().removeClass("error").fadeIn(100).delay(1000).fadeOut(500);
+  }
+  function displayErrorToast(message) {
+    $("#toast").html(message).finish().addClass("error").fadeIn(100).delay(2000).fadeOut(2500);
+  }
+
   $("#copyShort").on("click", function (event) {
     clipboard.copy({
       "text/plain": $scope.share_forum_short
     }).then(
-      function(){$("#toast").finish().fadeIn(100).delay(1000).fadeOut(500);},
-      function(){$("#toastError").finish().fadeIn(100).delay(2000).fadeOut(2500);}
+      function(){displayToast("The forum link has been copied to your clipboard.");},
+      function(){displayErrorToast("ERROR: Could not copy the forum link.<br>(Your browser might not support web clipboard API yet.)");}
     );
   });
   $("#copyLong").on("click", function (event) {
     clipboard.copy({
       "text/plain": $scope.share_forum_long
     }).then(
-      function(){$("#toast").finish().fadeIn(100).delay(1000).fadeOut(500);},
-      function(){$("#toastError").finish().fadeIn(100).delay(2000).fadeOut(2500);}
+      function(){displayToast("The forum link has been copied to your clipboard.");},
+      function(){displayErrorToast("ERROR: Could not copy the forum link.<br>(Your browser might not support web clipboard API yet.)");}
     );
   });
 
@@ -686,6 +693,39 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
       $scope[i] = demo[i];
     }
   }
+
+  function registerServiceWorker() {
+    navigator.serviceWorker.register("/service-worker.js", {
+      scope: "/"
+    }).then(function(reg) {
+      console.log(":-)", reg);
+      displayToast("Offline support has been enabled.");
+    }, function(err) {
+      console.log(":-(", err);
+      displayErrorToast("Could not enable offline support.");
+    });
+  }
+
+  $scope.toggleServiceWorker = function() {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistration().then(function(r) {
+        if (r) {
+          r.unregister().then(function() {
+            displayErrorToast("Offline support has been disabled.");
+          });
+        } else {
+          registerServiceWorker();
+        }
+      }, function(err) {
+        console.log(":-(", err);
+        displayErrorToast("Could not enable offline support.");
+      });
+    } else {
+      console.log(":-(");
+      displayErrorToast("Offline support not available.");
+    }
+  }
+
 
   // For debugging.
   ss = $scope;
