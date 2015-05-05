@@ -26,11 +26,13 @@
   <script src="lib/angular.js"></script>
   <script src="lib/angular-debounce.js"></script>
   <script src="lib/elastic.js"></script>
-  <script src="lib/ZeroClipboard.js"></script>
   <script src="alg.cubing.net.js"></script>
 
 </head>
 <body>
+
+  <div id="toast" style="display:none;">The forum link has been copied to your clipboard.</div>
+  <div id="toastError" style="display:none;">ERROR: Could not copy the forum link.<br>(Your browser might not support web clipboard API yet.)</div>
 
   <div id="display-wrapper" data-ng-class="{'fullscreen': view.fullscreen, 'algDelayed': algDelayed || setupDelayed, 'invalid': algStatus == 'invalid' || setupStatus == 'invalid'}">
 
@@ -192,7 +194,7 @@
               id="copyLong"
               class="clipboard"
               data-ng-show="type.reconstruction"
-              style="display: none; width: 2em; font-size: 0.75em"><i
+              style="margin: 0; padding: 2px 6px; width: 2em; font-size: 0.75em"><i
               class="fa fa-clipboard"></i>
             </button>
           </h2>

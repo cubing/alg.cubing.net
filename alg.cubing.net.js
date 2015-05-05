@@ -632,31 +632,50 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
     $scope.algDelayed = (event == "delayed")
   }
 
-  ZeroClipboard.config( { swfPath: "lib/ZeroClipboard.swf" } );
-  new ZeroClipboard($("#copyShort")).on("copy", function (event) {
-    event.clipboardData.setData("text/plain", $scope.share_forum_short);
-    $("body").fadeOut(100).fadeIn(500);
-    console.log("Copying to clipboard", $scope.share_forum_short)
-  });
-  new ZeroClipboard($("#copyLong")).on("copy", function (event) {
-    event.clipboardData.setData("text/plain", $scope.share_forum_long);
-    $("body").fadeOut(100).fadeIn(500);
-    console.log("Copying to clipboard", $scope.share_forum_long)
-  });
 
-  // If the page was opened locally, copying to clipboard won't work.
-  // This seems to be a bad heuristic, because I've only ever seen it work in Chrome.
-  try {
-  $.ajax("lib/ZeroClipboard.swf", {
-    success: function() {
-      console.log("XHR test succeeded. Enabling clipboard button.");
-      $("button.clipboard").show();
-    },
-    error: function() {
-      console.warn("XHR test failed. Disabling clipboard button.");
-    }
+  // clipboard.js: https://github.com/lgarron/clipboard.js
+  var clipboard = {};
+
+  clipboard.copy = (function() {
+    var _intercept = false;
+    var _data; // Map from data type (e.g. "text/html") to value.
+
+    document.addEventListener("copy", function(e){
+      if (_intercept) {
+        for (var key in _data) {
+          e.clipboardData.setData(key, _data[key]);
+        }
+        e.preventDefault();
+      }
+    });
+
+    return function(data) {
+      _intercept = true;
+      _data = (typeof data === "string" ? {"text/plain": data} : data);
+      try {
+        if (typeof ClipboardEvent === "undefined") {
+          throw "Copying is probably not supported.";
+        }
+        document.execCommand("copy");
+        $("#toast").finish().fadeIn(100).delay(1000).fadeOut(500);
+      }
+      catch(e) {
+        $("#toastError").finish().fadeIn(100).delay(2000).fadeOut(2500);
+      }
+      _intercept = false;
+    };
+  }());
+
+  $("#copyShort").on("click", function (event) {
+    clipboard.copy({
+      "text/plain": $scope.share_forum_short
+    });
   });
-  } catch(e) {}
+  $("#copyLong").on("click", function (event) {
+    clipboard.copy({
+      "text/plain": $scope.share_forum_long
+    });
+  });
 
   // TODO: Use IFs for puzzle/type
   var demos = {

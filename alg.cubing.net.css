@@ -306,3 +306,33 @@ textarea.sharetext {
 .sharetext:hover {
   background: #fff;
 }
+
+#toast, #toastError {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  z-index: 1000;
+
+  color: white;
+  background: rgba(0, 0, 0, 0.8);
+
+  width: 50%;
+  height: 5%;
+  min-height: 2em;
+  left: 25%;
+  top: 5%;
+
+  border-radius: 12px;
+
+  text-align: center;
+
+box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  position: absolute;
+}
+
+#toastError {
+  background: rgba(192, 0, 0, 0.8);
+  min-height: 4em;
+}
