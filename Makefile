@@ -8,7 +8,7 @@ deploy: alg.cubing.net.zip
 		--exclude .gitignore \
 		--exclude .gitmodules \
 		./ \
-		alg.cubing.net:~/alg.cubing.net/live/
+		alg.cubing.net:~/alg.cubing.net/
 	echo "\nDone deploying. Go to https://alg.cubing.net/\n"
 
 .PHONY: deploy-test
@@ -19,7 +19,7 @@ deploy-test:
 		--exclude .gitignore \
 		--exclude .gitmodules \
 		./ \
-		alg.cubing.net:~/alg.cubing.net/live/test/
+		alg.cubing.net:~/alg.cubing.net/test/
 	echo "\nDone deploying. Go to https://alg.cubing.net/test/\n"
 
 .PHONY: open
