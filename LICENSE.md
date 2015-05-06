@@ -34,3 +34,4 @@ THE SOFTWARE.
 - [`font-awesome`](http://fontawesome.io/) by Dave Gandy
   - The CSS is MIT-licensed
   - The fonts themselves are Open Font Licensed (OFL).
+- [`clipboard.js`](https://github.com/lgarron/clipboard.js/) by Lucas Garron

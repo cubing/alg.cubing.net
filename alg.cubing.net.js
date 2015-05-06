@@ -632,60 +632,21 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
     $scope.algDelayed = (event == "delayed")
   }
 
-
-  // clipboard.js: https://github.com/lgarron/clipboard.js
-  var clipboard = {};
-
-  clipboard.copy = (function() {
-    var _intercept = false;
-    var _data; // Map from data type (e.g. "text/html") to value.
-
-    document.addEventListener("copy", function(e){
-      if (_intercept) {
-        for (var key in _data) {
-          e.clipboardData.setData(key, _data[key]);
-        }
-        e.preventDefault();
-      }
-    });
-
-    return function(data) {
-      _intercept = true;
-      _data = (typeof data === "string" ? {"text/plain": data} : data);
-      try {
-        if (typeof ClipboardEvent === "undefined") {
-          // Perhaps we're IE?
-          if (typeof window.clipboardData !== "undefined" &&
-              typeof window.clipboardData.setData !== "undefined") {
-            // For now, assume there is a "text/plain" in _data.
-            var copySucceeded = window.clipboardData.setData("Text", _data["text/plain"]);
-            if (!copySucceeded) {
-              throw "Copying failed.";
-            }
-          }
-          else {
-            throw "Copying is probably not supported.";
-          }
-        }
-        document.execCommand("copy");
-        $("#toast").finish().fadeIn(100).delay(1000).fadeOut(500);
-      }
-      catch(e) {
-        $("#toastError").finish().fadeIn(100).delay(2000).fadeOut(2500);
-      }
-      _intercept = false;
-    };
-  }());
-
   $("#copyShort").on("click", function (event) {
     clipboard.copy({
       "text/plain": $scope.share_forum_short
-    });
+    }).then(
+      function(){$("#toast").finish().fadeIn(100).delay(1000).fadeOut(500);},
+      function(){$("#toastError").finish().fadeIn(100).delay(2000).fadeOut(2500);}
+    );
   });
   $("#copyLong").on("click", function (event) {
     clipboard.copy({
       "text/plain": $scope.share_forum_long
-    });
+    }).then(
+      function(){$("#toast").finish().fadeIn(100).delay(1000).fadeOut(500);},
+      function(){$("#toastError").finish().fadeIn(100).delay(2000).fadeOut(2500);}
+    );
   });
 
   // TODO: Use IFs for puzzle/type
