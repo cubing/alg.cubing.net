@@ -654,7 +654,18 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
       _data = (typeof data === "string" ? {"text/plain": data} : data);
       try {
         if (typeof ClipboardEvent === "undefined") {
-          throw "Copying is probably not supported.";
+          // Perhaps we're IE?
+          if (typeof window.clipboardData !== "undefined" &&
+              typeof window.clipboardData.setData !== "undefined") {
+            // For now, assume there is a "text/plain" in _data.
+            var copySucceeded = window.clipboardData.setData("Text", _data["text/plain"]);
+            if (!copySucceeded) {
+              throw "Copying failed.";
+            }
+          }
+          else {
+            throw "Copying is probably not supported.";
+          }
         }
         document.execCommand("copy");
         $("#toast").finish().fadeIn(100).delay(1000).fadeOut(500);
