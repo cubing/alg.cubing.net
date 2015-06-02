@@ -700,9 +700,11 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
     }).then(function(reg) {
       console.log(":-)", reg);
       displayToast("Offline support has been enabled.");
+      $scope.$apply("serviceWorkerIcon = 'fa-check-circle'");
     }, function(err) {
       console.log(":-(", err);
       displayErrorToast("Could not enable offline support.");
+      $scope.$apply("serviceWorkerIcon = 'fa-times-circle'");
     });
   }
 
@@ -712,6 +714,7 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
         if (r) {
           r.unregister().then(function() {
             displayErrorToast("Offline support has been disabled.");
+           $scope.$apply("serviceWorkerIcon = 'fa-times-circle'");
           });
         } else {
           registerServiceWorker();
@@ -719,11 +722,27 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
       }, function(err) {
         console.log(":-(", err);
         displayErrorToast("Could not enable offline support.");
+         $scope.$apply("serviceWorkerIcon = 'fa-times'");
       });
     } else {
       console.log(":-(");
       displayErrorToast("Offline support not available.");
+      $scope.serviceWorkerIcon = 'fa-times';
     }
+  }
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistration().then(function(r) {
+      if (r) {
+      $scope.$apply("serviceWorkerIcon = 'fa-check-circle'");
+      } else {
+         $scope.$apply("serviceWorkerIcon = 'fa-times-circle'");
+      }
+    }, function(err) {
+      $scope.$apply("serviceWorkerIcon = 'fa-times'");
+    });
+  } else {
+    $scope.serviceWorkerIcon = 'fa-times';
   }
 
 
