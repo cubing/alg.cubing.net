@@ -591,6 +591,11 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
       twistyScene.setSpeed($scope.speed);
     }); // initialize the watch
 
+    if($scope.type.type === "solve" || $scope.type.id === "reconstruction") {
+        document.getElementById("algorithm").selectionStart = 0;
+        document.getElementById("algorithm").selectionEnd = 0;
+    }
+
     $scope.updateLocation();
   };
 
