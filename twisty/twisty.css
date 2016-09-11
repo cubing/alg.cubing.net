@@ -1,8 +1,23 @@
-/* Checkerboard */
+/* Main Definitions */
+twisty {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Checkerboard background */
 twisty {
   background-color: #EAEAEA;
   background-image: linear-gradient(45deg, #DDD 25%, transparent 25%, transparent 75%, #DDD 75%, #DDD),
     linear-gradient(45deg, #DDD 25%, transparent 25%, transparent 75%, #DDD 75%, #DDD);
   background-size: 32px 32px;
   background-position: 0 0, 16px 16px;
+}
+
+twisty canvas {
+  flex: 4 0 0;
+}
+
+twisty twisty-control-bar {
+  flex: 1 0 0;
+  background: rgba(0, 0, 0, 0.25);
 }

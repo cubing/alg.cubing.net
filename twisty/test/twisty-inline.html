@@ -1,24 +1,30 @@
+<!DOCTYPE html>
 <html>
 <head>
   <title>Inline Test | twisty.js</title>
-  <link rel="stylesheet" href="style.css">
 
-  <link href="../twisty.css" rel="stylesheet" type="text/css">
   <link href="twisty-inline-mvld.css" rel="stylesheet" type="text/css">
   <link href="twisty-inline.css" rel="stylesheet" type="text/css">
+
+  <link href="../twisty.css" rel="stylesheet" type="text/css">
+  <script src="../twisty.js"></script>
 </head>
 <body>
 
 <div class="ribbon"></div>
 <div class="content">
   <p>
-    Lorem Ipsum cillum dolor esse sit incididunt velit eiusmod magna ad nostrud officia aute dolor dolor.
+    This should be automatically initialized:
   </p>
   <twisty></twisty>
   <p>
-    Commodo nisi non consectetur voluptate incididunt mollit duis dolore amet amet tempor exercitation. Qui amet aute ea aute id ad aliquip proident.
+    This should be automatically initialized, too:
   </p>
   <twisty></twisty>
+  <p>
+    But this should <strong>not</strong> be initialized:
+  </p>
+  <twisty initialization="custom"></twisty>
   <p>
     Tempor tempor aliqua in commodo cillum Lorem magna dolore proident Lorem.
   </p>
