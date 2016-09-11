@@ -25,6 +25,7 @@ twisty twisty-control-bar {
 
 twisty twisty-control-bar button {
   flex: 1 0 0;
+  /* TODO: size font based on twisty element height. Probably requires JS. */
   font-size: 16px;
 
   display: flex;
