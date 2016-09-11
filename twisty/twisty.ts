@@ -16,7 +16,7 @@ class Twisty {
   // Initialize a Twisty for the given Element unless the elements
   // `initialization` attribute is set to `custom`.
   static smartInitialize(elem: Element) {
-    let ini = elem.getAttribute("initialization");
+    const ini = elem.getAttribute("initialization");
     if (ini !== "custom") {
       new Twisty(elem);
     }
@@ -31,7 +31,7 @@ class TwistyControlBar {
 }
 
 window.addEventListener("load", function() {
-  let elems = document.querySelectorAll("twisty");
+  const elems = document.querySelectorAll("twisty");
   console.log(`Found ${elems.length} twisty elem${elems.length === 1 ? "" : "s"} on page.`)
 
   for (let i = 0; i < elems.length; i++) {
