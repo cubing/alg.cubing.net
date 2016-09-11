@@ -27,6 +27,22 @@ class TwistyControlBar {
   public element;
   constructor(public twisty: Twisty) {
     this.element = document.createElement("twisty-control-bar");
+
+    // TODO: Use SVGs or a web font.
+    const buttonIcons = [
+      "\u2934\uFE0F",
+      "\u23EE",
+      "\u2B05\uFE0F",
+      "\u23EF",
+      "\u27A1\uFE0F",
+      "\u23ED"
+    ];
+
+    for (let i = 0; i < 6; i++) {
+      const button = document.createElement("button");
+      button.textContent = buttonIcons[i];
+      this.element.appendChild(button);
+    }
   }
 }
 
