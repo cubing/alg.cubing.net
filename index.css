@@ -11,7 +11,7 @@ body, body * {
   padding: 0;
 }
 
-viewer, controls {
+twisty, controls {
   flex: 1 0 0;
 }
 
