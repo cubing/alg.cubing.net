@@ -13,7 +13,7 @@ twisty {
   background-position: 0 0, 16px 16px;
 }
 
-twisty canvas {
+twisty twisty-view-container {
   flex: 4 0 0;
 }
 

@@ -3,13 +3,13 @@
 // TODO: learn how to use modules
 
 class Twisty {
-  private canvas: HTMLCanvasElement;
+  private viewContainer: HTMLElement;
   private controlBar: TwistyControlBar;
   constructor(public element: Element) {
-    this.canvas = document.createElement("canvas");
+    this.viewContainer = document.createElement("twisty-view-container");
     this.controlBar = new TwistyControlBar(this);
 
-    this.element.appendChild(this.canvas);
+    this.element.appendChild(this.viewContainer);
     this.element.appendChild(this.controlBar.element);
   }
 
