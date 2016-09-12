@@ -31,3 +31,9 @@ twisty twisty-control-bar button {
   display: flex;
   justify-content: center;
 }
+
+twisty twisty-view-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

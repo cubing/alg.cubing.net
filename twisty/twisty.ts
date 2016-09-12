@@ -11,6 +11,12 @@ class Twisty {
 
     this.element.appendChild(this.viewContainer);
     this.element.appendChild(this.controlBar.element);
+
+    this.draw();
+  }
+
+  draw() {
+    this.viewContainer.textContent = String(Date.now());
   }
 
   // Initialize a Twisty for the given Element unless the elements
