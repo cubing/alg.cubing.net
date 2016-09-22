@@ -3,8 +3,8 @@
 // TODO: learn how to use modules
 
 class Twisty {
-  private viewContainer: HTMLElement;
-  private controlBar: TwistyControlBar;
+  private readonly viewContainer: HTMLElement;
+  private readonly controlBar: TwistyControlBar;
   constructor(public element: Element) {
     this.viewContainer = document.createElement("twisty-view-container");
     this.controlBar = new TwistyControlBar(this);
