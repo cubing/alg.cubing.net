@@ -21,5 +21,5 @@ Custom (Javascript):
     ></twisty>
 
     <script>
-      new Twisty(element);
+      new TwistyPlayer(element);
     </script>
