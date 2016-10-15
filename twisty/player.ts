@@ -2,15 +2,15 @@
 
 // TODO: learn how to use modules
 
-class Twisty {
+class TwistyPlayer {
   private readonly viewContainer: HTMLElement;
-  private readonly controlBar: TwistyControlBar;
+  private readonly TwistycontrolBar: TwistyControlBar;
   constructor(public element: Element) {
     this.viewContainer = document.createElement("twisty-view-container");
-    this.controlBar = new TwistyControlBar(this);
+    this.TwistycontrolBar = new TwistyControlBar(this);
 
     this.element.appendChild(this.viewContainer);
-    this.element.appendChild(this.controlBar.element);
+    this.element.appendChild(this.TwistycontrolBar.element);
 
     this.draw();
   }
@@ -19,19 +19,28 @@ class Twisty {
     this.viewContainer.textContent = String(Date.now());
   }
 
-  // Initialize a Twisty for the given Element unless the elements
+  // Initialize a Twisty for the given Element unless the element's
   // `initialization` attribute is set to `custom`.
-  static smartInitialize(elem: Element) {
+  private static autoInitialize(elem: Element) {
     const ini = elem.getAttribute("initialization");
     if (ini !== "custom") {
-      new Twisty(elem);
+      new TwistyPlayer(elem);
+    }
+  }
+
+  static autoInitializePage() {
+    const elems = document.querySelectorAll("twisty");
+    console.log(`Found ${elems.length} twisty elem${elems.length === 1 ? "" : "s"} on page.`)
+
+    for (let i = 0; i < elems.length; i++) {
+      TwistyPlayer.autoInitialize(elems[i]);
     }
   }
 }
 
 class TwistyControlBar {
   public element;
-  constructor(public twisty: Twisty) {
+  constructor(public twisty: TwistyPlayer) {
     this.element = document.createElement("twisty-control-bar");
 
     // TODO: Use SVGs or a web font.
@@ -52,11 +61,4 @@ class TwistyControlBar {
   }
 }
 
-window.addEventListener("load", function() {
-  const elems = document.querySelectorAll("twisty");
-  console.log(`Found ${elems.length} twisty elem${elems.length === 1 ? "" : "s"} on page.`)
-
-  for (let i = 0; i < elems.length; i++) {
-    Twisty.smartInitialize(elems[i]);
-  }
-});
+window.addEventListener("load", TwistyPlayer.autoInitializePage);
