@@ -4,19 +4,21 @@
 
 class TwistyPlayer {
   private readonly viewContainer: HTMLElement;
-  private readonly TwistycontrolBar: TwistyControlBar;
+  private anim: TwistyAnim;
+  private controlBar: TwistyControlBar;
   constructor(public element: Element) {
     this.viewContainer = document.createElement("twisty-view-container");
-    this.TwistycontrolBar = new TwistyControlBar(this);
+    this.anim = new TwistyAnim(this.draw.bind(this));
+    this.controlBar = new TwistyControlBar(this.anim);
 
     this.element.appendChild(this.viewContainer);
-    this.element.appendChild(this.TwistycontrolBar.element);
+    this.element.appendChild(this.controlBar.element);
 
-    this.draw();
+    this.draw(0);
   }
 
-  draw() {
-    this.viewContainer.textContent = String(Date.now());
+  draw(duration: Duration) {
+    this.viewContainer.textContent = String(Math.floor(duration));
   }
 
   // Initialize a Twisty for the given Element unless the element's
@@ -40,23 +42,42 @@ class TwistyPlayer {
 
 class TwistyControlBar {
   public element;
-  constructor(public twisty: TwistyPlayer) {
+  constructor(public anim: TwistyAnim) {
     this.element = document.createElement("twisty-control-bar");
 
-    // TODO: Use SVGs or a web font.
-    const buttonIcons = [
-      "\u2934\uFE0F",
-      "\u23EE",
-      "\u2B05\uFE0F",
-      "\u23EF",
-      "\u27A1\uFE0F",
-      "\u23ED"
-    ];
+    // TODO: Use SVGs or a web font for element-relative sizing.
+    const buttons = [{
+        title: "Cycle display mode",
+        icon: "\u2934\uFE0F",
+        fn: () => {}
+      }, {
+        title: "Skip to start",
+        icon: "\u23EE",
+        fn: anim.reset.bind(anim)
+      }, {
+        title: "Step back",
+        icon: "\u2B05\uFE0F",
+        fn: () => {}
+      }, {
+        title: "Play",
+        icon: "\u23EF",
+        fn: anim.playPause.bind(anim) // TODO: Toggle between play and pause icon.
+      }, {
+        title: "Step forward",
+        icon: "\u27A1\uFE0F",
+        fn: () => {}
+      }, {
+        title: "Skip to end",
+        icon: "\u23ED",
+        fn: () => {}
+      }];
 
     for (let i = 0; i < 6; i++) {
       const button = document.createElement("button");
-      button.textContent = buttonIcons[i];
+      button.title = buttons[i].title;
+      button.textContent = buttons[i].icon;
       this.element.appendChild(button);
+      button.addEventListener("click", buttons[i].fn);
     }
   }
 }
