@@ -8,7 +8,7 @@ class TwistyPlayer {
   private controlBar: TwistyControlBar;
   constructor(public element: Element) {
     this.viewContainer = document.createElement("twisty-view-container");
-    this.anim = new TwistyAnim(this.draw.bind(this));
+    this.anim = new TwistyAnim(this.draw.bind(this), new SimpleBreakPoints([0, 1000, 1500, 2500]));
     this.controlBar = new TwistyControlBar(this.anim);
 
     this.element.appendChild(this.viewContainer);
@@ -53,11 +53,11 @@ class TwistyControlBar {
       }, {
         title: "Skip to start",
         icon: "\u23EE",
-        fn: anim.reset.bind(anim)
+        fn: anim.skipToStart.bind(anim)
       }, {
         title: "Step back",
         icon: "\u2B05\uFE0F",
-        fn: () => {}
+        fn: anim.stepBackward.bind(anim)
       }, {
         title: "Play",
         icon: "\u23EF",
@@ -65,11 +65,11 @@ class TwistyControlBar {
       }, {
         title: "Step forward",
         icon: "\u27A1\uFE0F",
-        fn: () => {}
+        fn: anim.stepForward.bind(anim)
       }, {
         title: "Skip to end",
         icon: "\u23ED",
-        fn: () => {}
+        fn: anim.skipToEnd.bind(anim)
       }];
 
     for (let i = 0; i < 6; i++) {
