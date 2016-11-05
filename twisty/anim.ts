@@ -85,7 +85,7 @@ class TwistyAnim {
 
   // Animate or pause in the given direction.
   // Idempotent.
-  animateDirection(direction: AnimDirection): void {
+  private animateDirection(direction: AnimDirection): void {
     if (this.direction === direction) {
       return;
     }
