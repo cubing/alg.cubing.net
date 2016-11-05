@@ -28,7 +28,7 @@ class TwistyAnim {
   private direction: AnimDirection = AnimDirection.Paused;
   private breakPointType: BreakPointType = BreakPointType.EntireMoveSequence;
   private scheduler: FrameScheduler;
-  // TODO: tempo
+  private tempo: number = 1; // TODO: Support setting tempo.
   // TODO: cache breakpoints instead of re-querying the model constantly.
   constructor(private displayCallback: (Timestamp) => void, private breakPointModel: BreakPointModel) {
     this.scheduler = new FrameScheduler(this.frame.bind(this));
@@ -42,7 +42,7 @@ class TwistyAnim {
   private timeScaling(): number {
     // Since we don't have a tunable tempo, we directly use the direction
     // scaling factor.
-    return this.direction;
+    return this.direction * this.tempo;
   }
 
   // Update the cursor based on the time since lastFrameTime, and reset
