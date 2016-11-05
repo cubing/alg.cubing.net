@@ -47,10 +47,35 @@ class TwistyAnim {
   // Update the cursor based on the time since lastFrameTime, and reset
   // lastFrameTime.
   private updateCursor(timeStamp: TimeStamp) {
+    if (this.direction === AnimDirection.Paused) {
+      this.lastFrameTime = timeStamp;
+      return;
+    }
+
+    var previousCursor = this.cursor;
+
     var elapsed = timeStamp - this.lastFrameTime;
+    // Workaround for the first frame: https://twitter.com/lgarron/status/794846097445269504
+    if (elapsed < 0) {
+      elapsed = 0;
+    }
     this.cursor += elapsed * this.timeScaling();
     this.lastFrameTime = timeStamp;
-    // TODO: Handle stopping.
+
+    // Check if we've passed a breakpoint
+    // TODO: check if we've gone off the end.
+    var isForwards = (this.direction === AnimDirection.Forwards);
+    var nextBreakPoint = isForwards ?
+      this.breakPointModel.forwardsBreakPoint(previousCursor) :
+      this.breakPointModel.backwardsBreakPoint(previousCursor);
+    var isPastBreakPoint = isForwards ?
+      (this.cursor > nextBreakPoint) :
+      (this.cursor < nextBreakPoint);
+    if (isPastBreakPoint) {
+        this.cursor = nextBreakPoint;
+        this.direction = AnimDirection.Paused;
+        this.scheduler.stop();
+    }
   }
 
   private frame(timeStamp: TimeStamp) {
@@ -58,14 +83,17 @@ class TwistyAnim {
     this.display();
   }
 
+  // Animate or pause in the given direction.
   // Idempotent.
   animateDirection(direction: AnimDirection): void {
-    console.log("animateDirection: ", direction);
     if (this.direction === direction) {
       return;
     }
 
+    // Update cursor based on previous direction.
     this.updateCursor(performance.now());
+
+    // Start the new direction.
     this.direction = direction;
     if (direction === AnimDirection.Paused) {
       this.scheduler.stop();
@@ -82,9 +110,20 @@ class TwistyAnim {
 
   /* Controls */
 
-  playForward(): void {  this.animateDirection(AnimDirection.Forwards); }
-  pause(): void {        this.animateDirection(AnimDirection.Paused); }
-  playBackward(): void { this.animateDirection(AnimDirection.Backwards); }
+  playForward(): void {
+    this.breakPointType = BreakPointType.EntireMoveSequence;
+    this.animateDirection(AnimDirection.Forwards);
+  }
+
+  pause(): void {
+    // Intentionally don't change breakPointType.
+    this.animateDirection(AnimDirection.Paused);
+  }
+
+  playBackward(): void {
+    this.breakPointType = BreakPointType.EntireMoveSequence;
+    this.animateDirection(AnimDirection.Backwards);
+  }
 
   skipToStart(): void {
     this.skipAndPauseTo(this.breakPointModel.firstBreakPoint());
@@ -95,14 +134,16 @@ class TwistyAnim {
   }
 
   stepForward(): void {
-    // TODO
+    this.breakPointType = BreakPointType.Move;
+    this.animateDirection(AnimDirection.Forwards);
   }
 
   stepBackward(): void {
-    // TODO
+    this.breakPointType = BreakPointType.Move;
+    this.animateDirection(AnimDirection.Backwards);
   }
 
-  playForwardPause(): void {
+  togglePausePlayForward(): void {
     if (this.direction === AnimDirection.Paused) {
       this.playForward();
     } else {
@@ -114,10 +155,12 @@ class TwistyAnim {
 class FrameScheduler {
   private animating: boolean = false;
   constructor(private callback: (TimeStamp) => void) {}
+
   animFrame(timeStamp: TimeStamp) {
     this.callback(timeStamp);
     if (this.animating) {
-    requestAnimationFrame(this.animFrame.bind(this));
+      // TODO: use same bound frame instead of creating a new binding each frame.
+      requestAnimationFrame(this.animFrame.bind(this));
     }
   }
 
@@ -189,4 +232,4 @@ class TestSimpleBreakPoints {
   }
 }
 
-new TestSimpleBreakPoints();
+// new TestSimpleBreakPoints();
