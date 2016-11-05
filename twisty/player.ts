@@ -61,7 +61,7 @@ class TwistyControlBar {
       }, {
         title: "Play",
         icon: "\u23EF",
-        fn: anim.playPause.bind(anim) // TODO: Toggle between play and pause icon.
+        fn: anim.playForwardPause.bind(anim) // TODO: Toggle between play and pause icon.
       }, {
         title: "Step forward",
         icon: "\u27A1\uFE0F",
