@@ -21,6 +21,7 @@ type TimeStamp = Duration; // Duration since a particular epoch.
 // https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame
 var ANIM_REQUEST_PAUSED = 0;
 
+// TODO: Break into model (≈instance variables, private methods) and controller?
 class TwistyAnim {
   private cursor: Duration = 0;
   private lastFrameTime: TimeStamp = 0;
