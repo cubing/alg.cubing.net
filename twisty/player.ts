@@ -4,11 +4,11 @@
 
 class TwistyPlayer {
   private readonly viewContainer: HTMLElement;
-  private anim: TwistyAnim;
+  private anim: AnimController;
   private controlBar: TwistyControlBar;
   constructor(public element: Element) {
     this.viewContainer = document.createElement("twisty-view-container");
-    this.anim = new TwistyAnim(this.draw.bind(this), new SimpleBreakPoints([0, 1000, 1500, 2500]));
+    this.anim = new AnimController(this.draw.bind(this), new SimpleBreakPoints([0, 1000, 1500, 2500]));
     this.controlBar = new TwistyControlBar(this.anim);
 
     this.element.appendChild(this.viewContainer);
@@ -42,7 +42,7 @@ class TwistyPlayer {
 
 class TwistyControlBar {
   public element;
-  constructor(public anim: TwistyAnim) {
+  constructor(public anim: AnimController) {
     this.element = document.createElement("twisty-control-bar");
 
     // TODO: Use SVGs or a web font for element-relative sizing.

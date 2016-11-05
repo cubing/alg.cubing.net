@@ -21,8 +21,7 @@ type TimeStamp = Duration; // Duration since a particular epoch.
 // https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame
 var ANIM_REQUEST_PAUSED = 0;
 
-// TODO: Break into model (≈instance variables, private methods) and controller?
-class TwistyAnim {
+class AnimModel {
   private cursor: Duration = 0;
   private lastCursorTime: TimeStamp = 0;
   private direction: AnimDirection = AnimDirection.Paused;
@@ -84,9 +83,17 @@ class TwistyAnim {
     this.display();
   }
 
+  setBreakPointType(breakPointType: BreakPointType) {
+    this.breakPointType = breakPointType;
+  }
+
+  isPaused() {
+    return this.direction === AnimDirection.Paused;
+  }
+
   // Animate or pause in the given direction.
   // Idempotent.
-  private animateDirection(direction: AnimDirection): void {
+  animateDirection(direction: AnimDirection): void {
     if (this.direction === direction) {
       return;
     }
@@ -103,49 +110,61 @@ class TwistyAnim {
     }
   }
 
-  private skipAndPauseTo(duration: Duration): void {
+  // A simple wrapper for animateDirection(Paused).
+  pause(): void {
+    this.animateDirection(AnimDirection.Paused);
+  }
+
+  skipAndPauseTo(duration: Duration): void {
     this.pause();
     this.cursor = duration;
     this.scheduler.singleFrame();
   }
+}
 
-  /* Controls */
+class AnimController {
+  private model: AnimModel;
+
+  // TODO: come up with a more elegant way to instantiate the model+controller.
+  constructor(displayCallback: (Timestamp) => void, breakPointModel: BreakPointModel) {
+    this.model = new AnimModel(displayCallback, breakPointModel);
+  }
 
   playForward(): void {
-    this.breakPointType = BreakPointType.EntireMoveSequence;
-    this.animateDirection(AnimDirection.Forwards);
+    this.model.setBreakPointType(BreakPointType.EntireMoveSequence);
+    this.model.animateDirection(AnimDirection.Forwards);
   }
 
   pause(): void {
     // Intentionally don't change breakPointType.
-    this.animateDirection(AnimDirection.Paused);
+    this.model.animateDirection(AnimDirection.Paused);
   }
 
   playBackward(): void {
-    this.breakPointType = BreakPointType.EntireMoveSequence;
-    this.animateDirection(AnimDirection.Backwards);
+    this.model.setBreakPointType(BreakPointType.EntireMoveSequence);
+    this.model.animateDirection(AnimDirection.Backwards);
   }
 
   skipToStart(): void {
-    this.skipAndPauseTo(this.breakPointModel.firstBreakPoint());
+    this.model.skipAndPauseTo(0); // TODO: this.breakPointModel.firstBreakPoint()
   }
 
   skipToEnd(): void {
-    this.skipAndPauseTo(this.breakPointModel.lastBreakPoint());
+    this.model.skipAndPauseTo(0); // TODO: this.breakPointModel.lastBreakPoint()
   }
 
   stepForward(): void {
-    this.breakPointType = BreakPointType.Move;
-    this.animateDirection(AnimDirection.Forwards);
+    this.model.setBreakPointType(BreakPointType.Move);
+    this.model.animateDirection(AnimDirection.Forwards);
   }
 
   stepBackward(): void {
-    this.breakPointType = BreakPointType.Move;
-    this.animateDirection(AnimDirection.Backwards);
+    this.model.setBreakPointType(BreakPointType.Move);
+    this.model.animateDirection(AnimDirection.Backwards);
   }
 
   togglePausePlayForward(): void {
-    if (this.direction === AnimDirection.Paused) {
+    if (this.model.isPaused()) {
       this.playForward();
     } else {
       this.pause();
