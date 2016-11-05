@@ -1,6 +1,6 @@
 "use strict";
 
-// The values are scaling factors.
+// The values are animation scaling factors.
 enum AnimDirection {
   Forwards = 1,
   Paused = 0,
@@ -39,8 +39,6 @@ class AnimModel {
   }
 
   private timeScaling(): number {
-    // Since we don't have a tunable tempo, we directly use the direction
-    // scaling factor.
     return this.direction * this.tempo;
   }
 
