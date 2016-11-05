@@ -24,7 +24,7 @@ var ANIM_REQUEST_PAUSED = 0;
 // TODO: Break into model (≈instance variables, private methods) and controller?
 class TwistyAnim {
   private cursor: Duration = 0;
-  private lastFrameTime: TimeStamp = 0;
+  private lastCursorTime: TimeStamp = 0;
   private direction: AnimDirection = AnimDirection.Paused;
   private breakPointType: BreakPointType = BreakPointType.EntireMoveSequence;
   private scheduler: FrameScheduler;
@@ -45,23 +45,23 @@ class TwistyAnim {
     return this.direction * this.tempo;
   }
 
-  // Update the cursor based on the time since lastFrameTime, and reset
-  // lastFrameTime.
+  // Update the cursor based on the time since lastCursorTime, and reset
+  // lastCursorTime.
   private updateCursor(timeStamp: TimeStamp) {
     if (this.direction === AnimDirection.Paused) {
-      this.lastFrameTime = timeStamp;
+      this.lastCursorTime = timeStamp;
       return;
     }
 
     var previousCursor = this.cursor;
 
-    var elapsed = timeStamp - this.lastFrameTime;
+    var elapsed = timeStamp - this.lastCursorTime;
     // Workaround for the first frame: https://twitter.com/lgarron/status/794846097445269504
     if (elapsed < 0) {
       elapsed = 0;
     }
     this.cursor += elapsed * this.timeScaling();
-    this.lastFrameTime = timeStamp;
+    this.lastCursorTime = timeStamp;
 
     // Check if we've passed a breakpoint
     // TODO: check if we've gone off the end.
