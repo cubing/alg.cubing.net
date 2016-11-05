@@ -31,6 +31,7 @@ class AnimModel {
 
   // Renders the current cursor.
   private display() {
+    // TODO: AVoid rendering if the cursor hasn't moved since last time.
     this.displayCallback(this.cursor);
   }
 
@@ -58,15 +59,14 @@ class AnimModel {
 
     // Check if we've passed a breakpoint
     // TODO: check if we've gone off the end.
+    var breakPoint = this.breakPointModel.breakPoint(this.direction, this.breakPointType, previousCursor);
+
     var isForwards = (this.direction === AnimDirection.Forwards);
-    var nextBreakPoint = isForwards ?
-      this.breakPointModel.forwardsBreakPoint(previousCursor) :
-      this.breakPointModel.backwardsBreakPoint(previousCursor);
     var isPastBreakPoint = isForwards ?
-      (this.cursor > nextBreakPoint) :
-      (this.cursor < nextBreakPoint);
+      (this.cursor > breakPoint) :
+      (this.cursor < breakPoint);
     if (isPastBreakPoint) {
-        this.cursor = nextBreakPoint;
+        this.cursor = breakPoint;
         this.direction = AnimDirection.Paused;
         this.scheduler.stop();
     }
@@ -77,6 +77,7 @@ class AnimModel {
     this.display();
   }
 
+  // TODO: Push this into breakPointModel.
   setBreakPointType(breakPointType: BreakPointType) {
     this.breakPointType = breakPointType;
   }
@@ -109,10 +110,18 @@ class AnimModel {
     this.animateDirection(AnimDirection.Paused);
   }
 
-  skipAndPauseTo(duration: Duration): void {
+  private skipAndPauseTo(duration: Duration): void {
     this.pause();
     this.cursor = duration;
     this.scheduler.singleFrame();
+  }
+
+  skipToStart(): void {
+    this.skipAndPauseTo(this.breakPointModel.firstBreakPoint());
+  }
+
+  skipToEnd(): void {
+    this.skipAndPauseTo(this.breakPointModel.lastBreakPoint());
   }
 }
 
@@ -120,7 +129,7 @@ class AnimController {
   private model: AnimModel;
 
   // TODO: come up with a more elegant way to instantiate the model+controller.
-  constructor(displayCallback: (Timestamp) => void, breakPointModel: BreakPointModel) {
+  constructor(displayCallback: (Timestamp) => void, private breakPointModel: BreakPointModel) {
     this.model = new AnimModel(displayCallback, breakPointModel);
   }
 
@@ -140,11 +149,11 @@ class AnimController {
   }
 
   skipToStart(): void {
-    this.model.skipAndPauseTo(0); // TODO: this.breakPointModel.firstBreakPoint()
+    this.model.skipToStart();
   }
 
   skipToEnd(): void {
-    this.model.skipAndPauseTo(0); // TODO: this.breakPointModel.lastBreakPoint()
+    this.model.skipToEnd();
   }
 
   stepForward(): void {
@@ -210,25 +219,36 @@ interface BreakPointModel {
   firstBreakPoint(): Duration;
   lastBreakPoint(): Duration;
   // TODO: Define semantics if `duration` is past the end.
-  forwardsBreakPoint(duration: Duration): Duration;
-  backwardsBreakPoint(duration: Duration): Duration;
+  breakPoint(direction: AnimDirection, breakPointType: BreakPointType, duration: Duration): Duration;
 }
 
 class SimpleBreakPoints implements BreakPointModel {
     // Assumes breakPointList is sorted.
     constructor(private breakPointList: Duration[]) {}
+
     firstBreakPoint() {
       return this.breakPointList[0];
     }
     lastBreakPoint() {
       return this.breakPointList[this.breakPointList.length - 1];
     }
-    forwardsBreakPoint(duration: Duration) {
-      return this.breakPointList.filter(d2 => d2 > duration)[0];
-    }
-    backwardsBreakPoint(duration: Duration) {
-      var l = this.breakPointList.filter(d2 => d2 < duration);
-      return l[l.length - 1];
+
+    breakPoint(direction: AnimDirection, breakPointType: BreakPointType, duration: Duration) {
+      if (direction === AnimDirection.Backwards) {
+        var l = this.breakPointList.filter(d2 => d2 < duration);
+        if (l.length === 0 || breakPointType === BreakPointType.EntireMoveSequence) {
+          // TODO: Avoid list filtering above if breakPointType == EntireMoveSequence
+          return this.firstBreakPoint();
+        }
+        return l[l.length - 1];
+      } else {
+        var l = this.breakPointList.filter(d2 => d2 > duration);
+        if (l.length === 0 || breakPointType === BreakPointType.EntireMoveSequence) {
+          // TODO: Avoid list filtering above if breakPointType == EntireMoveSequence
+          return this.lastBreakPoint();
+        }
+        return l[0];
+      }
     }
 }
 
@@ -237,12 +257,12 @@ class TestSimpleBreakPoints {
     var b1 = new SimpleBreakPoints([30, 400, 1500, 2000]);
     console.log(b1.firstBreakPoint() === 30);
     console.log(b1.lastBreakPoint() === 2000);
-    console.log(b1.forwardsBreakPoint(30) === 400);
-    console.log(b1.forwardsBreakPoint(400) === 1500);
-    console.log(b1.forwardsBreakPoint(600) === 1500);
-    console.log(b1.backwardsBreakPoint(400) === 30);
-    console.log(b1.backwardsBreakPoint(1999) === 1500);
-    console.log(b1.backwardsBreakPoint(2000) === 1500);
+    console.log(b1.breakPoint(AnimDirection.Forwards, BreakPointType.Move, 30) === 400);
+    console.log(b1.breakPoint(AnimDirection.Forwards, BreakPointType.Move, 400) === 1500);
+    console.log(b1.breakPoint(AnimDirection.Forwards, BreakPointType.Move, 600) === 1500);
+    console.log(b1.breakPoint(AnimDirection.Backwards, BreakPointType.Move, 400) === 30);
+    console.log(b1.breakPoint(AnimDirection.Backwards, BreakPointType.Move, 1999) === 1500);
+    console.log(b1.breakPoint(AnimDirection.Backwards, BreakPointType.Move, 2000) === 1500);
   }
 }
 
