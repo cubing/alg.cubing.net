@@ -17,10 +17,6 @@ enum BreakPointType {
 type Duration = number; // Duration in milliseconds
 type TimeStamp = Duration; // Duration since a particular epoch.
 
-// 0 cannot represent an active request ID:
-// https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame
-var ANIM_REQUEST_PAUSED = 0;
-
 class AnimModel {
   private cursor: Duration = 0;
   private lastCursorTime: TimeStamp = 0;
