@@ -48,36 +48,37 @@ class TwistyControlBar {
     // TODO: Use SVGs or a web font for element-relative sizing.
     const buttons = [{
         title: "Cycle display mode",
-        icon: "\u2934\uFE0F",
+        iconClass: "fullscreen",
         fn: () => {}
       }, {
         title: "Skip to start",
-        icon: "\u23EE",
+        iconClass: "skip-to-start",
         fn: anim.skipToStart.bind(anim)
       }, {
         title: "Step back",
-        icon: "\u2B05\uFE0F",
+        iconClass: "step-backward",
         fn: anim.stepBackward.bind(anim)
       }, {
         title: "Play",
-        icon: "\u23EF",
+        iconClass: "play",
         fn: anim.togglePausePlayForward.bind(anim) // TODO: Toggle between play and pause icon.
       }, {
         title: "Step forward",
-        icon: "\u27A1\uFE0F",
+        iconClass: "step-forward",
         fn: anim.stepForward.bind(anim)
       }, {
         title: "Skip to end",
-        icon: "\u23ED",
+        iconClass: "skip-to-end",
         fn: anim.skipToEnd.bind(anim)
       }];
 
     for (let i = 0; i < 6; i++) {
       const button = document.createElement("button");
       button.title = buttons[i].title;
-      button.textContent = buttons[i].icon;
-      this.element.appendChild(button);
+      // TODO: Handle updating image based on anim state.
+      button.classList.add(buttons[i].iconClass);
       button.addEventListener("click", buttons[i].fn);
+      this.element.appendChild(button);
     }
   }
 }
