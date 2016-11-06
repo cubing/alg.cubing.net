@@ -14,5 +14,5 @@ svg "step-backward" "font-awesome/mail-reply.svg"
 svg "pause" "font-awesome/pause.svg"
 svg "play" "font-awesome/play.svg"
 
-svg "fullscreen" "google/ic_fullscreen_black_24px.svg"
-svg "exit-fulscreen" "google/ic_fullscreen_exit_black_24px.svg"
+svg "enter-fullscreen" "google/ic_fullscreen_black_24px.svg"
+svg "exit-fullscreen" "google/ic_fullscreen_exit_black_24px.svg"

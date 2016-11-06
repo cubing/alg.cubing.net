@@ -2,6 +2,16 @@
 
 // TODO: learn how to use modules
 
+interface Document {
+    mozCancelFullScreen: () => void;
+    msExitFullscreen: () => void;
+}
+
+interface Element {
+    mozRequestFullScreen: () => void;
+    msRequestFullscreen: () => void;
+}
+
 class TwistyPlayer {
   private readonly viewContainer: HTMLElement;
   private anim: AnimController;
@@ -9,7 +19,7 @@ class TwistyPlayer {
   constructor(public element: Element) {
     this.viewContainer = document.createElement("twisty-view-container");
     this.anim = new AnimController(this.draw.bind(this), new SimpleBreakPoints([0, 1000, 1500, 2500]));
-    this.controlBar = new TwistyControlBar(this.anim);
+    this.controlBar = new TwistyControlBar(this.anim, this.element);
 
     this.element.appendChild(this.viewContainer);
     this.element.appendChild(this.controlBar.element);
@@ -41,45 +51,74 @@ class TwistyPlayer {
 }
 
 class TwistyControlBar {
+  private isFullscreen: boolean = false;
+  private buttonElems: {[key: string]:Element}; // TODO: Use ES6 Map.
   public element;
-  constructor(public anim: AnimController) {
+  constructor(private anim: AnimController, private twistyElement: Element) {
     this.element = document.createElement("twisty-control-bar");
 
     // TODO: Use SVGs or a web font for element-relative sizing.
     const buttons = [{
         title: "Cycle display mode",
-        iconClass: "fullscreen",
-        fn: () => {}
+        id: "fullscreen",
+        initialClass: "fullscreen",
+        fn: this.toggleFullscreen.bind(this)
       }, {
         title: "Skip to start",
-        iconClass: "skip-to-start",
+        id: "skip-to-start",
+        initialClass: "skip-to-start",
         fn: anim.skipToStart.bind(anim)
       }, {
         title: "Step back",
-        iconClass: "step-backward",
+        id: "step-backward",
+        initialClass: "step-backward",
         fn: anim.stepBackward.bind(anim)
       }, {
         title: "Play",
-        iconClass: "play",
+        id: "play",
+        initialClass: "play",
         fn: anim.togglePausePlayForward.bind(anim) // TODO: Toggle between play and pause icon.
       }, {
         title: "Step forward",
-        iconClass: "step-forward",
+        id: "step-forward",
+        initialClass: "step-forward",
         fn: anim.stepForward.bind(anim)
       }, {
         title: "Skip to end",
-        iconClass: "skip-to-end",
+        id: "skip-to-end",
+        initialClass: "skip-to-end",
         fn: anim.skipToEnd.bind(anim)
       }];
+
+    this.buttonElems = {};
 
     for (let i = 0; i < 6; i++) {
       const button = document.createElement("button");
       button.title = buttons[i].title;
       // TODO: Handle updating image based on anim state.
-      button.classList.add(buttons[i].iconClass);
+      button.classList.add(buttons[i].initialClass);
       button.addEventListener("click", buttons[i].fn);
+
+      this.buttonElems[buttons[i].id] = button;
       this.element.appendChild(button);
     }
+  }
+
+  toggleFullscreen() {
+    if (this.isFullscreen) {
+      var exitFullscreen = document.exitFullscreen ||
+                           document.mozCancelFullScreen ||
+                           document.msExitFullscreen ||
+                           document.webkitExitFullscreen;
+      exitFullscreen.call(document);
+    } else {
+      var requestFullscreen = this.twistyElement.requestFullscreen ||
+                              this.twistyElement.mozRequestFullScreen ||
+                              this.twistyElement.msRequestFullscreen ||
+                              this.twistyElement.webkitRequestFullscreen;
+      requestFullscreen.call(this.twistyElement);
+    }
+    this.isFullscreen = !this.isFullscreen;
   }
 }
 
