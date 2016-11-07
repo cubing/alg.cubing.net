@@ -129,7 +129,7 @@ class AnimController {
   private model: AnimModel;
 
   // TODO: come up with a more elegant way to instantiate the model+controller.
-  constructor(displayCallback: (Timestamp) => void, private breakPointModel: BreakPointModel) {
+  constructor(displayCallback: (Timestamp) => void, breakPointModel: BreakPointModel) {
     this.model = new AnimModel(displayCallback, breakPointModel);
   }
 
