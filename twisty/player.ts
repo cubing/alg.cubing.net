@@ -53,9 +53,16 @@ class TwistyPlayer {
 class TwistyControlBar {
   private isFullscreen: boolean = false;
   private buttonElems: {[key: string]:Element}; // TODO: Use ES6 Map.
+  private scrubber: TwistyScrubber;
   public element;
   constructor(private anim: AnimController, private twistyElement: Element) {
     this.element = document.createElement("twisty-control-bar");
+
+    this.scrubber = new TwistyScrubber();
+    this.element.appendChild(this.scrubber.element);
+
+    var buttonRow = document.createElement("button-row");
+    this.element.appendChild(buttonRow);
 
     // TODO: Use SVGs or a web font for element-relative sizing.
     const buttons = [{
@@ -100,7 +107,7 @@ class TwistyControlBar {
       button.addEventListener("click", buttons[i].fn);
 
       this.buttonElems[buttons[i].id] = button;
-      this.element.appendChild(button);
+      buttonRow.appendChild(button);
     }
   }
 
@@ -119,6 +126,21 @@ class TwistyControlBar {
       requestFullscreen.call(this.twistyElement);
     }
     this.isFullscreen = !this.isFullscreen;
+  }
+}
+
+class TwistyScrubber {
+  public readonly element: HTMLInputElement;
+  constructor() {
+    this.element = document.createElement("input");
+    this.element.classList.add("scrubber");
+    this.element.type = "range";
+
+    this.element.addEventListener("input", this.oninput.bind(this));
+  }
+
+  oninput(): void {
+    console.log(this.element.value);
   }
 }
 

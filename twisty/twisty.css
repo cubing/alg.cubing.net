@@ -24,8 +24,25 @@ twisty twisty-view-container {
 
 twisty twisty-control-bar {
   flex: 1 0 0;
+
+  display: flex;
+  flex-direction: column;
+}
+
+twisty input.scrubber {
+  flex: 0 0 8px;
+  background: rgba(0, 0, 0, 0.25);
+  z-index: 1;
+
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+
+twisty twisty-control-bar button-row {
+  flex: 1 0 0;
   background: rgba(195, 195, 195, 0.5);
   display: flex;
+  flex-direction: row;
 }
 
 twisty twisty-control-bar button {
