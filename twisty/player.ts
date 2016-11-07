@@ -92,7 +92,7 @@ class TwistyControlBar {
 
     this.buttonElems = {};
 
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < buttons.length; i++) {
       const button = document.createElement("button");
       button.title = buttons[i].title;
       // TODO: Handle updating image based on anim state.
