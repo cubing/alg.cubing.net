@@ -31,7 +31,7 @@ class AnimModel {
   private tempo: number = 1; // TODO: Support setting tempo.
   // TODO: cache breakpoints instead of re-querying the model constantly.
   private observers: AnimModelObserver[] = [];
-  constructor(private displayCallback: (Timestamp) => void, private breakPointModel: BreakPointModel) {
+  constructor(private displayCallback: (timeStamp: TimeStamp) => void, private breakPointModel: BreakPointModel) {
     this.scheduler = new FrameScheduler(this.frame.bind(this));
   }
 
@@ -161,7 +161,7 @@ class AnimController {
   public model: AnimModel;
 
   // TODO: come up with a more elegant way to instantiate the model+controller.
-  constructor(displayCallback: (Timestamp) => void, breakPointModel: BreakPointModel) {
+  constructor(displayCallback: (timeStamp: TimeStamp) => void, breakPointModel: BreakPointModel) {
     this.model = new AnimModel(displayCallback, breakPointModel);
   }
 
@@ -209,7 +209,7 @@ class AnimController {
 
 class FrameScheduler {
   private animating: boolean = false;
-  constructor(private callback: (TimeStamp) => void) {}
+  constructor(private callback: (timeStamp: TimeStamp) => void) {}
 
   animFrame(timeStamp: TimeStamp) {
     this.callback(timeStamp);
