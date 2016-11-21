@@ -58,7 +58,7 @@ class TwistyControlBar {
   constructor(private anim: AnimController, private twistyElement: Element) {
     this.element = document.createElement("twisty-control-bar");
 
-    this.scrubber = new TwistyScrubber();
+    this.scrubber = new TwistyScrubber(anim);
     this.element.appendChild(this.scrubber.element);
 
     var buttonRow = document.createElement("button-row");
@@ -129,18 +129,50 @@ class TwistyControlBar {
   }
 }
 
-class TwistyScrubber {
+class TwistyScrubber implements AnimModelObserver {
   public readonly element: HTMLInputElement;
-  constructor() {
+  constructor(private anim: AnimController) {
     this.element = document.createElement("input");
     this.element.classList.add("scrubber");
     this.element.type = "range";
 
     this.element.addEventListener("input", this.oninput.bind(this));
+    var bounds = this.anim.model.getBounds();
+    this.element.min = String(bounds[0]);
+    this.element.max = String(bounds[1]);
+    this.element.value = String(this.anim.model.getCursor());
+    this.anim.model.addObserver(this);
   }
 
-  oninput(): void {
-    console.log(this.element.value);
+  private updateBackground() {
+    // TODO: Figure out the most efficient way to do this.
+    // TODO: Pad by the thumb radius at each end.
+    var min = parseInt(this.element.min);
+    var max = parseInt(this.element.max);
+    var value = parseInt(this.element.value);
+    var v = (value - min) / max * 100;
+    this.element.style.background = `linear-gradient(to right, \
+      rgb(204, 24, 30) 0%, \
+      rgb(204, 24, 30) ${v}%, \
+      rgba(0, 0, 0, 0.25) ${v}%, \
+      rgba(0, 0, 0, 0.25) 100%\
+      )`;
+  }
+
+  private oninput(): void {
+    // TODO: Ideally, we should prevent this from firing back.
+    this.anim.model.skipAndPauseTo(parseInt(this.element.value));
+    this.updateBackground();
+  }
+
+  animCursorChanged(): void {
+    this.element.value = String(this.anim.model.getCursor());
+    this.updateBackground();
+  }
+
+  animBoundsChanged(): void {
+    // TODO
+    this.updateBackground();
   }
 }
 

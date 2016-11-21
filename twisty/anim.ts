@@ -17,6 +17,11 @@ enum BreakPointType {
 type Duration = number; // Duration in milliseconds
 type TimeStamp = Duration; // Duration since a particular epoch.
 
+interface AnimModelObserver {
+  animCursorChanged: () => void;
+  animBoundsChanged: () => void;
+}
+
 class AnimModel {
   private cursor: Duration = 0;
   private lastCursorTime: TimeStamp = 0;
@@ -25,8 +30,31 @@ class AnimModel {
   private scheduler: FrameScheduler;
   private tempo: number = 1; // TODO: Support setting tempo.
   // TODO: cache breakpoints instead of re-querying the model constantly.
+  private observers: AnimModelObserver[] = [];
   constructor(private displayCallback: (Timestamp) => void, private breakPointModel: BreakPointModel) {
     this.scheduler = new FrameScheduler(this.frame.bind(this));
+  }
+
+  public getCursor(): Duration {
+    return this.cursor;
+  }
+
+  public getBounds(): Duration[] {
+    return [
+      this.breakPointModel.firstBreakPoint(),
+      this.breakPointModel.lastBreakPoint()
+    ];
+  }
+
+  private dispatchAnimCursorChanged(): void {
+    for (var observer of this.observers) {
+      observer.animCursorChanged();
+    }
+  }
+
+  // TODO: support removal?
+  public addObserver(observer: AnimModelObserver) {
+    this.observers.push(observer);
   }
 
   // Renders the current cursor.
@@ -70,6 +98,8 @@ class AnimModel {
         this.direction = AnimDirection.Paused;
         this.scheduler.stop();
     }
+
+    this.dispatchAnimCursorChanged();
   }
 
   private frame(timeStamp: TimeStamp) {
@@ -110,10 +140,12 @@ class AnimModel {
     this.animateDirection(AnimDirection.Paused);
   }
 
-  private skipAndPauseTo(duration: Duration): void {
+  skipAndPauseTo(duration: Duration): void {
     this.pause();
     this.cursor = duration;
     this.scheduler.singleFrame();
+
+    this.dispatchAnimCursorChanged();
   }
 
   skipToStart(): void {
@@ -126,7 +158,7 @@ class AnimModel {
 }
 
 class AnimController {
-  private model: AnimModel;
+  public model: AnimModel;
 
   // TODO: come up with a more elegant way to instantiate the model+controller.
   constructor(displayCallback: (Timestamp) => void, breakPointModel: BreakPointModel) {

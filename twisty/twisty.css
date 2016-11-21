@@ -32,7 +32,9 @@ twisty twisty-control-bar {
 twisty input.scrubber {
   flex: 0 0 8px;
   background: rgba(0, 0, 0, 0.25);
+  width: 100%;
   z-index: 1;
+  margin: 0;
 
   -webkit-appearance: none;
   cursor: pointer;
