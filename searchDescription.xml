@@ -4,5 +4,5 @@
   <Description>View an alg at alg.cubing.net</Description>
   <Tags>rubik alg view animation cube cubing speedsolving speedcubing reconstruction algorithm</Tags>
   <Contact>web@garron.net</Contact>
-  <Url type="text/html" template="http://alg.cubing.net/?alg={searchTerms}"/>
+  <Url type="text/html" template="https://alg.cubing.net/?alg={searchTerms}"/>
 </OpenSearchDescription>
