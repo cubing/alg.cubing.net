@@ -12,22 +12,6 @@ interface Element {
     msRequestFullscreen: () => void;
 }
 
-namespace Twisty {
-export namespace Widget {
-
-export abstract class Button {
-  public element: HTMLButtonElement;
-  constructor(title: string, initialClass: string) {
-    this.element = document.createElement("button");
-    this.element.title = title;
-    // TODO: Handle updating image based on anim state.
-    this.element.classList.add(initialClass);
-    this.element.addEventListener("click", this.onpress.bind(this));
-  }
-
-  abstract onpress(): void
-}
-
 namespace FullscreenAPI {
   export function element() {
     return document.fullscreenElement ||
@@ -50,6 +34,22 @@ namespace FullscreenAPI {
                          document.webkitExitFullscreen;
     exitFullscreen.call(document);
   }
+}
+
+namespace Twisty {
+export namespace Widget {
+
+export abstract class Button {
+  public element: HTMLButtonElement;
+  constructor(title: string, initialClass: string) {
+    this.element = document.createElement("button");
+    this.element.title = title;
+    // TODO: Handle updating image based on anim state.
+    this.element.classList.add(initialClass);
+    this.element.addEventListener("click", this.onpress.bind(this));
+  }
+
+  abstract onpress(): void
 }
 
 export module Button {
