@@ -111,17 +111,17 @@ export class Model {
   }
 
   // TODO: Push this into breakPointModel.
-  setBreakPointType(breakPointType: BreakPointType) {
+  private setBreakPointType(breakPointType: BreakPointType) {
     this.breakPointType = breakPointType;
   }
 
-  isPaused() {
+  private isPaused() {
     return this.direction === Direction.Paused;
   }
 
   // Animate or pause in the given direction.
   // Idempotent.
-  animateDirection(direction: Direction): void {
+  private animateDirection(direction: Direction): void {
     if (this.direction === direction) {
       return;
     }
@@ -138,17 +138,27 @@ export class Model {
     }
   }
 
-  // A simple wrapper for animateDirection(Paused).
-  pause(): void {
-    this.animateDirection(Direction.Paused);
-  }
-
-  skipAndPauseTo(duration: Duration): void {
+  public skipAndPauseTo(duration: Duration): void {
     this.pause();
     this.cursor = duration;
     this.scheduler.singleFrame();
 
     this.dispatchAnimCursorChanged();
+  }
+
+  playForward(): void {
+    this.setBreakPointType(BreakPointType.EntireMoveSequence);
+    this.animateDirection(Direction.Forwards);
+  }
+
+  // A simple wrapper for animateDirection(Paused).
+  pause(): void {
+    this.animateDirection(Direction.Paused);
+  }
+
+  playBackward(): void {
+    this.setBreakPointType(BreakPointType.EntireMoveSequence);
+    this.animateDirection(Direction.Backwards);
   }
 
   skipToStart(): void {
@@ -158,57 +168,26 @@ export class Model {
   skipToEnd(): void {
     this.skipAndPauseTo(this.breakPointModel.lastBreakPoint());
   }
-}
-
-export class Controller {
-  public model: Model;
-
-  // TODO: come up with a more elegant way to instantiate the model+controller.
-  constructor(displayCallback: (timeStamp: TimeStamp) => void, breakPointModel: BreakPointModel) {
-    this.model = new Model(displayCallback, breakPointModel);
-  }
-
-  playForward(): void {
-    this.model.setBreakPointType(BreakPointType.EntireMoveSequence);
-    this.model.animateDirection(Direction.Forwards);
-  }
-
-  pause(): void {
-    // Intentionally don't change breakPointType.
-    this.model.animateDirection(Direction.Paused);
-  }
-
-  playBackward(): void {
-    this.model.setBreakPointType(BreakPointType.EntireMoveSequence);
-    this.model.animateDirection(Direction.Backwards);
-  }
-
-  skipToStart(): void {
-    this.model.skipToStart();
-  }
-
-  skipToEnd(): void {
-    this.model.skipToEnd();
-  }
 
   stepForward(): void {
-    this.model.setBreakPointType(BreakPointType.Move);
-    this.model.animateDirection(Direction.Forwards);
+    this.setBreakPointType(BreakPointType.Move);
+    this.animateDirection(Direction.Forwards);
   }
 
   stepBackward(): void {
-    this.model.setBreakPointType(BreakPointType.Move);
-    this.model.animateDirection(Direction.Backwards);
+    this.setBreakPointType(BreakPointType.Move);
+    this.animateDirection(Direction.Backwards);
   }
 
   togglePausePlayForward(): void {
-    if (this.model.isPaused()) {
+    if (this.isPaused()) {
       this.playForward();
     } else {
       this.pause();
     }
   }
 }
+
 
 class FrameScheduler {
   private animating: boolean = false;

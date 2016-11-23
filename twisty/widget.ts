@@ -69,27 +69,27 @@ export module Button {
   }
 
   export class SkipToStart extends Button {
-    constructor(private anim: Anim.Controller) {
+    constructor(private anim: Anim.Model) {
       super("Skip To Start", "skip-to-start"); }
     onpress(): void { this.anim.skipToStart(); }
   }
   export class SkipToEnd extends Button {
-    constructor(private anim: Anim.Controller) {
+    constructor(private anim: Anim.Model) {
       super("Skip To End", "skip-to-end"); }
     onpress(): void { this.anim.skipToEnd(); }
   }
   export class PlayPause extends Button {
-    constructor(private anim: Anim.Controller) {
+    constructor(private anim: Anim.Model) {
       super("Play", "play"); }
     onpress(): void { this.anim.togglePausePlayForward(); }
   }
   export class StepForward extends Button {
-    constructor(private anim: Anim.Controller) {
+    constructor(private anim: Anim.Model) {
       super("Step forward", "step-forward"); }
     onpress(): void { this.anim.stepForward(); }
   }
   export class StepBackward extends Button {
-    constructor(private anim: Anim.Controller) {
+    constructor(private anim: Anim.Model) {
       super("Step backward", "step-backward"); }
     onpress(): void { this.anim.stepBackward(); }
   }
@@ -97,7 +97,7 @@ export module Button {
 
 export class ControlBar {
   public element: HTMLElement;
-  constructor(private anim: Anim.Controller, private twistyElement: Element) {
+  constructor(private anim: Anim.Model, private twistyElement: Element) {
     this.element = document.createElement("twisty-control-bar");
 
     this.element.appendChild((new Button.Fullscreen(twistyElement)).element);
@@ -111,17 +111,17 @@ export class ControlBar {
 
 export class Scrubber implements Anim.ModelObserver {
   public readonly element: HTMLInputElement;
-  constructor(private anim: Anim.Controller) {
+  constructor(private anim: Anim.Model) {
     this.element = document.createElement("input");
     this.element.classList.add("scrubber");
     this.element.type = "range";
 
     this.element.addEventListener("input", this.oninput.bind(this));
-    var bounds = this.anim.model.getBounds();
+    var bounds = this.anim.getBounds();
     this.element.min = String(bounds[0]);
     this.element.max = String(bounds[1]);
-    this.element.value = String(this.anim.model.getCursor());
-    this.anim.model.addObserver(this);
+    this.element.value = String(this.anim.getCursor());
+    this.anim.addObserver(this);
   }
 
   private updateBackground() {
@@ -141,12 +141,12 @@ export class Scrubber implements Anim.ModelObserver {
 
   private oninput(): void {
     // TODO: Ideally, we should prevent this from firing back.
-    this.anim.model.skipAndPauseTo(parseInt(this.element.value));
+    this.anim.skipAndPauseTo(parseInt(this.element.value));
     this.updateBackground();
   }
 
   animCursorChanged(): void {
-    this.element.value = String(this.anim.model.getCursor());
+    this.element.value = String(this.anim.getCursor());
     this.updateBackground();
   }
 

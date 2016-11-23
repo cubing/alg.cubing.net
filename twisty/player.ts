@@ -4,10 +4,10 @@ namespace Twisty {
 
 export class Player {
   private readonly viewContainer: HTMLElement;
-  private anim: Anim.Controller;
+  private anim: Anim.Model;
   constructor(public element: Element) {
     this.viewContainer = document.createElement("twisty-view-container");
-    this.anim = new Anim.Controller(this.draw.bind(this), new Anim.SimpleBreakPoints([0, 1000, 1500, 2500]));
+    this.anim = new Anim.Model(this.draw.bind(this), new Anim.SimpleBreakPoints([0, 1000, 1500, 2500]));
 
     this.element.appendChild(this.viewContainer);
     this.element.appendChild((new Twisty.Widget.Scrubber(this.anim)).element);
