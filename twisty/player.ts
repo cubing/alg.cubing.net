@@ -5,17 +5,13 @@ namespace Twisty {
 export class Player {
   private readonly viewContainer: HTMLElement;
   private anim: Anim.Controller;
-  private scrubber: Twisty.Widget.Scrubber
-  private controlBar: Twisty.Widget.ControlBar;
   constructor(public element: Element) {
     this.viewContainer = document.createElement("twisty-view-container");
     this.anim = new Anim.Controller(this.draw.bind(this), new Anim.SimpleBreakPoints([0, 1000, 1500, 2500]));
-    this.scrubber = new Twisty.Widget.Scrubber(this.anim);
-    this.controlBar = new Twisty.Widget.ControlBar(this.anim, this.element);
 
     this.element.appendChild(this.viewContainer);
-    this.element.appendChild(this.scrubber.element);
-    this.element.appendChild(this.controlBar.element);
+    this.element.appendChild((new Twisty.Widget.Scrubber(this.anim)).element);
+    this.element.appendChild((new Twisty.Widget.ControlBar(this.anim, this.element)).element);
 
     this.draw(0);
   }
