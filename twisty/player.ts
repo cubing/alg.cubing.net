@@ -16,12 +16,12 @@ namespace Twisty {
 
 export class Player {
   private readonly viewContainer: HTMLElement;
-  private anim: AnimController;
+  private anim: Anim.Controller;
   private scrubber: Twisty.Widget.Scrubber
   private controlBar: Twisty.Widget.ControlBar;
   constructor(public element: Element) {
     this.viewContainer = document.createElement("twisty-view-container");
-    this.anim = new AnimController(this.draw.bind(this), new SimpleBreakPoints([0, 1000, 1500, 2500]));
+    this.anim = new Anim.Controller(this.draw.bind(this), new Anim.SimpleBreakPoints([0, 1000, 1500, 2500]));
     this.scrubber = new Twisty.Widget.Scrubber(this.anim);
     this.controlBar = new Twisty.Widget.ControlBar(this.anim, this.element);
 
@@ -32,7 +32,7 @@ export class Player {
     this.draw(0);
   }
 
-  draw(duration: Duration) {
+  draw(duration: Anim.Duration) {
     this.viewContainer.textContent = String(Math.floor(duration));
   }
 

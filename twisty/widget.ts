@@ -7,7 +7,7 @@ export class ControlBar {
   private isFullscreen: boolean = false;
   private buttonElems: {[key: string]:Element}; // TODO: Use ES6 Map.
   public element: HTMLElement;
-  constructor(private anim: AnimController, private twistyElement: Element) {
+  constructor(private anim: Anim.Controller, private twistyElement: Element) {
     this.element = document.createElement("twisty-control-bar");
 
     // TODO: Use SVGs or a web font for element-relative sizing.
@@ -75,9 +75,9 @@ export class ControlBar {
   }
 }
 
-export class Scrubber implements AnimModelObserver {
+export class Scrubber implements Anim.ModelObserver {
   public readonly element: HTMLInputElement;
-  constructor(private anim: AnimController) {
+  constructor(private anim: Anim.Controller) {
     this.element = document.createElement("input");
     this.element.classList.add("scrubber");
     this.element.type = "range";
