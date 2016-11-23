@@ -1,6 +1,9 @@
 "use strict";
 
-class TwistyControlBar {
+namespace Twisty {
+export namespace Widget {
+
+export class ControlBar {
   private isFullscreen: boolean = false;
   private buttonElems: {[key: string]:Element}; // TODO: Use ES6 Map.
   public element: HTMLElement;
@@ -72,7 +75,7 @@ class TwistyControlBar {
   }
 }
 
-class TwistyScrubber implements AnimModelObserver {
+export class Scrubber implements AnimModelObserver {
   public readonly element: HTMLInputElement;
   constructor(private anim: AnimController) {
     this.element = document.createElement("input");
@@ -117,4 +120,7 @@ class TwistyScrubber implements AnimModelObserver {
     // TODO
     this.updateBackground();
   }
+}
+
+}
 }

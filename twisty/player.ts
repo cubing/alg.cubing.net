@@ -12,16 +12,18 @@ interface Element {
     msRequestFullscreen: () => void;
 }
 
-class TwistyPlayer {
+namespace Twisty {
+
+export class Player {
   private readonly viewContainer: HTMLElement;
   private anim: AnimController;
-  private scrubber: TwistyScrubber
-  private controlBar: TwistyControlBar;
+  private scrubber: Twisty.Widget.Scrubber
+  private controlBar: Twisty.Widget.ControlBar;
   constructor(public element: Element) {
     this.viewContainer = document.createElement("twisty-view-container");
     this.anim = new AnimController(this.draw.bind(this), new SimpleBreakPoints([0, 1000, 1500, 2500]));
-    this.scrubber = new TwistyScrubber(this.anim);
-    this.controlBar = new TwistyControlBar(this.anim, this.element);
+    this.scrubber = new Twisty.Widget.Scrubber(this.anim);
+    this.controlBar = new Twisty.Widget.ControlBar(this.anim, this.element);
 
     this.element.appendChild(this.viewContainer);
     this.element.appendChild(this.scrubber.element);
@@ -39,7 +41,7 @@ class TwistyPlayer {
   private static autoInitialize(elem: Element) {
     const ini = elem.getAttribute("initialization");
     if (ini !== "custom") {
-      new TwistyPlayer(elem);
+      new Twisty.Player(elem);
     }
   }
 
@@ -48,9 +50,11 @@ class TwistyPlayer {
     console.log(`Found ${elems.length} twisty elem${elems.length === 1 ? "" : "s"} on page.`)
 
     for (let i = 0; i < elems.length; i++) {
-      TwistyPlayer.autoInitialize(elems[i]);
+      Twisty.Player.autoInitialize(elems[i]);
     }
   }
 }
 
-window.addEventListener("load", TwistyPlayer.autoInitializePage);
+window.addEventListener("load", Twisty.Player.autoInitializePage);
+
+}
