@@ -3,13 +3,9 @@
 class TwistyControlBar {
   private isFullscreen: boolean = false;
   private buttonElems: {[key: string]:Element}; // TODO: Use ES6 Map.
-  private scrubber: TwistyScrubber;
   public element: HTMLElement;
   constructor(private anim: AnimController, private twistyElement: Element) {
     this.element = document.createElement("twisty-control-bar");
-
-    this.scrubber = new TwistyScrubber(anim);
-    this.element.appendChild(this.scrubber.element);
 
     var buttonRow = document.createElement("button-row");
     this.element.appendChild(buttonRow);

@@ -15,13 +15,16 @@ interface Element {
 class TwistyPlayer {
   private readonly viewContainer: HTMLElement;
   private anim: AnimController;
+  private scrubber: TwistyScrubber
   private controlBar: TwistyControlBar;
   constructor(public element: Element) {
     this.viewContainer = document.createElement("twisty-view-container");
     this.anim = new AnimController(this.draw.bind(this), new SimpleBreakPoints([0, 1000, 1500, 2500]));
+    this.scrubber = new TwistyScrubber(this.anim);
     this.controlBar = new TwistyControlBar(this.anim, this.element);
 
     this.element.appendChild(this.viewContainer);
+    this.element.appendChild(this.scrubber.element);
     this.element.appendChild(this.controlBar.element);
 
     this.draw(0);
