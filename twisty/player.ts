@@ -1,15 +1,5 @@
 "use strict";
 
-interface Document {
-    mozCancelFullScreen: () => void;
-    msExitFullscreen: () => void;
-}
-
-interface Element {
-    mozRequestFullScreen: () => void;
-    msRequestFullscreen: () => void;
-}
-
 namespace Twisty {
 
 export class Player {
