@@ -7,9 +7,6 @@ class TwistyControlBar {
   constructor(private anim: AnimController, private twistyElement: Element) {
     this.element = document.createElement("twisty-control-bar");
 
-    var buttonRow = document.createElement("button-row");
-    this.element.appendChild(buttonRow);
-
     // TODO: Use SVGs or a web font for element-relative sizing.
     const buttons = [{
         title: "Cycle display mode",
@@ -53,7 +50,7 @@ class TwistyControlBar {
       button.addEventListener("click", buttons[i].fn);
 
       this.buttonElems[buttons[i].id] = button;
-      buttonRow.appendChild(button);
+      this.element.appendChild(button);
     }
   }
 

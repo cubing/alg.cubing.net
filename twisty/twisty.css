@@ -40,8 +40,9 @@ twisty input.scrubber {
   cursor: pointer;
 }
 
-twisty twisty-control-bar button-row {
+twisty twisty-control-bar {
   flex: 1 0 0;
+
   background: rgba(195, 195, 195, 0.5);
   display: flex;
   flex-direction: row;
