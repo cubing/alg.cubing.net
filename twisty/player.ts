@@ -1,7 +1,5 @@
 "use strict";
 
-// TODO: learn how to use modules
-
 interface Document {
     mozCancelFullScreen: () => void;
     msExitFullscreen: () => void;
