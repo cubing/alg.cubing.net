@@ -156,5 +156,17 @@ export class Scrubber {
   }
 }
 
+export class CursorTextView implements Anim.CursorObserver {
+  public readonly element: Element;
+  constructor(private anim: Anim.Model) {
+    this.element = document.createElement("cursor-text-view");
+    this.anim.dispatcher.registerCursorObserver(this);
+  }
+
+  animCursorChanged(duration: Anim.Duration) {
+    this.element.textContent = String(Math.floor(duration));
+  }
+}
+
 }
 }

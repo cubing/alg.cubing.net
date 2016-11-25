@@ -55,7 +55,7 @@ export class Model {
   private tempo: number = 1; // TODO: Support setting tempo.
   public dispatcher: Dispatcher = new Dispatcher();
   // TODO: cache breakpoints instead of re-querying the model constantly.
-  constructor(private displayCallback: (timeStamp: TimeStamp) => void, private breakPointModel: BreakPointModel) {
+  constructor(private breakPointModel: BreakPointModel) {
     this.scheduler = new FrameScheduler(this.frame.bind(this));
   }
 
@@ -68,16 +68,6 @@ export class Model {
       this.breakPointModel.firstBreakPoint(),
       this.breakPointModel.lastBreakPoint()
     ];
-  }
-
-  private dispatchAnimCursorChanged(): void {
-    this.dispatcher.animCursorChanged(this.cursor);
-  }
-
-  // Renders the current cursor.
-  private display() {
-    // TODO: AVoid rendering if the cursor hasn't moved since last time.
-    this.displayCallback(this.cursor);
   }
 
   private timeScaling(): number {
@@ -115,13 +105,11 @@ export class Model {
         this.direction = Direction.Paused;
         this.scheduler.stop();
     }
-
-    this.dispatchAnimCursorChanged();
   }
 
   private frame(timeStamp: TimeStamp) {
     this.updateCursor(timeStamp);
-    this.display();
+    this.dispatcher.animCursorChanged(this.cursor);
   }
 
   // TODO: Push this into breakPointModel.
@@ -156,8 +144,6 @@ export class Model {
     this.pause();
     this.cursor = duration;
     this.scheduler.singleFrame();
-
-    this.dispatchAnimCursorChanged();
   }
 
   playForward(): void {

@@ -3,21 +3,13 @@
 namespace Twisty {
 
 export class Player {
-  private readonly viewContainer: HTMLElement;
   private anim: Anim.Model;
   constructor(public element: Element) {
-    this.viewContainer = document.createElement("twisty-view-container");
-    this.anim = new Anim.Model(this.draw.bind(this), new Anim.SimpleBreakPoints([0, 1000, 1500, 2500]));
+    this.anim = new Anim.Model(new Anim.SimpleBreakPoints([0, 1000, 1500, 2500]));
 
-    this.element.appendChild(this.viewContainer);
+    this.element.appendChild((new Twisty.Widget.CursorTextView(this.anim)).element);
     this.element.appendChild((new Twisty.Widget.Scrubber(this.anim)).element);
     this.element.appendChild((new Twisty.Widget.ControlBar(this.anim, this.element)).element);
-
-    this.draw(0);
-  }
-
-  draw(duration: Anim.Duration) {
-    this.viewContainer.textContent = String(Math.floor(duration));
   }
 
   // Initialize a Twisty for the given Element unless the element's
