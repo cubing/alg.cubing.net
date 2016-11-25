@@ -4,7 +4,7 @@ namespace Twisty {
 export namespace Anim {
 
 // The values are animation scaling factors.
-enum Direction {
+export enum Direction {
   Forwards = 1,
   Paused = 0,
   Backwards = -1
@@ -24,24 +24,44 @@ export interface CursorObserver {
   animCursorChanged: (cursor: Duration) => void;
 }
 
+export interface DirectionObserver {
+  animDirectionChanged: (direction: Direction) => void;
+}
+
 // export interface BoundsObserver {
 //   animBoundsChanged: (start: Duration, end: Duration) => void;
 // }
 
-export class Dispatcher {
+// TODO: Use generics to unify handling the types of observers.
+export class Dispatcher implements CursorObserver, DirectionObserver {
   private cursorObservers: Set<CursorObserver> = new Set<CursorObserver>();
+  private directionObservers: Set<DirectionObserver> = new Set<DirectionObserver>();
 
   registerCursorObserver(observer: CursorObserver) {
     if (this.cursorObservers.has(observer)) {
-      throw "Duplicate observer added.";
+      throw "Duplicate cursor observer added.";
     }
     this.cursorObservers.add(observer);
+  }
+
+  registerDirectionObserver(observer: DirectionObserver) {
+    if (this.directionObservers.has(observer)) {
+      throw "Duplicate direction observer added.";
+    }
+    this.directionObservers.add(observer);
   }
 
   animCursorChanged(cursor: Duration) {
     // TODO: guard against nested changes and test.
     for (var observer of this.cursorObservers) {
       observer.animCursorChanged(cursor);
+    }
+  }
+
+  animDirectionChanged(direction: Direction) {
+    // TODO: guard against nested changes and test.
+    for (var observer of this.directionObservers) {
+      observer.animDirectionChanged(direction);
     }
   }
 }
@@ -102,9 +122,16 @@ export class Model {
       (this.cursor < breakPoint);
     if (isPastBreakPoint) {
         this.cursor = breakPoint;
-        this.direction = Direction.Paused;
+        this.setDirection(Direction.Paused);
         this.scheduler.stop();
     }
+  }
+
+  private setDirection(direction: Direction) {
+    // TODO: Handle in frame for debouncing?
+    // (Are there any use cases that need synchoronous observation?)
+    this.direction = direction;
+    this.dispatcher.animDirectionChanged(direction);
   }
 
   private frame(timeStamp: TimeStamp) {
@@ -132,7 +159,7 @@ export class Model {
     this.updateCursor(performance.now());
 
     // Start the new direction.
-    this.direction = direction;
+    this.setDirection(direction);
     if (direction === Direction.Paused) {
       this.scheduler.stop();
     } else {
