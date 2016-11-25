@@ -20,9 +20,30 @@ enum BreakPointType {
 export type Duration = number; // Duration in milliseconds
 type TimeStamp = Duration; // Duration since a particular epoch.
 
-export interface ModelObserver {
-  animCursorChanged: () => void;
-  animBoundsChanged: () => void;
+export interface CursorObserver {
+  animCursorChanged: (cursor: Duration) => void;
+}
+
+// export interface BoundsObserver {
+//   animBoundsChanged: (start: Duration, end: Duration) => void;
+// }
+
+export class Dispatcher {
+  private cursorObservers: Set<CursorObserver> = new Set<CursorObserver>();
+
+  registerCursorObserver(observer: CursorObserver) {
+    if (this.cursorObservers.has(observer)) {
+      throw "Duplicate observer added.";
+    }
+    this.cursorObservers.add(observer);
+  }
+
+  animCursorChanged(cursor: Duration) {
+    // TODO: guard against nested changes and test.
+    for (var observer of this.cursorObservers) {
+      observer.animCursorChanged(cursor);
+    }
+  }
 }
 
 export class Model {
@@ -32,8 +53,8 @@ export class Model {
   private breakPointType: BreakPointType = BreakPointType.EntireMoveSequence;
   private scheduler: FrameScheduler;
   private tempo: number = 1; // TODO: Support setting tempo.
+  public dispatcher: Dispatcher = new Dispatcher();
   // TODO: cache breakpoints instead of re-querying the model constantly.
-  private observers: ModelObserver[] = [];
   constructor(private displayCallback: (timeStamp: TimeStamp) => void, private breakPointModel: BreakPointModel) {
     this.scheduler = new FrameScheduler(this.frame.bind(this));
   }
@@ -50,14 +71,7 @@ export class Model {
   }
 
   private dispatchAnimCursorChanged(): void {
-    for (var observer of this.observers) {
-      observer.animCursorChanged();
-    }
-  }
-
-  // TODO: support removal?
-  public addObserver(observer: ModelObserver) {
-    this.observers.push(observer);
+    this.dispatcher.animCursorChanged(this.cursor);
   }
 
   // Renders the current cursor.

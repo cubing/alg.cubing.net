@@ -109,7 +109,7 @@ export class ControlBar {
   }
 }
 
-export class Scrubber implements Anim.ModelObserver {
+export class Scrubber {
   public readonly element: HTMLInputElement;
   constructor(private anim: Anim.Model) {
     this.element = document.createElement("input");
@@ -121,7 +121,7 @@ export class Scrubber implements Anim.ModelObserver {
     this.element.min = String(bounds[0]);
     this.element.max = String(bounds[1]);
     this.element.value = String(this.anim.getCursor());
-    this.anim.addObserver(this);
+    this.anim.dispatcher.registerCursorObserver(this);
   }
 
   private updateBackground() {
@@ -145,8 +145,8 @@ export class Scrubber implements Anim.ModelObserver {
     this.updateBackground();
   }
 
-  animCursorChanged(): void {
-    this.element.value = String(this.anim.getCursor());
+  animCursorChanged(cursor: Anim.Duration): void {
+    this.element.value = String(cursor);
     this.updateBackground();
   }
 
