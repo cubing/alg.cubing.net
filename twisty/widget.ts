@@ -78,10 +78,20 @@ export module Button {
       super("Skip To End", "skip-to-end"); }
     onpress(): void { this.anim.skipToEnd(); }
   }
-  export class PlayPause extends Button {
+  export class PlayPause extends Button implements Anim.DirectionObserver {
     constructor(private anim: Anim.Model) {
-      super("Play", "play"); }
+      super("Play", "play");
+      this.anim.dispatcher.registerDirectionObserver(this);
+    }
     onpress(): void { this.anim.togglePausePlayForward(); }
+    animDirectionChanged(direction: Anim.Direction): void {
+      // TODO: Handle flash of pause button when pressed while the Twisty is already at the end.
+      var newClass = direction === Anim.Direction.Paused ? "play" : "pause";
+      this.element.classList.remove("play", "pause")
+      this.element.classList.add(newClass);
+
+      this.element.title = direction === Anim.Direction.Paused ? "Play" : "Pause";
+    }
   }
   export class StepForward extends Button {
     constructor(private anim: Anim.Model) {
