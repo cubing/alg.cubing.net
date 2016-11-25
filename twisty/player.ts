@@ -2,14 +2,13 @@
 
 namespace Twisty {
 
-export class Player {
-  private anim: Anim.Model;
+// TODO: Turn Twisty into a module and move Twisty.Twisty into Twisty proper.
+export class Twisty {
+  private anim: Twisty.Anim.Model;
   constructor(public element: Element) {
     this.anim = new Anim.Model(new Anim.SimpleBreakPoints([0, 1000, 1500, 2500]));
 
-    this.element.appendChild((new Twisty.Widget.CursorTextView(this.anim)).element);
-    this.element.appendChild((new Twisty.Widget.Scrubber(this.anim)).element);
-    this.element.appendChild((new Twisty.Widget.ControlBar(this.anim, this.element)).element);
+    this.element.appendChild((new Widget.Player(this.anim)).element);
   }
 }
 
@@ -18,7 +17,7 @@ export class Player {
 function autoInitialize(elem: Element) {
   const ini = elem.getAttribute("initialization");
   if (ini !== "custom") {
-    new Twisty.Player(elem);
+    new Twisty(elem);
   }
 }
 

@@ -168,5 +168,16 @@ export class CursorTextView implements Anim.CursorObserver {
   }
 }
 
+export class Player {
+  public element: Element;
+  constructor(private anim: Anim.Model) {
+    this.element = document.createElement("player");
+
+    this.element.appendChild((new CursorTextView(this.anim)).element);
+    this.element.appendChild((new Scrubber(this.anim)).element);
+    this.element.appendChild((new ControlBar(this.anim, this.element)).element);
+  }
+}
+
 }
 }

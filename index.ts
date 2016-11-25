@@ -2,5 +2,5 @@
 
 window.addEventListener("load", function() {
   const elem = document.querySelector("twisty");
-  new Twisty.Player(elem);
+  new Twisty.Twisty(elem);
 });
