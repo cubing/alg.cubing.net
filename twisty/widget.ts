@@ -109,7 +109,7 @@ export class ControlBar {
   }
 }
 
-export class Scrubber {
+export class Scrubber implements Anim.CursorObserver {
   public readonly element: HTMLInputElement;
   constructor(private anim: Anim.Model) {
     this.element = document.createElement("input");
