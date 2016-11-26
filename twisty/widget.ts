@@ -170,6 +170,7 @@ export class CursorTextView implements Anim.CursorObserver {
   public readonly element: Element;
   constructor(private anim: Anim.Model) {
     this.element = document.createElement("cursor-text-view");
+    this.element.textContent = String(this.anim.getCursor());
     this.anim.dispatcher.registerCursorObserver(this);
   }
 
