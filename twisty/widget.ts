@@ -3,8 +3,8 @@
 interface Document {
     mozCancelFullScreen: () => void;
     msExitFullscreen: () => void;
-    mozFullScreenElement: HTMLElement
-    msFullscreenElement: HTMLElement
+    mozFullScreenElement: Element
+    msFullscreenElement: Element
 }
 
 interface Element {
