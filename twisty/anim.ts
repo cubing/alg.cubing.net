@@ -256,7 +256,7 @@ class FrameScheduler {
 // - Line
 // - Start/end of move sequence.
 // - "section" (e.g. scramble section, solve section)
-interface BreakPointModel {
+export interface BreakPointModel {
   firstBreakPoint(): Duration;
   lastBreakPoint(): Duration;
   // TODO: Define semantics if `duration` is past the end.

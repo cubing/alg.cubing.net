@@ -4,9 +4,11 @@ namespace Twisty {
 
 // TODO: Turn Twisty into a module and move Twisty.Twisty into Twisty proper.
 export class Twisty {
-  private anim: Twisty.Anim.Model;
+  private timeLine: TimeLine;
+  private anim: Anim.Model;
   constructor(public element: Element) {
-    this.anim = new Anim.Model(new Anim.SimpleBreakPoints([0, 1000, 1500, 2500]));
+    this.timeLine = new TimeLine();
+    this.anim = new Anim.Model(this.timeLine.breakPointModel);
 
     this.element.appendChild((new Widget.Player(this.anim)).element);
   }
