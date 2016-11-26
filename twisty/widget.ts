@@ -84,13 +84,13 @@ export module Button {
       this.anim.dispatcher.registerDirectionObserver(this);
     }
     onpress(): void { this.anim.togglePausePlayForward(); }
-    animDirectionChanged(direction: Anim.Direction): void {
+    animDirectionChanged(direction: TimeLine.Direction): void {
       // TODO: Handle flash of pause button when pressed while the Twisty is already at the end.
-      var newClass = direction === Anim.Direction.Paused ? "play" : "pause";
+      var newClass = direction === TimeLine.Direction.Paused ? "play" : "pause";
       this.element.classList.remove("play", "pause")
       this.element.classList.add(newClass);
 
-      this.element.title = direction === Anim.Direction.Paused ? "Play" : "Pause";
+      this.element.title = direction === TimeLine.Direction.Paused ? "Play" : "Pause";
     }
   }
   export class StepForward extends Button {
@@ -155,7 +155,7 @@ export class Scrubber implements Anim.CursorObserver {
     this.updateBackground();
   }
 
-  animCursorChanged(cursor: Anim.Duration): void {
+  animCursorChanged(cursor: TimeLine.Duration): void {
     this.element.value = String(cursor);
     this.updateBackground();
   }
@@ -174,7 +174,7 @@ export class CursorTextView implements Anim.CursorObserver {
     this.anim.dispatcher.registerCursorObserver(this);
   }
 
-  animCursorChanged(duration: Anim.Duration) {
+  animCursorChanged(duration: TimeLine.Duration) {
     this.element.textContent = String(Math.floor(duration));
   }
 }
