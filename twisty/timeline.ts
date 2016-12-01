@@ -8,9 +8,9 @@ namespace Twisty {
 namespace Temp {
   export class BasicAlg {
     private breakpoints: number[];
-    constructor(private moves: string[]) {
+    constructor(private alg: Alg) {
       this.breakpoints = [];
-      for (var i = 0; i <= moves.length; i++) {
+      for (var i = 0; i <= alg.moves.length; i++) {
         this.breakpoints.push(i * 1000);
       }
     }
@@ -25,7 +25,7 @@ export class TimeLine {
   public alg: Temp.BasicAlg;
   public breakPointModel: TimeLine.BreakPointModel;
   constructor() {
-    this.alg = new Temp.BasicAlg(["R", "U", "R'", "D"]);
+    this.alg = new Temp.BasicAlg(Alg.Example.Sune);
     this.breakPointModel = this.alg.breakPointModel();
   }
 }

@@ -37,9 +37,8 @@ export class Block {
 
 export type Move = Block; // TODO: Generalize.
 
-class TestAlg {
-  constructor() {
-    var alg = new Alg([
+export namespace Example {
+export const Sune: Alg = new Alg([
       new Block("R",  1),
       new Block("U",  1),
       new Block("R", -1),
@@ -48,6 +47,11 @@ class TestAlg {
       new Block("U",  2),
       new Block("R", -1)
     ]);
+}
+
+class TestAlg {
+  constructor() {
+    var alg = Alg.Example.Sune;
     console.log(alg.toString() === "R U R' U R U2 R'");
     console.log(String(alg) === alg.toString());
   }
