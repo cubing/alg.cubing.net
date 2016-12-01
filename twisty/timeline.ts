@@ -1,11 +1,32 @@
 "use strict";
 
+
 namespace Twisty {
 
+// Scaffolding to experiment with implementation.
+// All code in `Temp` should be gone by 2.0
+namespace Temp {
+  export class BasicAlg {
+    private breakpoints: number[];
+    constructor(private moves: string[]) {
+      this.breakpoints = [];
+      for (var i = 0; i <= moves.length; i++) {
+        this.breakpoints.push(i * 1000);
+      }
+    }
+
+    breakPointModel(): TimeLine.BreakPointModel {
+      return new TimeLine.SimpleBreakPoints(this.breakpoints);
+    }
+  }
+}
+
 export class TimeLine {
+  public alg: Temp.BasicAlg;
   public breakPointModel: TimeLine.BreakPointModel;
   constructor() {
-    this.breakPointModel = new TimeLine.SimpleBreakPoints([0, 1000, 1500, 2500]);
+    this.alg = new Temp.BasicAlg(["R", "U", "R'", "D"]);
+    this.breakPointModel = this.alg.breakPointModel();
   }
 }
 
