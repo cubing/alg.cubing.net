@@ -51,7 +51,9 @@ abstract class NonRepeatable implements Segment {
 
 export class Sequence extends NonRepeatable {
   public type: string = "sequence";
-  public segments: Segment[];
+  constructor(public segments: Segment[]) {
+    super();
+  }
   toString(): string {
     return this.segments.join(" ");
   }
