@@ -13,16 +13,16 @@ namespace Alg {
 
 export type BaseMove = string; // TODO: Convert to an enum with string mappings.
 
-export interface Segment {
+export interface AlgPart {
   readonly type: string
   // TODO: Try to enforce an explicit toString implementation without adding
   // indirection.
   repeatable(): boolean
 }
-export interface NestableSegment extends Segment {}
-// TODO: Handle repeatability in a consistent way.
 
-abstract class Repeatable implements Segment {
+export type Algorithm = AlgPart;
+
+abstract class Repeatable implements AlgPart {
   public readonly abstract type: string
   // TODO: Make `amount` an optional argument in derived class constructors.
   repeatable(): boolean {
@@ -42,7 +42,7 @@ abstract class Repeatable implements Segment {
   }
 }
 
-abstract class NonRepeatable implements Segment {
+abstract class NonRepeatable implements AlgPart {
   public readonly abstract type: string
   repeatable(): boolean {
     return false;
@@ -51,38 +51,27 @@ abstract class NonRepeatable implements Segment {
 
 export class Sequence extends NonRepeatable {
   public type: string = "sequence";
-  constructor(public segments: Segment[]) {
+  constructor(public algParts: AlgPart[]) {
     super();
   }
   toString(): string {
-    return this.segments.join(" ");
+    return this.algParts.join(" ");
   }
 }
 
-// TODO: Prevent a NestedSequence immediately inside a NestedSequence.
-export class NestedSequence extends NonRepeatable implements NestableSegment {
-  public type: string = "nestedSequence";
-  constructor(public segments: NestableSegment[]) {
-    super();
-  }
-  toString(): string {
-    return this.segments.join(" ");
-  }
-}
-
-// Group is is like a NestedSequence, but is enclosed in parentheses when
+// Group is is like a Sequence, but is enclosed in parentheses when
 // written.
-export class Group extends Repeatable implements NestableSegment {
+export class Group extends Repeatable implements AlgPart {
   public type: string = "group";
-  constructor(public nested: NestedSequence, amount: number) {
+  constructor(public algPart: AlgPart, amount: number) {
     super(amount);
   }
   toString(): string {
-    return "(" + this.nested + ")" + this.repetitionSuffix();
+    return "(" + this.algPart + ")" + this.repetitionSuffix();
   }
 }
 
-export class BlockMove extends Repeatable implements NestableSegment {
+export class BlockMove extends Repeatable implements AlgPart {
   public type: string = "blockMove";
   // TODO: Typesafe layer types?
   public layer?: number;
@@ -101,9 +90,9 @@ export class BlockMove extends Repeatable implements NestableSegment {
   }
 }
 
-export class Commutator extends Repeatable implements NestableSegment {
+export class Commutator extends Repeatable implements AlgPart {
   public type: string = "commutator";
-  constructor(public A: NestableSegment, public B: NestableSegment, amount: number) {
+  constructor(public A: AlgPart, public B: AlgPart, amount: number) {
     super(amount);
   }
   toString(): string {
@@ -111,9 +100,9 @@ export class Commutator extends Repeatable implements NestableSegment {
   }
 }
 
-export class Conjugate extends Repeatable implements NestableSegment {
+export class Conjugate extends Repeatable implements AlgPart {
   public type: string = "conjugate";
-  constructor(public A: NestableSegment, public B: NestableSegment, amount: number) {
+  constructor(public A: AlgPart, public B: AlgPart, amount: number) {
     super(amount);
   }
   toString(): string {
@@ -121,7 +110,7 @@ export class Conjugate extends Repeatable implements NestableSegment {
   }
 }
 
-export class Pause extends NonRepeatable implements NestableSegment {
+export class Pause extends NonRepeatable implements AlgPart {
   public type: string = "pause";
   constructor() {
     super();
@@ -132,7 +121,7 @@ export class Pause extends NonRepeatable implements NestableSegment {
   }
 }
 
-export class Newline extends NonRepeatable implements NestableSegment {
+export class Newline extends NonRepeatable implements AlgPart {
   public type: string = "newline";
   constructor() {
     super();
@@ -142,7 +131,7 @@ export class Newline extends NonRepeatable implements NestableSegment {
   }
 }
 
-export class CommentShort extends NonRepeatable implements NestableSegment {
+export class CommentShort extends NonRepeatable implements AlgPart {
   public type: string = "commentShort";
   constructor(public comment: string) {
     super();
@@ -154,7 +143,7 @@ export class CommentShort extends NonRepeatable implements NestableSegment {
   }
 }
 
-export class CommentLong extends NonRepeatable implements NestableSegment {
+export class CommentLong extends NonRepeatable implements AlgPart {
   public type: string = "commentLong";
   constructor(public comment: string) {
     super();
@@ -165,75 +154,98 @@ export class CommentLong extends NonRepeatable implements NestableSegment {
   }
 }
 
-// interface Transformation<Down, Up> {
-//   blockMove(blockMove: BlockMove, down: Down): Up
-//   group(group: Group, down: Down): Up
-// }
+export namespace Transformation {
 
-export class Invert {
-  public static invert(segment: NestableSegment): NestableSegment;
-  public static invert(segment: Segment): Segment {
+export abstract class DownUp<DataDown, DataUp> {
+  public transform(segment: AlgPart, dataDown: DataDown): DataUp {
+    return this.transformGeneric(segment, dataDown);
+  }
+
+  protected transformGeneric(segment: AlgPart, dataDown: DataDown): DataUp {
     // TODO: Use a direct look up using e.g. hashmap instead of sequential if-else.
-         if (segment instanceof Sequence)       { return Invert.invertSequence(segment); }
-    else if (segment instanceof NestedSequence) { return Invert.invertNestedSequence(segment); }
-    else if (segment instanceof Group)          { return Invert.invertGroup(segment); }
-    else if (segment instanceof BlockMove)      { return Invert.invertBlockMove(segment); }
-    else if (segment instanceof Commutator)     { return Invert.invertCommutator(segment); }
-    else if (segment instanceof Conjugate)      { return Invert.invertConjugate(segment); }
-    else if (segment instanceof Pause)          { return Invert.invertPause(segment); }
-    else if (segment instanceof Newline)        { return Invert.invertNewline(segment); }
-    else if (segment instanceof CommentShort)   { return Invert.invertCommentShort(segment); }
-    else if (segment instanceof CommentLong)    { return Invert.invertCommentLong(segment); }
+    // TODO: Clone arguments by default, for safety.
+         if (segment instanceof Sequence)       { return this.transformSequence(segment, dataDown); }
+    else if (segment instanceof Group)          { return this.transformGroup(segment, dataDown); }
+    else if (segment instanceof BlockMove)      { return this.transformBlockMove(segment, dataDown); }
+    else if (segment instanceof Commutator)     { return this.transformCommutator(segment, dataDown); }
+    else if (segment instanceof Conjugate)      { return this.transformConjugate(segment, dataDown); }
+    else if (segment instanceof Pause)          { return this.transformPause(segment, dataDown); }
+    else if (segment instanceof Newline)        { return this.transformNewline(segment, dataDown); }
+    else if (segment instanceof CommentShort)   { return this.transformCommentShort(segment, dataDown); }
+    else if (segment instanceof CommentLong)    { return this.transformCommentLong(segment, dataDown); }
     else {
       throw "Unknown type of segment";
     }
   }
 
-  public static invertSequence(sequence: Sequence): Segment {
-    return new Sequence(sequence.segments.reverse().map(Invert.invert));
+  protected abstract transformSequence(sequence: Sequence, dataDown: DataDown): DataUp;
+  protected abstract transformGroup(group: Group, dataDown: DataDown): DataUp;
+  protected abstract transformBlockMove(blockMove: BlockMove, dataDown: DataDown): DataUp;
+  protected abstract transformCommutator(commutator: Commutator, dataDown: DataDown): DataUp;
+  protected abstract transformConjugate(conjugate: Conjugate, dataDown: DataDown): DataUp;
+  protected abstract transformPause(pause: Pause, dataDown: DataDown): DataUp;
+  protected abstract transformNewline(newline: Newline, dataDown: DataDown): DataUp;
+  protected abstract transformCommentShort(commentShort: CommentShort, dataDown: DataDown): DataUp;
+  protected abstract transformCommentLong(commentLong: CommentLong, dataDown: DataDown): DataUp;
+}
+
+export abstract class Up<DataUp> extends DownUp<undefined, DataUp> {
+  public transform(segment: AlgPart): DataUp {
+    return this.transformGeneric.call(this, segment);
   }
-  public static invertNestedSequence(nestedSequence: NestedSequence): NestableSegment {
-    return new NestedSequence(nestedSequence.segments.reverse().map(Invert.invert));
+
+  protected abstract transformSequence(sequence: Sequence): DataUp;
+  protected abstract transformGroup(group: Group): DataUp;
+  protected abstract transformBlockMove(blockMove: BlockMove): DataUp;
+  protected abstract transformCommutator(commutator: Commutator): DataUp;
+  protected abstract transformConjugate(conjugate: Conjugate): DataUp;
+  protected abstract transformPause(pause: Pause): DataUp;
+  protected abstract transformNewline(newline: Newline): DataUp;
+  protected abstract transformCommentShort(commentShort: CommentShort): DataUp;
+  protected abstract transformCommentLong(commentLong: CommentLong): DataUp;
+};
+export abstract class OfAlgPart extends Up<AlgPart> {};
+
+// TODO: Test that inverses are bijections.
+export abstract class Invert extends OfAlgPart {
+  public transformSequence(sequence: Sequence): Sequence {
+    // TODO: Handle newlines and comments correctly
+    var inverseParts: AlgPart[] = [];
+    for (var i = sequence.algParts.length - 1; i >= 0; i--) {
+      inverseParts.push(this.transform(sequence.algParts[i]));
+    }
+    return new Sequence(inverseParts);
   }
-  public static invertGroup(group: Group): NestableSegment {
-    return group; // TODO
+  protected transformGroup(group: Group): AlgPart {
+    return new Group(this.transform(group.algPart), group.amount);
   }
-  public static invertBlockMove(blockMove: BlockMove): NestableSegment {
-    var b = blockMove.copy();
-    b.amount *= -1;
-    return b;
+  protected transformBlockMove(blockMove: BlockMove): AlgPart {
+    return new BlockMove(blockMove.base, -blockMove.amount);
   }
-  public static invertCommutator(commutator: Commutator): NestableSegment {
-    return new Commutator(
-      commutator.B,
-      commutator.A,
-      commutator.amount
-    );
+  protected transformCommutator(commutator: Commutator): AlgPart {
+    return new Commutator(commutator.B, commutator.A, commutator.amount);
   }
-  public static invertConjugate(conjugate: Conjugate): NestableSegment {
-    return new Commutator(
-      conjugate.A,
-      Invert.invert(conjugate.B),
-      conjugate.amount
-    );
+  protected transformConjugate(conjugate: Conjugate): AlgPart {
+    return new Conjugate(conjugate.A, this.transform(conjugate.B), conjugate.amount);
   }
-  public static invertPause(pause: Pause): NestableSegment {
-    return pause; // TODO
+  protected transformPause(pause: Pause): AlgPart {
+    return new Pause();
   }
-  public static invertNewline(newline: Newline): NestableSegment {
-    return newline; // TODO
+  protected transformNewline(newline: Newline): AlgPart {
+    return new Newline();
   }
-  public static invertCommentShort(commentShort: CommentShort): NestableSegment {
-    return commentShort; // TODO
+  protected transformCommentShort(commentShort: CommentShort): AlgPart {
+    return new CommentShort(commentShort.comment);
   }
-  public static invertCommentLong(commentLong: CommentLong): NestableSegment {
-    return commentLong; // TODO
+  protected transformCommentLong(commentLong: CommentLong): AlgPart {
+    return new CommentLong(commentLong.comment);
   }
 }
 
+}
 
 // TODO
-// export class TimeStamp extends NonRepeatable implements Segment
+// export class TimeStamp extends NonRepeatable implements AlgPart
 
 export namespace Example {
 export const Sune: Alg = new Alg([
@@ -247,7 +259,7 @@ export const Sune: Alg = new Alg([
       new BlockMove("R", -1)
     ]);
 
-export const SuneSeq: Segment = new Sequence([
+export const SuneSeq: Sequence = new Sequence([
       // TODO: Use proper constructor instead of type assertion.
       new BlockMove("R",  1),
       new BlockMove("U",  1),
