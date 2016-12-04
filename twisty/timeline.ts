@@ -93,21 +93,5 @@ export class SimpleBreakPoints implements BreakPointModel {
     }
 }
 
-class TestSimpleBreakPoints {
-  constructor() {
-    var b1 = new SimpleBreakPoints([30, 400, 1500, 2000]);
-    console.log(b1.firstBreakPoint() === 30);
-    console.log(b1.lastBreakPoint() === 2000);
-    console.log(b1.breakPoint(Direction.Forwards, BreakPointType.Move, 30) === 400);
-    console.log(b1.breakPoint(Direction.Forwards, BreakPointType.Move, 400) === 1500);
-    console.log(b1.breakPoint(Direction.Forwards, BreakPointType.Move, 600) === 1500);
-    console.log(b1.breakPoint(Direction.Backwards, BreakPointType.Move, 400) === 30);
-    console.log(b1.breakPoint(Direction.Backwards, BreakPointType.Move, 1999) === 1500);
-    console.log(b1.breakPoint(Direction.Backwards, BreakPointType.Move, 2000) === 1500);
-  }
-}
-
-// new TestSimpleBreakPoints();
-
 }
 }

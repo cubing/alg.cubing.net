@@ -175,14 +175,4 @@ export const Sune: Alg = new Alg([
     ]);
 }
 
-class TestAlg {
-  constructor() {
-    var alg = Alg.Example.Sune;
-    console.log(alg.toString() === "R U R' U R U2 R'");
-    console.log(String(alg) === alg.toString());
-  }
-}
-
-new TestAlg();
-
 }
