@@ -76,8 +76,8 @@ export class Pause extends NonRepeatable {
   }
 }
 
-export class Newline extends NonRepeatable {
-  public type: string = "newline";
+export class NewLine extends NonRepeatable {
+  public type: string = "newLine";
   constructor() {
     super();
   }

@@ -19,7 +19,7 @@ export abstract class DownUp<DataDown, DataUp> {
     else if (segment instanceof Commutator)     { return this.traverseCommutator(segment, dataDown); }
     else if (segment instanceof Conjugate)      { return this.traverseConjugate(segment, dataDown); }
     else if (segment instanceof Pause)          { return this.traversePause(segment, dataDown); }
-    else if (segment instanceof Newline)        { return this.traverseNewline(segment, dataDown); }
+    else if (segment instanceof NewLine)        { return this.traverseNewLine(segment, dataDown); }
     else if (segment instanceof CommentShort)   { return this.traverseCommentShort(segment, dataDown); }
     else if (segment instanceof CommentLong)    { return this.traverseCommentLong(segment, dataDown); }
     else {
@@ -33,7 +33,7 @@ export abstract class DownUp<DataDown, DataUp> {
   protected abstract traverseCommutator(commutator: Commutator, dataDown: DataDown): DataUp;
   protected abstract traverseConjugate(conjugate: Conjugate, dataDown: DataDown): DataUp;
   protected abstract traversePause(pause: Pause, dataDown: DataDown): DataUp;
-  protected abstract traverseNewline(newline: Newline, dataDown: DataDown): DataUp;
+  protected abstract traverseNewLine(newLine: NewLine, dataDown: DataDown): DataUp;
   protected abstract traverseCommentShort(commentShort: CommentShort, dataDown: DataDown): DataUp;
   protected abstract traverseCommentLong(commentLong: CommentLong, dataDown: DataDown): DataUp;
 }
@@ -49,7 +49,7 @@ export abstract class Up<DataUp> extends DownUp<undefined, DataUp> {
   protected abstract traverseCommutator(commutator: Commutator): DataUp;
   protected abstract traverseConjugate(conjugate: Conjugate): DataUp;
   protected abstract traversePause(pause: Pause): DataUp;
-  protected abstract traverseNewline(newline: Newline): DataUp;
+  protected abstract traverseNewLine(newLine: NewLine): DataUp;
   protected abstract traverseCommentShort(commentShort: CommentShort): DataUp;
   protected abstract traverseCommentLong(commentLong: CommentLong): DataUp;
 };
@@ -72,7 +72,7 @@ export class Clone extends OfAlgPart {
     return new Conjugate(this.traverse(conjugate.A), this.traverse(conjugate.B), conjugate.amount);
   }
   protected traversePause(pause: Pause):                      AlgPart { return pause.clone(); }
-  protected traverseNewline(newline: Newline):                AlgPart { return newline.clone(); }
+  protected traverseNewLine(newLine: NewLine):                AlgPart { return newLine.clone(); }
   protected traverseCommentShort(commentShort: CommentShort): AlgPart { return commentShort.clone(); }
   protected traverseCommentLong(commentLong: CommentLong):    AlgPart { return commentLong.clone(); }
 }
@@ -80,7 +80,7 @@ export class Clone extends OfAlgPart {
 // TODO: Test that inverses are bijections.
 export class Invert extends OfAlgPart {
   public traverseSequence(sequence: Sequence): Sequence {
-    // TODO: Handle newlines and comments correctly
+    // TODO: Handle newLines and comments correctly
     return new Sequence(sequence.algParts.slice().reverse().map(a => this.traverse(a)));
   }
   protected traverseGroup(group: Group): AlgPart {
@@ -96,7 +96,7 @@ export class Invert extends OfAlgPart {
     return new Conjugate(conjugate.A, this.traverse(conjugate.B), conjugate.amount);
   }
   protected traversePause(pause: Pause):                      AlgPart { return pause.clone(); }
-  protected traverseNewline(newline: Newline):                AlgPart { return newline.clone(); }
+  protected traverseNewLine(newLine: NewLine):                AlgPart { return newLine.clone(); }
   protected traverseCommentShort(commentShort: CommentShort): AlgPart { return commentShort.clone(); }
   protected traverseCommentLong(commentLong: CommentLong):    AlgPart { return commentLong.clone(); }
 }
@@ -169,7 +169,7 @@ export class Expand extends OfAlgPart {
     return this.repeat(this.flattenSequenceOneLevel(once), conjugate);
   }
   protected traversePause(pause: Pause):                      AlgPart { return pause.clone(); }
-  protected traverseNewline(newline: Newline):                AlgPart { return newline.clone(); }
+  protected traverseNewLine(newLine: NewLine):                AlgPart { return newLine.clone(); }
   protected traverseCommentShort(commentShort: CommentShort): AlgPart { return commentShort.clone(); }
   protected traverseCommentLong(commentLong: CommentLong):    AlgPart { return commentLong.clone(); }
 }
@@ -195,7 +195,7 @@ export class CountBlockMoves extends Up<number> {
     return 2*(this.traverse(conjugate.A)) + this.traverse(conjugate.B);
   }
   protected traversePause(pause: Pause):                      number { return 0; }
-  protected traverseNewline(newline: Newline):                number { return 0; }
+  protected traverseNewLine(newLine: NewLine):                number { return 0; }
   protected traverseCommentShort(commentShort: CommentShort): number { return 0; }
   protected traverseCommentLong(commentLong: CommentLong):    number { return 0; }
 }
@@ -237,8 +237,8 @@ export class StructureEquals extends DownUp<AlgPart, boolean> {
   protected traversePause(pause: Pause, dataDown: AlgPart): boolean {
     return dataDown instanceof Pause;
   }
-  protected traverseNewline(newline: Newline, dataDown: AlgPart): boolean {
-    return dataDown instanceof Newline;
+  protected traverseNewLine(newLine: NewLine, dataDown: AlgPart): boolean {
+    return dataDown instanceof NewLine;
   }
   protected traverseCommentShort(commentShort: CommentShort, dataDown: AlgPart): boolean {
     return (dataDown instanceof CommentShort) && (commentShort.comment == dataDown.comment);
@@ -292,7 +292,7 @@ export class CoalesceMoves extends OfAlgPart {
   protected traverseCommutator(commutator: Commutator):       AlgPart { return commutator.clone(); }
   protected traverseConjugate(conjugate: Conjugate):          AlgPart { return conjugate.clone(); }
   protected traversePause(pause: Pause):                      AlgPart { return pause.clone(); }
-  protected traverseNewline(newline: Newline):                AlgPart { return newline.clone(); }
+  protected traverseNewLine(newLine: NewLine):                AlgPart { return newLine.clone(); }
   protected traverseCommentShort(commentShort: CommentShort): AlgPart { return commentShort.clone(); }
   protected traverseCommentLong(commentLong: CommentLong):    AlgPart { return commentLong.clone(); }
 }
@@ -313,7 +313,7 @@ export class Concat extends DownUp<AlgPart, Sequence> {
   protected traverseCommutator(   commutator:   Commutator,   dataDown: AlgPart): Sequence {return this.concatIntoSequence([commutator]     , dataDown); }
   protected traverseConjugate(    conjugate:    Conjugate,    dataDown: AlgPart): Sequence {return this.concatIntoSequence([conjugate]      , dataDown); }
   protected traversePause(        pause:        Pause,        dataDown: AlgPart): Sequence {return this.concatIntoSequence([pause]          , dataDown); }
-  protected traverseNewline(      newline:      Newline,      dataDown: AlgPart): Sequence {return this.concatIntoSequence([newline]        , dataDown); }
+  protected traverseNewLine(      newLine:      NewLine,      dataDown: AlgPart): Sequence {return this.concatIntoSequence([newLine]        , dataDown); }
   protected traverseCommentShort( commentShort: CommentShort, dataDown: AlgPart): Sequence {return this.concatIntoSequence([commentShort]   , dataDown); }
   protected traverseCommentLong(  commentLong:  CommentLong,  dataDown: AlgPart): Sequence {return this.concatIntoSequence([commentLong]    , dataDown); }
 }
