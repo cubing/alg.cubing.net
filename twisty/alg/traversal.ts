@@ -248,11 +248,63 @@ export class StructureEquals extends DownUp<AlgPart, boolean> {
   }
 }
 
-export const cloneTraversal:           Clone           = new Clone();
-export const invertTraversal:          Invert          = new Invert();
-export const expandTraversal:          Expand          = new Expand();
-export const countBlockMovesTraversal: CountBlockMoves = new CountBlockMoves();
-export const structureEqualsTraversal: StructureEquals = new StructureEquals();
+// TODO: Test that inverses are bijections.
+export class CoalesceMoves extends OfAlgPart {
+  private sameBlock(moveA: BlockMove, moveB: BlockMove): boolean {
+    // TODO: Handle layers
+    return moveA.base === moveB.base;
+  }
+
+  private roundCubeMoveAmount(amount: number): number {
+    return amount + 4 * Math.round(-Math.abs(amount/4)) * Math.sign(amount);
+  }
+
+  public traverseSequence(sequence: Sequence): Sequence {
+    var coalesced: AlgPart[] = [];
+    for (var part of sequence.algParts) {
+      if (!(part instanceof BlockMove)) {
+        coalesced.push(this.traverse(part));
+      } else if (coalesced.length > 0) {
+        var last = coalesced[coalesced.length-1];
+        if (last instanceof BlockMove &&
+            this.sameBlock(last, part)) {
+          // TODO: This is cube-specific. Perhaps pass the modules as DataDown?
+          var amount = this.roundCubeMoveAmount(last.amount + part.amount);
+          coalesced.pop();
+          if (amount !== 0) {
+            // We could modify the last element instead of creating a new one,
+            // but this is safe against shifting coding practices.
+            // TODO: Figure out if the shoot-in-the-foot risk
+            // modification is worth the speed.
+            coalesced.push(new BlockMove(part.base, amount));
+          }
+        } else {
+          coalesced.push(part.clone());
+        }
+      } else {
+        coalesced.push(part.clone());
+      }
+    }
+    return new Sequence(coalesced);
+  }
+  protected traverseGroup(group: Group):                      AlgPart { return group.clone(); }
+  protected traverseBlockMove(blockMove: BlockMove):          AlgPart { return blockMove.clone(); }
+  protected traverseCommutator(commutator: Commutator):       AlgPart { return commutator.clone(); }
+  protected traverseConjugate(conjugate: Conjugate):          AlgPart { return conjugate.clone(); }
+  protected traversePause(pause: Pause):                      AlgPart { return pause.clone(); }
+  protected traverseNewline(newline: Newline):                AlgPart { return newline.clone(); }
+  protected traverseCommentShort(commentShort: CommentShort): AlgPart { return commentShort.clone(); }
+  protected traverseCommentLong(commentLong: CommentLong):    AlgPart { return commentLong.clone(); }
+}
+
+export namespace Singleton {
+  export const clone           = new Clone();
+  export const invert          = new Invert();
+  export const expand          = new Expand();
+  export const countBlockMoves = new CountBlockMoves();
+  export const structureEquals = new StructureEquals();
+  export const coalesceMoves   = new CoalesceMoves();
+}
 
 }
 }

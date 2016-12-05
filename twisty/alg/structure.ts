@@ -8,13 +8,14 @@ export abstract class AlgPart {
   // TODO: Try to enforce an explicit toString implementation without adding
   // indirection.
 
-  clone():           AlgPart { return Alg.Traversal.cloneTraversal.traverse(this);           }
-  invert():          AlgPart { return Alg.Traversal.invertTraversal.traverse(this);          }
-  expand():          AlgPart { return Alg.Traversal.expandTraversal.traverse(this);          }
-  countBlockMoves(): number  { return Alg.Traversal.countBlockMovesTraversal.traverse(this); }
+  clone():           AlgPart { return Alg.Traversal.Singleton.clone.traverse(this);           }
+  invert():          AlgPart { return Alg.Traversal.Singleton.invert.traverse(this);          }
+  expand():          AlgPart { return Alg.Traversal.Singleton.expand.traverse(this);          }
+  countBlockMoves(): number  { return Alg.Traversal.Singleton.countBlockMoves.traverse(this); }
   structureEquals(algPart: AlgPart): boolean {
-    return Alg.Traversal.structureEqualsTraversal.traverse(this, algPart);
+    return Alg.Traversal.Singleton.structureEquals.traverse(this, algPart);
   }
+  coalesceMoves():    AlgPart { return Alg.Traversal.Singleton.coalesceMoves.traverse(this); }
 }
 
 export type Algorithm = AlgPart;
