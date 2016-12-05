@@ -40,7 +40,7 @@ function test(name: string, condition: boolean) {
 (function TestStructureEqualsTraversal() {
   var structureEquals = new Alg.Traversal.StructureEquals();
   test("[Traversal] FURUFCompact !== FURURFMoves", !structureEquals.traverse(Alg.Example.FURURFCompact, Alg.Example.FURURFMoves));
-  test("[Traversal] FURUFCompact !== FURURFMoves", !structureEquals.traverse(Alg.Example.FURURFMoves, Alg.Example.FURURFCompact));
+  test("[Traversal] FURURFMoves !== FURUFCompact", !structureEquals.traverse(Alg.Example.FURURFMoves, Alg.Example.FURURFCompact));
   test("[Traversal] FURURFMoves == FURURFMoves", structureEquals.traverse(Alg.Example.FURURFMoves, Alg.Example.FURURFMoves));
   test("[Traversal] FURURFCompact == FURURFCompact", structureEquals.traverse(Alg.Example.FURURFCompact, Alg.Example.FURURFCompact));
 })();
