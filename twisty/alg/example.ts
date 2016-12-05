@@ -46,6 +46,7 @@ export const FURURFCompact: Algorithm = new Conjugate(
   ),
   1
 );
+
 export const FURURFMoves: Algorithm = new Sequence([
   new BlockMove("F",  1),
   new BlockMove("U",  1),
