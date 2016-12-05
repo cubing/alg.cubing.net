@@ -54,9 +54,7 @@ export abstract class Up<DataUp> extends DownUp<undefined, DataUp> {
   protected abstract traverseCommentLong(commentLong: CommentLong): DataUp;
 };
 
-export abstract class AlgToAlg extends Up<Algorithm> {};
-
-export class Clone extends AlgToAlg {
+export class Clone extends Up<Algorithm> {
   public traverseSequence(sequence: Sequence): Sequence {
     return new Sequence(sequence.nestedAlgs.map(a => this.traverse(a)));
   }
@@ -79,7 +77,7 @@ export class Clone extends AlgToAlg {
 }
 
 // TODO: Test that inverses are bijections.
-export class Invert extends AlgToAlg {
+export class Invert extends Up<Algorithm> {
   public traverseSequence(sequence: Sequence): Sequence {
     // TODO: Handle newLines and comments correctly
     return new Sequence(sequence.nestedAlgs.slice().reverse().map(a => this.traverse(a)));
@@ -102,7 +100,7 @@ export class Invert extends AlgToAlg {
   protected traverseCommentLong(commentLong: CommentLong):    Algorithm { return commentLong.clone(); }
 }
 
-export class Expand extends AlgToAlg {
+export class Expand extends Up<Algorithm> {
   private flattenSequenceOneLevel(nestedAlgs: Algorithm[]): Algorithm[] {
     var flattened: Algorithm[] = [];
     for (var part of nestedAlgs) {
@@ -250,7 +248,7 @@ export class StructureEquals extends DownUp<Algorithm, boolean> {
 }
 
 // TODO: Test that inverses are bijections.
-export class CoalesceMoves extends AlgToAlg {
+export class CoalesceMoves extends Up<Algorithm> {
   private sameBlock(moveA: BlockMove, moveB: BlockMove): boolean {
     // TODO: Handle layers
     return moveA.base === moveB.base;
