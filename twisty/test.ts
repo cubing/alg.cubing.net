@@ -19,9 +19,17 @@
   console.log(b1.breakPoint(Twisty.TimeLine.Direction.Backwards, Twisty.TimeLine.BreakPointType.Move, 2000) === 1500);
 })();
 
-
 (function TestCountBlockMoves() {
   var t = new Alg.Traversal.CountBlockMoves();
   console.log(t.traverse(Alg.Example.Sune) === 7);
-  console.log(t.traverse(Alg.Example.FRURUF) === 6);
+  console.log(t.traverse(Alg.Example.FURURFCompact) === 6);
+})();
+
+(function TestStructureEquals() {
+  var structureEquals = new Alg.Traversal.StructureEquals();
+  var expand = new Alg.Traversal.Expand();
+  console.log(!structureEquals.traverse(Alg.Example.FURURFCompact, Alg.Example.FURURFMoves));
+  console.log(structureEquals.traverse(Alg.Example.FURURFMoves, Alg.Example.FURURFMoves));
+  console.log(structureEquals.traverse(Alg.Example.FURURFCompact, Alg.Example.FURURFCompact));
+  console.log(structureEquals.traverse(expand.traverse(Alg.Example.FURURFCompact), Alg.Example.FURURFMoves));
 })();

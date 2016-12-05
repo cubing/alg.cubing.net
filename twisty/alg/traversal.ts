@@ -101,8 +101,19 @@ export class Invert extends OfAlgPart {
   protected traverseCommentLong(commentLong: CommentLong):    AlgPart { return commentLong.clone(); }
 }
 
-// TODO: Test that inverses are bijections.
 export class Expand extends OfAlgPart {
+  private flattenSequenceOneLevel(algParts: AlgPart[]): AlgPart[] {
+    var flattened: AlgPart[] = [];
+    for (var part of algParts) {
+      if (part instanceof Sequence) {
+        flattened = flattened.concat(part.algParts);
+      } else {
+        flattened.push(part)
+      }
+    }
+    return flattened;
+  }
+
   private repeat(algParts: AlgPart[], accordingTo: Repeatable): Sequence {
     var amount = Math.abs(accordingTo.amount);
     var amountDir = (accordingTo.amount > 0) ? 1 : -1; // Mutable
@@ -125,34 +136,37 @@ export class Expand extends OfAlgPart {
   }
 
   public traverseSequence(sequence: Sequence): Sequence {
-    // TODO: Handle newlines and comments correctly
-    return new Sequence(sequence.algParts.map(this.traverse));
+    return new Sequence(this.flattenSequenceOneLevel(sequence.algParts.map(this.traverse)));
   }
   protected traverseGroup(group: Group): AlgPart {
     // TODO: Pass raw AlgPArts[] to sequence.
     return this.repeat([this.traverse(group.algPart)], group);
   }
   protected traverseBlockMove(blockMove: BlockMove): AlgPart {
-    return new BlockMove(blockMove.base, -blockMove.amount);
+    return blockMove.clone();
   }
   protected traverseCommutator(commutator: Commutator): AlgPart {
+    var expandedA = this.traverse(commutator.A)
+    var expandedB = this.traverse(commutator.B)
     var once: AlgPart[] = [];
     once = once.concat(
-      commutator.A,
-      commutator.B,
-      commutator.A.invert(),
-      commutator.B.invert()
+      expandedA,
+      expandedB,
+      expandedA.invert(),
+      expandedB.invert()
     );
-    return this.repeat(once, commutator);
+    return this.repeat(this.flattenSequenceOneLevel(once), commutator);
   }
   protected traverseConjugate(conjugate: Conjugate): AlgPart {
+    var expandedA = this.traverse(conjugate.A)
+    var expandedB = this.traverse(conjugate.B)
     var once: AlgPart[] = [];
     once = once.concat(
-      conjugate.A,
-      conjugate.B,
-      conjugate.A.invert()
+      expandedA,
+      expandedB,
+      expandedA.invert()
     );
-    return this.repeat(once, conjugate);
+    return this.repeat(this.flattenSequenceOneLevel(once), conjugate);
   }
   protected traversePause(pause: Pause):                      AlgPart { return pause.clone(); }
   protected traverseNewline(newline: Newline):                AlgPart { return newline.clone(); }
@@ -184,6 +198,54 @@ export class CountBlockMoves extends Up<number> {
   protected traverseNewline(newline: Newline):                number { return 0; }
   protected traverseCommentShort(commentShort: CommentShort): number { return 0; }
   protected traverseCommentLong(commentLong: CommentLong):    number { return 0; }
+}
+
+export class StructureEquals extends DownUp<AlgPart, boolean> {
+  public traverseSequence(sequence: Sequence, dataDown: AlgPart): boolean {
+    if (!(dataDown instanceof Sequence)) {
+      return false;
+    }
+    if (sequence.algParts.length !== dataDown.algParts.length) {
+      return false;
+    }
+    for (var i = 0; i < sequence.algParts.length; i++) {
+      if (!this.traverse(sequence.algParts[i], dataDown.algParts[i])) {
+        return false;
+      }
+    }
+    return true;
+  }
+  protected traverseGroup(group: Group, dataDown: AlgPart): boolean {
+    return (dataDown instanceof Group) && this.traverse(group.algPart, dataDown.algPart);
+  }
+  protected traverseBlockMove(blockMove: BlockMove, dataDown: AlgPart): boolean {
+    // TODO: Handle layers.
+    return dataDown instanceof BlockMove &&
+           blockMove.base === dataDown.base &&
+           blockMove.amount === dataDown.amount;
+  }
+  protected traverseCommutator(commutator: Commutator, dataDown: AlgPart): boolean {
+    return (dataDown instanceof Commutator) &&
+           this.traverse(commutator.A, dataDown.A) &&
+           this.traverse(commutator.B, dataDown.B);
+  }
+  protected traverseConjugate(conjugate: Conjugate, dataDown: AlgPart): boolean {
+    return (dataDown instanceof Conjugate) &&
+           this.traverse(conjugate.A, dataDown.A) &&
+           this.traverse(conjugate.B, dataDown.B);
+  }
+  protected traversePause(pause: Pause, dataDown: AlgPart): boolean {
+    return dataDown instanceof Pause;
+  }
+  protected traverseNewline(newline: Newline, dataDown: AlgPart): boolean {
+    return dataDown instanceof Newline;
+  }
+  protected traverseCommentShort(commentShort: CommentShort, dataDown: AlgPart): boolean {
+    return (dataDown instanceof CommentShort) && (commentShort.comment == dataDown.comment);
+  }
+  protected traverseCommentLong(commentLong: CommentLong, dataDown: AlgPart): boolean {
+    return (dataDown instanceof CommentShort) && (commentLong.comment == dataDown.comment);
+  }
 }
 
 }
