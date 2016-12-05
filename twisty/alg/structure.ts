@@ -40,10 +40,4 @@ export abstract class Repeatable extends Algorithm {
   }
 }
 
-export abstract class NonRepeatable extends Algorithm {
-  constructor() {
-    super();
-  }
-}
-
 }

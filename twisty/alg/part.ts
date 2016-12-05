@@ -4,7 +4,7 @@ namespace Alg {
 
 export type BaseMove = string; // TODO: Convert to an enum with string mappings.
 
-export class Sequence extends NonRepeatable {
+export class Sequence extends Algorithm {
   public type: string = "sequence";
   constructor(public nestedAlgs: Algorithm[]) {
     super();
@@ -65,7 +65,7 @@ export class Conjugate extends Repeatable {
   }
 }
 
-export class Pause extends NonRepeatable {
+export class Pause extends Algorithm {
   public type: string = "pause";
   constructor() {
     super();
@@ -76,7 +76,7 @@ export class Pause extends NonRepeatable {
   }
 }
 
-export class NewLine extends NonRepeatable {
+export class NewLine extends Algorithm {
   public type: string = "newLine";
   constructor() {
     super();
@@ -86,7 +86,7 @@ export class NewLine extends NonRepeatable {
   }
 }
 
-export class CommentShort extends NonRepeatable {
+export class CommentShort extends Algorithm {
   public type: string = "commentShort";
   constructor(public comment: string) {
     super();
@@ -98,7 +98,7 @@ export class CommentShort extends NonRepeatable {
   }
 }
 
-export class CommentLong extends NonRepeatable {
+export class CommentLong extends Algorithm {
   public type: string = "commentLong";
   constructor(public comment: string) {
     super();
@@ -110,6 +110,6 @@ export class CommentLong extends NonRepeatable {
 }
 
 // TODO
-// export class TimeStamp extends NonRepeatable implements Algorithm
+// export class TimeStamp extends Algorithm implements Algorithm
 
 }
