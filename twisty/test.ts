@@ -1,14 +1,14 @@
 "use strict";
 
 // Hacky, yet effective.
-function test(name: string, condition: boolean) {
+function test(description: string, condition: boolean) {
   var li = document.createElement("li");
   if (condition) {
-    console.log("\u2705 " + name);
-    li.textContent = "\u2705 " + name;
+    console.log("\u2705 " + description);
+    li.textContent = "\u2705 " + description;
   } else {
-    console.error("\u274C " + name);
-    li.textContent = "\u274C " + name;
+    console.error("\u274C " + description);
+    li.textContent = "\u274C " + description;
   }
   document.write(new XMLSerializer().serializeToString(li));
 }
