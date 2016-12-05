@@ -162,19 +162,23 @@ export class Expand extends OfAlgPart {
 
 export class CountBlockMoves extends Up<number> {
   public traverseSequence(sequence: Sequence): number {
-    return 1;
+    var total = 0;
+    for (var part of sequence.algParts) {
+      total += this.traverse(part);
+    }
+    return total;
   }
   protected traverseGroup(group: Group): number {
-    return 1;
+    return this.traverse(group.algPart);
   }
   protected traverseBlockMove(blockMove: BlockMove): number {
     return 1;
   }
   protected traverseCommutator(commutator: Commutator): number {
-    return 1;
+    return 2*(this.traverse(commutator.A) + this.traverse(commutator.B));
   }
   protected traverseConjugate(conjugate: Conjugate): number {
-    return 1;
+    return 2*(this.traverse(conjugate.A)) + this.traverse(conjugate.B);
   }
   protected traversePause(pause: Pause):                      number { return 0; }
   protected traverseNewline(newline: Newline):                number { return 0; }

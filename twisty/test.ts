@@ -18,3 +18,10 @@
   console.log(b1.breakPoint(Twisty.TimeLine.Direction.Backwards, Twisty.TimeLine.BreakPointType.Move, 1999) === 1500);
   console.log(b1.breakPoint(Twisty.TimeLine.Direction.Backwards, Twisty.TimeLine.BreakPointType.Move, 2000) === 1500);
 })();
+
+
+(function TestCountBlockMoves() {
+  var t = new Alg.Traversal.CountBlockMoves();
+  console.log(t.traverse(Alg.Example.Sune) === 7);
+  console.log(t.traverse(Alg.Example.FRURUF) === 6);
+})();
