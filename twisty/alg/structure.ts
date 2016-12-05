@@ -9,19 +9,19 @@ export abstract class AlgPart {
   // indirection.
   abstract repeatable(): boolean
 
-  private cloneTransform: Transform.Clone = new Transform.Clone();
+  private cloneTraversal: Traversal.Clone = new Traversal.Clone();
   clone(): AlgPart {
-    return this.cloneTransform.transform(this);
+    return this.cloneTraversal.traverse(this);
   }
 
-  private invertTransform: Transform.Invert = new Transform.Invert();
+  private invertTraversal: Traversal.Invert = new Traversal.Invert();
   invert(): AlgPart {
-    return this.invertTransform.transform(this);
+    return this.invertTraversal.traverse(this);
   }
 
-  private expandTransform: Transform.Expand = new Transform.Expand();
+  private expandTraversal: Traversal.Expand = new Traversal.Expand();
   expand(): AlgPart {
-    return this.expandTransform.transform(this);
+    return this.expandTraversal.traverse(this);
   }
 }
 
