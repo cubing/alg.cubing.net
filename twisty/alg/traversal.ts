@@ -53,6 +53,7 @@ export abstract class Up<DataUp> extends DownUp<undefined, DataUp> {
   protected abstract traverseCommentShort(commentShort: CommentShort): DataUp;
   protected abstract traverseCommentLong(commentLong: CommentLong): DataUp;
 };
+
 export abstract class AlgToAlg extends Up<Algorithm> {};
 
 export class Clone extends AlgToAlg {
