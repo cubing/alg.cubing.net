@@ -254,10 +254,6 @@ export class CoalesceMoves extends Up<Algorithm> {
     return moveA.base === moveB.base;
   }
 
-  private roundCubeMoveAmount(amount: number): number {
-    return amount + 4 * Math.round(-Math.abs(amount/4)) * Math.sign(amount);
-  }
-
   public traverseSequence(sequence: Sequence): Sequence {
     var coalesced: Algorithm[] = [];
     for (var part of sequence.nestedAlgs) {
@@ -268,7 +264,7 @@ export class CoalesceMoves extends Up<Algorithm> {
         if (last instanceof BlockMove &&
             this.sameBlock(last, part)) {
           // TODO: This is cube-specific. Perhaps pass the modules as DataDown?
-          var amount = this.roundCubeMoveAmount(last.amount + part.amount);
+          var amount = last.amount + part.amount;
           coalesced.pop();
           if (amount !== 0) {
             // We could modify the last element instead of creating a new one,
