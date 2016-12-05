@@ -8,9 +8,9 @@ namespace Twisty {
 namespace Temp {
   export class BasicAlg {
     private breakpoints: number[];
-    constructor(private sequence: Alg.Sequence) {
+    constructor(private algorithm: Alg.Algorithm) {
       this.breakpoints = [];
-      for (var i = 0; i <= sequence.nestedAlgs.length; i++) {
+      for (var i = 0; i <= algorithm.countBlockMoves(); i++) {
         this.breakpoints.push(i * 1000);
       }
     }
