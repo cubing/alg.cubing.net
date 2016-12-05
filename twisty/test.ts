@@ -83,3 +83,7 @@ var R = new Alg.Sequence([
   console.log("Concatenation associativity", U.concat(R.concat(U)).structureEquals(U.concat(R).concat(U)));
   console.log("Build Sune", R.concat(U).concat(R.invert()).concat(U).concat(R).concat(U2.invert()).concat(R.invert()).structureEquals(Alg.Example.Sune));
 })();
+
+(function TestJSON() {
+  console.log("FURURFCompact JSON string roundtrip", Alg.fromJSON(JSON.parse(JSON.stringify(Alg.Example.FURURFCompact))).structureEquals(Alg.Example.FURURFCompact));
+})();
