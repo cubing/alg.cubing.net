@@ -81,7 +81,7 @@ export class Clone extends OfAlgPart {
 export class Invert extends OfAlgPart {
   public traverseSequence(sequence: Sequence): Sequence {
     // TODO: Handle newlines and comments correctly
-    return new Sequence(sequence.algParts.reverse().map(a => this.traverse(a)));
+    return new Sequence(sequence.algParts.slice().reverse().map(a => this.traverse(a)));
   }
   protected traverseGroup(group: Group): AlgPart {
     return new Group(this.traverse(group.algPart), group.amount);
