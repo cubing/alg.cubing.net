@@ -7,7 +7,6 @@ export abstract class AlgPart {
   readonly type: string
   // TODO: Try to enforce an explicit toString implementation without adding
   // indirection.
-  abstract repeatable(): boolean
 
   private cloneTraversal: Traversal.Clone = new Traversal.Clone();
   clone(): AlgPart {
@@ -30,9 +29,6 @@ export type Algorithm = AlgPart;
 export abstract class Repeatable extends AlgPart {
   public readonly abstract type: string
   // TODO: Make `amount` an optional argument in derived class constructors.
-  repeatable(): boolean {
-    return true;
-  }
   constructor(public amount: number) {
     super();
   }
@@ -53,9 +49,6 @@ export abstract class NonRepeatable extends AlgPart {
   public readonly abstract type: string
   constructor() {
     super();
-  }
-  repeatable(): boolean {
-    return false;
   }
 }
 
