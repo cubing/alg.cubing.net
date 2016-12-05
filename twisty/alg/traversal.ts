@@ -5,25 +5,25 @@ export namespace Traversal {
 
 export abstract class DownUp<DataDown, DataUp> {
   // Immediate subclasses should overwrite this.
-  public traverse(segment: Algorithm, dataDown: DataDown): DataUp {
-    return this.traverseGeneric(segment, dataDown);
+  public traverse(algorithm: Algorithm, dataDown: DataDown): DataUp {
+    return this.traverseGeneric(algorithm, dataDown);
   }
 
   // A generic version of traverse that should not be overwritten.
-  protected traverseGeneric(segment: Algorithm, dataDown: DataDown): DataUp {
+  protected traverseGeneric(algorithm: Algorithm, dataDown: DataDown): DataUp {
     // TODO: Use a direct look up using e.g. hashmap instead of sequential if-else.
     // TODO: Clone arguments by default, for safety.
-         if (segment instanceof Sequence)       { return this.traverseSequence(segment, dataDown); }
-    else if (segment instanceof Group)          { return this.traverseGroup(segment, dataDown); }
-    else if (segment instanceof BlockMove)      { return this.traverseBlockMove(segment, dataDown); }
-    else if (segment instanceof Commutator)     { return this.traverseCommutator(segment, dataDown); }
-    else if (segment instanceof Conjugate)      { return this.traverseConjugate(segment, dataDown); }
-    else if (segment instanceof Pause)          { return this.traversePause(segment, dataDown); }
-    else if (segment instanceof NewLine)        { return this.traverseNewLine(segment, dataDown); }
-    else if (segment instanceof CommentShort)   { return this.traverseCommentShort(segment, dataDown); }
-    else if (segment instanceof CommentLong)    { return this.traverseCommentLong(segment, dataDown); }
+         if (algorithm instanceof Sequence)       { return this.traverseSequence(algorithm, dataDown); }
+    else if (algorithm instanceof Group)          { return this.traverseGroup(algorithm, dataDown); }
+    else if (algorithm instanceof BlockMove)      { return this.traverseBlockMove(algorithm, dataDown); }
+    else if (algorithm instanceof Commutator)     { return this.traverseCommutator(algorithm, dataDown); }
+    else if (algorithm instanceof Conjugate)      { return this.traverseConjugate(algorithm, dataDown); }
+    else if (algorithm instanceof Pause)          { return this.traversePause(algorithm, dataDown); }
+    else if (algorithm instanceof NewLine)        { return this.traverseNewLine(algorithm, dataDown); }
+    else if (algorithm instanceof CommentShort)   { return this.traverseCommentShort(algorithm, dataDown); }
+    else if (algorithm instanceof CommentLong)    { return this.traverseCommentLong(algorithm, dataDown); }
     else {
-      throw "Unknown type of segment";
+      throw "Unknown type of algorithm";
     }
   }
 
@@ -39,8 +39,8 @@ export abstract class DownUp<DataDown, DataUp> {
 }
 
 export abstract class Up<DataUp> extends DownUp<undefined, DataUp> {
-  public traverse(segment: Algorithm): DataUp {
-    return this.traverseGeneric.call(this, segment);
+  public traverse(algorithm: Algorithm): DataUp {
+    return this.traverseGeneric.call(this, algorithm);
   }
 
   protected abstract traverseSequence(sequence: Sequence): DataUp;
@@ -101,9 +101,9 @@ export class Invert extends Up<Algorithm> {
 }
 
 export class Expand extends Up<Algorithm> {
-  private flattenSequenceOneLevel(nestedAlgs: Algorithm[]): Algorithm[] {
+  private flattenSequenceOneLevel(algList: Algorithm[]): Algorithm[] {
     var flattened: Algorithm[] = [];
-    for (var part of nestedAlgs) {
+    for (var part of algList) {
       if (part instanceof Sequence) {
         flattened = flattened.concat(part.nestedAlgs);
       } else {
@@ -113,32 +113,32 @@ export class Expand extends Up<Algorithm> {
     return flattened;
   }
 
-  private repeat(nestedAlgs: Algorithm[], accordingTo: Repeatable): Sequence {
+  private repeat(algList: Algorithm[], accordingTo: Repeatable): Sequence {
     var amount = Math.abs(accordingTo.amount);
     var amountDir = (accordingTo.amount > 0) ? 1 : -1; // Mutable
 
     // TODO: Cleaner inversion
-    var directedAlgorithms: Algorithm[];
+    var once: Algorithm[];
     if (amountDir == -1) {
       // TODO: Avoid casting to sequence.
-      directedAlgorithms = (<Sequence>(new Sequence(nestedAlgs)).invert()).nestedAlgs;
+      once = (<Sequence>(new Sequence(algList)).invert()).nestedAlgs;
     } else {
-      directedAlgorithms = nestedAlgs;
+      once = algList;
     }
 
-    var repeatedParts: Algorithm[] = [];
+    var repeated: Algorithm[] = [];
     for (var i = 0; i < amount; i++) {
-      repeatedParts = repeatedParts.concat(directedAlgorithms);
+      repeated = repeated.concat(once);
     }
 
-    return new Sequence(repeatedParts);
+    return new Sequence(repeated);
   }
 
   public traverseSequence(sequence: Sequence): Sequence {
     return new Sequence(this.flattenSequenceOneLevel(sequence.nestedAlgs.map(a => this.traverse(a))));
   }
   protected traverseGroup(group: Group): Algorithm {
-    // TODO: Pass raw AlgPArts[] to sequence.
+    // TODO: Pass raw Algorithm[] to sequence.
     return this.repeat([this.traverse(group.nestedAlg)], group);
   }
   protected traverseBlockMove(blockMove: BlockMove): Algorithm {
