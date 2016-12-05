@@ -4,10 +4,12 @@ namespace Alg {
 export namespace Traversal {
 
 export abstract class DownUp<DataDown, DataUp> {
+  // Immediate subclasses should overwrite this.
   public traverse(segment: AlgPart, dataDown: DataDown): DataUp {
     return this.traverseGeneric(segment, dataDown);
   }
 
+  // A generic version of traverse that should not be overwritten.
   protected traverseGeneric(segment: AlgPart, dataDown: DataDown): DataUp {
     // TODO: Use a direct look up using e.g. hashmap instead of sequential if-else.
     // TODO: Clone arguments by default, for safety.
