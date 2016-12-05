@@ -28,13 +28,13 @@ function test(name: string, condition: boolean) {
   test("Forwards between breakpoints", b1.breakPoint(Twisty.TimeLine.Direction.Forwards, Twisty.TimeLine.BreakPointType.Move, 600) === 1500);
   test("Backwards from first breakpoint", b1.breakPoint(Twisty.TimeLine.Direction.Backwards, Twisty.TimeLine.BreakPointType.Move, 400) === 30);
   test("Backwards from just before end", b1.breakPoint(Twisty.TimeLine.Direction.Backwards, Twisty.TimeLine.BreakPointType.Move, 1999) === 1500);
-  test("Backwards frmo end", b1.breakPoint(Twisty.TimeLine.Direction.Backwards, Twisty.TimeLine.BreakPointType.Move, 2000) === 1500);
+  test("Backwards from end", b1.breakPoint(Twisty.TimeLine.Direction.Backwards, Twisty.TimeLine.BreakPointType.Move, 2000) === 1500);
 })();
 
 (function TestCountBlockMoves() {
   var t = new Alg.Traversal.CountBlockMoves();
   test("Sune has 7 moves", t.traverse(Alg.Example.Sune) === 7);
-  test("FURUrF compact has 7 moves", t.traverse(Alg.Example.FURURFCompact) === 6);
+  test("FURURFCompact has 7 moves", t.traverse(Alg.Example.FURURFCompact) === 6);
 })();
 
 (function TestStructureEqualsTraversal() {
