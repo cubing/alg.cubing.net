@@ -26,22 +26,28 @@
 
 (function TestStructureEqualsTraversal() {
   var structureEquals = new Alg.Traversal.StructureEquals();
-  var expand = new Alg.Traversal.Expand();
   console.log("[Traversal] FURUFCompact = FURURFMoves", !structureEquals.traverse(Alg.Example.FURURFCompact, Alg.Example.FURURFMoves));
   console.log("[Traversal] FURURFMoves = FURURFMoves", structureEquals.traverse(Alg.Example.FURURFMoves, Alg.Example.FURURFMoves));
   console.log("[Traversal] FURURFCompact = FURURFCompact", structureEquals.traverse(Alg.Example.FURURFCompact, Alg.Example.FURURFCompact));
-  console.log("[Traversal] FURURFCompact (expanded) = FURURFCompact", structureEquals.traverse(expand.traverse(Alg.Example.FURURFCompact), Alg.Example.FURURFMoves));
 })();
 
-(function TestStructureEqualsConvenience() {
-  console.log("[Convenience] FURUFCompact = FURURFMoves", !Alg.Example.FURURFCompact.structureEquals(Alg.Example.FURURFMoves));
-  console.log("[Convenience] FURURFMoves = FURURFMoves", Alg.Example.FURURFMoves.structureEquals(Alg.Example.FURURFMoves));
-  console.log("[Convenience] FURURFCompact = FURURFCompact", Alg.Example.FURURFCompact.structureEquals(Alg.Example.FURURFCompact));
-  console.log("[Convenience] FURURFCompact (expanded) = FURURFCompact", Alg.Example.FURURFCompact.expand().structureEquals(Alg.Example.FURURFMoves));
+(function TestStructureEqualsChaining() {
+  console.log("[Chaining] FURUFCompact = FURURFMoves", !Alg.Example.FURURFCompact.structureEquals(Alg.Example.FURURFMoves));
+  console.log("[Chaining] FURURFMoves = FURURFMoves", Alg.Example.FURURFMoves.structureEquals(Alg.Example.FURURFMoves));
+  console.log("[Chaining] FURURFCompact = FURURFCompact", Alg.Example.FURURFCompact.structureEquals(Alg.Example.FURURFCompact));
+  console.log("[Chaining] SuneCommutator != Sune", !Alg.Example.SuneCommutator.structureEquals(Alg.Example.Sune));
 })();
+
+(function TestExpand() {
+  console.log("[Chaining] Expand FURURFCompact", Alg.Example.FURURFCompact.expand().structureEquals(Alg.Example.FURURFMoves));
+  console.log("[Chaining] Expand Sune", Alg.Example.Sune.expand().structureEquals(Alg.Example.Sune));
+  console.log("[Chaining] Expand SuneCommutator", Alg.Example.SuneCommutator.expand().structureEquals(Alg.Example.Sune));
+  console.log("[Chaining] Expand FURURFCompact != expand SuneCommutator", Alg.Example.FURURFCompact.expand().structureEquals(Alg.Example.SuneCommutator.expand()));
+})();
+
 
 (function TestInvert() {
-  console.log("[Convenience] Sune double inverted is Sune", Alg.Example.Sune.invert().invert().structureEquals(Alg.Example.Sune));
-  console.log("[Convenience] Sune inverse is not Sune", !Alg.Example.Sune.invert().invert().structureEquals(Alg.Example.AntiSune));
-  console.log("[Convenience] Sune inverse is AntiSune", Alg.Example.Sune.invert().structureEquals(Alg.Example.AntiSune));
+  console.log("[Chaining] Sune double inverted is Sune", Alg.Example.Sune.invert().invert().structureEquals(Alg.Example.Sune));
+  console.log("[Chaining] Sune inverse is not Sune", !Alg.Example.Sune.invert().invert().structureEquals(Alg.Example.AntiSune));
+  console.log("[Chaining] Sune inverse is AntiSune", Alg.Example.Sune.invert().structureEquals(Alg.Example.AntiSune));
 })();

@@ -136,7 +136,7 @@ export class Expand extends OfAlgPart {
   }
 
   public traverseSequence(sequence: Sequence): Sequence {
-    return new Sequence(this.flattenSequenceOneLevel(sequence.algParts.map(this.traverse)));
+    return new Sequence(this.flattenSequenceOneLevel(sequence.algParts.map(a => this.traverse(a))));
   }
   protected traverseGroup(group: Group): AlgPart {
     // TODO: Pass raw AlgPArts[] to sequence.
