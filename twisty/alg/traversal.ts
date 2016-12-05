@@ -57,7 +57,7 @@ export abstract class OfAlgPart extends Up<AlgPart> {};
 
 export class Clone extends OfAlgPart {
   public traverseSequence(sequence: Sequence): Sequence {
-    return new Sequence(sequence.algParts.map(this.traverse));
+    return new Sequence(sequence.algParts.map(a => this.traverse(a)));
   }
   protected traverseGroup(group: Group): AlgPart {
     return new Group(this.traverse(group.algPart), group.amount);
@@ -81,7 +81,7 @@ export class Clone extends OfAlgPart {
 export class Invert extends OfAlgPart {
   public traverseSequence(sequence: Sequence): Sequence {
     // TODO: Handle newlines and comments correctly
-    return new Sequence(sequence.algParts.reverse().map(this.traverse));
+    return new Sequence(sequence.algParts.reverse().map(a => this.traverse(a)));
   }
   protected traverseGroup(group: Group): AlgPart {
     return new Group(this.traverse(group.algPart), group.amount);
@@ -247,6 +247,12 @@ export class StructureEquals extends DownUp<AlgPart, boolean> {
     return (dataDown instanceof CommentShort) && (commentLong.comment == dataDown.comment);
   }
 }
+
+export const cloneTraversal:           Clone           = new Clone();
+export const invertTraversal:          Invert          = new Invert();
+export const expandTraversal:          Expand          = new Expand();
+export const countBlockMovesTraversal: CountBlockMoves = new CountBlockMoves();
+export const structureEqualsTraversal: StructureEquals = new StructureEquals();
 
 }
 }
