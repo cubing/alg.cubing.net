@@ -4,7 +4,7 @@ namespace Alg {
 
 // TODO: Rename to Part?
 export abstract class Algorithm {
-  readonly type: string
+  public readonly abstract type: string
   // TODO: Try to enforce an explicit toString implementation without adding
   // indirection.
 
@@ -23,7 +23,6 @@ export abstract class Algorithm {
 }
 
 export abstract class Repeatable extends Algorithm {
-  public readonly abstract type: string
   // TODO: Make `amount` an optional argument in derived class constructors.
   constructor(public amount: number) {
     super();
@@ -42,7 +41,6 @@ export abstract class Repeatable extends Algorithm {
 }
 
 export abstract class NonRepeatable extends Algorithm {
-  public readonly abstract type: string
   constructor() {
     super();
   }
