@@ -30,10 +30,6 @@ export class BlockMove extends Repeatable {
   constructor(public base: BaseMove, amount: number) {
     super(amount);
   }
-  copy(): BlockMove {
-    // TODO: Take into account layers.
-    return new BlockMove(this.base, this.amount);
-  }
 }
 
 export class Commutator extends Repeatable {
