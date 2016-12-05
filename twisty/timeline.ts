@@ -10,7 +10,7 @@ namespace Temp {
     private breakpoints: number[];
     constructor(private sequence: Alg.Sequence) {
       this.breakpoints = [];
-      for (var i = 0; i <= sequence.algParts.length; i++) {
+      for (var i = 0; i <= sequence.nestedAlgs.length; i++) {
         this.breakpoints.push(i * 1000);
       }
     }

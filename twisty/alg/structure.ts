@@ -3,28 +3,26 @@
 namespace Alg {
 
 // TODO: Rename to Part?
-export abstract class AlgPart {
+export abstract class Algorithm {
   readonly type: string
   // TODO: Try to enforce an explicit toString implementation without adding
   // indirection.
 
-  clone():           AlgPart { return Alg.Traversal.Singleton.clone.traverse(this);           }
-  invert():          AlgPart { return Alg.Traversal.Singleton.invert.traverse(this);          }
-  expand():          AlgPart { return Alg.Traversal.Singleton.expand.traverse(this);          }
+  clone():           Algorithm { return Alg.Traversal.Singleton.clone.traverse(this);           }
+  invert():          Algorithm { return Alg.Traversal.Singleton.invert.traverse(this);          }
+  expand():          Algorithm { return Alg.Traversal.Singleton.expand.traverse(this);          }
   countBlockMoves(): number  { return Alg.Traversal.Singleton.countBlockMoves.traverse(this); }
-  coalesceMoves():   AlgPart { return Alg.Traversal.Singleton.coalesceMoves.traverse(this); }
+  coalesceMoves():   Algorithm { return Alg.Traversal.Singleton.coalesceMoves.traverse(this); }
 
-  structureEquals(algPart: AlgPart): boolean {
-    return Alg.Traversal.Singleton.structureEquals.traverse(this, algPart);
+  structureEquals(nestedAlg: Algorithm): boolean {
+    return Alg.Traversal.Singleton.structureEquals.traverse(this, nestedAlg);
   }
-  concat(algPart: AlgPart): Sequence {
-    return Alg.Traversal.Singleton.concat.traverse(this, algPart);
+  concat(nestedAlg: Algorithm): Sequence {
+    return Alg.Traversal.Singleton.concat.traverse(this, nestedAlg);
   }
 }
 
-export type Algorithm = AlgPart;
-
-export abstract class Repeatable extends AlgPart {
+export abstract class Repeatable extends Algorithm {
   public readonly abstract type: string
   // TODO: Make `amount` an optional argument in derived class constructors.
   constructor(public amount: number) {
@@ -43,7 +41,7 @@ export abstract class Repeatable extends AlgPart {
   }
 }
 
-export abstract class NonRepeatable extends AlgPart {
+export abstract class NonRepeatable extends Algorithm {
   public readonly abstract type: string
   constructor() {
     super();

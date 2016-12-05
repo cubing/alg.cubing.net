@@ -5,12 +5,12 @@ export namespace Traversal {
 
 export abstract class DownUp<DataDown, DataUp> {
   // Immediate subclasses should overwrite this.
-  public traverse(segment: AlgPart, dataDown: DataDown): DataUp {
+  public traverse(segment: Algorithm, dataDown: DataDown): DataUp {
     return this.traverseGeneric(segment, dataDown);
   }
 
   // A generic version of traverse that should not be overwritten.
-  protected traverseGeneric(segment: AlgPart, dataDown: DataDown): DataUp {
+  protected traverseGeneric(segment: Algorithm, dataDown: DataDown): DataUp {
     // TODO: Use a direct look up using e.g. hashmap instead of sequential if-else.
     // TODO: Clone arguments by default, for safety.
          if (segment instanceof Sequence)       { return this.traverseSequence(segment, dataDown); }
@@ -39,7 +39,7 @@ export abstract class DownUp<DataDown, DataUp> {
 }
 
 export abstract class Up<DataUp> extends DownUp<undefined, DataUp> {
-  public traverse(segment: AlgPart): DataUp {
+  public traverse(segment: Algorithm): DataUp {
     return this.traverseGeneric.call(this, segment);
   }
 
@@ -53,60 +53,60 @@ export abstract class Up<DataUp> extends DownUp<undefined, DataUp> {
   protected abstract traverseCommentShort(commentShort: CommentShort): DataUp;
   protected abstract traverseCommentLong(commentLong: CommentLong): DataUp;
 };
-export abstract class OfAlgPart extends Up<AlgPart> {};
+export abstract class OfAlgorithm extends Up<Algorithm> {};
 
-export class Clone extends OfAlgPart {
+export class Clone extends OfAlgorithm {
   public traverseSequence(sequence: Sequence): Sequence {
-    return new Sequence(sequence.algParts.map(a => this.traverse(a)));
+    return new Sequence(sequence.nestedAlgs.map(a => this.traverse(a)));
   }
-  protected traverseGroup(group: Group): AlgPart {
-    return new Group(this.traverse(group.algPart), group.amount);
+  protected traverseGroup(group: Group): Algorithm {
+    return new Group(this.traverse(group.nestedAlg), group.amount);
   }
-  protected traverseBlockMove(blockMove: BlockMove): AlgPart {
+  protected traverseBlockMove(blockMove: BlockMove): Algorithm {
     return new BlockMove(blockMove.base, blockMove.amount);
   }
-  protected traverseCommutator(commutator: Commutator): AlgPart {
+  protected traverseCommutator(commutator: Commutator): Algorithm {
     return new Commutator(this.traverse(commutator.A), this.traverse(commutator.B), commutator.amount);
   }
-  protected traverseConjugate(conjugate: Conjugate): AlgPart {
+  protected traverseConjugate(conjugate: Conjugate): Algorithm {
     return new Conjugate(this.traverse(conjugate.A), this.traverse(conjugate.B), conjugate.amount);
   }
-  protected traversePause(pause: Pause):                      AlgPart { return pause.clone(); }
-  protected traverseNewLine(newLine: NewLine):                AlgPart { return newLine.clone(); }
-  protected traverseCommentShort(commentShort: CommentShort): AlgPart { return commentShort.clone(); }
-  protected traverseCommentLong(commentLong: CommentLong):    AlgPart { return commentLong.clone(); }
+  protected traversePause(pause: Pause):                      Algorithm { return pause.clone(); }
+  protected traverseNewLine(newLine: NewLine):                Algorithm { return newLine.clone(); }
+  protected traverseCommentShort(commentShort: CommentShort): Algorithm { return commentShort.clone(); }
+  protected traverseCommentLong(commentLong: CommentLong):    Algorithm { return commentLong.clone(); }
 }
 
 // TODO: Test that inverses are bijections.
-export class Invert extends OfAlgPart {
+export class Invert extends OfAlgorithm {
   public traverseSequence(sequence: Sequence): Sequence {
     // TODO: Handle newLines and comments correctly
-    return new Sequence(sequence.algParts.slice().reverse().map(a => this.traverse(a)));
+    return new Sequence(sequence.nestedAlgs.slice().reverse().map(a => this.traverse(a)));
   }
-  protected traverseGroup(group: Group): AlgPart {
-    return new Group(this.traverse(group.algPart), group.amount);
+  protected traverseGroup(group: Group): Algorithm {
+    return new Group(this.traverse(group.nestedAlg), group.amount);
   }
-  protected traverseBlockMove(blockMove: BlockMove): AlgPart {
+  protected traverseBlockMove(blockMove: BlockMove): Algorithm {
     return new BlockMove(blockMove.base, -blockMove.amount);
   }
-  protected traverseCommutator(commutator: Commutator): AlgPart {
+  protected traverseCommutator(commutator: Commutator): Algorithm {
     return new Commutator(commutator.B, commutator.A, commutator.amount);
   }
-  protected traverseConjugate(conjugate: Conjugate): AlgPart {
+  protected traverseConjugate(conjugate: Conjugate): Algorithm {
     return new Conjugate(conjugate.A, this.traverse(conjugate.B), conjugate.amount);
   }
-  protected traversePause(pause: Pause):                      AlgPart { return pause.clone(); }
-  protected traverseNewLine(newLine: NewLine):                AlgPart { return newLine.clone(); }
-  protected traverseCommentShort(commentShort: CommentShort): AlgPart { return commentShort.clone(); }
-  protected traverseCommentLong(commentLong: CommentLong):    AlgPart { return commentLong.clone(); }
+  protected traversePause(pause: Pause):                      Algorithm { return pause.clone(); }
+  protected traverseNewLine(newLine: NewLine):                Algorithm { return newLine.clone(); }
+  protected traverseCommentShort(commentShort: CommentShort): Algorithm { return commentShort.clone(); }
+  protected traverseCommentLong(commentLong: CommentLong):    Algorithm { return commentLong.clone(); }
 }
 
-export class Expand extends OfAlgPart {
-  private flattenSequenceOneLevel(algParts: AlgPart[]): AlgPart[] {
-    var flattened: AlgPart[] = [];
-    for (var part of algParts) {
+export class Expand extends OfAlgorithm {
+  private flattenSequenceOneLevel(nestedAlgs: Algorithm[]): Algorithm[] {
+    var flattened: Algorithm[] = [];
+    for (var part of nestedAlgs) {
       if (part instanceof Sequence) {
-        flattened = flattened.concat(part.algParts);
+        flattened = flattened.concat(part.nestedAlgs);
       } else {
         flattened.push(part)
       }
@@ -114,41 +114,41 @@ export class Expand extends OfAlgPart {
     return flattened;
   }
 
-  private repeat(algParts: AlgPart[], accordingTo: Repeatable): Sequence {
+  private repeat(nestedAlgs: Algorithm[], accordingTo: Repeatable): Sequence {
     var amount = Math.abs(accordingTo.amount);
     var amountDir = (accordingTo.amount > 0) ? 1 : -1; // Mutable
 
     // TODO: Cleaner inversion
-    var directedAlgParts: AlgPart[];
+    var directedAlgorithms: Algorithm[];
     if (amountDir == -1) {
       // TODO: Avoid casting to sequence.
-      directedAlgParts = (<Sequence>(new Sequence(algParts)).invert()).algParts;
+      directedAlgorithms = (<Sequence>(new Sequence(nestedAlgs)).invert()).nestedAlgs;
     } else {
-      directedAlgParts = algParts;
+      directedAlgorithms = nestedAlgs;
     }
 
-    var repeatedParts: AlgPart[] = [];
+    var repeatedParts: Algorithm[] = [];
     for (var i = 0; i < amount; i++) {
-      repeatedParts = repeatedParts.concat(directedAlgParts);
+      repeatedParts = repeatedParts.concat(directedAlgorithms);
     }
 
     return new Sequence(repeatedParts);
   }
 
   public traverseSequence(sequence: Sequence): Sequence {
-    return new Sequence(this.flattenSequenceOneLevel(sequence.algParts.map(a => this.traverse(a))));
+    return new Sequence(this.flattenSequenceOneLevel(sequence.nestedAlgs.map(a => this.traverse(a))));
   }
-  protected traverseGroup(group: Group): AlgPart {
+  protected traverseGroup(group: Group): Algorithm {
     // TODO: Pass raw AlgPArts[] to sequence.
-    return this.repeat([this.traverse(group.algPart)], group);
+    return this.repeat([this.traverse(group.nestedAlg)], group);
   }
-  protected traverseBlockMove(blockMove: BlockMove): AlgPart {
+  protected traverseBlockMove(blockMove: BlockMove): Algorithm {
     return blockMove.clone();
   }
-  protected traverseCommutator(commutator: Commutator): AlgPart {
+  protected traverseCommutator(commutator: Commutator): Algorithm {
     var expandedA = this.traverse(commutator.A)
     var expandedB = this.traverse(commutator.B)
-    var once: AlgPart[] = [];
+    var once: Algorithm[] = [];
     once = once.concat(
       expandedA,
       expandedB,
@@ -157,10 +157,10 @@ export class Expand extends OfAlgPart {
     );
     return this.repeat(this.flattenSequenceOneLevel(once), commutator);
   }
-  protected traverseConjugate(conjugate: Conjugate): AlgPart {
+  protected traverseConjugate(conjugate: Conjugate): Algorithm {
     var expandedA = this.traverse(conjugate.A)
     var expandedB = this.traverse(conjugate.B)
-    var once: AlgPart[] = [];
+    var once: Algorithm[] = [];
     once = once.concat(
       expandedA,
       expandedB,
@@ -168,22 +168,22 @@ export class Expand extends OfAlgPart {
     );
     return this.repeat(this.flattenSequenceOneLevel(once), conjugate);
   }
-  protected traversePause(pause: Pause):                      AlgPart { return pause.clone(); }
-  protected traverseNewLine(newLine: NewLine):                AlgPart { return newLine.clone(); }
-  protected traverseCommentShort(commentShort: CommentShort): AlgPart { return commentShort.clone(); }
-  protected traverseCommentLong(commentLong: CommentLong):    AlgPart { return commentLong.clone(); }
+  protected traversePause(pause: Pause):                      Algorithm { return pause.clone(); }
+  protected traverseNewLine(newLine: NewLine):                Algorithm { return newLine.clone(); }
+  protected traverseCommentShort(commentShort: CommentShort): Algorithm { return commentShort.clone(); }
+  protected traverseCommentLong(commentLong: CommentLong):    Algorithm { return commentLong.clone(); }
 }
 
 export class CountBlockMoves extends Up<number> {
   public traverseSequence(sequence: Sequence): number {
     var total = 0;
-    for (var part of sequence.algParts) {
+    for (var part of sequence.nestedAlgs) {
       total += this.traverse(part);
     }
     return total;
   }
   protected traverseGroup(group: Group): number {
-    return this.traverse(group.algPart);
+    return this.traverse(group.nestedAlg);
   }
   protected traverseBlockMove(blockMove: BlockMove): number {
     return 1;
@@ -200,56 +200,56 @@ export class CountBlockMoves extends Up<number> {
   protected traverseCommentLong(commentLong: CommentLong):    number { return 0; }
 }
 
-export class StructureEquals extends DownUp<AlgPart, boolean> {
-  public traverseSequence(sequence: Sequence, dataDown: AlgPart): boolean {
+export class StructureEquals extends DownUp<Algorithm, boolean> {
+  public traverseSequence(sequence: Sequence, dataDown: Algorithm): boolean {
     if (!(dataDown instanceof Sequence)) {
       return false;
     }
-    if (sequence.algParts.length !== dataDown.algParts.length) {
+    if (sequence.nestedAlgs.length !== dataDown.nestedAlgs.length) {
       return false;
     }
-    for (var i = 0; i < sequence.algParts.length; i++) {
-      if (!this.traverse(sequence.algParts[i], dataDown.algParts[i])) {
+    for (var i = 0; i < sequence.nestedAlgs.length; i++) {
+      if (!this.traverse(sequence.nestedAlgs[i], dataDown.nestedAlgs[i])) {
         return false;
       }
     }
     return true;
   }
-  protected traverseGroup(group: Group, dataDown: AlgPart): boolean {
-    return (dataDown instanceof Group) && this.traverse(group.algPart, dataDown.algPart);
+  protected traverseGroup(group: Group, dataDown: Algorithm): boolean {
+    return (dataDown instanceof Group) && this.traverse(group.nestedAlg, dataDown.nestedAlg);
   }
-  protected traverseBlockMove(blockMove: BlockMove, dataDown: AlgPart): boolean {
+  protected traverseBlockMove(blockMove: BlockMove, dataDown: Algorithm): boolean {
     // TODO: Handle layers.
     return dataDown instanceof BlockMove &&
            blockMove.base === dataDown.base &&
            blockMove.amount === dataDown.amount;
   }
-  protected traverseCommutator(commutator: Commutator, dataDown: AlgPart): boolean {
+  protected traverseCommutator(commutator: Commutator, dataDown: Algorithm): boolean {
     return (dataDown instanceof Commutator) &&
            this.traverse(commutator.A, dataDown.A) &&
            this.traverse(commutator.B, dataDown.B);
   }
-  protected traverseConjugate(conjugate: Conjugate, dataDown: AlgPart): boolean {
+  protected traverseConjugate(conjugate: Conjugate, dataDown: Algorithm): boolean {
     return (dataDown instanceof Conjugate) &&
            this.traverse(conjugate.A, dataDown.A) &&
            this.traverse(conjugate.B, dataDown.B);
   }
-  protected traversePause(pause: Pause, dataDown: AlgPart): boolean {
+  protected traversePause(pause: Pause, dataDown: Algorithm): boolean {
     return dataDown instanceof Pause;
   }
-  protected traverseNewLine(newLine: NewLine, dataDown: AlgPart): boolean {
+  protected traverseNewLine(newLine: NewLine, dataDown: Algorithm): boolean {
     return dataDown instanceof NewLine;
   }
-  protected traverseCommentShort(commentShort: CommentShort, dataDown: AlgPart): boolean {
+  protected traverseCommentShort(commentShort: CommentShort, dataDown: Algorithm): boolean {
     return (dataDown instanceof CommentShort) && (commentShort.comment == dataDown.comment);
   }
-  protected traverseCommentLong(commentLong: CommentLong, dataDown: AlgPart): boolean {
+  protected traverseCommentLong(commentLong: CommentLong, dataDown: Algorithm): boolean {
     return (dataDown instanceof CommentShort) && (commentLong.comment == dataDown.comment);
   }
 }
 
 // TODO: Test that inverses are bijections.
-export class CoalesceMoves extends OfAlgPart {
+export class CoalesceMoves extends OfAlgorithm {
   private sameBlock(moveA: BlockMove, moveB: BlockMove): boolean {
     // TODO: Handle layers
     return moveA.base === moveB.base;
@@ -260,8 +260,8 @@ export class CoalesceMoves extends OfAlgPart {
   }
 
   public traverseSequence(sequence: Sequence): Sequence {
-    var coalesced: AlgPart[] = [];
-    for (var part of sequence.algParts) {
+    var coalesced: Algorithm[] = [];
+    for (var part of sequence.nestedAlgs) {
       if (!(part instanceof BlockMove)) {
         coalesced.push(this.traverse(part));
       } else if (coalesced.length > 0) {
@@ -287,35 +287,35 @@ export class CoalesceMoves extends OfAlgPart {
     }
     return new Sequence(coalesced);
   }
-  protected traverseGroup(group: Group):                      AlgPart { return group.clone(); }
-  protected traverseBlockMove(blockMove: BlockMove):          AlgPart { return blockMove.clone(); }
-  protected traverseCommutator(commutator: Commutator):       AlgPart { return commutator.clone(); }
-  protected traverseConjugate(conjugate: Conjugate):          AlgPart { return conjugate.clone(); }
-  protected traversePause(pause: Pause):                      AlgPart { return pause.clone(); }
-  protected traverseNewLine(newLine: NewLine):                AlgPart { return newLine.clone(); }
-  protected traverseCommentShort(commentShort: CommentShort): AlgPart { return commentShort.clone(); }
-  protected traverseCommentLong(commentLong: CommentLong):    AlgPart { return commentLong.clone(); }
+  protected traverseGroup(group: Group):                      Algorithm { return group.clone(); }
+  protected traverseBlockMove(blockMove: BlockMove):          Algorithm { return blockMove.clone(); }
+  protected traverseCommutator(commutator: Commutator):       Algorithm { return commutator.clone(); }
+  protected traverseConjugate(conjugate: Conjugate):          Algorithm { return conjugate.clone(); }
+  protected traversePause(pause: Pause):                      Algorithm { return pause.clone(); }
+  protected traverseNewLine(newLine: NewLine):                Algorithm { return newLine.clone(); }
+  protected traverseCommentShort(commentShort: CommentShort): Algorithm { return commentShort.clone(); }
+  protected traverseCommentLong(commentLong: CommentLong):    Algorithm { return commentLong.clone(); }
 }
 
-export class Concat extends DownUp<AlgPart, Sequence> {
-  private concatIntoSequence(A: AlgPart[], B: AlgPart): Sequence {
-    var algParts: AlgPart[] = A.slice();
+export class Concat extends DownUp<Algorithm, Sequence> {
+  private concatIntoSequence(A: Algorithm[], B: Algorithm): Sequence {
+    var nestedAlgs: Algorithm[] = A.slice();
     if (B instanceof Sequence) {
-      algParts = algParts.concat(B.algParts)
+      nestedAlgs = nestedAlgs.concat(B.nestedAlgs)
     } else {
-      algParts.push(B);
+      nestedAlgs.push(B);
     }
-    return new Sequence(algParts)
+    return new Sequence(nestedAlgs)
   }
-  protected traverseSequence(     sequence:     Sequence,     dataDown: AlgPart): Sequence {return this.concatIntoSequence(sequence.algParts, dataDown); }
-  protected traverseGroup(        group:        Group,        dataDown: AlgPart): Sequence {return this.concatIntoSequence([group]          , dataDown); }
-  protected traverseBlockMove(    blockMove:    BlockMove,    dataDown: AlgPart): Sequence {return this.concatIntoSequence([blockMove]      , dataDown); }
-  protected traverseCommutator(   commutator:   Commutator,   dataDown: AlgPart): Sequence {return this.concatIntoSequence([commutator]     , dataDown); }
-  protected traverseConjugate(    conjugate:    Conjugate,    dataDown: AlgPart): Sequence {return this.concatIntoSequence([conjugate]      , dataDown); }
-  protected traversePause(        pause:        Pause,        dataDown: AlgPart): Sequence {return this.concatIntoSequence([pause]          , dataDown); }
-  protected traverseNewLine(      newLine:      NewLine,      dataDown: AlgPart): Sequence {return this.concatIntoSequence([newLine]        , dataDown); }
-  protected traverseCommentShort( commentShort: CommentShort, dataDown: AlgPart): Sequence {return this.concatIntoSequence([commentShort]   , dataDown); }
-  protected traverseCommentLong(  commentLong:  CommentLong,  dataDown: AlgPart): Sequence {return this.concatIntoSequence([commentLong]    , dataDown); }
+  protected traverseSequence(     sequence:     Sequence,     dataDown: Algorithm): Sequence {return this.concatIntoSequence(sequence.nestedAlgs, dataDown); }
+  protected traverseGroup(        group:        Group,        dataDown: Algorithm): Sequence {return this.concatIntoSequence([group]          , dataDown); }
+  protected traverseBlockMove(    blockMove:    BlockMove,    dataDown: Algorithm): Sequence {return this.concatIntoSequence([blockMove]      , dataDown); }
+  protected traverseCommutator(   commutator:   Commutator,   dataDown: Algorithm): Sequence {return this.concatIntoSequence([commutator]     , dataDown); }
+  protected traverseConjugate(    conjugate:    Conjugate,    dataDown: Algorithm): Sequence {return this.concatIntoSequence([conjugate]      , dataDown); }
+  protected traversePause(        pause:        Pause,        dataDown: Algorithm): Sequence {return this.concatIntoSequence([pause]          , dataDown); }
+  protected traverseNewLine(      newLine:      NewLine,      dataDown: Algorithm): Sequence {return this.concatIntoSequence([newLine]        , dataDown); }
+  protected traverseCommentShort( commentShort: CommentShort, dataDown: Algorithm): Sequence {return this.concatIntoSequence([commentShort]   , dataDown); }
+  protected traverseCommentLong(  commentLong:  CommentLong,  dataDown: Algorithm): Sequence {return this.concatIntoSequence([commentLong]    , dataDown); }
 }
 
 export namespace Singleton {

@@ -6,11 +6,11 @@ export type BaseMove = string; // TODO: Convert to an enum with string mappings.
 
 export class Sequence extends NonRepeatable {
   public type: string = "sequence";
-  constructor(public algParts: AlgPart[]) {
+  constructor(public nestedAlgs: Algorithm[]) {
     super();
   }
   toString(): string {
-    return this.algParts.join(" ");
+    return this.nestedAlgs.join(" ");
   }
 }
 
@@ -18,11 +18,11 @@ export class Sequence extends NonRepeatable {
 // written.
 export class Group extends Repeatable {
   public type: string = "group";
-  constructor(public algPart: AlgPart, amount: number) {
+  constructor(public nestedAlg: Algorithm, amount: number) {
     super(amount);
   }
   toString(): string {
-    return "(" + this.algPart + ")" + this.repetitionSuffix();
+    return "(" + this.nestedAlg + ")" + this.repetitionSuffix();
   }
 }
 
@@ -47,7 +47,7 @@ export class BlockMove extends Repeatable {
 
 export class Commutator extends Repeatable {
   public type: string = "commutator";
-  constructor(public A: AlgPart, public B: AlgPart, amount: number) {
+  constructor(public A: Algorithm, public B: Algorithm, amount: number) {
     super(amount);
   }
   toString(): string {
@@ -57,7 +57,7 @@ export class Commutator extends Repeatable {
 
 export class Conjugate extends Repeatable {
   public type: string = "conjugate";
-  constructor(public A: AlgPart, public B: AlgPart, amount: number) {
+  constructor(public A: Algorithm, public B: Algorithm, amount: number) {
     super(amount);
   }
   toString(): string {
@@ -110,6 +110,6 @@ export class CommentLong extends NonRepeatable {
 }
 
 // TODO
-// export class TimeStamp extends NonRepeatable implements AlgPart
+// export class TimeStamp extends NonRepeatable implements Algorithm
 
 }
