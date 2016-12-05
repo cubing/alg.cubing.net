@@ -58,14 +58,28 @@
   console.log("Sune inverse is AntiSune", Alg.Example.Sune.invert().structureEquals(Alg.Example.AntiSune));
 })();
 
+
+var U = new Alg.BlockMove("U", 1);
+var UU_raw = new Alg.Sequence([
+  new Alg.BlockMove("U", 1),
+  new Alg.BlockMove("U", 1)
+]);
+var U2 = new Alg.Sequence([
+  new Alg.BlockMove("U", 2)
+]);
+var R = new Alg.Sequence([
+  new Alg.BlockMove("R", 1)
+]);
+
 (function TestCoalesceMoves() {
-  var UU = new Alg.Sequence([
-    new Alg.BlockMove("U", 1),
-    new Alg.BlockMove("U", 1)
-  ]);
-  var U2 = new Alg.Sequence([
-    new Alg.BlockMove("U", 2)
-  ]);
-  console.log("Coalesce U U", UU.coalesceMoves().structureEquals(U2));
+  console.log("Coalesce U U", UU_raw.coalesceMoves().structureEquals(U2));
+  console.log("Coalesce U U string value", UU_raw.coalesceMoves().toString() === "U2");
   console.log("Expanded SuneCommutator coalesces into Sune", Alg.Example.SuneCommutator.expand().coalesceMoves().structureEquals(Alg.Example.Sune));
+})();
+
+(function TestConcat() {
+  console.log("Concat U U", U.concat(U).structureEquals(UU_raw));
+  console.log("Concat U U string value", U.concat(U).toString() === "U U");
+  console.log("Concatenation associativity", U.concat(R.concat(U)).structureEquals(U.concat(R).concat(U)));
+  console.log("Build Sune", R.concat(U).concat(R.invert()).concat(U).concat(R).concat(U2.invert()).concat(R.invert()).structureEquals(Alg.Example.Sune));
 })();

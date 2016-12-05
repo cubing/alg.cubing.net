@@ -12,10 +12,14 @@ export abstract class AlgPart {
   invert():          AlgPart { return Alg.Traversal.Singleton.invert.traverse(this);          }
   expand():          AlgPart { return Alg.Traversal.Singleton.expand.traverse(this);          }
   countBlockMoves(): number  { return Alg.Traversal.Singleton.countBlockMoves.traverse(this); }
+  coalesceMoves():   AlgPart { return Alg.Traversal.Singleton.coalesceMoves.traverse(this); }
+
   structureEquals(algPart: AlgPart): boolean {
     return Alg.Traversal.Singleton.structureEquals.traverse(this, algPart);
   }
-  coalesceMoves():    AlgPart { return Alg.Traversal.Singleton.coalesceMoves.traverse(this); }
+  concat(algPart: AlgPart): Sequence {
+    return Alg.Traversal.Singleton.concat.traverse(this, algPart);
+  }
 }
 
 export type Algorithm = AlgPart;

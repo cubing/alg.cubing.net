@@ -297,6 +297,27 @@ export class CoalesceMoves extends OfAlgPart {
   protected traverseCommentLong(commentLong: CommentLong):    AlgPart { return commentLong.clone(); }
 }
 
+export class Concat extends DownUp<AlgPart, Sequence> {
+  private concatIntoSequence(A: AlgPart[], B: AlgPart): Sequence {
+    var algParts: AlgPart[] = A.slice();
+    if (B instanceof Sequence) {
+      algParts = algParts.concat(B.algParts)
+    } else {
+      algParts.push(B);
+    }
+    return new Sequence(algParts)
+  }
+  protected traverseSequence(     sequence:     Sequence,     dataDown: AlgPart): Sequence {return this.concatIntoSequence(sequence.algParts, dataDown); }
+  protected traverseGroup(        group:        Group,        dataDown: AlgPart): Sequence {return this.concatIntoSequence([group]          , dataDown); }
+  protected traverseBlockMove(    blockMove:    BlockMove,    dataDown: AlgPart): Sequence {return this.concatIntoSequence([blockMove]      , dataDown); }
+  protected traverseCommutator(   commutator:   Commutator,   dataDown: AlgPart): Sequence {return this.concatIntoSequence([commutator]     , dataDown); }
+  protected traverseConjugate(    conjugate:    Conjugate,    dataDown: AlgPart): Sequence {return this.concatIntoSequence([conjugate]      , dataDown); }
+  protected traversePause(        pause:        Pause,        dataDown: AlgPart): Sequence {return this.concatIntoSequence([pause]          , dataDown); }
+  protected traverseNewline(      newline:      Newline,      dataDown: AlgPart): Sequence {return this.concatIntoSequence([newline]        , dataDown); }
+  protected traverseCommentShort( commentShort: CommentShort, dataDown: AlgPart): Sequence {return this.concatIntoSequence([commentShort]   , dataDown); }
+  protected traverseCommentLong(  commentLong:  CommentLong,  dataDown: AlgPart): Sequence {return this.concatIntoSequence([commentLong]    , dataDown); }
+}
+
 export namespace Singleton {
   export const clone           = new Clone();
   export const invert          = new Invert();
@@ -304,6 +325,7 @@ export namespace Singleton {
   export const countBlockMoves = new CountBlockMoves();
   export const structureEquals = new StructureEquals();
   export const coalesceMoves   = new CoalesceMoves();
+  export const concat          = new Concat();
 }
 
 }
