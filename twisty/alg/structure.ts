@@ -13,6 +13,7 @@ export abstract class Algorithm {
   expand():          Algorithm { return Alg.Traversal.Singleton.expand.traverse(this);          }
   countBlockMoves(): number  { return Alg.Traversal.Singleton.countBlockMoves.traverse(this); }
   coalesceMoves():   Algorithm { return Alg.Traversal.Singleton.coalesceMoves.traverse(this); }
+  toString():        string    { return Alg.Traversal.Singleton.toString.traverse(this); }
 
   structureEquals(nestedAlg: Algorithm): boolean {
     return Alg.Traversal.Singleton.structureEquals.traverse(this, nestedAlg);
@@ -26,17 +27,6 @@ export abstract class Repeatable extends Algorithm {
   // TODO: Make `amount` an optional argument in derived class constructors.
   constructor(public amount: number) {
     super();
-  }
-  protected repetitionSuffix(): string {
-    var absAmount = Math.abs(this.amount);
-    var s = "";
-    if (absAmount !== 1) {
-      s += String(absAmount)
-    }
-    if (absAmount !== this.amount) {
-      s += "'"
-    }
-    return s;
   }
 }
 

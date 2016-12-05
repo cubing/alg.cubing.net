@@ -318,6 +318,32 @@ export class Concat extends DownUp<Algorithm, Sequence> {
   protected traverseCommentLong(  commentLong:  CommentLong,  dataDown: Algorithm): Sequence {return this.concatIntoSequence([commentLong]    , dataDown); }
 }
 
+export class ToString extends Up<string> {
+  private repetitionSuffix(amount: number): string {
+    var absAmount = Math.abs(amount);
+    var s = "";
+    if (absAmount !== 1) {
+      s += String(absAmount)
+    }
+    if (absAmount !== amount) {
+      s += "'"
+    }
+    return s;
+  }
+  protected traverseSequence(     sequence:     Sequence,     ): string { return sequence.nestedAlgs.join(" "); }
+  protected traverseGroup(        group:        Group,        ): string { return "(" + group.nestedAlg + ")" + this.repetitionSuffix(group.amount); }
+  protected traverseBlockMove(    blockMove:    BlockMove,    ): string { return blockMove.base + this.repetitionSuffix(blockMove.amount); }
+  protected traverseCommutator(   commutator:   Commutator,   ): string { return "[" + commutator.A + ", " + commutator.B + "]" + this.repetitionSuffix(commutator.amount); }
+  protected traverseConjugate(    conjugate:    Conjugate,    ): string { return "[" + conjugate.A + ": " + conjugate.B + "]" + this.repetitionSuffix(conjugate.amount); }
+  // TODO: Remove spaces between repeated pauses (in traverseSequence)
+  protected traversePause(        pause:        Pause,        ): string { return "."; }
+  protected traverseNewLine(      newLine:      NewLine,      ): string { return "\n"; }
+  // TODO: Enforce being followed by a newline (or the end of the alg)?
+  protected traverseCommentShort( commentShort: CommentShort, ): string { return "//" + commentShort.comment; }
+    // TODO: Sanitize `*/`
+  protected traverseCommentLong(  commentLong:  CommentLong,  ): string { return "/*" + commentLong.comment + "*/"; }
+}
+
 export namespace Singleton {
   export const clone           = new Clone();
   export const invert          = new Invert();
@@ -326,6 +352,7 @@ export namespace Singleton {
   export const structureEquals = new StructureEquals();
   export const coalesceMoves   = new CoalesceMoves();
   export const concat          = new Concat();
+  export const toString        = new ToString();
 }
 
 }
