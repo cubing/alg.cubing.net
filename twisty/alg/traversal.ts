@@ -6,74 +6,56 @@ export namespace Traversal {
 export abstract class DownUp<DataDown, DataUp> {
   // Immediate subclasses should overwrite this.
   public traverse(algorithm: Algorithm, dataDown: DataDown): DataUp {
-    return this.traverseGeneric(algorithm, dataDown);
+    return algorithm.dispatch(this, dataDown);
   }
 
-  // A generic version of traverse that should not be overwritten.
-  protected traverseGeneric(algorithm: Algorithm, dataDown: DataDown): DataUp {
-    // TODO: Use a direct look up using e.g. hashmap instead of sequential if-else.
-    // TODO: Clone arguments by default, for safety.
-         if (algorithm instanceof Sequence)       { return this.traverseSequence(algorithm, dataDown); }
-    else if (algorithm instanceof Group)          { return this.traverseGroup(algorithm, dataDown); }
-    else if (algorithm instanceof BlockMove)      { return this.traverseBlockMove(algorithm, dataDown); }
-    else if (algorithm instanceof Commutator)     { return this.traverseCommutator(algorithm, dataDown); }
-    else if (algorithm instanceof Conjugate)      { return this.traverseConjugate(algorithm, dataDown); }
-    else if (algorithm instanceof Pause)          { return this.traversePause(algorithm, dataDown); }
-    else if (algorithm instanceof NewLine)        { return this.traverseNewLine(algorithm, dataDown); }
-    else if (algorithm instanceof CommentShort)   { return this.traverseCommentShort(algorithm, dataDown); }
-    else if (algorithm instanceof CommentLong)    { return this.traverseCommentLong(algorithm, dataDown); }
-    else {
-      throw "Unknown type of algorithm";
-    }
-  }
-
-  protected abstract traverseSequence(sequence: Sequence, dataDown: DataDown): DataUp;
-  protected abstract traverseGroup(group: Group, dataDown: DataDown): DataUp;
-  protected abstract traverseBlockMove(blockMove: BlockMove, dataDown: DataDown): DataUp;
-  protected abstract traverseCommutator(commutator: Commutator, dataDown: DataDown): DataUp;
-  protected abstract traverseConjugate(conjugate: Conjugate, dataDown: DataDown): DataUp;
-  protected abstract traversePause(pause: Pause, dataDown: DataDown): DataUp;
-  protected abstract traverseNewLine(newLine: NewLine, dataDown: DataDown): DataUp;
-  protected abstract traverseCommentShort(commentShort: CommentShort, dataDown: DataDown): DataUp;
-  protected abstract traverseCommentLong(commentLong: CommentLong, dataDown: DataDown): DataUp;
+  public abstract traverseSequence(sequence: Sequence, dataDown: DataDown): DataUp;
+  public abstract traverseGroup(group: Group, dataDown: DataDown): DataUp;
+  public abstract traverseBlockMove(blockMove: BlockMove, dataDown: DataDown): DataUp;
+  public abstract traverseCommutator(commutator: Commutator, dataDown: DataDown): DataUp;
+  public abstract traverseConjugate(conjugate: Conjugate, dataDown: DataDown): DataUp;
+  public abstract traversePause(pause: Pause, dataDown: DataDown): DataUp;
+  public abstract traverseNewLine(newLine: NewLine, dataDown: DataDown): DataUp;
+  public abstract traverseCommentShort(commentShort: CommentShort, dataDown: DataDown): DataUp;
+  public abstract traverseCommentLong(commentLong: CommentLong, dataDown: DataDown): DataUp;
 }
 
 export abstract class Up<DataUp> extends DownUp<undefined, DataUp> {
   public traverse(algorithm: Algorithm): DataUp {
-    return this.traverseGeneric.call(this, algorithm);
+    return algorithm.dispatch(this, undefined);
   }
 
-  protected abstract traverseSequence(sequence: Sequence): DataUp;
-  protected abstract traverseGroup(group: Group): DataUp;
-  protected abstract traverseBlockMove(blockMove: BlockMove): DataUp;
-  protected abstract traverseCommutator(commutator: Commutator): DataUp;
-  protected abstract traverseConjugate(conjugate: Conjugate): DataUp;
-  protected abstract traversePause(pause: Pause): DataUp;
-  protected abstract traverseNewLine(newLine: NewLine): DataUp;
-  protected abstract traverseCommentShort(commentShort: CommentShort): DataUp;
-  protected abstract traverseCommentLong(commentLong: CommentLong): DataUp;
+  public abstract traverseSequence(sequence: Sequence): DataUp;
+  public abstract traverseGroup(group: Group): DataUp;
+  public abstract traverseBlockMove(blockMove: BlockMove): DataUp;
+  public abstract traverseCommutator(commutator: Commutator): DataUp;
+  public abstract traverseConjugate(conjugate: Conjugate): DataUp;
+  public abstract traversePause(pause: Pause): DataUp;
+  public abstract traverseNewLine(newLine: NewLine): DataUp;
+  public abstract traverseCommentShort(commentShort: CommentShort): DataUp;
+  public abstract traverseCommentLong(commentLong: CommentLong): DataUp;
 };
 
 export class Clone extends Up<Algorithm> {
   public traverseSequence(sequence: Sequence): Sequence {
     return new Sequence(sequence.nestedAlgs.map(a => this.traverse(a)));
   }
-  protected traverseGroup(group: Group): Algorithm {
+  public traverseGroup(group: Group): Algorithm {
     return new Group(this.traverse(group.nestedAlg), group.amount);
   }
-  protected traverseBlockMove(blockMove: BlockMove): Algorithm {
+  public traverseBlockMove(blockMove: BlockMove): Algorithm {
     return new BlockMove(blockMove.base, blockMove.amount);
   }
-  protected traverseCommutator(commutator: Commutator): Algorithm {
+  public traverseCommutator(commutator: Commutator): Algorithm {
     return new Commutator(this.traverse(commutator.A), this.traverse(commutator.B), commutator.amount);
   }
-  protected traverseConjugate(conjugate: Conjugate): Algorithm {
+  public traverseConjugate(conjugate: Conjugate): Algorithm {
     return new Conjugate(this.traverse(conjugate.A), this.traverse(conjugate.B), conjugate.amount);
   }
-  protected traversePause(pause: Pause):                      Algorithm { return pause.clone(); }
-  protected traverseNewLine(newLine: NewLine):                Algorithm { return newLine.clone(); }
-  protected traverseCommentShort(commentShort: CommentShort): Algorithm { return commentShort.clone(); }
-  protected traverseCommentLong(commentLong: CommentLong):    Algorithm { return commentLong.clone(); }
+  public traversePause(pause: Pause):                      Algorithm { return pause.clone(); }
+  public traverseNewLine(newLine: NewLine):                Algorithm { return newLine.clone(); }
+  public traverseCommentShort(commentShort: CommentShort): Algorithm { return commentShort.clone(); }
+  public traverseCommentLong(commentLong: CommentLong):    Algorithm { return commentLong.clone(); }
 }
 
 // TODO: Test that inverses are bijections.
@@ -82,22 +64,22 @@ export class Invert extends Up<Algorithm> {
     // TODO: Handle newLines and comments correctly
     return new Sequence(sequence.nestedAlgs.slice().reverse().map(a => this.traverse(a)));
   }
-  protected traverseGroup(group: Group): Algorithm {
+  public traverseGroup(group: Group): Algorithm {
     return new Group(this.traverse(group.nestedAlg), group.amount);
   }
-  protected traverseBlockMove(blockMove: BlockMove): Algorithm {
+  public traverseBlockMove(blockMove: BlockMove): Algorithm {
     return new BlockMove(blockMove.base, -blockMove.amount);
   }
-  protected traverseCommutator(commutator: Commutator): Algorithm {
+  public traverseCommutator(commutator: Commutator): Algorithm {
     return new Commutator(commutator.B, commutator.A, commutator.amount);
   }
-  protected traverseConjugate(conjugate: Conjugate): Algorithm {
+  public traverseConjugate(conjugate: Conjugate): Algorithm {
     return new Conjugate(conjugate.A, this.traverse(conjugate.B), conjugate.amount);
   }
-  protected traversePause(pause: Pause):                      Algorithm { return pause.clone(); }
-  protected traverseNewLine(newLine: NewLine):                Algorithm { return newLine.clone(); }
-  protected traverseCommentShort(commentShort: CommentShort): Algorithm { return commentShort.clone(); }
-  protected traverseCommentLong(commentLong: CommentLong):    Algorithm { return commentLong.clone(); }
+  public traversePause(pause: Pause):                      Algorithm { return pause.clone(); }
+  public traverseNewLine(newLine: NewLine):                Algorithm { return newLine.clone(); }
+  public traverseCommentShort(commentShort: CommentShort): Algorithm { return commentShort.clone(); }
+  public traverseCommentLong(commentLong: CommentLong):    Algorithm { return commentLong.clone(); }
 }
 
 export class Expand extends Up<Algorithm> {
@@ -137,14 +119,14 @@ export class Expand extends Up<Algorithm> {
   public traverseSequence(sequence: Sequence): Sequence {
     return new Sequence(this.flattenSequenceOneLevel(sequence.nestedAlgs.map(a => this.traverse(a))));
   }
-  protected traverseGroup(group: Group): Algorithm {
+  public traverseGroup(group: Group): Algorithm {
     // TODO: Pass raw Algorithm[] to sequence.
     return this.repeat([this.traverse(group.nestedAlg)], group);
   }
-  protected traverseBlockMove(blockMove: BlockMove): Algorithm {
+  public traverseBlockMove(blockMove: BlockMove): Algorithm {
     return blockMove.clone();
   }
-  protected traverseCommutator(commutator: Commutator): Algorithm {
+  public traverseCommutator(commutator: Commutator): Algorithm {
     var expandedA = this.traverse(commutator.A)
     var expandedB = this.traverse(commutator.B)
     var once: Algorithm[] = [];
@@ -156,7 +138,7 @@ export class Expand extends Up<Algorithm> {
     );
     return this.repeat(this.flattenSequenceOneLevel(once), commutator);
   }
-  protected traverseConjugate(conjugate: Conjugate): Algorithm {
+  public traverseConjugate(conjugate: Conjugate): Algorithm {
     var expandedA = this.traverse(conjugate.A)
     var expandedB = this.traverse(conjugate.B)
     var once: Algorithm[] = [];
@@ -167,10 +149,10 @@ export class Expand extends Up<Algorithm> {
     );
     return this.repeat(this.flattenSequenceOneLevel(once), conjugate);
   }
-  protected traversePause(pause: Pause):                      Algorithm { return pause.clone(); }
-  protected traverseNewLine(newLine: NewLine):                Algorithm { return newLine.clone(); }
-  protected traverseCommentShort(commentShort: CommentShort): Algorithm { return commentShort.clone(); }
-  protected traverseCommentLong(commentLong: CommentLong):    Algorithm { return commentLong.clone(); }
+  public traversePause(pause: Pause):                      Algorithm { return pause.clone(); }
+  public traverseNewLine(newLine: NewLine):                Algorithm { return newLine.clone(); }
+  public traverseCommentShort(commentShort: CommentShort): Algorithm { return commentShort.clone(); }
+  public traverseCommentLong(commentLong: CommentLong):    Algorithm { return commentLong.clone(); }
 }
 
 export class CountBlockMoves extends Up<number> {
@@ -181,22 +163,22 @@ export class CountBlockMoves extends Up<number> {
     }
     return total;
   }
-  protected traverseGroup(group: Group): number {
+  public traverseGroup(group: Group): number {
     return this.traverse(group.nestedAlg);
   }
-  protected traverseBlockMove(blockMove: BlockMove): number {
+  public traverseBlockMove(blockMove: BlockMove): number {
     return 1;
   }
-  protected traverseCommutator(commutator: Commutator): number {
+  public traverseCommutator(commutator: Commutator): number {
     return 2*(this.traverse(commutator.A) + this.traverse(commutator.B));
   }
-  protected traverseConjugate(conjugate: Conjugate): number {
+  public traverseConjugate(conjugate: Conjugate): number {
     return 2*(this.traverse(conjugate.A)) + this.traverse(conjugate.B);
   }
-  protected traversePause(pause: Pause):                      number { return 0; }
-  protected traverseNewLine(newLine: NewLine):                number { return 0; }
-  protected traverseCommentShort(commentShort: CommentShort): number { return 0; }
-  protected traverseCommentLong(commentLong: CommentLong):    number { return 0; }
+  public traversePause(pause: Pause):                      number { return 0; }
+  public traverseNewLine(newLine: NewLine):                number { return 0; }
+  public traverseCommentShort(commentShort: CommentShort): number { return 0; }
+  public traverseCommentLong(commentLong: CommentLong):    number { return 0; }
 }
 
 export class StructureEquals extends DownUp<Algorithm, boolean> {
@@ -214,35 +196,35 @@ export class StructureEquals extends DownUp<Algorithm, boolean> {
     }
     return true;
   }
-  protected traverseGroup(group: Group, dataDown: Algorithm): boolean {
+  public traverseGroup(group: Group, dataDown: Algorithm): boolean {
     return (dataDown instanceof Group) && this.traverse(group.nestedAlg, dataDown.nestedAlg);
   }
-  protected traverseBlockMove(blockMove: BlockMove, dataDown: Algorithm): boolean {
+  public traverseBlockMove(blockMove: BlockMove, dataDown: Algorithm): boolean {
     // TODO: Handle layers.
     return dataDown instanceof BlockMove &&
            blockMove.base === dataDown.base &&
            blockMove.amount === dataDown.amount;
   }
-  protected traverseCommutator(commutator: Commutator, dataDown: Algorithm): boolean {
+  public traverseCommutator(commutator: Commutator, dataDown: Algorithm): boolean {
     return (dataDown instanceof Commutator) &&
            this.traverse(commutator.A, dataDown.A) &&
            this.traverse(commutator.B, dataDown.B);
   }
-  protected traverseConjugate(conjugate: Conjugate, dataDown: Algorithm): boolean {
+  public traverseConjugate(conjugate: Conjugate, dataDown: Algorithm): boolean {
     return (dataDown instanceof Conjugate) &&
            this.traverse(conjugate.A, dataDown.A) &&
            this.traverse(conjugate.B, dataDown.B);
   }
-  protected traversePause(pause: Pause, dataDown: Algorithm): boolean {
+  public traversePause(pause: Pause, dataDown: Algorithm): boolean {
     return dataDown instanceof Pause;
   }
-  protected traverseNewLine(newLine: NewLine, dataDown: Algorithm): boolean {
+  public traverseNewLine(newLine: NewLine, dataDown: Algorithm): boolean {
     return dataDown instanceof NewLine;
   }
-  protected traverseCommentShort(commentShort: CommentShort, dataDown: Algorithm): boolean {
+  public traverseCommentShort(commentShort: CommentShort, dataDown: Algorithm): boolean {
     return (dataDown instanceof CommentShort) && (commentShort.comment == dataDown.comment);
   }
-  protected traverseCommentLong(commentLong: CommentLong, dataDown: Algorithm): boolean {
+  public traverseCommentLong(commentLong: CommentLong, dataDown: Algorithm): boolean {
     return (dataDown instanceof CommentShort) && (commentLong.comment == dataDown.comment);
   }
 }
@@ -282,14 +264,14 @@ export class CoalesceMoves extends Up<Algorithm> {
     }
     return new Sequence(coalesced);
   }
-  protected traverseGroup(group: Group):                      Algorithm { return group.clone(); }
-  protected traverseBlockMove(blockMove: BlockMove):          Algorithm { return blockMove.clone(); }
-  protected traverseCommutator(commutator: Commutator):       Algorithm { return commutator.clone(); }
-  protected traverseConjugate(conjugate: Conjugate):          Algorithm { return conjugate.clone(); }
-  protected traversePause(pause: Pause):                      Algorithm { return pause.clone(); }
-  protected traverseNewLine(newLine: NewLine):                Algorithm { return newLine.clone(); }
-  protected traverseCommentShort(commentShort: CommentShort): Algorithm { return commentShort.clone(); }
-  protected traverseCommentLong(commentLong: CommentLong):    Algorithm { return commentLong.clone(); }
+  public traverseGroup(group: Group):                      Algorithm { return group.clone(); }
+  public traverseBlockMove(blockMove: BlockMove):          Algorithm { return blockMove.clone(); }
+  public traverseCommutator(commutator: Commutator):       Algorithm { return commutator.clone(); }
+  public traverseConjugate(conjugate: Conjugate):          Algorithm { return conjugate.clone(); }
+  public traversePause(pause: Pause):                      Algorithm { return pause.clone(); }
+  public traverseNewLine(newLine: NewLine):                Algorithm { return newLine.clone(); }
+  public traverseCommentShort(commentShort: CommentShort): Algorithm { return commentShort.clone(); }
+  public traverseCommentLong(commentLong: CommentLong):    Algorithm { return commentLong.clone(); }
 }
 
 export class Concat extends DownUp<Algorithm, Sequence> {
@@ -302,15 +284,15 @@ export class Concat extends DownUp<Algorithm, Sequence> {
     }
     return new Sequence(nestedAlgs)
   }
-  protected traverseSequence(     sequence:     Sequence,     dataDown: Algorithm): Sequence {return this.concatIntoSequence(sequence.nestedAlgs, dataDown); }
-  protected traverseGroup(        group:        Group,        dataDown: Algorithm): Sequence {return this.concatIntoSequence([group]          , dataDown); }
-  protected traverseBlockMove(    blockMove:    BlockMove,    dataDown: Algorithm): Sequence {return this.concatIntoSequence([blockMove]      , dataDown); }
-  protected traverseCommutator(   commutator:   Commutator,   dataDown: Algorithm): Sequence {return this.concatIntoSequence([commutator]     , dataDown); }
-  protected traverseConjugate(    conjugate:    Conjugate,    dataDown: Algorithm): Sequence {return this.concatIntoSequence([conjugate]      , dataDown); }
-  protected traversePause(        pause:        Pause,        dataDown: Algorithm): Sequence {return this.concatIntoSequence([pause]          , dataDown); }
-  protected traverseNewLine(      newLine:      NewLine,      dataDown: Algorithm): Sequence {return this.concatIntoSequence([newLine]        , dataDown); }
-  protected traverseCommentShort( commentShort: CommentShort, dataDown: Algorithm): Sequence {return this.concatIntoSequence([commentShort]   , dataDown); }
-  protected traverseCommentLong(  commentLong:  CommentLong,  dataDown: Algorithm): Sequence {return this.concatIntoSequence([commentLong]    , dataDown); }
+  public traverseSequence(     sequence:     Sequence,     dataDown: Algorithm): Sequence {return this.concatIntoSequence(sequence.nestedAlgs, dataDown); }
+  public traverseGroup(        group:        Group,        dataDown: Algorithm): Sequence {return this.concatIntoSequence([group]          , dataDown); }
+  public traverseBlockMove(    blockMove:    BlockMove,    dataDown: Algorithm): Sequence {return this.concatIntoSequence([blockMove]      , dataDown); }
+  public traverseCommutator(   commutator:   Commutator,   dataDown: Algorithm): Sequence {return this.concatIntoSequence([commutator]     , dataDown); }
+  public traverseConjugate(    conjugate:    Conjugate,    dataDown: Algorithm): Sequence {return this.concatIntoSequence([conjugate]      , dataDown); }
+  public traversePause(        pause:        Pause,        dataDown: Algorithm): Sequence {return this.concatIntoSequence([pause]          , dataDown); }
+  public traverseNewLine(      newLine:      NewLine,      dataDown: Algorithm): Sequence {return this.concatIntoSequence([newLine]        , dataDown); }
+  public traverseCommentShort( commentShort: CommentShort, dataDown: Algorithm): Sequence {return this.concatIntoSequence([commentShort]   , dataDown); }
+  public traverseCommentLong(  commentLong:  CommentLong,  dataDown: Algorithm): Sequence {return this.concatIntoSequence([commentLong]    , dataDown); }
 }
 
 export class ToString extends Up<string> {
@@ -325,18 +307,18 @@ export class ToString extends Up<string> {
     }
     return s;
   }
-  protected traverseSequence(     sequence:     Sequence,     ): string { return sequence.nestedAlgs.join(" "); }
-  protected traverseGroup(        group:        Group,        ): string { return "(" + group.nestedAlg + ")" + this.repetitionSuffix(group.amount); }
-  protected traverseBlockMove(    blockMove:    BlockMove,    ): string { return blockMove.base + this.repetitionSuffix(blockMove.amount); }
-  protected traverseCommutator(   commutator:   Commutator,   ): string { return "[" + commutator.A + ", " + commutator.B + "]" + this.repetitionSuffix(commutator.amount); }
-  protected traverseConjugate(    conjugate:    Conjugate,    ): string { return "[" + conjugate.A + ": " + conjugate.B + "]" + this.repetitionSuffix(conjugate.amount); }
+  public traverseSequence(     sequence:     Sequence,     ): string { return sequence.nestedAlgs.join(" "); }
+  public traverseGroup(        group:        Group,        ): string { return "(" + group.nestedAlg + ")" + this.repetitionSuffix(group.amount); }
+  public traverseBlockMove(    blockMove:    BlockMove,    ): string { return blockMove.base + this.repetitionSuffix(blockMove.amount); }
+  public traverseCommutator(   commutator:   Commutator,   ): string { return "[" + commutator.A + ", " + commutator.B + "]" + this.repetitionSuffix(commutator.amount); }
+  public traverseConjugate(    conjugate:    Conjugate,    ): string { return "[" + conjugate.A + ": " + conjugate.B + "]" + this.repetitionSuffix(conjugate.amount); }
   // TODO: Remove spaces between repeated pauses (in traverseSequence)
-  protected traversePause(        pause:        Pause,        ): string { return "."; }
-  protected traverseNewLine(      newLine:      NewLine,      ): string { return "\n"; }
+  public traversePause(        pause:        Pause,        ): string { return "."; }
+  public traverseNewLine(      newLine:      NewLine,      ): string { return "\n"; }
   // TODO: Enforce being followed by a newline (or the end of the alg)?
-  protected traverseCommentShort( commentShort: CommentShort, ): string { return "//" + commentShort.comment; }
+  public traverseCommentShort( commentShort: CommentShort, ): string { return "//" + commentShort.comment; }
     // TODO: Sanitize `*/`
-  protected traverseCommentLong(  commentLong:  CommentLong,  ): string { return "/*" + commentLong.comment + "*/"; }
+  public traverseCommentLong(  commentLong:  CommentLong,  ): string { return "/*" + commentLong.comment + "*/"; }
 }
 
 export namespace Singleton {
