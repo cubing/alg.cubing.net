@@ -307,7 +307,7 @@ export class ToString extends Up<string> {
     }
     return s;
   }
-  public traverseSequence(     sequence:     Sequence,     ): string { return sequence.nestedAlgs.join(" "); }
+  public traverseSequence(     sequence:     Sequence,     ): string { return sequence.nestedAlgs.map(a => this.traverse(a)).join(" "); }
   public traverseGroup(        group:        Group,        ): string { return "(" + group.nestedAlg + ")" + this.repetitionSuffix(group.amount); }
   public traverseBlockMove(    blockMove:    BlockMove,    ): string { return blockMove.base + this.repetitionSuffix(blockMove.amount); }
   public traverseCommutator(   commutator:   Commutator,   ): string { return "[" + commutator.A + ", " + commutator.B + "]" + this.repetitionSuffix(commutator.amount); }
