@@ -98,7 +98,7 @@ var R = new Alg.Sequence([
 
   class HyperCloneTraversal extends Alg.Traversal.Clone  {
     public traverseConfabulator(confabulator: Confabulator): Alg.Algorithm {
-      return new Alg.Commutator(confabulator.A, confabulator.A, 3);
+      return new Alg.Commutator(confabulator.A.clone(), confabulator.A.clone(), 3);
 
     }
   }
@@ -115,5 +115,7 @@ var R = new Alg.Sequence([
 
   var h = new HyperCloneTraversal();
   var t = h.traverse(new Alg.Group(new Confabulator(new Alg.BlockMove("R", 1)), 2));
-  test("Check that you can create a new traversal for a new algorithm type.", t.structureEquals(new Alg.Group(new Alg.Commutator(new Alg.BlockMove("R", 1), new Alg.BlockMove("R", 1), 3), 2)))
+  // console.log();
+  test("Check that you can create a new traversal for a new algorithm type.", t.structureEquals(new Alg.Group(new Alg.Commutator(new Alg.BlockMove("R", 1), new Alg.BlockMove("R", 1), 3), 2)));
+  test("Check traversed confabulator.", t.toString() === "([R, R]3)2");
 })();
