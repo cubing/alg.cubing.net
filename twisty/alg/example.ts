@@ -56,5 +56,17 @@ export const FURURFMoves: Algorithm = new Sequence([
   new BlockMove("F", -1)
 ]);
 
+export const AllAlgTypes: Algorithm[] = [
+  new Sequence([new BlockMove("R", 1), new BlockMove("U", -1)]),
+  new Group(new BlockMove("F", 1), 2),
+  new BlockMove("R", 2),
+  new Commutator(new BlockMove("R", 2), new BlockMove("U", 2), 2),
+  new Conjugate(new BlockMove("L", 2), new BlockMove("D", -1), 2),
+  new Pause(),
+  new NewLine(),
+  new CommentShort("short comment"),
+  new CommentLong("long comment")
+];
+
 }
 }

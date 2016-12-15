@@ -105,7 +105,10 @@ var R = new Alg.Sequence([
 
   class Confabulator extends Alg.Algorithm {
     public type: string = "confabulator";
-    constructor(public A: Alg.Algorithm) { super(); }
+    constructor(public A: Alg.Algorithm) {
+      super();
+      this.freeze();
+    }
     dispatch<DataDown, DataUp>(t: HyperCloneTraversal): Alg.Algorithm {
       return t.traverseConfabulator(this);
     }
@@ -118,4 +121,23 @@ var R = new Alg.Sequence([
   // console.log();
   test("Check that you can create a new traversal for a new algorithm type.", t.structureEquals(new Alg.Group(new Alg.Commutator(new Alg.BlockMove("R", 1), new Alg.BlockMove("R", 1), 3), 2)));
   test("Check traversed confabulator.", t.toString() === "([R, R]3)2");
+})();
+
+
+// TODO: Cover all alg types
+(function TestThatAlgorithmsAreFrozen() {
+  for (var a of Alg.Example.AllAlgTypes) {
+    test(`Alg of type ${a.type} is frozen`, Object.isFrozen(a));
+  }
+})();
+
+(function TestBlockMoveFrozen() {
+  var b = new Alg.BlockMove("R", 4);
+  var e: any;
+  try {
+    b.amount = 2;
+  } catch (err) {
+    e = err;
+  }
+   test("Modifying BlockMove should not succeed.", e instanceof TypeError);
 })();
