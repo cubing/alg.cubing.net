@@ -52,10 +52,10 @@ export class Clone extends Up<Algorithm> {
   public traverseConjugate(conjugate: Conjugate): Algorithm {
     return new Conjugate(this.traverse(conjugate.A), this.traverse(conjugate.B), conjugate.amount);
   }
-  public traversePause(pause: Pause):                      Algorithm { return pause.clone(); }
-  public traverseNewLine(newLine: NewLine):                Algorithm { return newLine.clone(); }
-  public traverseCommentShort(commentShort: CommentShort): Algorithm { return commentShort.clone(); }
-  public traverseCommentLong(commentLong: CommentLong):    Algorithm { return commentLong.clone(); }
+  public traversePause(pause: Pause):                      Algorithm { return pause; }
+  public traverseNewLine(newLine: NewLine):                Algorithm { return newLine; }
+  public traverseCommentShort(commentShort: CommentShort): Algorithm { return commentShort; }
+  public traverseCommentLong(commentLong: CommentLong):    Algorithm { return commentLong; }
 }
 
 // TODO: Test that inverses are bijections.
@@ -76,10 +76,10 @@ export class Invert extends Up<Algorithm> {
   public traverseConjugate(conjugate: Conjugate): Algorithm {
     return new Conjugate(conjugate.A, this.traverse(conjugate.B), conjugate.amount);
   }
-  public traversePause(pause: Pause):                      Algorithm { return pause.clone(); }
-  public traverseNewLine(newLine: NewLine):                Algorithm { return newLine.clone(); }
-  public traverseCommentShort(commentShort: CommentShort): Algorithm { return commentShort.clone(); }
-  public traverseCommentLong(commentLong: CommentLong):    Algorithm { return commentLong.clone(); }
+  public traversePause(pause: Pause):                      Algorithm { return pause; }
+  public traverseNewLine(newLine: NewLine):                Algorithm { return newLine; }
+  public traverseCommentShort(commentShort: CommentShort): Algorithm { return commentShort; }
+  public traverseCommentLong(commentLong: CommentLong):    Algorithm { return commentLong; }
 }
 
 export class Expand extends Up<Algorithm> {
@@ -124,7 +124,7 @@ export class Expand extends Up<Algorithm> {
     return this.repeat([this.traverse(group.nestedAlg)], group);
   }
   public traverseBlockMove(blockMove: BlockMove): Algorithm {
-    return blockMove.clone();
+    return blockMove;
   }
   public traverseCommutator(commutator: Commutator): Algorithm {
     var expandedA = this.traverse(commutator.A)
@@ -149,10 +149,10 @@ export class Expand extends Up<Algorithm> {
     );
     return this.repeat(this.flattenSequenceOneLevel(once), conjugate);
   }
-  public traversePause(pause: Pause):                      Algorithm { return pause.clone(); }
-  public traverseNewLine(newLine: NewLine):                Algorithm { return newLine.clone(); }
-  public traverseCommentShort(commentShort: CommentShort): Algorithm { return commentShort.clone(); }
-  public traverseCommentLong(commentLong: CommentLong):    Algorithm { return commentLong.clone(); }
+  public traversePause(pause: Pause):                      Algorithm { return pause; }
+  public traverseNewLine(newLine: NewLine):                Algorithm { return newLine; }
+  public traverseCommentShort(commentShort: CommentShort): Algorithm { return commentShort; }
+  public traverseCommentLong(commentLong: CommentLong):    Algorithm { return commentLong; }
 }
 
 export class CountBlockMoves extends Up<number> {
@@ -256,22 +256,22 @@ export class CoalesceMoves extends Up<Algorithm> {
             coalesced.push(new BlockMove(part.base, amount));
           }
         } else {
-          coalesced.push(part.clone());
+          coalesced.push(part);
         }
       } else {
-        coalesced.push(part.clone());
+        coalesced.push(part);
       }
     }
     return new Sequence(coalesced);
   }
-  public traverseGroup(group: Group):                      Algorithm { return group.clone(); }
-  public traverseBlockMove(blockMove: BlockMove):          Algorithm { return blockMove.clone(); }
-  public traverseCommutator(commutator: Commutator):       Algorithm { return commutator.clone(); }
-  public traverseConjugate(conjugate: Conjugate):          Algorithm { return conjugate.clone(); }
-  public traversePause(pause: Pause):                      Algorithm { return pause.clone(); }
-  public traverseNewLine(newLine: NewLine):                Algorithm { return newLine.clone(); }
-  public traverseCommentShort(commentShort: CommentShort): Algorithm { return commentShort.clone(); }
-  public traverseCommentLong(commentLong: CommentLong):    Algorithm { return commentLong.clone(); }
+  public traverseGroup(group: Group):                      Algorithm { return group; }
+  public traverseBlockMove(blockMove: BlockMove):          Algorithm { return blockMove; }
+  public traverseCommutator(commutator: Commutator):       Algorithm { return commutator; }
+  public traverseConjugate(conjugate: Conjugate):          Algorithm { return conjugate; }
+  public traversePause(pause: Pause):                      Algorithm { return pause; }
+  public traverseNewLine(newLine: NewLine):                Algorithm { return newLine; }
+  public traverseCommentShort(commentShort: CommentShort): Algorithm { return commentShort; }
+  public traverseCommentLong(commentLong: CommentLong):    Algorithm { return commentLong; }
 }
 
 export class Concat extends DownUp<Algorithm, Sequence> {
