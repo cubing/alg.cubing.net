@@ -24,3 +24,34 @@ function twistyTest(description: string, condition: boolean) {
   twistyTest("Backwards from just before end", b1.breakPoint(Twisty.TimeLine.Direction.Backwards, Twisty.TimeLine.BreakPointType.Move, 1999) === 1500);
   twistyTest("Backwards from end", b1.breakPoint(Twisty.TimeLine.Direction.Backwards, Twisty.TimeLine.BreakPointType.Move, 2000) === 1500);
 })();
+
+
+(function TestDurations() {
+  console.log(new Twisty.TimeLine.AlgDuration(Twisty.TimeLine.DefaultDurationForAmount).traverse(Alg.Example.Sune));
+  // twistyTest("First breakpoint", new AlgDuration(DefaultDurationForAmount).traverse(Alg.Example.Sune));
+})();
+
+(function TestAlgCursor() {
+  // TODO: Test Defaults
+  var positionFn = new Twisty.TimeLine.AlgPosition();
+  var dirCursor = new Twisty.TimeLine.DirectionWithCursor(Twisty.TimeLine.Direction.Forwards, 4300);
+  console.log(positionFn.traverse(Alg.Example.FURURFCompact, dirCursor));
+
+  var alg2= new Alg.Conjugate(
+  new Alg.BlockMove("F",  1),
+  new Alg.Commutator(
+    new Alg.BlockMove("U",  2),
+    new Alg.BlockMove("R",  1),
+    1
+  ),
+  1);
+
+  dirCursor = new Twisty.TimeLine.DirectionWithCursor(Twisty.TimeLine.Direction.Forwards, 4300);
+  console.log(positionFn.traverse(alg2, dirCursor));
+
+  // twistyTest("First breakpoint", new AlgDuration(DefaultDurationForAmount).traverse(Alg.Example.Sune));
+})();
+// console.log(
+//   ,
+//   new AlgDuration(ConstantDurationForAmount).traverse(Alg.Example.Sune)
+// );
