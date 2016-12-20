@@ -82,6 +82,41 @@ var R = new Alg.Sequence([
   algTest("FURURFCompact JSON string roundtrip", Alg.fromJSON(JSON.parse(JSON.stringify(Alg.Example.FURURFCompact))).structureEquals(Alg.Example.FURURFCompact));
 })();
 
+
+// TODO: Test that inverses are bijections.
+class Depth extends Alg.Traversal.Up<number> {
+  public traverseSequence(sequence: Alg.Sequence): number {
+    var max = 0;
+    for (var part of sequence.nestedAlgs) {
+      max = Math.max(max, this.traverse(part));
+    }
+    return max;
+  }
+  public traverseGroup(group: Alg.Group): number {
+    return 1 + this.traverse(group.nestedAlg);
+  }
+  public traverseBlockMove(blockMove: Alg.BlockMove): number {
+    return 0;
+  }
+  public traverseCommutator(commutator: Alg.Commutator): number {
+    return 1 + Math.max(this.traverse(commutator.A), this.traverse(commutator.B));
+  }
+  public traverseConjugate(conjugate: Alg.Conjugate): number {
+    return 1 + Math.max(this.traverse(conjugate.A), this.traverse(conjugate.B));
+  }
+  public traversePause(pause: Alg.Pause):                      number { return 0; }
+  public traverseNewLine(newLine: Alg.NewLine):                number { return 0; }
+  public traverseCommentShort(commentShort: Alg.CommentShort): number { return 0; }
+  public traverseCommentLong(commentLong: Alg.CommentLong):    number { return 0; }
+}
+
+(function TestTraversal() {
+  var depth = new Depth();
+  algTest("Regular Sune depth", depth.traverse(Alg.Example.Sune) === 0);
+  algTest("SuneCommutator depth", depth.traverse(Alg.Example.SuneCommutator) === 1);
+  algTest("FRURFCompact depth", depth.traverse(Alg.Example.FURURFCompact) === 2);
+})();
+
 (function TestNewAlgTypeNewTraversal() {
 
   class HyperCloneTraversal extends Alg.Traversal.Clone  {
