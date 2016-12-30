@@ -11,38 +11,44 @@ export class SetDefinition {
   ) {}
 }
 
-export type MoveName = string
-export class SetMove {
+export class SetTransformation {
   constructor(
     public permutation: number[],
     public orientation: number[]
   ) {}
 }
-export type PuzzleMove = Map<MoveName, SetMove>
-
-// TODO: Pairs of position and orientation?
-export class SetState {
-  constructor(
-    public pieces: number[],
-    public orientations: number[]
-   ) {}
-}
-export type PuzzleState = Map<SetName, SetState>
+export type Transformation = Map<SetName, SetTransformation>
 
 export type PuzzleName = string
+export type MoveName = string
 export class PuzzleDefinition {
   constructor(
     public name: PuzzleName,
     public sets: Map<SetName, SetDefinition>,
-    public solvedState: PuzzleState,
-    public moves: Map<MoveName, SetMove>
+    public startPieces: Transformation,
+    public moves: Map<MoveName, Transformation>
   ) {}
 }
 
+export function IdentityTransformation(definition: PuzzleDefinition): Transformation {
+  var transformation = new Map<MoveName, SetTransformation>();
+  for (var [setName, setDefinition] of this.definition.sets) {
+    var newPermutation = new Array(setDefinition.numPieces);
+    var newOrientation = new Array(setDefinition.numPieces);
+    for (var i = 0; i < setDefinition.numPieces; i ++) {
+      newPermutation.push(i);
+      newOrientation.push(0);
+    }
+    var setTransformation = new SetTransformation(newPermutation, newOrientation);
+    transformation.set(setName, setTransformation);
+  }
+  return transformation;
+}
+
 export class Puzzle {
-  public state: PuzzleState
+  public state: Transformation
   constructor(public definition: PuzzleDefinition) {
-    this.state = definition.solvedState;
+    this.state = IdentityTransformation(definition);
   }
 
   private loc2idx(loc: number) {
@@ -59,20 +65,22 @@ export class Puzzle {
       throw `Unknown move: ${move}`
     }
 
-    // TODO: Figure out why `new PuzzleState()` causes a compiler error.
-    var newState: PuzzleState = new Map<SetName, SetState>();
+    // TODO: Figure out why `new Transformation()` causes a compiler error.
+    var newState: Transformation = new Map<SetName, SetTransformation>();
     for (var [setName, setDefinition] of this.definition.sets) {
-      var oldSetState = this.state.get(setName) as SetState;
+      var oldStateTransformation = this.state.get(setName) as SetTransformation;
+      var moveTransformation = move.get(setName) as SetTransformation;
+
       var newPermutation = new Array(setDefinition.numPieces);
       var newOrientation = new Array(setDefinition.numPieces);
       for (var idx = 0; idx <= setDefinition.numPieces; idx++) {
-        var prevIdx = this.loc2idx(move.permutation[idx] as number);
-        newPermutation[idx] = (oldSetState as SetState).pieces[this.loc2idx(prevIdx)];
+        var prevIdx = this.loc2idx(moveTransformation.permutation[idx] as number);
+        newPermutation[idx] = oldStateTransformation.permutation[this.loc2idx(prevIdx)];
 
-        var orientationChange = move.orientation[idx];
-        newOrientation[idx] = (oldSetState.orientations[prevIdx] + orientationChange) % setDefinition.orientations;
+        var orientationChange = moveTransformation.orientation[idx];
+        newOrientation[idx] = (oldStateTransformation.orientation[prevIdx] + orientationChange) % setDefinition.orientations;
       }
-      newState.set(setName, new SetState(newPermutation, newOrientation));
+      newState.set(setName, new SetTransformation(newPermutation, newOrientation));
     }
 
     this.state = newState;
