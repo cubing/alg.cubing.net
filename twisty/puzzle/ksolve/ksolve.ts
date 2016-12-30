@@ -3,44 +3,44 @@ namespace KSolve {
 // TODO: Handle solved states with non-ordered/repeated values.
 // TODO: Properly handle freezing
 
-export type SetName = string
-export class SetDefinition {
+export type OrbitName = string
+export class OrbitDefinition {
   constructor(
     public numPieces: number,
     public orientations: number
   ) {}
 }
 
-export class SetTransformation {
+export class OrbitTransformation {
   constructor(
     public permutation: number[],
     public orientation: number[]
   ) {}
 }
-export type Transformation = Map<SetName, SetTransformation>
+export type Transformation = Map<OrbitName, OrbitTransformation>
 
 export type PuzzleName = string
 export type MoveName = string
 export class PuzzleDefinition {
   constructor(
     public name: PuzzleName,
-    public sets: Map<SetName, SetDefinition>,
+    public orbits: Map<OrbitName, OrbitDefinition>,
     public startPieces: Transformation,
     public moves: Map<MoveName, Transformation>
   ) {}
 }
 
 export function IdentityTransformation(definition: PuzzleDefinition): Transformation {
-  var transformation = new Map<MoveName, SetTransformation>();
-  for (var [setName, setDefinition] of this.definition.sets) {
-    var newPermutation = new Array(setDefinition.numPieces);
-    var newOrientation = new Array(setDefinition.numPieces);
-    for (var i = 0; i < setDefinition.numPieces; i ++) {
+  var transformation = new Map<MoveName, OrbitTransformation>();
+  for (var [orbitName, orbitDefinition] of this.definition.orbits) {
+    var newPermutation = new Array(orbitDefinition.numPieces);
+    var newOrientation = new Array(orbitDefinition.numPieces);
+    for (var i = 0; i < orbitDefinition.numPieces; i ++) {
       newPermutation.push(i);
       newOrientation.push(0);
     }
-    var setTransformation = new SetTransformation(newPermutation, newOrientation);
-    transformation.set(setName, setTransformation);
+    var orbitTransformation = new OrbitTransformation(newPermutation, newOrientation);
+    transformation.set(orbitName, orbitTransformation);
   }
   return transformation;
 }
@@ -66,21 +66,21 @@ export class Puzzle {
     }
 
     // TODO: Figure out why `new Transformation()` causes a compiler error.
-    var newState: Transformation = new Map<SetName, SetTransformation>();
-    for (var [setName, setDefinition] of this.definition.sets) {
-      var oldStateTransformation = this.state.get(setName) as SetTransformation;
-      var moveTransformation = move.get(setName) as SetTransformation;
+    var newState: Transformation = new Map<OrbitName, OrbitTransformation>();
+    for (var [orbitName, orbitDefinition] of this.definition.orbits) {
+      var oldStateTransformation = this.state.get(orbitName) as OrbitTransformation;
+      var moveTransformation = move.get(orbitName) as OrbitTransformation;
 
-      var newPermutation = new Array(setDefinition.numPieces);
-      var newOrientation = new Array(setDefinition.numPieces);
-      for (var idx = 0; idx <= setDefinition.numPieces; idx++) {
+      var newPermutation = new Array(orbitDefinition.numPieces);
+      var newOrientation = new Array(orbitDefinition.numPieces);
+      for (var idx = 0; idx <= orbitDefinition.numPieces; idx++) {
         var prevIdx = this.loc2idx(moveTransformation.permutation[idx] as number);
         newPermutation[idx] = oldStateTransformation.permutation[this.loc2idx(prevIdx)];
 
         var orientationChange = moveTransformation.orientation[idx];
-        newOrientation[idx] = (oldStateTransformation.orientation[prevIdx] + orientationChange) % setDefinition.orientations;
+        newOrientation[idx] = (oldStateTransformation.orientation[prevIdx] + orientationChange) % orbitDefinition.orientations;
       }
-      newState.set(setName, new SetTransformation(newPermutation, newOrientation));
+      newState.set(orbitName, new OrbitTransformation(newPermutation, newOrientation));
     }
 
     this.state = newState;
@@ -89,16 +89,16 @@ export class Puzzle {
   // ksolvePuzzle.prototype = {
   //   newSolvedState_: function() {
   //     var state = {};
-  //     for (var set in this.parser_.sets) {
-  //       state[set] = {
+  //     for (var orbit in this.parser_.orbits) {
+  //       state[orbit] = {
   //         permutation: [],
   //         orientation: []
   //       };
-  //       for (var i = 0; i < this.parser_.sets[set].num; i++) {
-  //         state[set].permutation.push(this.parser_.solved[set].permutation[i] - 1);
+  //       for (var i = 0; i < this.parser_.orbits[orbit].num; i++) {
+  //         state[orbit].permutation.push(this.parser_.solved[orbit].permutation[i] - 1);
   //       }
-  //       for (var i = 0; i < this.parser_.sets[set].num; i++) {
-  //         state[set].orientation.push(0);
+  //       for (var i = 0; i < this.parser_.orbits[orbit].num; i++) {
+  //         state[orbit].orientation.push(0);
   //       }
   //     }
   //     return state;
@@ -108,17 +108,17 @@ export class Puzzle {
   //     return this.state_;
   //   },
 
-  //   setSVGElement: function(svgElement) {
+  //   orbitSVGElement: function(svgElement) {
   //     this.svgElement_ = svgElement;
   //     this.originalColors_ = {};
 
-  //     for (var set in this.parser_.sets) {
-  //       var num_pieces = this.parser_.sets[set].num;
-  //       var num_orientations = this.parser_.sets[set].orientations;
+  //     for (var orbit in this.parser_.orbits) {
+  //       var num_pieces = this.parser_.orbits[orbit].num;
+  //       var num_orientations = this.parser_.orbits[orbit].orientations;
 
   //       for (var loc = 0; loc < num_pieces; loc++) {
   //         for (var orientations = 0; orientations < num_orientations; orientations++) {
-  //           var id = set + "-l" + loc + "-o" + orientations;
+  //           var id = orbit + "-l" + loc + "-o" + orientations;
   //           this.originalColors_[id] = this.svgElement_.getElementById(id).style.fill;
   //         }
   //       }
@@ -126,11 +126,11 @@ export class Puzzle {
   //   },
 
   //   draw: function() {
-  //     for (var set in this.parser_.sets) {
-  //       for (var loc = 0; loc < this.parser_.sets[set].num; loc++) {
-  //         for (var orientations = 0; orientations < this.parser_.sets[set].orientations; orientations++) {
-  //           var id = set + "-l" + loc + "-o" + orientations;
-  //           var from = set + "-l" + this.state_[set].permutation[loc] + "-o" + ((this.parser_.sets[set].orientations - this.state_[set].orientation[loc] + orientations) % this.parser_.sets[set].orientations);
+  //     for (var orbit in this.parser_.orbits) {
+  //       for (var loc = 0; loc < this.parser_.orbits[orbit].num; loc++) {
+  //         for (var orientations = 0; orientations < this.parser_.orbits[orbit].orientations; orientations++) {
+  //           var id = orbit + "-l" + loc + "-o" + orientations;
+  //           var from = orbit + "-l" + this.state_[orbit].permutation[loc] + "-o" + ((this.parser_.orbits[orbit].orientations - this.state_[orbit].orientation[loc] + orientations) % this.parser_.orbits[orbit].orientations);
   //           this.svgElement_.getElementById(id).style.fill = this.originalColors_[from];
   //         }
   //       }
@@ -141,11 +141,11 @@ export class Puzzle {
 
   //   serializeStateToKsolve: function() {
   //     var output = ""
-  //     for (var set in this.parser_.sets) {
-  //       output += set + "\n";
-  //       // output += this.state_[set].permutation.map(function(x) {return x + 1;}).join(" ") + "\n";
-  //       output += this.state_[set].permutation.join(" ") + "\n";
-  //       output += this.state_[set].orientation.join(" ") + "\n";
+  //     for (var orbit in this.parser_.orbits) {
+  //       output += orbit + "\n";
+  //       // output += this.state_[orbit].permutation.map(function(x) {return x + 1;}).join(" ") + "\n";
+  //       output += this.state_[orbit].permutation.join(" ") + "\n";
+  //       output += this.state_[orbit].orientation.join(" ") + "\n";
   //     }
   //     output = output.slice(0, output.length - 1); // Trim last newline.
   //     return output;
