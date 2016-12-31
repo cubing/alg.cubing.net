@@ -3,11 +3,6 @@ namespace KSolve {
 // TODO: Handle solved states with non-ordered/repeated values.
 // TODO: Properly handle freezing
 
-export class OrbitDefinition {
-  numPieces: number
-  orientations: number
-}
-
 export class OrbitTransformation {
   permutation: number[]
   orientation: number[]
@@ -15,6 +10,10 @@ export class OrbitTransformation {
 // TODO: Use a list instead of an object for performance?
 export type Transformation = {[/* orbit name */key: string]: OrbitTransformation}
 
+export class OrbitDefinition {
+  numPieces: number
+  orientations: number
+}
 export class PuzzleDefinition {
   name: string
   orbits: {[/* orbit name */key: string]: OrbitDefinition}
