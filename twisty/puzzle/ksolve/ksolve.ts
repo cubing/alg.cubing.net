@@ -33,12 +33,12 @@ export class PuzzleDefinition {
 
 export function IdentityTransformation(definition: PuzzleDefinition): Transformation {
   var transformation = new Transformation();
-  for (var [orbitName, orbitDefinition] of this.definition.orbits) {
+  for (var [orbitName, orbitDefinition] of definition.orbits) {
     var newPermutation = new Array(orbitDefinition.numPieces);
     var newOrientation = new Array(orbitDefinition.numPieces);
     for (var i = 0; i < orbitDefinition.numPieces; i ++) {
-      newPermutation.push(i);
-      newOrientation.push(0);
+      newPermutation[i] = i;
+      newOrientation[i] = 0;
     }
     var orbitTransformation = new OrbitTransformation(newPermutation, newOrientation);
     transformation.set(orbitName, orbitTransformation);
@@ -56,11 +56,7 @@ export class Puzzle {
     return loc - 1;
   }
 
-  private idx2loc(idx: number) {
-    return idx + 1;
-  }
-
-  public applyMove(moveName: MoveName): void {
+  public applyMove(moveName: MoveName): this {
     var move = this.definition.moves.get(moveName);
     if (!move) {
       throw `Unknown move: ${move}`
@@ -74,9 +70,9 @@ export class Puzzle {
 
       var newPermutation = new Array(orbitDefinition.numPieces);
       var newOrientation = new Array(orbitDefinition.numPieces);
-      for (var idx = 0; idx <= orbitDefinition.numPieces; idx++) {
+      for (var idx = 0; idx < orbitDefinition.numPieces; idx++) {
         var prevIdx = this.loc2idx(moveTransformation.permutation[idx] as number);
-        newPermutation[idx] = oldStateTransformation.permutation[this.loc2idx(prevIdx)];
+        newPermutation[idx] = oldStateTransformation.permutation[prevIdx];
 
         var orientationChange = moveTransformation.orientation[idx];
         newOrientation[idx] = (oldStateTransformation.orientation[prevIdx] + orientationChange) % orbitDefinition.orientations;
@@ -85,6 +81,7 @@ export class Puzzle {
     }
 
     this.state = newState;
+    return this;
   }
 
   // ksolvePuzzle.prototype = {
