@@ -20,6 +20,7 @@ export class PuzzleDefinition {
   orbits: {[/* orbit name */key: string]: OrbitDefinition}
   startPieces: Transformation // TODO: Expose a way to get the transformed start pieces.
   moves: {[/* move name */key: string]: Transformation}
+  svg?: string
 }
 
 export function IdentityTransformation(definition: PuzzleDefinition): Transformation {
@@ -96,35 +97,58 @@ export class Puzzle {
   // invert(): this {}
 }
 
-class SVG {
-  //   orbitSVGElement: function(svgElement) {
-  //     this.svgElement_ = svgElement;
-  //     this.originalColors_ = {};
+export class SVG {
+  public element: HTMLElement; // TODO: SVGSVGElement?
+  private originalColors: {[type: string]: string} = {}
+  constructor(public puzzleDefinition: PuzzleDefinition) {
+    if (!puzzleDefinition.svg) {
+      throw `No SVG definition for puzzle type: ${puzzleDefinition.name}`
+    }
 
-  //     for (var orbit in this.parser_.orbits) {
-  //       var num_pieces = this.parser_.orbits[orbit].num;
-  //       var num_orientations = this.parser_.orbits[orbit].orientations;
+    this.element = document.createElement("svg");
+    // TODO: Sanitization.
+    this.element.innerHTML = puzzleDefinition.svg;
+    document.body.appendChild(this.element);
 
-  //       for (var loc = 0; loc < num_pieces; loc++) {
-  //         for (var orientations = 0; orientations < num_orientations; orientations++) {
-  //           var id = orbit + "-l" + loc + "-o" + orientations;
-  //           this.originalColors_[id] = this.svgElement_.getElementById(id).style.fill;
-  //         }
-  //       }
-  //     }
-  //   },
+    for (var orbitName in puzzleDefinition.orbits) {
+      var orbitDefinition = puzzleDefinition.orbits[orbitName];
 
-  //   draw: function() {
-  //     for (var orbit in this.parser_.orbits) {
-  //       for (var loc = 0; loc < this.parser_.orbits[orbit].num; loc++) {
-  //         for (var orientations = 0; orientations < this.parser_.orbits[orbit].orientations; orientations++) {
-  //           var id = orbit + "-l" + loc + "-o" + orientations;
-  //           var from = orbit + "-l" + this.state_[orbit].permutation[loc] + "-o" + ((this.parser_.orbits[orbit].orientations - this.state_[orbit].orientation[loc] + orientations) % this.parser_.orbits[orbit].orientations);
-  //           this.svgElement_.getElementById(id).style.fill = this.originalColors_[from];
-  //         }
-  //       }
-  //     }
-  //   },
+      for (var idx = 0; idx < orbitDefinition.numPieces; idx++) {
+        for (var orientation = 0; orientation < orbitDefinition.orientations; orientation++) {
+          var id = this.elementID(orbitName, idx, orientation);
+          this.originalColors[id] = this.elementByID(id).style.fill as string;
+        }
+      }
+    }
+  }
+
+  private elementID(orbitName: string, idx: number, orientation: number): string {
+    return orbitName + "-l" + idx + "-o" + orientation;
+  }
+
+  private elementByID(id: string): HTMLElement {
+    // TODO: Use classes and scope selector to SVG element.
+    return document.getElementById(id) as HTMLElement;
+  }
+
+  draw(puzzle: Puzzle) {
+    for (var orbitName in puzzle.definition.orbits) {
+      var orbitDefinition = puzzle.definition.orbits[orbitName];
+
+      var orbitState = puzzle.state[orbitName];
+      for (var idx = 0; idx < orbitDefinition.numPieces; idx++) {
+        for (var orientation = 0; orientation < orbitDefinition.orientations; orientation++) {
+          var id = this.elementID(orbitName, + idx, + orientation);
+          var from = this.elementID(
+            orbitName,
+            orbitState.permutation[idx],
+            (orbitDefinition.orientations - orbitState.orientation[idx] + orientation) % orbitDefinition.orientations
+          );
+          this.elementByID(id).style.fill = this.originalColors[from];
+        }
+      }
+    }
+  }
 }
 
 }
