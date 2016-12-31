@@ -3,45 +3,37 @@ namespace KSolve {
 // TODO: Handle solved states with non-ordered/repeated values.
 // TODO: Properly handle freezing
 
-export type OrbitName = string
 export class OrbitDefinition {
-  constructor(
-    public numPieces: number,
-    public orientations: number
-  ) {}
+  numPieces: number
+  orientations: number
 }
 
 export class OrbitTransformation {
-  constructor(
-    public permutation: number[],
-    public orientation: number[]
-  ) {}
+  permutation: number[]
+  orientation: number[]
 }
-// TODO: Use a list instead of a map for performance?
-export class Transformation extends Map<OrbitName, OrbitTransformation> {}
+// TODO: Use a list instead of an object for performance?
+export type Transformation = {[/* orbit name */key: string]: OrbitTransformation}
 
-export type PuzzleName = string
-export type MoveName = string
 export class PuzzleDefinition {
-  constructor(
-    public name: PuzzleName,
-    public orbits: Map<OrbitName, OrbitDefinition>,
-    public startPieces: Transformation,
-    public moves: Map<MoveName, Transformation>
-  ) {}
+  name: string
+  orbits: {[/* orbit name */key: string]: OrbitDefinition}
+  startPieces: Transformation
+  moves: {[/* move name */key: string]: Transformation}
 }
 
 export function IdentityTransformation(definition: PuzzleDefinition): Transformation {
-  var transformation = new Transformation();
-  for (var [orbitName, orbitDefinition] of definition.orbits) {
+  var transformation = <Transformation>{};
+  for (var orbitName in definition.orbits) {
+    var orbitDefinition = definition.orbits[orbitName];
     var newPermutation = new Array(orbitDefinition.numPieces);
     var newOrientation = new Array(orbitDefinition.numPieces);
     for (var i = 0; i < orbitDefinition.numPieces; i ++) {
       newPermutation[i] = i;
       newOrientation[i] = 0;
     }
-    var orbitTransformation = new OrbitTransformation(newPermutation, newOrientation);
-    transformation.set(orbitName, orbitTransformation);
+    var orbitTransformation = {permutation: newPermutation, orientation: newOrientation};
+    transformation[orbitName] = orbitTransformation;
   }
   return transformation;
 }
@@ -56,17 +48,17 @@ export class Puzzle {
     return loc - 1;
   }
 
-  public applyMove(moveName: MoveName): this {
-    var move = this.definition.moves.get(moveName);
+  public applyMove(moveName: string): this {
+    var move = this.definition.moves[moveName];
     if (!move) {
       throw `Unknown move: ${move}`
     }
 
-    // TODO: Figure out why `new Transformation()` causes a compiler error.
-    var newState: Transformation = new Transformation();
-    for (var [orbitName, orbitDefinition] of this.definition.orbits) {
-      var oldStateTransformation = this.state.get(orbitName) as OrbitTransformation;
-      var moveTransformation = move.get(orbitName) as OrbitTransformation;
+    var newState: Transformation = <Transformation>{};
+    for (var orbitName in this.definition.orbits) {
+      var orbitDefinition = this.definition.orbits[orbitName];
+      var oldStateTransformation = this.state[orbitName];
+      var moveTransformation = move[orbitName];
 
       var newPermutation = new Array(orbitDefinition.numPieces);
       var newOrientation = new Array(orbitDefinition.numPieces);
@@ -77,7 +69,7 @@ export class Puzzle {
         var orientationChange = moveTransformation.orientation[idx];
         newOrientation[idx] = (oldStateTransformation.orientation[prevIdx] + orientationChange) % orbitDefinition.orientations;
       }
-      newState.set(orbitName, new OrbitTransformation(newPermutation, newOrientation));
+      newState[orbitName] = {permutation: newPermutation, orientation: newOrientation};
     }
 
     this.state = newState;
@@ -86,10 +78,10 @@ export class Puzzle {
 
   serialize(): string {
     var output = ""
-    for (var [orbitName, orbitDefinition] of this.definition.orbits) {
+    for (var orbitName in this.definition.orbits) {
       output += orbitName + "\n";
-      output += (this.state.get(orbitName) as OrbitTransformation).permutation.join(" ") + "\n";
-      output += (this.state.get(orbitName) as OrbitTransformation).orientation.join(" ") + "\n";
+      output += this.state[orbitName].permutation.join(" ") + "\n";
+      output += this.state[orbitName].orientation.join(" ") + "\n";
     }
     output = output.slice(0, output.length - 1); // Trim last newline.
     return output;
