@@ -1,3 +1,4 @@
+"use strict";
 
 namespace KSolve {
 // TODO: Properly handle freezing
