@@ -1,6 +1,5 @@
 
 namespace KSolve {
-// TODO: Handle solved states with non-ordered/repeated values.
 // TODO: Properly handle freezing
 
 export class OrbitTransformation {
@@ -19,7 +18,7 @@ export class OrbitDefinition {
 export class PuzzleDefinition {
   name: string
   orbits: {[/* orbit name */key: string]: OrbitDefinition}
-  startPieces: Transformation
+  startPieces: Transformation // TODO: Expose a way to get the transformed start pieces.
   moves: {[/* move name */key: string]: Transformation}
 }
 
