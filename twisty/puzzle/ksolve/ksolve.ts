@@ -86,28 +86,17 @@ export class Puzzle {
     output = output.slice(0, output.length - 1); // Trim last newline.
     return output;
   }
-  // ksolvePuzzle.prototype = {
-  //   newSolvedState_: function() {
-  //     var state = {};
-  //     for (var orbit in this.parser_.orbits) {
-  //       state[orbit] = {
-  //         permutation: [],
-  //         orientation: []
-  //       };
-  //       for (var i = 0; i < this.parser_.orbits[orbit].num; i++) {
-  //         state[orbit].permutation.push(this.parser_.solved[orbit].permutation[i] - 1);
-  //       }
-  //       for (var i = 0; i < this.parser_.orbits[orbit].num; i++) {
-  //         state[orbit].orientation.push(0);
-  //       }
-  //     }
-  //     return state;
-  //   },
 
-  //   getState: function() {
-  //     return this.state_;
-  //   },
+  // TODO: Implement
+  // parseState(): this {}
 
+  // TODO: Alg parsing
+
+  // TODO: Implement.
+  // invert(): this {}
+}
+
+class SVG {
   //   orbitSVGElement: function(svgElement) {
   //     this.svgElement_ = svgElement;
   //     this.originalColors_ = {};
@@ -136,23 +125,6 @@ export class Puzzle {
   //       }
   //     }
   //   },
-
-  //   // invertState: {},
-
-  //   printState: function() {
-  //     console.log(this.serializeStateToKsolve());
-  //   },
-
-  //   applyAlg: function(algString) {
-  //     var a = alg.cube.fromString(algString);
-  //     for (var i in a) {
-  //       var amount = (a[i].amount + 4) % 4;
-  //       for (var j = 0; j < amount; j++) {
-  //         this.applyMove(a[i].base);
-  //       }
-  //     }
-  //   }
-  // }
 }
 
 }
