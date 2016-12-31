@@ -17,7 +17,8 @@ export class OrbitTransformation {
     public orientation: number[]
   ) {}
 }
-export type Transformation = Map<OrbitName, OrbitTransformation>
+// TODO: Use a list instead of a map for performance?
+export class Transformation extends Map<OrbitName, OrbitTransformation> {}
 
 export type PuzzleName = string
 export type MoveName = string
@@ -31,7 +32,7 @@ export class PuzzleDefinition {
 }
 
 export function IdentityTransformation(definition: PuzzleDefinition): Transformation {
-  var transformation = new Map<MoveName, OrbitTransformation>();
+  var transformation = new Transformation();
   for (var [orbitName, orbitDefinition] of this.definition.orbits) {
     var newPermutation = new Array(orbitDefinition.numPieces);
     var newOrientation = new Array(orbitDefinition.numPieces);
@@ -66,7 +67,7 @@ export class Puzzle {
     }
 
     // TODO: Figure out why `new Transformation()` causes a compiler error.
-    var newState: Transformation = new Map<OrbitName, OrbitTransformation>();
+    var newState: Transformation = new Transformation();
     for (var [orbitName, orbitDefinition] of this.definition.orbits) {
       var oldStateTransformation = this.state.get(orbitName) as OrbitTransformation;
       var moveTransformation = move.get(orbitName) as OrbitTransformation;
