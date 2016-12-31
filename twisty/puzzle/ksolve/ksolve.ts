@@ -84,6 +84,16 @@ export class Puzzle {
     return this;
   }
 
+  serialize(): string {
+    var output = ""
+    for (var [orbitName, orbitDefinition] of this.definition.orbits) {
+      output += orbitName + "\n";
+      output += (this.state.get(orbitName) as OrbitTransformation).permutation.join(" ") + "\n";
+      output += (this.state.get(orbitName) as OrbitTransformation).orientation.join(" ") + "\n";
+    }
+    output = output.slice(0, output.length - 1); // Trim last newline.
+    return output;
+  }
   // ksolvePuzzle.prototype = {
   //   newSolvedState_: function() {
   //     var state = {};
@@ -136,18 +146,6 @@ export class Puzzle {
   //   },
 
   //   // invertState: {},
-
-  //   serializeStateToKsolve: function() {
-  //     var output = ""
-  //     for (var orbit in this.parser_.orbits) {
-  //       output += orbit + "\n";
-  //       // output += this.state_[orbit].permutation.map(function(x) {return x + 1;}).join(" ") + "\n";
-  //       output += this.state_[orbit].permutation.join(" ") + "\n";
-  //       output += this.state_[orbit].orientation.join(" ") + "\n";
-  //     }
-  //     output = output.slice(0, output.length - 1); // Trim last newline.
-  //     return output;
-  //   },
 
   //   printState: function() {
   //     console.log(this.serializeStateToKsolve());
