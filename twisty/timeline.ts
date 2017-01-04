@@ -48,10 +48,15 @@ export class TimeLine implements TimeLine.BreakPointModel {
       throw "Invalid position calculated." // TODO
     }
     // TODO: Make this less hacky.
-    // TODO: Support going back one breakpoint from the end.
     if (direction === TimeLine.Direction.Forwards && duration < this.lastBreakPoint()) {
       if (pos.fraction === 1) {
         return this.breakPoint(direction, breakPointType, duration + 0.1);
+      }
+    }
+    // TODO: Make sure that AlgPosition returns the right move.
+    if (direction === TimeLine.Direction.Backwards && duration > this.firstBreakPoint()) {
+      if (pos.fraction === 0) {
+        return this.breakPoint(direction, breakPointType, duration - 0.1);
       }
     }
 
@@ -271,11 +276,19 @@ export function DefaultDurationForAmount(amount: number): TimeLine.Duration {
 }
 
 }
-var t = new TimeLine();
-t.alg = exampleAlg;
-console.log(t.breakPoint(TimeLine.Direction.Forwards, TimeLine.BreakPointType.Move, 10));
-console.log(t.breakPoint(TimeLine.Direction.Backwards, TimeLine.BreakPointType.Move, 10));
-console.log(t.breakPoint(TimeLine.Direction.Backwards, TimeLine.BreakPointType.Move, 1300));
-console.log(t.breakPoint(TimeLine.Direction.Forwards, TimeLine.BreakPointType.Move, 2050));
-console.log(t.breakPoint(TimeLine.Direction.Backwards, TimeLine.BreakPointType.Move, 2050));
+// var t = new TimeLine();
+// t.alg = exampleAlg;
+// console.log(t.breakPoint(TimeLine.Direction.Forwards, TimeLine.BreakPointType.Move, 10));
+// console.log(t.breakPoint(TimeLine.Direction.Backwards, TimeLine.BreakPointType.Move, 10));
+// console.log(t.breakPoint(TimeLine.Direction.Backwards, TimeLine.BreakPointType.Move, 1300));
+// console.log(t.breakPoint(TimeLine.Direction.Forwards, TimeLine.BreakPointType.Move, 2050));
+// console.log(t.breakPoint(TimeLine.Direction.Backwards, TimeLine.BreakPointType.Move, 2050));
+
+
+var durFn = new TimeLine.AlgDuration(TimeLine.DefaultDurationForAmount);
+var posFn = new TimeLine.AlgPosition(durFn);
+var dirCur = new TimeLine.DirectionWithCursor(TimeLine.Direction.Backwards, 14000);
+console.log(posFn.traverse(exampleAlg, dirCur));
 }
+
+
