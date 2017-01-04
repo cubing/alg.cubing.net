@@ -180,26 +180,31 @@ export class CursorTextView implements Anim.CursorObserver {
 }
 
 export class CursorTextMoveView implements Anim.CursorObserver {
-  private cursor: TimeLine.AlgPosition;
+  private posFn: TimeLine.AlgPosition;
   public readonly element: Element;
   constructor(private anim: Anim.Model) {
     this.element = document.createElement("cursor-text-view");
-    this.element.textContent = String(this.anim.getCursor());
     this.anim.dispatcher.registerCursorObserver(this);
 
     var durFn = new TimeLine.AlgDuration(TimeLine.DefaultDurationForAmount);
-    this.cursor = new TimeLine.AlgPosition(durFn);
+    this.posFn = new TimeLine.AlgPosition(durFn);
+
+    this.animCursorChanged(anim.getCursor());
+  }
+
+  private formatFraction(k: number) {
+    return (String(k) + (Math.floor(k) === k ? "." : "") + "000000").slice(0, 5)
   }
 
   animCursorChanged(duration: TimeLine.Duration) {
     var calcState = new TimeLine.DirectionWithCursor(TimeLine.Direction.Forwards, duration);
-    var pos = this.cursor.traverse(exampleAlg, calcState);
+    var pos = this.posFn.traverse(exampleAlg, calcState);
     if (!pos) {
       throw "aaaaargh";
     }
     var move = <Alg.BlockMove>pos.part;
     var dirredMove = new Alg.BlockMove(move.base, move.amount * pos.dir);
-    this.element.textContent = "" + Math.floor(duration) + " " + dirredMove.toString() + " " + ("" + pos.fraction + "000000").slice(0, 5);
+    this.element.textContent = "" + Math.floor(duration) + " " + dirredMove.toString() + " " + this.formatFraction(pos.fraction);
   }
 }
 
