@@ -1,6 +1,15 @@
 "use strict";
 
-var exampleAlg: Alg.Algorithm = Alg.Example.APermCompact; // TODO: Remove
+// var exampleAlg: Alg.Algorithm = Alg.Example.APermCompact; // TODO: Remove
+var exampleAlg: Alg.Algorithm = new Alg.Conjugate(
+  new Alg.BlockMove("F", 1),
+  new Alg.Commutator(
+    new Alg.BlockMove("R", 1),
+    new Alg.BlockMove("U", 1),
+    3
+  ),
+  1
+);
 
 namespace Twisty {
 
@@ -166,7 +175,6 @@ export class DirectionWithCursor {
               public cursor: TimeLine.Duration) {}
 }
 
-// TODO: Handle repeat amounts.
 export class AlgPosition extends Alg.Traversal.DownUp<DirectionWithCursor, Position | null> {
   public cursor: TimeLine.Duration = 0
 
@@ -179,29 +187,39 @@ export class AlgPosition extends Alg.Traversal.DownUp<DirectionWithCursor, Posit
     return new Position(algorithm, dirCur.dir, dirCur.cursor/ this.algDuration.traverse(algorithm));
   }
 
-  private traversePartsWithDirections(partsWithDirections: PartWithDirection[], dirCur: DirectionWithCursor): Position | null {
+  private traversePartsWithDirections(partsWithDirections: PartWithDirection[], amount: number, dirCur: DirectionWithCursor): Position | null {
     // TODO: Use generators once TypeScript is less buggy with them.
     var iterList = dirCur.dir === TimeLine.Direction.Forwards ?
                        partsWithDirections :
                        partsWithDirections.slice(0).reverse();
 
-    var cursorRemaining = dirCur.cursor;
+    var singleIterationTotal = 0;
     for (var partWithDirection of iterList) {
-        var duration = this.algDuration.traverse(partWithDirection.part);
-        // TODO: keep the move transition either on the rising edge or the falling edge, from the "forward" perspective.
-        if (cursorRemaining <= duration) {
-          var newDir = TimeLine.CombineDirections(dirCur.dir, partWithDirection.direction);
-          var newDirCur = new DirectionWithCursor(newDir, cursorRemaining);
-          return this.traverse(partWithDirection.part, newDirCur);
-        }
-        cursorRemaining -= duration;
+      // TODO: Dedup this calculation with the final loop?
+      singleIterationTotal += this.algDuration.traverse(partWithDirection.part);
+    }
+    var numFullIterations = Math.floor(dirCur.cursor / singleIterationTotal);
+
+    var cursorRemaining = dirCur.cursor - numFullIterations * singleIterationTotal;
+    // TODO: Use division/interpolation to handle large amounts efficiently.
+    for (var i = 0; i < amount; i++) {
+      for (var partWithDirection of iterList) {
+          var duration = this.algDuration.traverse(partWithDirection.part);
+          // TODO: keep the move transition either on the rising edge or the falling edge, from the "forward" perspective.
+          if (cursorRemaining <= duration) {
+            var newDir = TimeLine.CombineDirections(dirCur.dir, partWithDirection.direction);
+            var newDirCur = new DirectionWithCursor(newDir, cursorRemaining);
+            return this.traverse(partWithDirection.part, newDirCur);
+          }
+          cursorRemaining -= duration;
+      }
     }
     return null;
   }
 
   public traverseSequence(sequence: Alg.Sequence, dirCur: DirectionWithCursor): Position | null {
     var p = sequence.nestedAlgs.map(part => new PartWithDirection(part, TimeLine.Direction.Forwards));
-    return this.traversePartsWithDirections(p, dirCur);
+    return this.traversePartsWithDirections(p, 1, dirCur);
   }
   public traverseGroup(group: Alg.Group, dirCur: DirectionWithCursor): Position | null {
     return this.traverse(group.nestedAlg, dirCur);}
@@ -213,14 +231,14 @@ export class AlgPosition extends Alg.Traversal.DownUp<DirectionWithCursor, Posit
       new PartWithDirection(commutator.B, TimeLine.Direction.Forwards),
       new PartWithDirection(commutator.A, TimeLine.Direction.Backwards),
       new PartWithDirection(commutator.B, TimeLine.Direction.Backwards)
-    ], dirCur);
+    ], commutator.amount, dirCur);
   }
   public traverseConjugate(conjugate: Alg.Conjugate, dirCur: DirectionWithCursor): Position | null {
     return this.traversePartsWithDirections([
       new PartWithDirection(conjugate.A, TimeLine.Direction.Forwards),
       new PartWithDirection(conjugate.B, TimeLine.Direction.Forwards),
       new PartWithDirection(conjugate.A, TimeLine.Direction.Backwards)
-    ], dirCur);
+    ], conjugate.amount, dirCur);
   }
   public traversePause(pause: Alg.Pause, dirCur: DirectionWithCursor): Position | null {
     return this.leaf(pause, dirCur); }
