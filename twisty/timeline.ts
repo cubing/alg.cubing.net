@@ -48,6 +48,7 @@ export class TimeLine implements TimeLine.BreakPointModel {
       throw "Invalid position calculated." // TODO
     }
     // TODO: Make this less hacky.
+    // TODO: Support going back one breakpoint from the end.
     if (direction === TimeLine.Direction.Forwards && duration < this.lastBreakPoint()) {
       if (pos.fraction === 1) {
         return this.breakPoint(direction, breakPointType, duration + 0.1);
