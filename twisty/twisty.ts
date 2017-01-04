@@ -8,7 +8,7 @@ export class Twisty {
   private anim: Anim.Model;
   constructor(public element: Element) {
     this.timeLine = new TimeLine();
-    this.anim = new Anim.Model(this.timeLine.breakPointModel);
+    this.anim = new Anim.Model(this.timeLine);
 
     this.element.appendChild((new Widget.Player(this.anim)).element);
   }

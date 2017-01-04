@@ -4,27 +4,57 @@ var exampleAlg: Alg.Algorithm = Alg.Example.APermCompact; // TODO: Remove
 
 namespace Twisty {
 
-// Scaffolding to experiment with implementation.
-// All code in `Temp` should be gone by 2.0
-namespace Temp {
-  export class BasicAlg {
-    private breakpoints: number[];
-    constructor(private algorithm: Alg.Algorithm) {
-      this.breakpoints = [0, new TimeLine.AlgDuration().traverse(algorithm)];
-    }
-
-    breakPointModel(): TimeLine.BreakPointModel {
-      return new TimeLine.SimpleBreakPoints(this.breakpoints);
-    }
-  }
-}
-
-export class TimeLine {
-  public alg: Temp.BasicAlg;
-  public breakPointModel: TimeLine.BreakPointModel;
+export class TimeLine implements TimeLine.BreakPointModel {
+  public alg: Alg.Algorithm;
   constructor() {
-    this.alg = new Temp.BasicAlg(exampleAlg);
-    this.breakPointModel = this.alg.breakPointModel();
+    this.alg = exampleAlg;
+  }
+
+  firstBreakPoint(): TimeLine.Duration {
+    return 0;
+  }
+
+  lastBreakPoint(): TimeLine.Duration {
+    // TODO: Bind once to TimeLine namespace.
+    var durFn = new TimeLine.AlgDuration(TimeLine.DefaultDurationForAmount);
+    return durFn.traverse(this.alg);
+  }
+
+  // TODO: Define semantics if `duration` is past the end.
+  breakPoint(direction: TimeLine.Direction, breakPointType: TimeLine.BreakPointType, duration: TimeLine.Duration): TimeLine.Duration {
+    if (breakPointType === TimeLine.BreakPointType.EntireMoveSequence) {
+      if (direction === TimeLine.Direction.Backwards) {
+        return this.firstBreakPoint();
+      } else {
+        return this.lastBreakPoint();
+      }
+    }
+
+    // TODO: Bind once to TimeLine namespace.
+    var durFn = new TimeLine.AlgDuration(TimeLine.DefaultDurationForAmount);
+    var posFn = new TimeLine.AlgPosition(durFn);
+    var dirCur = new TimeLine.DirectionWithCursor(TimeLine.Direction.Forwards, duration);
+    var pos = posFn.traverse(this.alg, dirCur);
+    if (pos === null) {
+      throw "Invalid position calculated." // TODO
+    }
+    // TODO: Make this less hacky.
+    if (direction === TimeLine.Direction.Forwards && duration < this.lastBreakPoint()) {
+      if (pos.fraction === 1) {
+        return this.breakPoint(direction, breakPointType, duration + 0.1);
+      }
+    }
+
+    // TODO: Make this less hacky.
+    var frac = pos.fraction;
+    if (pos.dir === TimeLine.Direction.Backwards) {
+      frac = 1 - pos.fraction
+    }
+    if (pos.dir === direction) {
+      return duration + pos.dir * durFn.traverse(pos.part) * (1 - frac);
+    } else {
+      return duration - pos.dir * durFn.traverse(pos.part) * frac;
+    }
   }
 }
 
@@ -161,8 +191,8 @@ export class AlgPosition extends Alg.Traversal.DownUp<DirectionWithCursor, Posit
         // TODO: keep the move transition either on the rising edge or the falling edge, from the "forward" perspective.
         if (cursorRemaining <= duration) {
           var newDir = TimeLine.CombineDirections(dirCur.dir, partWithDirection.direction);
-          var newdirCur = new DirectionWithCursor(dirCur.dir, cursorRemaining);
-          return this.traverse(partWithDirection.part, newdirCur);
+          var newDirCur = new DirectionWithCursor(newDir, cursorRemaining);
+          return this.traverse(partWithDirection.part, newDirCur);
         }
         cursorRemaining -= duration;
     }
@@ -222,4 +252,11 @@ export function DefaultDurationForAmount(amount: number): TimeLine.Duration {
 }
 
 }
+var t = new TimeLine();
+t.alg = exampleAlg;
+console.log(t.breakPoint(TimeLine.Direction.Forwards, TimeLine.BreakPointType.Move, 10));
+console.log(t.breakPoint(TimeLine.Direction.Backwards, TimeLine.BreakPointType.Move, 10));
+console.log(t.breakPoint(TimeLine.Direction.Backwards, TimeLine.BreakPointType.Move, 1300));
+console.log(t.breakPoint(TimeLine.Direction.Forwards, TimeLine.BreakPointType.Move, 2050));
+console.log(t.breakPoint(TimeLine.Direction.Backwards, TimeLine.BreakPointType.Move, 2050));
 }
