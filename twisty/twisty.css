@@ -83,4 +83,5 @@ twisty player cursor-text-view {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-family: monospace;
 }
