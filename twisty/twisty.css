@@ -21,7 +21,7 @@ twisty player {
 }
 
 twisty player cursor-text-view {
-  flex: 4 0 0;
+  flex: 1 0 0;
 }
 
 twisty player twisty-control-bar {
@@ -84,4 +84,13 @@ twisty player cursor-text-view {
   align-items: center;
   justify-content: center;
   font-family: monospace;
+}
+
+twisty player ksolve-svg-view {
+  display: flex;
+  flex: 4 0 0;
+  align-items: center;
+  justify-content: center;
+
+  /* TODO: dynamic fitting */
 }
