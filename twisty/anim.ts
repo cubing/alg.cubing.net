@@ -55,7 +55,7 @@ export class Model {
   private direction: TimeLine.Direction = TimeLine.Direction.Paused;
   private breakPointType: TimeLine.BreakPointType = TimeLine.BreakPointType.EntireMoveSequence;
   private scheduler: FrameScheduler;
-  private tempo: number = 1; // TODO: Support setting tempo.
+  private tempo: number = 1.5; // TODO: Support setting tempo.
   public dispatcher: Dispatcher = new Dispatcher();
   // TODO: cache breakpoints instead of re-querying the model constantly.
   constructor(private breakPointModel: TimeLine.BreakPointModel) {
