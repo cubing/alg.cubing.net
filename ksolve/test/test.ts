@@ -24,8 +24,8 @@ function ksolveTest(description: string, condition: boolean) {
 })();
 
 (function TestDraw() {
-  var p = new KSolve.Puzzle(KSolve.Puzzles["333"]);
-  var svg = new KSolve.SVG(KSolve.Puzzles["333"]);
+  var p = new KSolve.Puzzle(KSolve.Puzzles["222"]);
+  var svg = new KSolve.SVG(KSolve.Puzzles["222"]);
   document.body.appendChild(svg.element);
 
   for (var move of "RURRRURUURRR") {

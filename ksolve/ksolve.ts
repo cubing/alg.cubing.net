@@ -106,7 +106,8 @@ export class SVG {
       throw `No SVG definition for puzzle type: ${puzzleDefinition.name}`
     }
 
-    this.element = document.createElement("svg");
+    this.element = document.createElement("div");
+    this.element.classList.add("svg-wrapper");
     // TODO: Sanitization.
     this.element.innerHTML = puzzleDefinition.svg;
     document.body.appendChild(this.element);

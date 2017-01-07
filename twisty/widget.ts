@@ -214,8 +214,8 @@ export class KSolveView implements Anim.CursorObserver {
     this.element = document.createElement("ksolve-svg-view");
     this.anim.dispatcher.registerCursorObserver(this);
 
-    var p = new KSolve.Puzzle(KSolve.Puzzles["333"]);
-    var svg = new KSolve.SVG(KSolve.Puzzles["333"]);
+    var p = new KSolve.Puzzle(KSolve.Puzzles["333"]); // TODO: Dynamic puzzle
+    var svg = new KSolve.SVG(KSolve.Puzzles["333"]); // TODO: Dynamic puzzle
     this.element.appendChild(svg.element);
   }
 
@@ -229,9 +229,9 @@ export class Player {
     this.element = document.createElement("player");
 
     this.element.appendChild((new KSolveView(this.anim)).element);
-    this.element.appendChild((new CursorTextMoveView(this.anim)).element);
     this.element.appendChild((new Scrubber(this.anim)).element);
     this.element.appendChild((new ControlBar(this.anim, this.element)).element);
+    this.element.appendChild((new CursorTextMoveView(this.anim)).element);
   }
 }
 
