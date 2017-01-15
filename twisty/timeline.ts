@@ -80,10 +80,10 @@ export enum BreakpointType {
   EntireMoveSequence
 }
 
-// TODO: Extend `number`, introduce MoveSequenceTimeStamp vs. EpochTimeStamp,
+// TODO: Extend `number`, introduce MoveSequenceTimestamp vs. EpochTimestamp,
 // force Duration to be a difference.
 export type Duration = number; // Duration in milliseconds
-export type TimeStamp = Duration; // Duration since a particular epoch.
+export type Timestamp = Duration; // Duration since a particular epoch.
 
 export type Fraction = number; // Value from 0 to 1.
 

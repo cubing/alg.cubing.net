@@ -51,7 +51,7 @@ export class Dispatcher implements CursorObserver, DirectionObserver {
 
 export class Model {
   private cursor: Timeline.Duration = 0;
-  private lastCursorTime: Timeline.TimeStamp = 0;
+  private lastCursorTime: Timeline.Timestamp = 0;
   private direction: Timeline.Direction = Timeline.Direction.Paused;
   private breakpointType: Timeline.BreakpointType = Timeline.BreakpointType.EntireMoveSequence;
   private scheduler: FrameScheduler;
@@ -79,21 +79,21 @@ export class Model {
 
   // Update the cursor based on the time since lastCursorTime, and reset
   // lastCursorTime.
-  private updateCursor(timeStamp: Timeline.TimeStamp) {
+  private updateCursor(timestamp: Timeline.Timestamp) {
     if (this.direction === Timeline.Direction.Paused) {
-      this.lastCursorTime = timeStamp;
+      this.lastCursorTime = timestamp;
       return;
     }
 
     var previousCursor = this.cursor;
 
-    var elapsed = timeStamp - this.lastCursorTime;
+    var elapsed = timestamp - this.lastCursorTime;
     // Workaround for the first frame: https://twitter.com/lgarron/status/794846097445269504
     if (elapsed < 0) {
       elapsed = 0;
     }
     this.cursor += elapsed * this.timeScaling();
-    this.lastCursorTime = timeStamp;
+    this.lastCursorTime = timestamp;
 
     // Check if we've passed a breakpoint
     // TODO: check if we've gone off the end.
@@ -117,8 +117,8 @@ export class Model {
     this.dispatcher.animDirectionChanged(direction);
   }
 
-  private frame(timeStamp: Timeline.TimeStamp) {
-    this.updateCursor(timeStamp);
+  private frame(timestamp: Timeline.Timestamp) {
+    this.updateCursor(timestamp);
     this.dispatcher.animCursorChanged(this.cursor);
   }
 
@@ -201,10 +201,10 @@ export class Model {
 
 class FrameScheduler {
   private animating: boolean = false;
-  constructor(private callback: (timeStamp: Timeline.TimeStamp) => void) {}
+  constructor(private callback: (timestamp: Timeline.Timestamp) => void) {}
 
-  animFrame(timeStamp: Timeline.TimeStamp) {
-    this.callback(timeStamp);
+  animFrame(timestamp: Timeline.Timestamp) {
+    this.callback(timestamp);
     if (this.animating) {
       // TODO: use same bound frame instead of creating a new binding each frame.
       requestAnimationFrame(this.animFrame.bind(this));
