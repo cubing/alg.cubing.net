@@ -4,15 +4,15 @@ namespace Twisty {
 export namespace Anim {
 
 export interface CursorObserver {
-  animCursorChanged: (cursor: TimeLine.Duration) => void;
+  animCursorChanged: (cursor: Timeline.Duration) => void;
 }
 
 export interface DirectionObserver {
-  animDirectionChanged: (direction: TimeLine.Direction) => void;
+  animDirectionChanged: (direction: Timeline.Direction) => void;
 }
 
 // export interface BoundsObserver {
-//   animBoundsChanged: (start: TimeLine.Duration, end: TimeLine.Duration) => void;
+//   animBoundsChanged: (start: Timeline.Duration, end: Timeline.Duration) => void;
 // }
 
 // TODO: Use generics to unify handling the types of observers.
@@ -34,14 +34,14 @@ export class Dispatcher implements CursorObserver, DirectionObserver {
     this.directionObservers.add(observer);
   }
 
-  animCursorChanged(cursor: TimeLine.Duration) {
+  animCursorChanged(cursor: Timeline.Duration) {
     // TODO: guard against nested changes and test.
     for (var observer of this.cursorObservers) {
       observer.animCursorChanged(cursor);
     }
   }
 
-  animDirectionChanged(direction: TimeLine.Direction) {
+  animDirectionChanged(direction: Timeline.Direction) {
     // TODO: guard against nested changes and test.
     for (var observer of this.directionObservers) {
       observer.animDirectionChanged(direction);
@@ -50,26 +50,26 @@ export class Dispatcher implements CursorObserver, DirectionObserver {
 }
 
 export class Model {
-  private cursor: TimeLine.Duration = 0;
-  private lastCursorTime: TimeLine.TimeStamp = 0;
-  private direction: TimeLine.Direction = TimeLine.Direction.Paused;
-  private breakPointType: TimeLine.BreakPointType = TimeLine.BreakPointType.EntireMoveSequence;
+  private cursor: Timeline.Duration = 0;
+  private lastCursorTime: Timeline.TimeStamp = 0;
+  private direction: Timeline.Direction = Timeline.Direction.Paused;
+  private breakPointType: Timeline.BreakPointType = Timeline.BreakPointType.EntireMoveSequence;
   private scheduler: FrameScheduler;
   private tempo: number = 1.5; // TODO: Support setting tempo.
   public dispatcher: Dispatcher = new Dispatcher();
   // TODO: cache breakpoints instead of re-querying the model constantly.
-  constructor(public timeLine: TimeLine) {
+  constructor(public timeline: Timeline) {
     this.scheduler = new FrameScheduler(this.frame.bind(this));
   }
 
-  public getCursor(): TimeLine.Duration {
+  public getCursor(): Timeline.Duration {
     return this.cursor;
   }
 
-  public getBounds(): TimeLine.Duration[] {
+  public getBounds(): Timeline.Duration[] {
     return [
-      this.timeLine.firstBreakPoint(),
-      this.timeLine.lastBreakPoint()
+      this.timeline.firstBreakPoint(),
+      this.timeline.lastBreakPoint()
     ];
   }
 
@@ -79,8 +79,8 @@ export class Model {
 
   // Update the cursor based on the time since lastCursorTime, and reset
   // lastCursorTime.
-  private updateCursor(timeStamp: TimeLine.TimeStamp) {
-    if (this.direction === TimeLine.Direction.Paused) {
+  private updateCursor(timeStamp: Timeline.TimeStamp) {
+    if (this.direction === Timeline.Direction.Paused) {
       this.lastCursorTime = timeStamp;
       return;
     }
@@ -97,43 +97,43 @@ export class Model {
 
     // Check if we've passed a breakpoint
     // TODO: check if we've gone off the end.
-    var breakPoint = this.timeLine.breakPoint(this.direction, this.breakPointType, previousCursor);
+    var breakPoint = this.timeline.breakPoint(this.direction, this.breakPointType, previousCursor);
 
-    var isForwards = (this.direction === TimeLine.Direction.Forwards);
+    var isForwards = (this.direction === Timeline.Direction.Forwards);
     var isPastBreakPoint = isForwards ?
       (this.cursor > breakPoint) :
       (this.cursor < breakPoint);
     if (isPastBreakPoint) {
         this.cursor = breakPoint;
-        this.setDirection(TimeLine.Direction.Paused);
+        this.setDirection(Timeline.Direction.Paused);
         this.scheduler.stop();
     }
   }
 
-  private setDirection(direction: TimeLine.Direction) {
+  private setDirection(direction: Timeline.Direction) {
     // TODO: Handle in frame for debouncing?
     // (Are there any use cases that need synchoronous observation?)
     this.direction = direction;
     this.dispatcher.animDirectionChanged(direction);
   }
 
-  private frame(timeStamp: TimeLine.TimeStamp) {
+  private frame(timeStamp: Timeline.TimeStamp) {
     this.updateCursor(timeStamp);
     this.dispatcher.animCursorChanged(this.cursor);
   }
 
-  // TODO: Push this into timeLine.
-  private setBreakPointType(breakPointType: TimeLine.BreakPointType) {
+  // TODO: Push this into timeline.
+  private setBreakPointType(breakPointType: Timeline.BreakPointType) {
     this.breakPointType = breakPointType;
   }
 
   private isPaused() {
-    return this.direction === TimeLine.Direction.Paused;
+    return this.direction === Timeline.Direction.Paused;
   }
 
   // Animate or pause in the given direction.
   // Idempotent.
-  private animateDirection(direction: TimeLine.Direction): void {
+  private animateDirection(direction: Timeline.Direction): void {
     if (this.direction === direction) {
       return;
     }
@@ -143,50 +143,50 @@ export class Model {
 
     // Start the new direction.
     this.setDirection(direction);
-    if (direction === TimeLine.Direction.Paused) {
+    if (direction === Timeline.Direction.Paused) {
       this.scheduler.stop();
     } else {
       this.scheduler.start();
     }
   }
 
-  public skipAndPauseTo(duration: TimeLine.Duration): void {
+  public skipAndPauseTo(duration: Timeline.Duration): void {
     this.pause();
     this.cursor = duration;
     this.scheduler.singleFrame();
   }
 
   playForward(): void {
-    this.setBreakPointType(TimeLine.BreakPointType.EntireMoveSequence);
-    this.animateDirection(TimeLine.Direction.Forwards);
+    this.setBreakPointType(Timeline.BreakPointType.EntireMoveSequence);
+    this.animateDirection(Timeline.Direction.Forwards);
   }
 
   // A simple wrapper for animateDirection(Paused).
   pause(): void {
-    this.animateDirection(TimeLine.Direction.Paused);
+    this.animateDirection(Timeline.Direction.Paused);
   }
 
   playBackward(): void {
-    this.setBreakPointType(TimeLine.BreakPointType.EntireMoveSequence);
-    this.animateDirection(TimeLine.Direction.Backwards);
+    this.setBreakPointType(Timeline.BreakPointType.EntireMoveSequence);
+    this.animateDirection(Timeline.Direction.Backwards);
   }
 
   skipToStart(): void {
-    this.skipAndPauseTo(this.timeLine.firstBreakPoint());
+    this.skipAndPauseTo(this.timeline.firstBreakPoint());
   }
 
   skipToEnd(): void {
-    this.skipAndPauseTo(this.timeLine.lastBreakPoint());
+    this.skipAndPauseTo(this.timeline.lastBreakPoint());
   }
 
   stepForward(): void {
-    this.setBreakPointType(TimeLine.BreakPointType.Move);
-    this.animateDirection(TimeLine.Direction.Forwards);
+    this.setBreakPointType(Timeline.BreakPointType.Move);
+    this.animateDirection(Timeline.Direction.Forwards);
   }
 
   stepBackward(): void {
-    this.setBreakPointType(TimeLine.BreakPointType.Move);
-    this.animateDirection(TimeLine.Direction.Backwards);
+    this.setBreakPointType(Timeline.BreakPointType.Move);
+    this.animateDirection(Timeline.Direction.Backwards);
   }
 
   togglePausePlayForward(): void {
@@ -201,9 +201,9 @@ export class Model {
 
 class FrameScheduler {
   private animating: boolean = false;
-  constructor(private callback: (timeStamp: TimeLine.TimeStamp) => void) {}
+  constructor(private callback: (timeStamp: Timeline.TimeStamp) => void) {}
 
-  animFrame(timeStamp: TimeLine.TimeStamp) {
+  animFrame(timeStamp: Timeline.TimeStamp) {
     this.callback(timeStamp);
     if (this.animating) {
       // TODO: use same bound frame instead of creating a new binding each frame.

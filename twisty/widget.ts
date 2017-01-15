@@ -84,13 +84,13 @@ export module Button {
       this.anim.dispatcher.registerDirectionObserver(this);
     }
     onpress(): void { this.anim.togglePausePlayForward(); }
-    animDirectionChanged(direction: TimeLine.Direction): void {
+    animDirectionChanged(direction: Timeline.Direction): void {
       // TODO: Handle flash of pause button when pressed while the Twisty is already at the end.
-      var newClass = direction === TimeLine.Direction.Paused ? "play" : "pause";
+      var newClass = direction === Timeline.Direction.Paused ? "play" : "pause";
       this.element.classList.remove("play", "pause")
       this.element.classList.add(newClass);
 
-      this.element.title = direction === TimeLine.Direction.Paused ? "Play" : "Pause";
+      this.element.title = direction === Timeline.Direction.Paused ? "Play" : "Pause";
     }
   }
   export class StepForward extends Button {
@@ -155,7 +155,7 @@ export class Scrubber implements Anim.CursorObserver {
     this.updateBackground();
   }
 
-  animCursorChanged(cursor: TimeLine.Duration): void {
+  animCursorChanged(cursor: Timeline.Duration): void {
     this.element.value = String(cursor);
     this.updateBackground();
   }
@@ -174,20 +174,20 @@ export class CursorTextView implements Anim.CursorObserver {
     this.anim.dispatcher.registerCursorObserver(this);
   }
 
-  animCursorChanged(duration: TimeLine.Duration) {
+  animCursorChanged(duration: Timeline.Duration) {
     this.element.textContent = String(Math.floor(duration));
   }
 }
 
 export class CursorTextMoveView implements Anim.CursorObserver {
-  private posFn: TimeLine.AlgPosition;
+  private posFn: Timeline.AlgPosition;
   public readonly element: Element;
   constructor(private anim: Anim.Model) {
     this.element = document.createElement("cursor-text-view");
     this.anim.dispatcher.registerCursorObserver(this);
 
-    var durFn = new TimeLine.AlgDuration(TimeLine.DefaultDurationForAmount);
-    this.posFn = new TimeLine.AlgPosition(durFn);
+    var durFn = new Timeline.AlgDuration(Timeline.DefaultDurationForAmount);
+    this.posFn = new Timeline.AlgPosition(durFn);
 
     this.animCursorChanged(anim.getCursor());
   }
@@ -196,9 +196,9 @@ export class CursorTextMoveView implements Anim.CursorObserver {
     return (String(k) + (Math.floor(k) === k ? "." : "") + "000000").slice(0, 5)
   }
 
-  animCursorChanged(duration: TimeLine.Duration) {
-    var calcState = new TimeLine.DirectionWithCursor(TimeLine.Direction.Forwards, duration);
-    var pos = this.posFn.traverse(this.anim.timeLine.alg, calcState);
+  animCursorChanged(duration: Timeline.Duration) {
+    var calcState = new Timeline.DirectionWithCursor(Timeline.Direction.Forwards, duration);
+    var pos = this.posFn.traverse(this.anim.timeline.alg, calcState);
     if (!pos) {
       throw "aaaaargh";
     }
@@ -219,7 +219,7 @@ export class KSolveView implements Anim.CursorObserver {
     this.element.appendChild(svg.element);
   }
 
-  animCursorChanged(duration: TimeLine.Duration) {
+  animCursorChanged(duration: Timeline.Duration) {
   }
 }
 
