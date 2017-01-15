@@ -2,27 +2,27 @@
 
 namespace Twisty {
 
-export class Timeline implements Timeline.BreakPointModel {
+export class Timeline implements Timeline.BreakpointModel {
   constructor(public alg: Alg.Algorithm) {
   }
 
-  firstBreakPoint(): Timeline.Duration {
+  firstBreakpoint(): Timeline.Duration {
     return 0;
   }
 
-  lastBreakPoint(): Timeline.Duration {
+  lastBreakpoint(): Timeline.Duration {
     // TODO: Bind once to Timeline namespace.
     var durFn = new Timeline.AlgDuration(Timeline.DefaultDurationForAmount);
     return durFn.traverse(this.alg);
   }
 
   // TODO: Define semantics if `duration` is past the end.
-  breakPoint(direction: Timeline.Direction, breakPointType: Timeline.BreakPointType, duration: Timeline.Duration): Timeline.Duration {
-    if (breakPointType === Timeline.BreakPointType.EntireMoveSequence) {
+  breakpoint(direction: Timeline.Direction, breakpointType: Timeline.BreakpointType, duration: Timeline.Duration): Timeline.Duration {
+    if (breakpointType === Timeline.BreakpointType.EntireMoveSequence) {
       if (direction === Timeline.Direction.Backwards) {
-        return this.firstBreakPoint();
+        return this.firstBreakpoint();
       } else {
-        return this.lastBreakPoint();
+        return this.lastBreakpoint();
       }
     }
 
@@ -35,15 +35,15 @@ export class Timeline implements Timeline.BreakPointModel {
       throw "Invalid position calculated." // TODO
     }
     // TODO: Make this less hacky.
-    if (direction === Timeline.Direction.Forwards && duration < this.lastBreakPoint()) {
+    if (direction === Timeline.Direction.Forwards && duration < this.lastBreakpoint()) {
       if (pos.fraction === 1) {
-        return this.breakPoint(direction, breakPointType, duration + 0.1);
+        return this.breakpoint(direction, breakpointType, duration + 0.1);
       }
     }
     // TODO: Make sure that AlgPosition returns the right move.
-    if (direction === Timeline.Direction.Backwards && duration > this.firstBreakPoint()) {
+    if (direction === Timeline.Direction.Backwards && duration > this.firstBreakpoint()) {
       if (pos.fraction === 0) {
-        return this.breakPoint(direction, breakPointType, duration - 0.1);
+        return this.breakpoint(direction, breakpointType, duration - 0.1);
       }
     }
 
@@ -75,7 +75,7 @@ export function CombineDirections(d1: Direction, d2: Direction): Direction {
   return d1 * d2;
 }
 
-export enum BreakPointType {
+export enum BreakpointType {
   Move,
   EntireMoveSequence
 }
@@ -92,37 +92,37 @@ export type Fraction = number; // Value from 0 to 1.
 // - Line
 // - Start/end of move sequence.
 // - "section" (e.g. scramble section, solve section)
-export interface BreakPointModel {
-  firstBreakPoint(): Duration;
-  lastBreakPoint(): Duration;
+export interface BreakpointModel {
+  firstBreakpoint(): Duration;
+  lastBreakpoint(): Duration;
   // TODO: Define semantics if `duration` is past the end.
-  breakPoint(direction: Direction, breakPointType: BreakPointType, duration: Duration): Duration;
+  breakpoint(direction: Direction, breakpointType: BreakpointType, duration: Duration): Duration;
 }
 
-export class SimpleBreakPoints implements BreakPointModel {
-    // Assumes breakPointList is sorted.
-    constructor(private breakPointList: Duration[]) {}
+export class SimpleBreakpoints implements BreakpointModel {
+    // Assumes breakpointList is sorted.
+    constructor(private breakpointList: Duration[]) {}
 
-    firstBreakPoint() {
-      return this.breakPointList[0];
+    firstBreakpoint() {
+      return this.breakpointList[0];
     }
-    lastBreakPoint() {
-      return this.breakPointList[this.breakPointList.length - 1];
+    lastBreakpoint() {
+      return this.breakpointList[this.breakpointList.length - 1];
     }
 
-    breakPoint(direction: Direction, breakPointType: BreakPointType, duration: Duration) {
+    breakpoint(direction: Direction, breakpointType: BreakpointType, duration: Duration) {
       if (direction === Direction.Backwards) {
-        var l = this.breakPointList.filter(d2 => d2 < duration);
-        if (l.length === 0 || breakPointType === BreakPointType.EntireMoveSequence) {
-          // TODO: Avoid list filtering above if breakPointType == EntireMoveSequence
-          return this.firstBreakPoint();
+        var l = this.breakpointList.filter(d2 => d2 < duration);
+        if (l.length === 0 || breakpointType === BreakpointType.EntireMoveSequence) {
+          // TODO: Avoid list filtering above if breakpointType == EntireMoveSequence
+          return this.firstBreakpoint();
         }
         return l[l.length - 1];
       } else {
-        var l = this.breakPointList.filter(d2 => d2 > duration);
-        if (l.length === 0 || breakPointType === BreakPointType.EntireMoveSequence) {
-          // TODO: Avoid list filtering above if breakPointType == EntireMoveSequence
-          return this.lastBreakPoint();
+        var l = this.breakpointList.filter(d2 => d2 > duration);
+        if (l.length === 0 || breakpointType === BreakpointType.EntireMoveSequence) {
+          // TODO: Avoid list filtering above if breakpointType == EntireMoveSequence
+          return this.lastBreakpoint();
         }
         return l[0];
       }
@@ -265,11 +265,11 @@ export function DefaultDurationForAmount(amount: number): Timeline.Duration {
 }
 // var t = new Timeline();
 // t.alg = exampleAlg;
-// console.log(t.breakPoint(Timeline.Direction.Forwards, Timeline.BreakPointType.Move, 10));
-// console.log(t.breakPoint(Timeline.Direction.Backwards, Timeline.BreakPointType.Move, 10));
-// console.log(t.breakPoint(Timeline.Direction.Backwards, Timeline.BreakPointType.Move, 1300));
-// console.log(t.breakPoint(Timeline.Direction.Forwards, Timeline.BreakPointType.Move, 2050));
-// console.log(t.breakPoint(Timeline.Direction.Backwards, Timeline.BreakPointType.Move, 2050));
+// console.log(t.breakpoint(Timeline.Direction.Forwards, Timeline.BreakpointType.Move, 10));
+// console.log(t.breakpoint(Timeline.Direction.Backwards, Timeline.BreakpointType.Move, 10));
+// console.log(t.breakpoint(Timeline.Direction.Backwards, Timeline.BreakpointType.Move, 1300));
+// console.log(t.breakpoint(Timeline.Direction.Forwards, Timeline.BreakpointType.Move, 2050));
+// console.log(t.breakpoint(Timeline.Direction.Backwards, Timeline.BreakpointType.Move, 2050));
 
 
 var durFn = new Timeline.AlgDuration(Timeline.DefaultDurationForAmount);

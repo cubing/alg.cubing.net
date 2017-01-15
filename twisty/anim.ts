@@ -53,7 +53,7 @@ export class Model {
   private cursor: Timeline.Duration = 0;
   private lastCursorTime: Timeline.TimeStamp = 0;
   private direction: Timeline.Direction = Timeline.Direction.Paused;
-  private breakPointType: Timeline.BreakPointType = Timeline.BreakPointType.EntireMoveSequence;
+  private breakpointType: Timeline.BreakpointType = Timeline.BreakpointType.EntireMoveSequence;
   private scheduler: FrameScheduler;
   private tempo: number = 1.5; // TODO: Support setting tempo.
   public dispatcher: Dispatcher = new Dispatcher();
@@ -68,8 +68,8 @@ export class Model {
 
   public getBounds(): Timeline.Duration[] {
     return [
-      this.timeline.firstBreakPoint(),
-      this.timeline.lastBreakPoint()
+      this.timeline.firstBreakpoint(),
+      this.timeline.lastBreakpoint()
     ];
   }
 
@@ -97,14 +97,14 @@ export class Model {
 
     // Check if we've passed a breakpoint
     // TODO: check if we've gone off the end.
-    var breakPoint = this.timeline.breakPoint(this.direction, this.breakPointType, previousCursor);
+    var breakpoint = this.timeline.breakpoint(this.direction, this.breakpointType, previousCursor);
 
     var isForwards = (this.direction === Timeline.Direction.Forwards);
-    var isPastBreakPoint = isForwards ?
-      (this.cursor > breakPoint) :
-      (this.cursor < breakPoint);
-    if (isPastBreakPoint) {
-        this.cursor = breakPoint;
+    var isPastBreakpoint = isForwards ?
+      (this.cursor > breakpoint) :
+      (this.cursor < breakpoint);
+    if (isPastBreakpoint) {
+        this.cursor = breakpoint;
         this.setDirection(Timeline.Direction.Paused);
         this.scheduler.stop();
     }
@@ -123,8 +123,8 @@ export class Model {
   }
 
   // TODO: Push this into timeline.
-  private setBreakPointType(breakPointType: Timeline.BreakPointType) {
-    this.breakPointType = breakPointType;
+  private setBreakpointType(breakpointType: Timeline.BreakpointType) {
+    this.breakpointType = breakpointType;
   }
 
   private isPaused() {
@@ -157,7 +157,7 @@ export class Model {
   }
 
   playForward(): void {
-    this.setBreakPointType(Timeline.BreakPointType.EntireMoveSequence);
+    this.setBreakpointType(Timeline.BreakpointType.EntireMoveSequence);
     this.animateDirection(Timeline.Direction.Forwards);
   }
 
@@ -167,25 +167,25 @@ export class Model {
   }
 
   playBackward(): void {
-    this.setBreakPointType(Timeline.BreakPointType.EntireMoveSequence);
+    this.setBreakpointType(Timeline.BreakpointType.EntireMoveSequence);
     this.animateDirection(Timeline.Direction.Backwards);
   }
 
   skipToStart(): void {
-    this.skipAndPauseTo(this.timeline.firstBreakPoint());
+    this.skipAndPauseTo(this.timeline.firstBreakpoint());
   }
 
   skipToEnd(): void {
-    this.skipAndPauseTo(this.timeline.lastBreakPoint());
+    this.skipAndPauseTo(this.timeline.lastBreakpoint());
   }
 
   stepForward(): void {
-    this.setBreakPointType(Timeline.BreakPointType.Move);
+    this.setBreakpointType(Timeline.BreakpointType.Move);
     this.animateDirection(Timeline.Direction.Forwards);
   }
 
   stepBackward(): void {
-    this.setBreakPointType(Timeline.BreakPointType.Move);
+    this.setBreakpointType(Timeline.BreakpointType.Move);
     this.animateDirection(Timeline.Direction.Backwards);
   }
 
