@@ -70,6 +70,18 @@ export const FURURFMoves: Algorithm = new Sequence([
   new BlockMove("F", -1)
 ]);
 
+
+export const HeadlightSwaps: Alg.Algorithm = new Alg.Conjugate(
+  new Alg.BlockMove("F", 1),
+  new Alg.Commutator(
+    new Alg.BlockMove("R", 1),
+    new Alg.BlockMove("U", 1),
+    3
+  ),
+  1
+);
+
+
 export const AllAlgTypes: Algorithm[] = [
   new Sequence([new BlockMove("R", 1), new BlockMove("U", -1)]),
   new Group(new BlockMove("F", 1), 2),

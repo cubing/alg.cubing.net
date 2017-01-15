@@ -198,7 +198,7 @@ export class CursorTextMoveView implements Anim.CursorObserver {
 
   animCursorChanged(duration: TimeLine.Duration) {
     var calcState = new TimeLine.DirectionWithCursor(TimeLine.Direction.Forwards, duration);
-    var pos = this.posFn.traverse(exampleAlg, calcState);
+    var pos = this.posFn.traverse(this.anim.timeLine.alg, calcState);
     if (!pos) {
       throw "aaaaargh";
     }

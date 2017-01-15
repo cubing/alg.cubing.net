@@ -58,7 +58,7 @@ export class Model {
   private tempo: number = 1.5; // TODO: Support setting tempo.
   public dispatcher: Dispatcher = new Dispatcher();
   // TODO: cache breakpoints instead of re-querying the model constantly.
-  constructor(private breakPointModel: TimeLine.BreakPointModel) {
+  constructor(public timeLine: TimeLine) {
     this.scheduler = new FrameScheduler(this.frame.bind(this));
   }
 
@@ -68,8 +68,8 @@ export class Model {
 
   public getBounds(): TimeLine.Duration[] {
     return [
-      this.breakPointModel.firstBreakPoint(),
-      this.breakPointModel.lastBreakPoint()
+      this.timeLine.firstBreakPoint(),
+      this.timeLine.lastBreakPoint()
     ];
   }
 
@@ -97,7 +97,7 @@ export class Model {
 
     // Check if we've passed a breakpoint
     // TODO: check if we've gone off the end.
-    var breakPoint = this.breakPointModel.breakPoint(this.direction, this.breakPointType, previousCursor);
+    var breakPoint = this.timeLine.breakPoint(this.direction, this.breakPointType, previousCursor);
 
     var isForwards = (this.direction === TimeLine.Direction.Forwards);
     var isPastBreakPoint = isForwards ?
@@ -122,7 +122,7 @@ export class Model {
     this.dispatcher.animCursorChanged(this.cursor);
   }
 
-  // TODO: Push this into breakPointModel.
+  // TODO: Push this into timeLine.
   private setBreakPointType(breakPointType: TimeLine.BreakPointType) {
     this.breakPointType = breakPointType;
   }
@@ -172,11 +172,11 @@ export class Model {
   }
 
   skipToStart(): void {
-    this.skipAndPauseTo(this.breakPointModel.firstBreakPoint());
+    this.skipAndPauseTo(this.timeLine.firstBreakPoint());
   }
 
   skipToEnd(): void {
-    this.skipAndPauseTo(this.breakPointModel.lastBreakPoint());
+    this.skipAndPauseTo(this.timeLine.lastBreakPoint());
   }
 
   stepForward(): void {

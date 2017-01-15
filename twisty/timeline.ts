@@ -1,22 +1,9 @@
 "use strict";
 
-// var exampleAlg: Alg.Algorithm = Alg.Example.APermCompact; // TODO: Remove
-var exampleAlg: Alg.Algorithm = new Alg.Conjugate(
-  new Alg.BlockMove("F", 1),
-  new Alg.Commutator(
-    new Alg.BlockMove("R", 1),
-    new Alg.BlockMove("U", 1),
-    3
-  ),
-  1
-);
-
 namespace Twisty {
 
 export class TimeLine implements TimeLine.BreakPointModel {
-  public alg: Alg.Algorithm;
-  constructor() {
-    this.alg = exampleAlg;
+  constructor(public alg: Alg.Algorithm) {
   }
 
   firstBreakPoint(): TimeLine.Duration {
@@ -288,7 +275,6 @@ export function DefaultDurationForAmount(amount: number): TimeLine.Duration {
 var durFn = new TimeLine.AlgDuration(TimeLine.DefaultDurationForAmount);
 var posFn = new TimeLine.AlgPosition(durFn);
 var dirCur = new TimeLine.DirectionWithCursor(TimeLine.Direction.Backwards, 14000);
-console.log(posFn.traverse(exampleAlg, dirCur));
 }
 
 
