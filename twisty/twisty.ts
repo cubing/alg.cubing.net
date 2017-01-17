@@ -4,11 +4,15 @@ namespace Twisty {
 
 // TODO: Turn Twisty into a module and move Twisty.Twisty into Twisty proper.
 export class Twisty {
+  private alg: Alg.Algorithm;
   private timeline: Timeline;
   private anim: Anim.Model;
+  private cursor: Cursor;
   constructor(public element: Element) {
-    this.timeline = new Timeline(Alg.Example.HeadlightSwaps);
-    this.anim = new Anim.Model(this.timeline);
+    this.alg = Alg.Example.HeadlightSwaps;
+    this.cursor = new Cursor(this.alg);
+    // this.timeline = new Timeline(Alg.Example.HeadlightSwaps);
+    this.anim = new Anim.Model(this.cursor);
 
     this.element.appendChild((new Widget.Player(this.anim)).element);
   }

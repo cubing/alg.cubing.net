@@ -4,11 +4,11 @@ namespace Twisty {
 export namespace Anim {
 
 export interface CursorObserver {
-  animCursorChanged: (cursor: Timeline.Duration) => void;
+  animCursorChanged: (cursor: Cursor) => void; // TODO cursor.position?
 }
 
 export interface DirectionObserver {
-  animDirectionChanged: (direction: Timeline.Direction) => void;
+  animDirectionChanged: (direction: Cursor.Direction) => void;
 }
 
 // export interface BoundsObserver {
@@ -34,14 +34,14 @@ export class Dispatcher implements CursorObserver, DirectionObserver {
     this.directionObservers.add(observer);
   }
 
-  animCursorChanged(cursor: Timeline.Duration) {
+  animCursorChanged(cursor: Cursor) {
     // TODO: guard against nested changes and test.
     for (var observer of this.cursorObservers) {
       observer.animCursorChanged(cursor);
     }
   }
 
-  animDirectionChanged(direction: Timeline.Direction) {
+  animDirectionChanged(direction: Cursor.Direction) {
     // TODO: guard against nested changes and test.
     for (var observer of this.directionObservers) {
       observer.animDirectionChanged(direction);
@@ -50,7 +50,6 @@ export class Dispatcher implements CursorObserver, DirectionObserver {
 }
 
 export class Model {
-  private cursor: Timeline.Duration = 0;
   private lastCursorTime: Timeline.Timestamp = 0;
   private direction: Timeline.Direction = Timeline.Direction.Paused;
   private breakpointType: Timeline.BreakpointType = Timeline.BreakpointType.EntireMoveSequence;
@@ -58,18 +57,18 @@ export class Model {
   private tempo: number = 1.5; // TODO: Support setting tempo.
   public dispatcher: Dispatcher = new Dispatcher();
   // TODO: cache breakpoints instead of re-querying the model constantly.
-  constructor(public timeline: Timeline) {
+  constructor(public cursor: Cursor) {
     this.scheduler = new FrameScheduler(this.frame.bind(this));
   }
 
-  public getCursor(): Timeline.Duration {
-    return this.cursor;
-  }
+  // public getCursor(): Timeline.Duration {
+  //   return this.cursor;
+  // }
 
   public getBounds(): Timeline.Duration[] {
     return [
-      this.timeline.firstBreakpoint(),
-      this.timeline.lastBreakpoint()
+      this.cursor.startOfAlg(),
+      this.cursor.endOfAlg()
     ];
   }
 
@@ -80,31 +79,22 @@ export class Model {
   // Update the cursor based on the time since lastCursorTime, and reset
   // lastCursorTime.
   private updateCursor(timestamp: Timeline.Timestamp) {
+    console.log("updateCursor");
     if (this.direction === Timeline.Direction.Paused) {
       this.lastCursorTime = timestamp;
       return;
     }
 
-    var previousCursor = this.cursor;
+    // var previousCursor = this.cursor;
 
     var elapsed = timestamp - this.lastCursorTime;
+    this.lastCursorTime = timestamp;
     // Workaround for the first frame: https://twitter.com/lgarron/status/794846097445269504
     if (elapsed < 0) {
       elapsed = 0;
     }
-    this.cursor += elapsed * this.timeScaling();
-    this.lastCursorTime = timestamp;
-
-    // Check if we've passed a breakpoint
-    // TODO: check if we've gone off the end.
-    var breakpoint = this.timeline.breakpoint(this.direction, this.breakpointType, previousCursor);
-
-    var isForwards = (this.direction === Timeline.Direction.Forwards);
-    var isPastBreakpoint = isForwards ?
-      (this.cursor > breakpoint) :
-      (this.cursor < breakpoint);
-    if (isPastBreakpoint) {
-        this.cursor = breakpoint;
+    var reachedMoveBreakpoint = this.cursor.delta(elapsed * this.timeScaling(), this.breakpointType === Timeline.BreakpointType.Move);
+    if (reachedMoveBreakpoint) {
         this.setDirection(Timeline.Direction.Paused);
         this.scheduler.stop();
     }
@@ -152,7 +142,8 @@ export class Model {
 
   public skipAndPauseTo(duration: Timeline.Duration): void {
     this.pause();
-    this.cursor = duration;
+    this.cursor.setPositionToStart();
+    this.cursor.forward(duration, false); // TODO
     this.scheduler.singleFrame();
   }
 
@@ -172,19 +163,21 @@ export class Model {
   }
 
   skipToStart(): void {
-    this.skipAndPauseTo(this.timeline.firstBreakpoint());
+    this.skipAndPauseTo(this.cursor.startOfAlg());
   }
 
   skipToEnd(): void {
-    this.skipAndPauseTo(this.timeline.lastBreakpoint());
+    this.skipAndPauseTo(this.cursor.endOfAlg());
   }
 
   stepForward(): void {
+    this.cursor.forward(0.1, false); // TODO
     this.setBreakpointType(Timeline.BreakpointType.Move);
     this.animateDirection(Timeline.Direction.Forwards);
   }
 
   stepBackward(): void {
+    this.cursor.backward(0.1, false); // TODO
     this.setBreakpointType(Timeline.BreakpointType.Move);
     this.animateDirection(Timeline.Direction.Backwards);
   }

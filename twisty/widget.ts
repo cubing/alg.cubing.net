@@ -130,7 +130,7 @@ export class Scrubber implements Anim.CursorObserver {
     var bounds = this.anim.getBounds();
     this.element.min = String(bounds[0]);
     this.element.max = String(bounds[1]);
-    this.element.value = String(this.anim.getCursor());
+    this.element.value = String(this.anim.cursor.currentTimestamp());
     this.anim.dispatcher.registerCursorObserver(this);
   }
 
@@ -155,8 +155,8 @@ export class Scrubber implements Anim.CursorObserver {
     this.updateBackground();
   }
 
-  animCursorChanged(cursor: Timeline.Duration): void {
-    this.element.value = String(cursor);
+  animCursorChanged(cursor: Cursor): void {
+    this.element.value = String(cursor.currentTimestamp());
     this.updateBackground();
   }
 
@@ -170,12 +170,12 @@ export class CursorTextView implements Anim.CursorObserver {
   public readonly element: Element;
   constructor(private anim: Anim.Model) {
     this.element = document.createElement("cursor-text-view");
-    this.element.textContent = String(this.anim.getCursor());
+    this.element.textContent = String(this.anim.cursor.currentTimestamp());
     this.anim.dispatcher.registerCursorObserver(this);
   }
 
-  animCursorChanged(duration: Timeline.Duration) {
-    this.element.textContent = String(Math.floor(duration));
+  animCursorChanged(cursor: Cursor) {
+    this.element.textContent = String(Math.floor(cursor.currentTimestamp()));
   }
 }
 
@@ -189,22 +189,16 @@ export class CursorTextMoveView implements Anim.CursorObserver {
     var durFn = new Timeline.AlgDuration(Timeline.DefaultDurationForAmount);
     this.posFn = new Timeline.AlgPosition(durFn);
 
-    this.animCursorChanged(anim.getCursor());
+    this.animCursorChanged(anim.cursor);
   }
 
   private formatFraction(k: number) {
     return (String(k) + (Math.floor(k) === k ? "." : "") + "000000").slice(0, 5)
   }
 
-  animCursorChanged(duration: Timeline.Duration) {
-    var calcState = new Timeline.DirectionWithCursor(Timeline.Direction.Forwards, duration);
-    var pos = this.posFn.traverse(this.anim.timeline.alg, calcState);
-    if (!pos) {
-      throw "aaaaargh";
-    }
-    var move = <Alg.BlockMove>pos.part;
-    var dirredMove = new Alg.BlockMove(move.base, move.amount * pos.dir);
-    this.element.textContent = "" + Math.floor(duration) + " " + dirredMove.toString() + " " + this.formatFraction(pos.fraction);
+  animCursorChanged(cursor: Cursor) {
+    var pos = cursor.currentPosition();
+    this.element.textContent = "" + Math.floor(cursor.currentTimestamp()) + " " + pos.move.toString() + " " + this.formatFraction(pos.amountInDirection / pos.moveDuration);
   }
 }
 
@@ -219,7 +213,7 @@ export class KSolveView implements Anim.CursorObserver {
     this.element.appendChild(svg.element);
   }
 
-  animCursorChanged(duration: Timeline.Duration) {
+  animCursorChanged(cursor: Cursor) {
   }
 }
 
