@@ -23,6 +23,13 @@ function ksolveTest(description: string, condition: boolean) {
   ksolveTest("After Sune", p.serialize() === "CORNERS\n2 3 0 1 4 5 6\n2 0 2 2 0 0 0");
 })();
 
+(function TestApplyBlockMove() {
+  var p = new KSolve.Puzzle(KSolve.Puzzles["333"]);
+
+  p.applyBlockMove(new Alg.BlockMove("R", 6));
+  ksolveTest("After R6", p.serialize() === "CORNERS\n7 1 2 4 3 5 6 0\n0 0 0 0 0 0 0 0\nEDGES\n0 1 2 11 7 5 6 4 8 9 10 3\n0 0 0 0 0 0 0 0 0 0 0 0");
+})();
+
 (function TestDraw() {
   var p = new KSolve.Puzzle(KSolve.Puzzles["222"]);
   var svg = new KSolve.SVG(KSolve.Puzzles["222"]);
