@@ -77,7 +77,6 @@ export class Cursor {
   }
   // TODO: Avoid assuming a single move at a time.
   forward(duration: Cursor.Duration, stopAtEndOfMove: boolean): /* TODO: Remove this. Represents of move breakpoint was reachec. */ boolean {
-    console.log("forward: ", duration);
     if (this.position === null) {
       return false;
     }
@@ -146,6 +145,12 @@ export class Cursor {
 
 export namespace Cursor {
   export type Duration = number; // Duration in milliseconds
+  // TODO: Extend `number`, introduce MoveSequenceTimestamp vs. EpochTimestamp,
+  // force Duration to be a difference.
+  export type Timestamp = Duration; // Duration since a particular epoch.
+
+  export type Fraction = number; // Value from 0 to 1.
+
   export enum Direction {
     Forwards = 1,
     Paused = 0,

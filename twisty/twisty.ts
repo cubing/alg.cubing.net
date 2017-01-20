@@ -5,7 +5,6 @@ namespace Twisty {
 // TODO: Turn Twisty into a module and move Twisty.Twisty into Twisty proper.
 export class Twisty {
   private alg: Alg.Algorithm;
-  private timeline: Timeline;
   private anim: Anim.Model;
   private cursor: Cursor;
   constructor(public element: Element) {

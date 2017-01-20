@@ -50,8 +50,8 @@ export class Dispatcher implements CursorObserver, DirectionObserver {
 }
 
 export class Model {
-  private lastCursorTime: Timeline.Timestamp = 0;
-  private direction: Timeline.Direction = Timeline.Direction.Paused;
+  private lastCursorTime: Cursor.Timestamp = 0;
+  private direction: Cursor.Direction = Cursor.Direction.Paused;
   private breakpointType: Timeline.BreakpointType = Timeline.BreakpointType.EntireMoveSequence;
   private scheduler: FrameScheduler;
   private tempo: number = 1.5; // TODO: Support setting tempo.
@@ -78,8 +78,7 @@ export class Model {
 
   // Update the cursor based on the time since lastCursorTime, and reset
   // lastCursorTime.
-  private updateCursor(timestamp: Timeline.Timestamp) {
-    console.log("updateCursor");
+  private updateCursor(timestamp: Cursor.Timestamp) {
     if (this.direction === Timeline.Direction.Paused) {
       this.lastCursorTime = timestamp;
       return;
@@ -107,7 +106,7 @@ export class Model {
     this.dispatcher.animDirectionChanged(direction);
   }
 
-  private frame(timestamp: Timeline.Timestamp) {
+  private frame(timestamp: Cursor.Timestamp) {
     this.updateCursor(timestamp);
     this.dispatcher.animCursorChanged(this.cursor);
   }
@@ -194,9 +193,9 @@ export class Model {
 
 class FrameScheduler {
   private animating: boolean = false;
-  constructor(private callback: (timestamp: Timeline.Timestamp) => void) {}
+  constructor(private callback: (timestamp: Cursor.Timestamp) => void) {}
 
-  animFrame(timestamp: Timeline.Timestamp) {
+  animFrame(timestamp: Cursor.Timestamp) {
     this.callback(timestamp);
     if (this.animating) {
       // TODO: use same bound frame instead of creating a new binding each frame.
