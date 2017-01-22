@@ -5,5 +5,7 @@ var t: Twisty.Twisty;
 
 window.addEventListener("load", function() {
   const elem = document.querySelector("twisty");
-  t = new Twisty.Twisty(elem);
+  if(elem) {
+    t = new Twisty.Twisty(elem);
+  }
 });
