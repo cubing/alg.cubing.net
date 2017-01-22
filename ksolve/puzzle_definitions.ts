@@ -21,8 +21,8 @@ export var Puzzles: {[key: string]: KSolve.PuzzleDefinition} = {
       "EDGES":   {numPieces: 12, orientations: 2}
     },
     startPieces: {
-      "CORNERS": {permutation: [0, 1, 2, 3, 4, 5, 6, 7],               orientation: [0, 0, 0, 0, 0, 0, 0, 0]},
-      "EDGES":   {permutation: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], orientation: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}
+      "CORNERS": {permutation: [1, 2, 3, 4, 5, 6, 7, 8],                orientation: [0, 0, 0, 0, 0, 0, 0, 0]},
+      "EDGES":   {permutation: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], orientation: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}
     },
     moves: {
       "U": {"CORNERS": {permutation: [4, 1, 2, 3, 5, 6, 7, 8],                orientation: [0, 0, 0, 0, 0, 0, 0, 0]            },

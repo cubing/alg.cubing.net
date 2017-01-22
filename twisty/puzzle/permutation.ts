@@ -1,5 +1,6 @@
 "use strict";
 
+/* <<<
 namespace Twisty {
 export namespace Puzzle {
 
@@ -28,3 +29,4 @@ export class Z8 implements Position {
 
 }
 }
+*/

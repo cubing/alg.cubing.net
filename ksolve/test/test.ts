@@ -38,5 +38,5 @@ function ksolveTest(description: string, condition: boolean) {
   for (var move of "RURRRURUURRR") {
     p.applyMove(move);
   }
-  svg.draw(p);
+  svg.draw(p.definition, p.state);
 })();

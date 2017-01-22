@@ -24,7 +24,7 @@ export class PuzzleDefinition {
   svg?: string
 }
 
-function Combine(def: PuzzleDefinition, t1: Transformation, t2: Transformation): Transformation {
+export function Combine(def: PuzzleDefinition, t1: Transformation, t2: Transformation): Transformation {
   var newTrans: Transformation = <Transformation>{};
   for (var orbitName in def.orbits) {
     var oDef = def.orbits[orbitName];
@@ -102,7 +102,7 @@ export class Puzzle {
   applyBlockMove(blockMove: Alg.BlockMove) {
     var move = this.definition.moves[blockMove.base];
     if (!move) {
-      throw `Unknown move: ${move}`
+      throw `Unknown move: ${blockMove.base}`
     }
     var multiple = Multiply(this.definition, move, blockMove.amount);
     this.state = Combine(this.definition, this.state, multiple);
@@ -111,7 +111,7 @@ export class Puzzle {
   applyMove(moveName: string): this {
     var move = this.definition.moves[moveName];
     if (!move) {
-      throw `Unknown move: ${move}`
+      throw `Unknown move: ${moveName}`
     }
 
     this.state = Combine(this.definition, this.state, move);
@@ -159,20 +159,20 @@ export class SVG {
 
   private elementByID(id: string): HTMLElement {
     // TODO: Use classes and scope selector to SVG element.
-    return document.getElementById(id) as HTMLElement;
+    return this.element.querySelector("#" + id) as HTMLElement;
   }
 
-  draw(puzzle: Puzzle) {
-    for (var orbitName in puzzle.definition.orbits) {
-      var orbitDefinition = puzzle.definition.orbits[orbitName];
+  draw(definition: PuzzleDefinition, state: Transformation) {
+    for (var orbitName in definition.orbits) {
+      var orbitDefinition = definition.orbits[orbitName];
 
-      var orbitState = puzzle.state[orbitName];
+      var orbitState = state[orbitName];
       for (var idx = 0; idx < orbitDefinition.numPieces; idx++) {
         for (var orientation = 0; orientation < orbitDefinition.orientations; orientation++) {
-          var id = this.elementID(orbitName, + idx, + orientation);
+          var id = this.elementID(orbitName, idx, orientation);
           var from = this.elementID(
             orbitName,
-            orbitState.permutation[idx],
+            orbitState.permutation[idx] - 1,
             (orbitDefinition.orientations - orbitState.orientation[idx] + orientation) % orbitDefinition.orientations
           );
           this.elementByID(id).style.fill = this.originalColors[from];

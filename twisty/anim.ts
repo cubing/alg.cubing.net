@@ -4,7 +4,7 @@ namespace Twisty {
 export namespace Anim {
 
 export interface CursorObserver {
-  animCursorChanged: (cursor: Cursor) => void; // TODO cursor.position?
+  animCursorChanged: (cursor: Cursor<Puzzle>) => void; // TODO cursor.position?
 }
 
 export interface DirectionObserver {
@@ -34,7 +34,7 @@ export class Dispatcher implements CursorObserver, DirectionObserver {
     this.directionObservers.add(observer);
   }
 
-  animCursorChanged(cursor: Cursor) {
+  animCursorChanged(cursor: Cursor<Puzzle>) {
     // TODO: guard against nested changes and test.
     for (var observer of this.cursorObservers) {
       observer.animCursorChanged(cursor);
@@ -57,7 +57,7 @@ export class Model {
   private tempo: number = 1.5; // TODO: Support setting tempo.
   public dispatcher: Dispatcher = new Dispatcher();
   // TODO: cache breakpoints instead of re-querying the model constantly.
-  constructor(public cursor: Cursor) {
+  constructor(public cursor: Cursor<Puzzle>) {
     this.scheduler = new FrameScheduler(this.frame.bind(this));
   }
 

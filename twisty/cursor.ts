@@ -4,12 +4,12 @@ namespace Twisty {
 
 var algDuration = new Timeline.AlgDuration(Timeline.DefaultDurationForAmount);
 
-export class Cursor {
+export class Cursor<P extends Puzzle> {
   private expandedAlgSequence: Alg.Sequence;
   private algDuration: Cursor.Duration;
 
-  private position: Cursor.Position;
-  constructor(public alg: Alg.Algorithm) {
+  private position: Cursor.Position<P>;
+  constructor(public alg: Alg.Algorithm, private puzzle: P) {
     var expandedAlg = alg.expand();
     if (expandedAlg instanceof Alg.Sequence) {
       this.expandedAlgSequence = expandedAlg
@@ -34,7 +34,8 @@ export class Cursor {
       moveStartTimestamp: 0,
       moveDuration: algDuration.traverse(currentMove),
       direction: Cursor.Direction.Forwards,
-      amountInDirection: 0
+      amountInDirection: 0,
+      state: this.puzzle.startState()
     }
   }
 
@@ -61,7 +62,7 @@ export class Cursor {
     }
     return this.position.moveStartTimestamp + this.position.moveDuration;
   }
-  currentPosition(): Cursor.Position {
+  currentPosition(): Cursor.Position<P> {
     return this.position;
   }
   currentTimestamp(): Cursor.Duration {
@@ -107,6 +108,14 @@ export class Cursor {
         return true;
       }
       this.position.moveIdx++;
+
+      if(!(move instanceof Alg.BlockMove)) {
+        throw "TODO - only BlockMove supported";
+      }
+      this.position.state = this.puzzle.combine(
+        this.position.state,
+        this.puzzle.multiply(this.puzzle.stateFromMove(move.base), move.amount)
+      );
       this.position.moveStartTimestamp += lengthOfMove;
       remainingDuration -= lengthOfMove;
     }
@@ -136,6 +145,15 @@ export class Cursor {
         return true;
       }
       this.position.moveIdx--;
+
+      var prevMove = this.expandedAlgSequence.nestedAlgs[this.position.moveIdx];
+      if(!(prevMove instanceof Alg.BlockMove)) {
+        throw "TODO - only BlockMove supported";
+      }
+      this.position.state = this.puzzle.combine(
+        this.position.state,
+        this.puzzle.multiply(this.puzzle.stateFromMove(prevMove.base), -prevMove.amount)
+      );
       this.position.moveStartTimestamp -= lengthOfMove;
       remainingDuration -= lengthOfMove;
     }
@@ -157,13 +175,14 @@ export namespace Cursor {
     Backwards = -1
   }
 
-  export type Position = {
+  export type Position<P extends Puzzle> = {
     move: Alg.Algorithm // TODO: Define Alg.BasicAlg for leaf alg types?
-    moveIdx: number,
-    moveStartTimestamp: Cursor.Duration,
+    moveIdx: number
+    moveStartTimestamp: Cursor.Duration
     moveDuration: Cursor.Duration
     direction: Direction
     amountInDirection: Duration
+    state: State<P>
   }
 }
 

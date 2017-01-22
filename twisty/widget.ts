@@ -155,7 +155,7 @@ export class Scrubber implements Anim.CursorObserver {
     this.updateBackground();
   }
 
-  animCursorChanged(cursor: Cursor): void {
+  animCursorChanged(cursor: Cursor<Puzzle>): void {
     this.element.value = String(cursor.currentTimestamp());
     this.updateBackground();
   }
@@ -174,7 +174,7 @@ export class CursorTextView implements Anim.CursorObserver {
     this.anim.dispatcher.registerCursorObserver(this);
   }
 
-  animCursorChanged(cursor: Cursor) {
+  animCursorChanged(cursor: Cursor<Puzzle>) {
     this.element.textContent = String(Math.floor(cursor.currentTimestamp()));
   }
 }
@@ -196,7 +196,7 @@ export class CursorTextMoveView implements Anim.CursorObserver {
     return (String(k) + (Math.floor(k) === k ? "." : "") + "000000").slice(0, 5)
   }
 
-  animCursorChanged(cursor: Cursor) {
+  animCursorChanged(cursor: Cursor<Puzzle>) {
     var pos = cursor.currentPosition();
     this.element.textContent = "" + Math.floor(cursor.currentTimestamp()) + " " + pos.move.toString() + " " + this.formatFraction(pos.amountInDirection / pos.moveDuration);
   }
@@ -204,16 +204,17 @@ export class CursorTextMoveView implements Anim.CursorObserver {
 
 export class KSolveView implements Anim.CursorObserver {
   public readonly element: Element;
+  private svg: KSolve.SVG;
   constructor(private anim: Anim.Model) {
     this.element = document.createElement("ksolve-svg-view");
     this.anim.dispatcher.registerCursorObserver(this);
 
-    var p = new KSolve.Puzzle(KSolve.Puzzles["333"]); // TODO: Dynamic puzzle
-    var svg = new KSolve.SVG(KSolve.Puzzles["333"]); // TODO: Dynamic puzzle
-    this.element.appendChild(svg.element);
+    this.svg = new KSolve.SVG(KSolve.Puzzles["333"]); // TODO: Dynamic puzzle
+    this.element.appendChild(this.svg.element);
   }
 
-  animCursorChanged(cursor: Cursor) {
+  animCursorChanged(cursor: Cursor<Puzzle>) {
+    this.svg.draw(KSolve.Puzzles["333"], cursor.currentPosition().state as KSolve.Transformation);
   }
 }
 
