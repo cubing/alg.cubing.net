@@ -82,6 +82,24 @@ export function IdentityTransformation(definition: PuzzleDefinition): Transforma
   return transformation;
 }
 
+export function Invert(def: PuzzleDefinition, t: Transformation): Transformation {
+  var newTrans: Transformation = <Transformation>{};
+  for (var orbitName in def.orbits) {
+    var oDef = def.orbits[orbitName];
+    var o = t[orbitName];
+
+    var newPerm = new Array(oDef.numPieces);
+    var newOri = new Array(oDef.numPieces);
+    for (var idx = 0; idx < oDef.numPieces; idx++) {
+      var fromIdx = (o.permutation[idx] as number) - 1;
+      newPerm[fromIdx] = idx + 1;
+      newOri[fromIdx] = (oDef.orientations - o.orientation[idx]) % oDef.orientations;
+    }
+    newTrans[orbitName] = {permutation: newPerm, orientation: newOri};
+  }
+  return newTrans;
+}
+
 export class Puzzle {
   public state: Transformation
   constructor(public definition: PuzzleDefinition) {

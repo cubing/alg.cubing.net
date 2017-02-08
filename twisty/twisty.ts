@@ -9,15 +9,7 @@ export class Twisty {
   private cursor: Cursor<Puzzle>;
   constructor(public element: Element) {
     this.alg = Alg.Example.HeadlightSwaps;
-    this.alg = new Alg.Sequence([
-      new Alg.BlockMove("R",  1),
-      new Alg.BlockMove("U",  1),
-      new Alg.BlockMove("R",  3),
-      new Alg.BlockMove("U",  1),
-      new Alg.BlockMove("R",  1),
-      new Alg.BlockMove("U",  2),
-      new Alg.BlockMove("R",  3)
-    ]);
+    this.alg = Alg.Example.Sune;
     this.cursor = new Cursor(this.alg, new KSolve333Puzzle());
     // this.timeline = new Timeline(Alg.Example.HeadlightSwaps);
     this.anim = new Anim.Model(this.cursor);

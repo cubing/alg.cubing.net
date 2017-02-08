@@ -39,7 +39,7 @@ export class KSolve333Puzzle extends Puzzle {
     return threeDef.startPieces;
   }
   invert(state: KSolve333PuzzleState): KSolve333PuzzleState {
-    return new KSolve.Transformation(); // TODO - https://github.com/cubing/alg.cubing.net/issues/134
+    return KSolve.Invert(threeDef, state);
   }
   combine(s1: KSolve333PuzzleState, s2: KSolve333PuzzleState): KSolve333PuzzleState {
     return KSolve.Combine(threeDef, s1, s2);
