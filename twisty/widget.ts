@@ -198,7 +198,7 @@ export class CursorTextMoveView implements Anim.CursorObserver {
 
   animCursorChanged(cursor: Cursor<Puzzle>) {
     var pos = cursor.currentPosition();
-    this.element.textContent = "" + Math.floor(cursor.currentTimestamp()) + " " + pos.move.toString() + " " + this.formatFraction(pos.amountInDirection / pos.moveDuration);
+    this.element.textContent = "" + Math.floor(cursor.currentTimestamp()) + " " + pos.moves[0].move.toString() + " " + this.formatFraction(pos.moves[0].fraction);
   }
 }
 

@@ -8,6 +8,12 @@ export class Cursor<P extends Puzzle> {
   private expandedAlgSequence: Alg.Sequence;
   private algDuration: Cursor.Duration;
 
+  private currentMove: Alg.Algorithm;
+  private moveIdx: number;
+  private moveStartTimestamp: Cursor.Duration;
+  private moveDuration: Cursor.Duration;
+  private direction: Cursor.Direction;
+  private amountInDirection: Cursor.Duration;
   private position: Cursor.Position<P>;
   constructor(public alg: Alg.Algorithm, private puzzle: P) {
     var expandedAlg = alg.expand();
@@ -28,14 +34,19 @@ export class Cursor<P extends Puzzle> {
 
   setPositionToStart() {
     var currentMove = this.expandedAlgSequence.nestedAlgs[0];
+    this.currentMove = currentMove;
+    this.moveIdx = 0;
+    this.moveStartTimestamp = 0;
+    this.moveDuration = algDuration.traverse(currentMove);
+    this.direction = Cursor.Direction.Forwards;
+    this.amountInDirection = 0;
     this.position = {
-      move: currentMove,
-      moveIdx: 0,
-      moveStartTimestamp: 0,
-      moveDuration: algDuration.traverse(currentMove),
-      direction: Cursor.Direction.Forwards,
-      amountInDirection: 0,
-      state: this.puzzle.startState()
+      state: this.puzzle.startState(),
+      moves: [{
+        move: currentMove,
+        direction: this.direction,
+        fraction: this.amountInDirection/this.moveDuration
+      }]
     }
   }
 
@@ -54,19 +65,19 @@ export class Cursor<P extends Puzzle> {
     if (this.position === null) {
       return 0; // TODO
     }
-    return this.position.moveStartTimestamp;
+    return this.moveStartTimestamp;
   }
   endOfMove(): Cursor.Duration {
     if (this.position === null) {
       return 0; // TODO
     }
-    return this.position.moveStartTimestamp + this.position.moveDuration;
+    return this.moveStartTimestamp + this.moveDuration;
   }
   currentPosition(): Cursor.Position<P> {
     return this.position;
   }
   currentTimestamp(): Cursor.Duration {
-    return this.position.moveStartTimestamp + this.position.amountInDirection;
+    return this.moveStartTimestamp + this.amountInDirection;
   }
   delta(duration: Cursor.Duration, stopAtMoveBoundary: boolean): boolean {
     // TODO: Unify forward and backward?
@@ -84,8 +95,8 @@ export class Cursor<P extends Puzzle> {
     if (duration < 0) {
       throw "negative";
     }
-    var remainingDuration = this.position.amountInDirection + duration;
-    for (var i = this.position.moveIdx; i < this.expandedAlgSequence.nestedAlgs.length; i++) {
+    var remainingDuration = this.amountInDirection + duration;
+    for (var i = this.moveIdx; i < this.expandedAlgSequence.nestedAlgs.length; i++) {
       var move = this.expandedAlgSequence.nestedAlgs[i];
       var lengthOfMove = algDuration.traverse(move);
       // console.log("forward",
@@ -96,18 +107,18 @@ export class Cursor<P extends Puzzle> {
       //   this.currentMoveStartTimestamp
       // )
       if (lengthOfMove >= remainingDuration) {
-        this.position.move = move;
-        this.position.moveDuration = lengthOfMove;
-        this.position.amountInDirection = remainingDuration;
+        this.currentMove = move;
+        this.moveDuration = lengthOfMove;
+        this.amountInDirection = remainingDuration;
         return false;
       }
       if (stopAtEndOfMove) {
-        this.position.move = move;
-        this.position.moveDuration = lengthOfMove;
-        this.position.amountInDirection = lengthOfMove;
+        this.currentMove = move;
+        this.moveDuration = lengthOfMove;
+        this.amountInDirection = lengthOfMove;
         return true;
       }
-      this.position.moveIdx++;
+      this.moveIdx++;
 
       if(!(move instanceof Alg.BlockMove)) {
         throw "TODO - only BlockMove supported";
@@ -116,7 +127,7 @@ export class Cursor<P extends Puzzle> {
         this.position.state,
         this.puzzle.multiply(this.puzzle.stateFromMove(move.base), move.amount)
       );
-      this.position.moveStartTimestamp += lengthOfMove;
+      this.moveStartTimestamp += lengthOfMove;
       remainingDuration -= lengthOfMove;
     }
     throw "Past end";
@@ -128,25 +139,25 @@ export class Cursor<P extends Puzzle> {
     if (duration < 0) {
       throw "negative";
     }
-    var remainingDuration = this.position.moveDuration - this.position.amountInDirection + duration;
-    for (var i = this.position.moveIdx; i >= 0; i++) {
+    var remainingDuration = this.moveDuration - this.amountInDirection + duration;
+    for (var i = this.moveIdx; i >= 0; i++) {
       var move = this.expandedAlgSequence.nestedAlgs[i];
       var lengthOfMove = algDuration.traverse(move);
       if (lengthOfMove >= remainingDuration) {
-        this.position.move = move;
-        this.position.moveDuration = lengthOfMove;
-        this.position.amountInDirection = lengthOfMove - remainingDuration;
+        this.currentMove = move;
+        this.moveDuration = lengthOfMove;
+        this.amountInDirection = lengthOfMove - remainingDuration;
         return false;
       }
       if (stopAtStartOfMove) {
-        this.position.move = move;
-        this.position.moveDuration = lengthOfMove;
-        this.position.amountInDirection = 0;
+        this.currentMove = move;
+        this.moveDuration = lengthOfMove;
+        this.amountInDirection = 0;
         return true;
       }
-      this.position.moveIdx--;
+      this.moveIdx--;
 
-      var prevMove = this.expandedAlgSequence.nestedAlgs[this.position.moveIdx];
+      var prevMove = this.expandedAlgSequence.nestedAlgs[this.moveIdx];
       if(!(prevMove instanceof Alg.BlockMove)) {
         throw "TODO - only BlockMove supported";
       }
@@ -154,7 +165,7 @@ export class Cursor<P extends Puzzle> {
         this.position.state,
         this.puzzle.multiply(this.puzzle.stateFromMove(prevMove.base), -prevMove.amount)
       );
-      this.position.moveStartTimestamp -= lengthOfMove;
+      this.moveStartTimestamp -= lengthOfMove;
       remainingDuration -= lengthOfMove;
     }
     throw "Past end";
@@ -175,14 +186,15 @@ export namespace Cursor {
     Backwards = -1
   }
 
-  export type Position<P extends Puzzle> = {
-    move: Alg.Algorithm // TODO: Define Alg.BasicAlg for leaf alg types?
-    moveIdx: number
-    moveStartTimestamp: Cursor.Duration
-    moveDuration: Cursor.Duration
+  export interface MoveProgress {
+    move: Alg.Algorithm
     direction: Direction
-    amountInDirection: Duration
+    fraction: number
+  }
+
+  export type Position<P extends Puzzle> = {
     state: State<P>
+    moves: MoveProgress[]
   }
 }
 
