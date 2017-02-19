@@ -47,9 +47,9 @@ export function Combine(def: PuzzleDefinition, t1: Transformation, t2: Transform
   return newTrans;
 }
 
-function Multiply(def: PuzzleDefinition, t: Transformation, amount: number): Transformation {
+export function Multiply(def: PuzzleDefinition, t: Transformation, amount: number): Transformation {
   if (amount < 0) {
-    throw "Amount must be non-negative integer."
+    Multiply(def, Invert(def, t), -amount);
   }
   if (amount === 0) {
     return IdentityTransformation(def);
