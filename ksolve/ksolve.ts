@@ -49,7 +49,7 @@ export function Combine(def: PuzzleDefinition, t1: Transformation, t2: Transform
 
 export function Multiply(def: PuzzleDefinition, t: Transformation, amount: number): Transformation {
   if (amount < 0) {
-    Multiply(def, Invert(def, t), -amount);
+    return Multiply(def, Invert(def, t), -amount);
   }
   if (amount === 0) {
     return IdentityTransformation(def);

@@ -198,7 +198,11 @@ export class CursorTextMoveView implements Anim.CursorObserver {
 
   animCursorChanged(cursor: Cursor<Puzzle>) {
     var pos = cursor.currentPosition();
-    this.element.textContent = "" + Math.floor(cursor.currentTimestamp()) + " " + pos.moves[0].move.toString() + " " + this.formatFraction(pos.moves[0].fraction);
+    var s = "" + Math.floor(cursor.currentTimestamp());
+    if (pos.moves.length > 0) {
+      s += " " + pos.moves[0].move.toString() + " " + this.formatFraction(pos.moves[0].fraction);
+    }
+    this.element.textContent = s;
   }
 }
 
@@ -215,16 +219,20 @@ export class KSolveView implements Anim.CursorObserver {
 
   animCursorChanged(cursor: Cursor<Puzzle>) {
     var pos = cursor.currentPosition();
+    if (pos.moves.length > 0) {
 
-    var move = (pos.moves[0].move as Alg.BlockMove);
+      var move = (pos.moves[0].move as Alg.BlockMove);
 
-    var threeDef = KSolve.Puzzles["333"];
-    var newState = KSolve.Combine(
-      threeDef,
-      pos.state as KSolve.Transformation,
-      KSolve.Multiply(threeDef, threeDef.moves[move.base], move.amount * pos.moves[0].direction)
-    );
-    this.svg.draw(KSolve.Puzzles["333"], pos.state as KSolve.Transformation, newState, pos.moves[0].fraction);
+      var threeDef = KSolve.Puzzles["333"];
+      var newState = KSolve.Combine(
+        threeDef,
+        pos.state as KSolve.Transformation,
+        KSolve.Multiply(threeDef, threeDef.moves[move.base], move.amount * pos.moves[0].direction)
+      );
+      this.svg.draw(KSolve.Puzzles["333"], pos.state as KSolve.Transformation, newState, pos.moves[0].fraction);
+    } else {
+      this.svg.draw(KSolve.Puzzles["333"], pos.state as KSolve.Transformation);
+    }
   }
 }
 

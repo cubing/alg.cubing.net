@@ -61,7 +61,11 @@ function twistyTest(description: string, condition: boolean) {
 
   var c = new Twisty.Cursor<Twisty.MoveCounterPuzzle>(Alg.Example.Sune, new Twisty.MoveCounterPuzzle());
   console.log(JSON.stringify(c.currentPosition()));
-  c.forward(1500, false);
+  c.forward(2300, false);
+  console.log(JSON.stringify(c.currentPosition()));
+  c.forward(10000, true);
+  console.log(JSON.stringify(c.currentPosition()));
+  c.forward(4500, false);
   console.log(JSON.stringify(c.currentPosition()));
 
 })();

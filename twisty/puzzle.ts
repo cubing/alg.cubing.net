@@ -63,10 +63,10 @@ export class MoveCounterPuzzle extends Puzzle {
     return new MoveCounterState(0);
   }
   invert(state: MoveCounterState): MoveCounterState {
-    return new MoveCounterState((100 - state.value) % 100);
+    return state;
   }
   combine(s1: MoveCounterState, s2: MoveCounterState): MoveCounterState {
-    return new MoveCounterState((s1.value + s2.value) % 100);
+    return new MoveCounterState(s1.value + s2.value);
   }
   stateFromMove(moveName: MoveName): MoveCounterState {
     return new MoveCounterState(1);
