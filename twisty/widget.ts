@@ -214,7 +214,17 @@ export class KSolveView implements Anim.CursorObserver {
   }
 
   animCursorChanged(cursor: Cursor<Puzzle>) {
-    this.svg.draw(KSolve.Puzzles["333"], cursor.currentPosition().state as KSolve.Transformation);
+    var pos = cursor.currentPosition();
+
+    var move = (pos.moves[0].move as Alg.BlockMove);
+
+    var threeDef = KSolve.Puzzles["333"];
+    var newState = KSolve.Combine(
+      threeDef,
+      pos.state as KSolve.Transformation,
+      KSolve.Multiply(threeDef, threeDef.moves[move.base], move.amount * pos.moves[0].direction)
+    );
+    this.svg.draw(KSolve.Puzzles["333"], pos.state as KSolve.Transformation, newState, pos.moves[0].fraction);
   }
 }
 

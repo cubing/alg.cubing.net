@@ -180,11 +180,12 @@ export class SVG {
     return this.element.querySelector("#" + id) as HTMLElement;
   }
 
-  draw(definition: PuzzleDefinition, state: Transformation) {
+  draw(definition: PuzzleDefinition, state: Transformation, nextState?: Transformation, fraction?: number) {
     for (var orbitName in definition.orbits) {
       var orbitDefinition = definition.orbits[orbitName];
 
       var orbitState = state[orbitName];
+      // var orbitState = (nextState as Transformation)[orbitName];
       for (var idx = 0; idx < orbitDefinition.numPieces; idx++) {
         for (var orientation = 0; orientation < orbitDefinition.orientations; orientation++) {
           var id = this.elementID(orbitName, idx, orientation);

@@ -8,13 +8,9 @@ export class Cursor<P extends Puzzle> {
   private expandedAlgSequence: Alg.Sequence;
   private algDuration: Cursor.Duration;
 
-  private currentMove: Alg.Algorithm;
   private moveIdx: number;
   private moveStartTimestamp: Cursor.Duration;
-  private moveDuration: Cursor.Duration;
-  private direction: Cursor.Direction;
-  private amountInDirection: Cursor.Duration;
-  private position: Cursor.Position<P>;
+  private algTimestamp: Cursor.Duration;
   constructor(public alg: Alg.Algorithm, private puzzle: P) {
     var expandedAlg = alg.expand();
     if (expandedAlg instanceof Alg.Sequence) {
@@ -33,21 +29,9 @@ export class Cursor<P extends Puzzle> {
   }
 
   setPositionToStart() {
-    var currentMove = this.expandedAlgSequence.nestedAlgs[0];
-    this.currentMove = currentMove;
     this.moveIdx = 0;
     this.moveStartTimestamp = 0;
-    this.moveDuration = algDuration.traverse(currentMove);
-    this.direction = Cursor.Direction.Forwards;
-    this.amountInDirection = 0;
-    this.position = {
-      state: this.puzzle.startState(),
-      moves: [{
-        move: currentMove,
-        direction: this.direction,
-        fraction: this.amountInDirection/this.moveDuration
-      }]
-    }
+    this.algTimestamp = 0;
   }
 
   setPositionToEnd() {
@@ -62,22 +46,23 @@ export class Cursor<P extends Puzzle> {
     return this.algDuration
   }
   startOfMove(): Cursor.Duration {
-    if (this.position === null) {
-      return 0; // TODO
-    }
     return this.moveStartTimestamp;
   }
   endOfMove(): Cursor.Duration {
-    if (this.position === null) {
-      return 0; // TODO
+    if (this.algTimestamp >= this.algDuration) {
+      return this.algTimestamp;
     }
-    return this.moveStartTimestamp + this.moveDuration;
+    return this.moveStartTimestamp + this.moveDuration();
+  }
+  private moveDuration(): Cursor.Duration {
+    // TODO: Cache
+    return algDuration.traverse(this.expandedAlgSequence.nestedAlgs[this.moveIdx]);
   }
   currentPosition(): Cursor.Position<P> {
     return this.position;
   }
   currentTimestamp(): Cursor.Duration {
-    return this.moveStartTimestamp + this.amountInDirection;
+    return this.algTimestamp;
   }
   delta(duration: Cursor.Duration, stopAtMoveBoundary: boolean): boolean {
     // TODO: Unify forward and backward?
@@ -88,32 +73,22 @@ export class Cursor<P extends Puzzle> {
     }
   }
   // TODO: Avoid assuming a single move at a time.
-  forward(duration: Cursor.Duration, stopAtEndOfMove: boolean): /* TODO: Remove this. Represents of move breakpoint was reachec. */ boolean {
-    if (this.position === null) {
-      return false;
-    }
+  forward(duration: Cursor.Duration, stopAtEndOfMove: boolean): /* TODO: Remove this. Represents of move breakpoint was reached. */ boolean {
     if (duration < 0) {
       throw "negative";
     }
-    var remainingDuration = this.amountInDirection + duration;
+    var remainingDuration = (this.algTimestamp - this.moveStartTimestamp) + duration;
     for (var i = this.moveIdx; i < this.expandedAlgSequence.nestedAlgs.length; i++) {
       var move = this.expandedAlgSequence.nestedAlgs[i];
       var lengthOfMove = algDuration.traverse(move);
-      // console.log("forward",
-      //   move,
-      //   lengthOfMove,
-      //   this.position,
-      //   this.currentMoveIdx,
-      //   this.currentMoveStartTimestamp
-      // )
       if (lengthOfMove >= remainingDuration) {
-        this.currentMove = move;
-        this.moveDuration = lengthOfMove;
-        this.amountInDirection = remainingDuration;
+        this.algTimestamp = this.moveStartTimestamp + remainingDuration;
         return false;
       }
       if (stopAtEndOfMove) {
-        this.currentMove = move;
+        this.moveStartTimestamp += this.expandedAlgSequence.nestedAlgs[i];
+        this.
+        this.currentMove = null;
         this.moveDuration = lengthOfMove;
         this.amountInDirection = lengthOfMove;
         return true;

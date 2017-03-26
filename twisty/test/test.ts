@@ -55,3 +55,13 @@ function twistyTest(description: string, condition: boolean) {
 //   ,
 //   new AlgDuration(ConstantDurationForAmount).traverse(Alg.Example.Sune)
 // );
+
+
+(function TestCursorValues() {
+
+  var c = new Twisty.Cursor<Twisty.MoveCounterPuzzle>(Alg.Example.Sune, new Twisty.MoveCounterPuzzle());
+  console.log(JSON.stringify(c.currentPosition()));
+  c.forward(1500, false);
+  console.log(JSON.stringify(c.currentPosition()));
+
+})();
