@@ -2,8 +2,7 @@
 
 namespace Twisty {
 
-var algDuration = new Timeline.AlgDuration(Timeline.DefaultDurationForAmount);
-
+var algDuration = new Cursor.AlgDuration(Cursor.DefaultDurationForAmount);
 
 export class Cursor<P extends Puzzle> {
   private moves: Alg.Sequence;
@@ -180,6 +179,49 @@ export namespace Cursor {
   export type Position<P extends Puzzle> = {
     state: State<P>
     moves: MoveProgress[]
+  }
+
+
+  export type DurationForAmount = (amount: number) => Timeline.Duration;
+
+  export function ConstantDurationForAmount(amount: number): Timeline.Duration {
+    return 1000;
+  }
+
+  export function DefaultDurationForAmount(amount: number): Timeline.Duration {
+    switch (Math.abs(amount)) {
+      case 0:
+        return 0;
+      case 1:
+        return 1000;
+      case 2:
+        return 1500;
+      default:
+        return 2000;
+    }
+  }
+
+  export class AlgDuration extends Alg.Traversal.Up<Duration> {
+    // TODO: Pass durationForAmount as Down type instead?
+    constructor(public durationForAmount = DefaultDurationForAmount) {
+      super()
+    }
+
+    public traverseSequence(sequence: Alg.Sequence):             Duration {
+      var total = 0;
+      for (var alg of sequence.nestedAlgs) {
+        total += this.traverse(alg)
+      }
+      return total;
+    }
+    public traverseGroup(group: Alg.Group):                      Duration { return group.amount * this.traverse(group.nestedAlg); }
+    public traverseBlockMove(blockMove: Alg.BlockMove):          Duration { return this.durationForAmount(blockMove.amount); }
+    public traverseCommutator(commutator: Alg.Commutator):       Duration { return commutator.amount * 2 * (this.traverse(commutator.A) + this.traverse(commutator.B)); }
+    public traverseConjugate(conjugate: Alg.Conjugate):          Duration { return conjugate.amount * (2 * this.traverse(conjugate.A) + this.traverse(conjugate.B)); }
+    public traversePause(pause: Alg.Pause):                      Duration { return this.durationForAmount(1); }
+    public traverseNewLine(newLine: Alg.NewLine):                Duration { return this.durationForAmount(1); }
+    public traverseCommentShort(commentShort: Alg.CommentShort): Duration { return this.durationForAmount(0); }
+    public traverseCommentLong(commentLong: Alg.CommentLong):    Duration { return this.durationForAmount(0); }
   }
 }
 

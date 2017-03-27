@@ -58,29 +58,6 @@ export class SimpleBreakpoints implements BreakpointModel {
     }
 }
 
-export class AlgDuration extends Alg.Traversal.Up<Timeline.Duration> {
-  // TODO: Pass durationForAmount as Down type instead?
-  constructor(public durationForAmount = DefaultDurationForAmount) {
-    super()
-  }
-
-  public traverseSequence(sequence: Alg.Sequence):             Timeline.Duration {
-    var total = 0;
-    for (var alg of sequence.nestedAlgs) {
-      total += this.traverse(alg)
-    }
-    return total;
-  }
-  public traverseGroup(group: Alg.Group):                      Timeline.Duration { return group.amount * this.traverse(group.nestedAlg); }
-  public traverseBlockMove(blockMove: Alg.BlockMove):          Timeline.Duration { return this.durationForAmount(blockMove.amount); }
-  public traverseCommutator(commutator: Alg.Commutator):       Timeline.Duration { return commutator.amount * 2 * (this.traverse(commutator.A) + this.traverse(commutator.B)); }
-  public traverseConjugate(conjugate: Alg.Conjugate):          Timeline.Duration { return conjugate.amount * (2 * this.traverse(conjugate.A) + this.traverse(conjugate.B)); }
-  public traversePause(pause: Alg.Pause):                      Timeline.Duration { return this.durationForAmount(1); }
-  public traverseNewLine(newLine: Alg.NewLine):                Timeline.Duration { return this.durationForAmount(1); }
-  public traverseCommentShort(commentShort: Alg.CommentShort): Timeline.Duration { return this.durationForAmount(0); }
-  public traverseCommentLong(commentLong: Alg.CommentLong):    Timeline.Duration { return this.durationForAmount(0); }
-}
-
 // TODO: Encapsulate
 export class Position {
   constructor(public part: Alg.Algorithm, public dir: Cursor.Direction, public fraction: Fraction) {}
@@ -100,7 +77,7 @@ export class DirectionWithCursor {
 export class AlgPosition extends Alg.Traversal.DownUp<DirectionWithCursor, Position | null> {
   public cursor: Timeline.Duration = 0
 
-  constructor(public algDuration = new AlgDuration()) {
+  constructor(public algDuration = new Cursor.AlgDuration()) {
     super();
   }
 
@@ -172,25 +149,6 @@ export class AlgPosition extends Alg.Traversal.DownUp<DirectionWithCursor, Posit
     return null; }
 }
 
-export type DurationForAmount = (amount: number) => Timeline.Duration;
-
-export function ConstantDurationForAmount(amount: number): Timeline.Duration {
-  return 1000;
-}
-
-export function DefaultDurationForAmount(amount: number): Timeline.Duration {
-  switch (Math.abs(amount)) {
-    case 0:
-      return 0;
-    case 1:
-      return 1000;
-    case 2:
-      return 1500;
-    default:
-      return 2000;
-  }
-}
-
 }
 // var t = new Timeline();
 // t.alg = exampleAlg;
@@ -201,9 +159,6 @@ export function DefaultDurationForAmount(amount: number): Timeline.Duration {
 // console.log(t.breakpoint(Cursor.Direction.Backwards, Timeline.BreakpointType.Move, 2050));
 
 
-var durFn = new Timeline.AlgDuration(Timeline.DefaultDurationForAmount);
-var posFn = new Timeline.AlgPosition(durFn);
-// var dirCur = new Cursor.DirectionWithCursor(Cursor.Direction.Backwards, 14000);
 }
 
 

@@ -27,7 +27,7 @@ function twistyTest(description: string, condition: boolean) {
 
 
 (function TestDurations() {
-  console.log(new Twisty.Timeline.AlgDuration(Twisty.Timeline.DefaultDurationForAmount).traverse(Alg.Example.Sune));
+  console.log(new Twisty.Cursor.AlgDuration(Twisty.Cursor.DefaultDurationForAmount).traverse(Alg.Example.Sune));
   // twistyTest("First breakpoint", new AlgDuration(DefaultDurationForAmount).traverse(Alg.Example.Sune));
 })();
 

@@ -186,7 +186,7 @@ export class CursorTextMoveView implements Anim.CursorObserver {
     this.element = document.createElement("cursor-text-view");
     this.anim.dispatcher.registerCursorObserver(this);
 
-    var durFn = new Timeline.AlgDuration(Timeline.DefaultDurationForAmount);
+    var durFn = new Cursor.AlgDuration(Cursor.DefaultDurationForAmount);
     this.posFn = new Timeline.AlgPosition(durFn);
 
     this.animCursorChanged(anim.cursor);
