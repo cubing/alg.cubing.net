@@ -2,10 +2,9 @@
 
 namespace Twisty {
 
-var algDuration = new Cursor.AlgDuration(Cursor.DefaultDurationForAmount);
-
 export class Cursor<P extends Puzzle> {
   private moves: Alg.Sequence;
+  private durationFn: Alg.Traversal.Up<Cursor.Duration>;
 
   private state: State<P>;
   private moveIdx: number;
@@ -14,6 +13,8 @@ export class Cursor<P extends Puzzle> {
   constructor(public alg: Alg.Algorithm, private puzzle: P) {
     this.setMoves(alg);
     this.setPositionToStart();
+
+    this.durationFn = new Cursor.AlgDuration(Cursor.DefaultDurationForAmount)
   }
 
   private setMoves(alg: Alg.Algorithm) {
@@ -32,7 +33,7 @@ export class Cursor<P extends Puzzle> {
 
   private algDuration() {
     // TODO: Cache internally once performance matters.
-    return algDuration.traverse(this.moves);
+    return this.durationFn.traverse(this.moves);
   }
 
   private numMoves() {
@@ -60,7 +61,7 @@ export class Cursor<P extends Puzzle> {
   }
   private moveDuration(): Cursor.Duration {
     // TODO: Cache
-    return algDuration.traverse(this.moves.nestedAlgs[this.moveIdx]);
+    return this.durationFn.traverse(this.moves.nestedAlgs[this.moveIdx]);
   }
   currentPosition(): Cursor.Position<P> {
     var pos = <Cursor.Position<P>>{
@@ -73,7 +74,7 @@ export class Cursor<P extends Puzzle> {
       pos.moves.push({
         move: move,
         direction: Cursor.Direction.Forwards,
-        fraction: moveTS / algDuration.traverse(move)
+        fraction: moveTS / this.durationFn.traverse(move)
       });
     }
     return pos;
@@ -102,7 +103,7 @@ export class Cursor<P extends Puzzle> {
       if(!(move instanceof Alg.BlockMove)) {
         throw "TODO - only BlockMove supported";
       }
-      var lengthOfMove = algDuration.traverse(move);
+      var lengthOfMove = this.durationFn.traverse(move);
       if (remainingOffset < lengthOfMove) {
         this.algTimestamp = this.moveStartTimestamp + remainingOffset;
         return false;
@@ -146,7 +147,7 @@ export class Cursor<P extends Puzzle> {
         this.state,
         this.puzzle.multiply(this.puzzle.stateFromMove(prevMove.base), -prevMove.amount)
       );
-      var lengthOfMove = algDuration.traverse(prevMove);
+      var lengthOfMove = this.durationFn.traverse(prevMove);
       this.moveIdx -= 1;
       this.moveStartTimestamp -= lengthOfMove;
       this.algTimestamp = this.moveStartTimestamp;
@@ -181,14 +182,18 @@ export namespace Cursor {
     moves: MoveProgress[]
   }
 
+  export enum BreakpointType {
+    Move,
+    EntireMoveSequence
+  }
 
-  export type DurationForAmount = (amount: number) => Timeline.Duration;
+  export type DurationForAmount = (amount: number) => Duration;
 
-  export function ConstantDurationForAmount(amount: number): Timeline.Duration {
+  export function ConstantDurationForAmount(amount: number): Duration {
     return 1000;
   }
 
-  export function DefaultDurationForAmount(amount: number): Timeline.Duration {
+  export function DefaultDurationForAmount(amount: number): Duration {
     switch (Math.abs(amount)) {
       case 0:
         return 0;

@@ -52,7 +52,7 @@ export class Dispatcher implements CursorObserver, DirectionObserver {
 export class Model {
   private lastCursorTime: Cursor.Timestamp = 0;
   private direction: Cursor.Direction = Cursor.Direction.Paused;
-  private breakpointType: Timeline.BreakpointType = Timeline.BreakpointType.EntireMoveSequence;
+  private breakpointType: Cursor.BreakpointType = Cursor.BreakpointType.EntireMoveSequence;
   private scheduler: FrameScheduler;
   private tempo: number = 1.5; // TODO: Support setting tempo.
   public dispatcher: Dispatcher = new Dispatcher();
@@ -65,7 +65,7 @@ export class Model {
   //   return this.cursor;
   // }
 
-  public getBounds(): Timeline.Duration[] {
+  public getBounds(): Cursor.Duration[] {
     return [
       this.cursor.startOfAlg(),
       this.cursor.endOfAlg()
@@ -92,7 +92,7 @@ export class Model {
     if (elapsed < 0) {
       elapsed = 0;
     }
-    var reachedMoveBreakpoint = this.cursor.delta(elapsed * this.timeScaling(), this.breakpointType === Timeline.BreakpointType.Move);
+    var reachedMoveBreakpoint = this.cursor.delta(elapsed * this.timeScaling(), this.breakpointType === Cursor.BreakpointType.Move);
     if (reachedMoveBreakpoint) {
         this.setDirection(Cursor.Direction.Paused);
         this.scheduler.stop();
@@ -112,7 +112,7 @@ export class Model {
   }
 
   // TODO: Push this into timeline.
-  private setBreakpointType(breakpointType: Timeline.BreakpointType) {
+  private setBreakpointType(breakpointType: Cursor.BreakpointType) {
     this.breakpointType = breakpointType;
   }
 
@@ -139,7 +139,7 @@ export class Model {
     }
   }
 
-  public skipAndPauseTo(duration: Timeline.Duration): void {
+  public skipAndPauseTo(duration: Cursor.Duration): void {
     this.pause();
     this.cursor.setPositionToStart();
     this.cursor.forward(duration, false); // TODO
@@ -147,7 +147,7 @@ export class Model {
   }
 
   playForward(): void {
-    this.setBreakpointType(Timeline.BreakpointType.EntireMoveSequence);
+    this.setBreakpointType(Cursor.BreakpointType.EntireMoveSequence);
     this.animateDirection(Cursor.Direction.Forwards);
   }
 
@@ -157,7 +157,7 @@ export class Model {
   }
 
   playBackward(): void {
-    this.setBreakpointType(Timeline.BreakpointType.EntireMoveSequence);
+    this.setBreakpointType(Cursor.BreakpointType.EntireMoveSequence);
     this.animateDirection(Cursor.Direction.Backwards);
   }
 
@@ -171,13 +171,13 @@ export class Model {
 
   stepForward(): void {
     this.cursor.forward(0.1, false); // TODO
-    this.setBreakpointType(Timeline.BreakpointType.Move);
+    this.setBreakpointType(Cursor.BreakpointType.Move);
     this.animateDirection(Cursor.Direction.Forwards);
   }
 
   stepBackward(): void {
     this.cursor.backward(0.1, false); // TODO
-    this.setBreakpointType(Timeline.BreakpointType.Move);
+    this.setBreakpointType(Cursor.BreakpointType.Move);
     this.animateDirection(Cursor.Direction.Backwards);
   }
 

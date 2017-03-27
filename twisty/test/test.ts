@@ -13,17 +13,17 @@ function twistyTest(description: string, condition: boolean) {
   document.write(new XMLSerializer().serializeToString(li));
 }
 
-(function TestSimpleBreakpoints() {
-  var b1 = new Twisty.Timeline.SimpleBreakpoints([30, 400, 1500, 2000]);
-  twistyTest("First breakpoint", b1.firstBreakpoint() === 30);
-  twistyTest("Last breakpoint", b1.lastBreakpoint() === 2000);
-  twistyTest("Forwards from beginning", b1.breakpoint(Twisty.Cursor.Direction.Forwards, Twisty.Timeline.BreakpointType.Move, 30) === 400);
-  twistyTest("Forwards from first breakpoint", b1.breakpoint(Twisty.Cursor.Direction.Forwards, Twisty.Timeline.BreakpointType.Move, 400) === 1500);
-  twistyTest("Forwards between breakpoints", b1.breakpoint(Twisty.Cursor.Direction.Forwards, Twisty.Timeline.BreakpointType.Move, 600) === 1500);
-  twistyTest("Backwards from first breakpoint", b1.breakpoint(Twisty.Cursor.Direction.Backwards, Twisty.Timeline.BreakpointType.Move, 400) === 30);
-  twistyTest("Backwards from just before end", b1.breakpoint(Twisty.Cursor.Direction.Backwards, Twisty.Timeline.BreakpointType.Move, 1999) === 1500);
-  twistyTest("Backwards from end", b1.breakpoint(Twisty.Cursor.Direction.Backwards, Twisty.Timeline.BreakpointType.Move, 2000) === 1500);
-})();
+// (function TestSimpleBreakpoints() {
+//   var b1 = new Twisty.Timeline.SimpleBreakpoints([30, 400, 1500, 2000]);
+//   twistyTest("First breakpoint", b1.firstBreakpoint() === 30);
+//   twistyTest("Last breakpoint", b1.lastBreakpoint() === 2000);
+//   twistyTest("Forwards from beginning", b1.breakpoint(Twisty.Cursor.Direction.Forwards, Twisty.Timeline.BreakpointType.Move, 30) === 400);
+//   twistyTest("Forwards from first breakpoint", b1.breakpoint(Twisty.Cursor.Direction.Forwards, Twisty.Timeline.BreakpointType.Move, 400) === 1500);
+//   twistyTest("Forwards between breakpoints", b1.breakpoint(Twisty.Cursor.Direction.Forwards, Twisty.Timeline.BreakpointType.Move, 600) === 1500);
+//   twistyTest("Backwards from first breakpoint", b1.breakpoint(Twisty.Cursor.Direction.Backwards, Twisty.Timeline.BreakpointType.Move, 400) === 30);
+//   twistyTest("Backwards from just before end", b1.breakpoint(Twisty.Cursor.Direction.Backwards, Twisty.Timeline.BreakpointType.Move, 1999) === 1500);
+//   twistyTest("Backwards from end", b1.breakpoint(Twisty.Cursor.Direction.Backwards, Twisty.Timeline.BreakpointType.Move, 2000) === 1500);
+// })();
 
 
 (function TestDurations() {

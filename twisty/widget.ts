@@ -180,14 +180,12 @@ export class CursorTextView implements Anim.CursorObserver {
 }
 
 export class CursorTextMoveView implements Anim.CursorObserver {
-  private posFn: Timeline.AlgPosition;
   public readonly element: Element;
   constructor(private anim: Anim.Model) {
     this.element = document.createElement("cursor-text-view");
     this.anim.dispatcher.registerCursorObserver(this);
 
     var durFn = new Cursor.AlgDuration(Cursor.DefaultDurationForAmount);
-    this.posFn = new Timeline.AlgPosition(durFn);
 
     this.animCursorChanged(anim.cursor);
   }

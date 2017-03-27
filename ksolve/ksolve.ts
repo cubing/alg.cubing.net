@@ -213,7 +213,9 @@ export class SVG {
       var orbitDefinition = definition.orbits[orbitName];
 
       var orbitState = state[orbitName];
-      // var orbitState = (nextState as Transformation)[orbitName];
+      if (fraction > 0.5) {
+        var orbitState = (nextState as Transformation)[orbitName];
+      }
       for (var idx = 0; idx < orbitDefinition.numPieces; idx++) {
         for (var orientation = 0; orientation < orbitDefinition.orientations; orientation++) {
           var id = this.elementID(orbitName, idx, orientation);
