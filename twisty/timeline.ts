@@ -2,78 +2,7 @@
 
 namespace Twisty {
 
-export class Timeline implements Timeline.BreakpointModel {
-  constructor(public alg: Alg.Algorithm) {
-  }
-
-  firstBreakpoint(): Timeline.Duration {
-    return 0;
-  }
-
-  lastBreakpoint(): Timeline.Duration {
-    // TODO: Bind once to Timeline namespace.
-    var durFn = new Timeline.AlgDuration(Timeline.DefaultDurationForAmount);
-    return durFn.traverse(this.alg);
-  }
-
-  // TODO: Define semantics if `duration` is past the end.
-  breakpoint(direction: Timeline.Direction, breakpointType: Timeline.BreakpointType, duration: Timeline.Duration): Timeline.Duration {
-    if (breakpointType === Timeline.BreakpointType.EntireMoveSequence) {
-      if (direction === Timeline.Direction.Backwards) {
-        return this.firstBreakpoint();
-      } else {
-        return this.lastBreakpoint();
-      }
-    }
-
-    // TODO: Bind once to Timeline namespace.
-    var durFn = new Timeline.AlgDuration(Timeline.DefaultDurationForAmount);
-    var posFn = new Timeline.AlgPosition(durFn);
-    var dirCur = new Timeline.DirectionWithCursor(Timeline.Direction.Forwards, duration);
-    var pos = posFn.traverse(this.alg, dirCur);
-    if (pos === null) {
-      throw "Invalid position calculated." // TODO
-    }
-    // TODO: Make this less hacky.
-    if (direction === Timeline.Direction.Forwards && duration < this.lastBreakpoint()) {
-      if (pos.fraction === 1) {
-        return this.breakpoint(direction, breakpointType, duration + 0.1);
-      }
-    }
-    // TODO: Make sure that AlgPosition returns the right move.
-    if (direction === Timeline.Direction.Backwards && duration > this.firstBreakpoint()) {
-      if (pos.fraction === 0) {
-        return this.breakpoint(direction, breakpointType, duration - 0.1);
-      }
-    }
-
-    // TODO: Make this less hacky.
-    var frac = pos.fraction;
-    if (pos.dir === Timeline.Direction.Backwards) {
-      frac = 1 - pos.fraction
-    }
-    if (pos.dir === direction) {
-      return duration + pos.dir * durFn.traverse(pos.part) * (1 - frac);
-    } else {
-      return duration - pos.dir * durFn.traverse(pos.part) * frac;
-    }
-  }
-}
-
 export namespace Timeline {
-
-// The values are animation scaling factors.
-// TODO: "Paused" is more of an Anim concept. Can we get it out of the Timeline
-// namespace in a natural way?
-export enum Direction {
-  Forwards = 1,
-  Paused = 0,
-  Backwards = -1
-}
-
-export function CombineDirections(d1: Direction, d2: Direction): Direction {
-  return d1 * d2;
-}
 
 export enum BreakpointType {
   Move,
@@ -96,7 +25,7 @@ export interface BreakpointModel {
   firstBreakpoint(): Duration;
   lastBreakpoint(): Duration;
   // TODO: Define semantics if `duration` is past the end.
-  breakpoint(direction: Direction, breakpointType: BreakpointType, duration: Duration): Duration;
+  breakpoint(direction: Cursor.Direction, breakpointType: BreakpointType, duration: Duration): Duration;
 }
 
 export class SimpleBreakpoints implements BreakpointModel {
@@ -110,8 +39,8 @@ export class SimpleBreakpoints implements BreakpointModel {
       return this.breakpointList[this.breakpointList.length - 1];
     }
 
-    breakpoint(direction: Direction, breakpointType: BreakpointType, duration: Duration) {
-      if (direction === Direction.Backwards) {
+    breakpoint(direction: Cursor.Direction, breakpointType: BreakpointType, duration: Duration) {
+      if (direction === Cursor.Direction.Backwards) {
         var l = this.breakpointList.filter(d2 => d2 < duration);
         if (l.length === 0 || breakpointType === BreakpointType.EntireMoveSequence) {
           // TODO: Avoid list filtering above if breakpointType == EntireMoveSequence
@@ -154,17 +83,17 @@ export class AlgDuration extends Alg.Traversal.Up<Timeline.Duration> {
 
 // TODO: Encapsulate
 export class Position {
-  constructor(public part: Alg.Algorithm, public dir: Timeline.Direction, public fraction: Fraction) {}
+  constructor(public part: Alg.Algorithm, public dir: Cursor.Direction, public fraction: Fraction) {}
 }
 
 // TODO: Encapsulate
 class PartWithDirection {
-  constructor(public part: Alg.Algorithm, public direction: Timeline.Direction) {}
+  constructor(public part: Alg.Algorithm, public direction: Cursor.Direction) {}
 }
 
 // TODO: Encapsulate
 export class DirectionWithCursor {
-  constructor(public dir: Timeline.Direction,
+  constructor(public dir: Cursor.Direction,
               public cursor: Timeline.Duration) {}
 }
 
@@ -182,7 +111,7 @@ export class AlgPosition extends Alg.Traversal.DownUp<DirectionWithCursor, Posit
 
   private traversePartsWithDirections(partsWithDirections: PartWithDirection[], amount: number, dirCur: DirectionWithCursor): Position | null {
     // TODO: Use generators once TypeScript is less buggy with them.
-    var iterList = dirCur.dir === Timeline.Direction.Forwards ?
+    var iterList = dirCur.dir === Cursor.Direction.Forwards ?
                        partsWithDirections :
                        partsWithDirections.slice(0).reverse();
 
@@ -200,7 +129,7 @@ export class AlgPosition extends Alg.Traversal.DownUp<DirectionWithCursor, Posit
           var duration = this.algDuration.traverse(partWithDirection.part);
           // TODO: keep the move transition either on the rising edge or the falling edge, from the "forward" perspective.
           if (cursorRemaining <= duration) {
-            var newDir = Timeline.CombineDirections(dirCur.dir, partWithDirection.direction);
+            var newDir = dirCur.dir * partWithDirection.direction; // TODO
             var newDirCur = new DirectionWithCursor(newDir, cursorRemaining);
             return this.traverse(partWithDirection.part, newDirCur);
           }
@@ -211,7 +140,7 @@ export class AlgPosition extends Alg.Traversal.DownUp<DirectionWithCursor, Posit
   }
 
   public traverseSequence(sequence: Alg.Sequence, dirCur: DirectionWithCursor): Position | null {
-    var p = sequence.nestedAlgs.map(part => new PartWithDirection(part, Timeline.Direction.Forwards));
+    var p = sequence.nestedAlgs.map(part => new PartWithDirection(part, Cursor.Direction.Forwards));
     return this.traversePartsWithDirections(p, 1, dirCur);
   }
   public traverseGroup(group: Alg.Group, dirCur: DirectionWithCursor): Position | null {
@@ -220,17 +149,17 @@ export class AlgPosition extends Alg.Traversal.DownUp<DirectionWithCursor, Posit
     return this.leaf(blockMove, dirCur); }
   public traverseCommutator(commutator: Alg.Commutator, dirCur: DirectionWithCursor): Position | null {
     return this.traversePartsWithDirections([
-      new PartWithDirection(commutator.A, Timeline.Direction.Forwards),
-      new PartWithDirection(commutator.B, Timeline.Direction.Forwards),
-      new PartWithDirection(commutator.A, Timeline.Direction.Backwards),
-      new PartWithDirection(commutator.B, Timeline.Direction.Backwards)
+      new PartWithDirection(commutator.A, Cursor.Direction.Forwards),
+      new PartWithDirection(commutator.B, Cursor.Direction.Forwards),
+      new PartWithDirection(commutator.A, Cursor.Direction.Backwards),
+      new PartWithDirection(commutator.B, Cursor.Direction.Backwards)
     ], commutator.amount, dirCur);
   }
   public traverseConjugate(conjugate: Alg.Conjugate, dirCur: DirectionWithCursor): Position | null {
     return this.traversePartsWithDirections([
-      new PartWithDirection(conjugate.A, Timeline.Direction.Forwards),
-      new PartWithDirection(conjugate.B, Timeline.Direction.Forwards),
-      new PartWithDirection(conjugate.A, Timeline.Direction.Backwards)
+      new PartWithDirection(conjugate.A, Cursor.Direction.Forwards),
+      new PartWithDirection(conjugate.B, Cursor.Direction.Forwards),
+      new PartWithDirection(conjugate.A, Cursor.Direction.Backwards)
     ], conjugate.amount, dirCur);
   }
   public traversePause(pause: Alg.Pause, dirCur: DirectionWithCursor): Position | null {
@@ -265,16 +194,16 @@ export function DefaultDurationForAmount(amount: number): Timeline.Duration {
 }
 // var t = new Timeline();
 // t.alg = exampleAlg;
-// console.log(t.breakpoint(Timeline.Direction.Forwards, Timeline.BreakpointType.Move, 10));
-// console.log(t.breakpoint(Timeline.Direction.Backwards, Timeline.BreakpointType.Move, 10));
-// console.log(t.breakpoint(Timeline.Direction.Backwards, Timeline.BreakpointType.Move, 1300));
-// console.log(t.breakpoint(Timeline.Direction.Forwards, Timeline.BreakpointType.Move, 2050));
-// console.log(t.breakpoint(Timeline.Direction.Backwards, Timeline.BreakpointType.Move, 2050));
+// console.log(t.breakpoint(Cursor.Direction.Forwards, Timeline.BreakpointType.Move, 10));
+// console.log(t.breakpoint(Cursor.Direction.Backwards, Timeline.BreakpointType.Move, 10));
+// console.log(t.breakpoint(Cursor.Direction.Backwards, Timeline.BreakpointType.Move, 1300));
+// console.log(t.breakpoint(Cursor.Direction.Forwards, Timeline.BreakpointType.Move, 2050));
+// console.log(t.breakpoint(Cursor.Direction.Backwards, Timeline.BreakpointType.Move, 2050));
 
 
 var durFn = new Timeline.AlgDuration(Timeline.DefaultDurationForAmount);
 var posFn = new Timeline.AlgPosition(durFn);
-var dirCur = new Timeline.DirectionWithCursor(Timeline.Direction.Backwards, 14000);
+// var dirCur = new Cursor.DirectionWithCursor(Cursor.Direction.Backwards, 14000);
 }
 
 

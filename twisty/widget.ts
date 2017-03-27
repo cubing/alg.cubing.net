@@ -84,13 +84,13 @@ export module Button {
       this.anim.dispatcher.registerDirectionObserver(this);
     }
     onpress(): void { this.anim.togglePausePlayForward(); }
-    animDirectionChanged(direction: Timeline.Direction): void {
+    animDirectionChanged(direction: Cursor.Direction): void {
       // TODO: Handle flash of pause button when pressed while the Twisty is already at the end.
-      var newClass = direction === Timeline.Direction.Paused ? "play" : "pause";
+      var newClass = direction === Cursor.Direction.Paused ? "play" : "pause";
       this.element.classList.remove("play", "pause")
       this.element.classList.add(newClass);
 
-      this.element.title = direction === Timeline.Direction.Paused ? "Play" : "Pause";
+      this.element.title = direction === Cursor.Direction.Paused ? "Play" : "Pause";
     }
   }
   export class StepForward extends Button {

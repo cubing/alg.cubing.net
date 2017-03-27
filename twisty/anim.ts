@@ -79,7 +79,7 @@ export class Model {
   // Update the cursor based on the time since lastCursorTime, and reset
   // lastCursorTime.
   private updateCursor(timestamp: Cursor.Timestamp) {
-    if (this.direction === Timeline.Direction.Paused) {
+    if (this.direction === Cursor.Direction.Paused) {
       this.lastCursorTime = timestamp;
       return;
     }
@@ -94,12 +94,12 @@ export class Model {
     }
     var reachedMoveBreakpoint = this.cursor.delta(elapsed * this.timeScaling(), this.breakpointType === Timeline.BreakpointType.Move);
     if (reachedMoveBreakpoint) {
-        this.setDirection(Timeline.Direction.Paused);
+        this.setDirection(Cursor.Direction.Paused);
         this.scheduler.stop();
     }
   }
 
-  private setDirection(direction: Timeline.Direction) {
+  private setDirection(direction: Cursor.Direction) {
     // TODO: Handle in frame for debouncing?
     // (Are there any use cases that need synchoronous observation?)
     this.direction = direction;
@@ -117,12 +117,12 @@ export class Model {
   }
 
   private isPaused() {
-    return this.direction === Timeline.Direction.Paused;
+    return this.direction === Cursor.Direction.Paused;
   }
 
   // Animate or pause in the given direction.
   // Idempotent.
-  private animateDirection(direction: Timeline.Direction): void {
+  private animateDirection(direction: Cursor.Direction): void {
     if (this.direction === direction) {
       return;
     }
@@ -132,7 +132,7 @@ export class Model {
 
     // Start the new direction.
     this.setDirection(direction);
-    if (direction === Timeline.Direction.Paused) {
+    if (direction === Cursor.Direction.Paused) {
       this.scheduler.stop();
     } else {
       this.scheduler.start();
@@ -148,17 +148,17 @@ export class Model {
 
   playForward(): void {
     this.setBreakpointType(Timeline.BreakpointType.EntireMoveSequence);
-    this.animateDirection(Timeline.Direction.Forwards);
+    this.animateDirection(Cursor.Direction.Forwards);
   }
 
   // A simple wrapper for animateDirection(Paused).
   pause(): void {
-    this.animateDirection(Timeline.Direction.Paused);
+    this.animateDirection(Cursor.Direction.Paused);
   }
 
   playBackward(): void {
     this.setBreakpointType(Timeline.BreakpointType.EntireMoveSequence);
-    this.animateDirection(Timeline.Direction.Backwards);
+    this.animateDirection(Cursor.Direction.Backwards);
   }
 
   skipToStart(): void {
@@ -172,13 +172,13 @@ export class Model {
   stepForward(): void {
     this.cursor.forward(0.1, false); // TODO
     this.setBreakpointType(Timeline.BreakpointType.Move);
-    this.animateDirection(Timeline.Direction.Forwards);
+    this.animateDirection(Cursor.Direction.Forwards);
   }
 
   stepBackward(): void {
     this.cursor.backward(0.1, false); // TODO
     this.setBreakpointType(Timeline.BreakpointType.Move);
-    this.animateDirection(Timeline.Direction.Backwards);
+    this.animateDirection(Cursor.Direction.Backwards);
   }
 
   togglePausePlayForward(): void {
