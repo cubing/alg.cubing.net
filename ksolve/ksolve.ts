@@ -100,6 +100,34 @@ export function Invert(def: PuzzleDefinition, t: Transformation): Transformation
   return newTrans;
 }
 
+export function EquivalentTransformations(def: PuzzleDefinition, t1: Transformation, t2: Transformation): boolean {
+  for (var orbitName in def.orbits) {
+    var oDef = def.orbits[orbitName];
+    var o1 = t1[orbitName];
+    var o2 = t2[orbitName];
+
+    for (var idx = 0; idx < oDef.numPieces; idx++) {
+      if (o1.orientation[idx] !== o2.orientation[idx]) {
+        return false;
+      }
+      if (o1.permutation[idx] !== o2.permutation[idx]) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+export function EquivalentStates(def: PuzzleDefinition, t1: Transformation, t2: Transformation): boolean {
+  // Turn transformations into states.
+  // This accounts for indistinguishable pieces.
+  return EquivalentTransformations(
+    def,
+    Combine(def, def.startPieces, t1),
+    Combine(def, def.startPieces, t2)
+  );
+}
+
 export class Puzzle {
   public state: Transformation
   constructor(public definition: PuzzleDefinition) {

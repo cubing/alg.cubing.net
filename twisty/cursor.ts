@@ -59,15 +59,6 @@ export class Cursor<P extends Puzzle> {
   endOfAlg(): Cursor.Duration {
     return this.algDuration();
   }
-  // startOfMove(): Cursor.Duration {
-  //   return this.moveStartTimestamp;
-  // }
-  // endOfMove(): Cursor.Duration {
-  //   if (this.algTimestamp >= this.algDuration) {
-  //     return this.algTimestamp;
-  //   }
-  //   return this.moveStartTimestamp + this.moveDuration();
-  // }
   private moveDuration(): Cursor.Duration {
     // TODO: Cache
     return algDuration.traverse(this.moves.nestedAlgs[this.moveIdx]);
@@ -105,7 +96,7 @@ export class Cursor<P extends Puzzle> {
     if (duration < 0) {
       throw "negative";
     }
-    var remainingDuration = (this.algTimestamp - this.moveStartTimestamp) + duration;
+    var remainingOffset = (this.algTimestamp - this.moveStartTimestamp) + duration;
 
     while (this.moveIdx < this.numMoves()) {
       var move = this.moves.nestedAlgs[this.moveIdx];
@@ -113,8 +104,8 @@ export class Cursor<P extends Puzzle> {
         throw "TODO - only BlockMove supported";
       }
       var lengthOfMove = algDuration.traverse(move);
-      if (remainingDuration < lengthOfMove) {
-        this.algTimestamp = this.moveStartTimestamp + remainingDuration;
+      if (remainingOffset < lengthOfMove) {
+        this.algTimestamp = this.moveStartTimestamp + remainingOffset;
         return false;
       }
       this.state = this.puzzle.combine(
@@ -124,54 +115,45 @@ export class Cursor<P extends Puzzle> {
       this.moveIdx += 1;
       this.moveStartTimestamp += lengthOfMove;
       this.algTimestamp = this.moveStartTimestamp;
-      remainingDuration -= lengthOfMove;
+      remainingOffset -= lengthOfMove;
       if (stopAtEndOfMove) {
-        return (remainingDuration > 0);
+        return (remainingOffset > 0);
       }
     }
-    // if (remainingDuration > 0) {
-    //   throw "Past end";
-    // }
-    return false
+    return true;
   }
   backward(duration: Cursor.Duration, stopAtStartOfMove: boolean): /* TODO: Remove this. Represents of move breakpoint was reachec. */ boolean {
-    return false;
-  //   if (this.position === null) {
-  //     return false;
-  //   }
-  //   if (duration < 0) {
-  //     throw "negative";
-  //   }
-  //   var remainingDuration = this.moveDuration - this.amountInDirection + duration;
-  //   for (var i = this.moveIdx; i >= 0; i++) {
-  //     var move = this.moves.nestedAlgs[i];
-  //     var lengthOfMove = algDuration.traverse(move);
-  //     if (lengthOfMove >= remainingDuration) {
-  //       this.currentMove = move;
-  //       this.moveDuration = lengthOfMove;
-  //       this.amountInDirection = lengthOfMove - remainingDuration;
-  //       return false;
-  //     }
-  //     if (stopAtStartOfMove) {
-  //       this.currentMove = move;
-  //       this.moveDuration = lengthOfMove;
-  //       this.amountInDirection = 0;
-  //       return true;
-  //     }
-  //     this.moveIdx--;
+    if (duration < 0) {
+      throw "negative";
+    }
+    var remainingOffset = (this.algTimestamp - this.moveStartTimestamp) - duration;
 
-  //     var prevMove = this.moves.nestedAlgs[this.moveIdx];
-  //     if(!(prevMove instanceof Alg.BlockMove)) {
-  //       throw "TODO - only BlockMove supported";
-  //     }
-  //     this.position.state = this.puzzle.combine(
-  //       this.position.state,
-  //       this.puzzle.multiply(this.puzzle.stateFromMove(prevMove.base), -prevMove.amount)
-  //     );
-  //     this.moveStartTimestamp -= lengthOfMove;
-  //     remainingDuration -= lengthOfMove;
-  //   }
-  //   throw "Past end";
+    while (this.moveIdx >= 0) {
+      if (remainingOffset >= 0) {
+        this.algTimestamp = this.moveStartTimestamp + remainingOffset;
+        return false;
+      }
+      if (stopAtStartOfMove || this.moveIdx === 0) {
+        this.algTimestamp = this.moveStartTimestamp;
+        return true; // TODO
+      }
+
+      var prevMove = this.moves.nestedAlgs[this.moveIdx - 1];
+      if(!(prevMove instanceof Alg.BlockMove)) {
+        throw "TODO - only BlockMove supported";
+      }
+
+      this.state = this.puzzle.combine(
+        this.state,
+        this.puzzle.multiply(this.puzzle.stateFromMove(prevMove.base), -prevMove.amount)
+      );
+      var lengthOfMove = algDuration.traverse(prevMove);
+      this.moveIdx -= 1;
+      this.moveStartTimestamp -= lengthOfMove;
+      this.algTimestamp = this.moveStartTimestamp;
+      remainingOffset += lengthOfMove;
+    }
+    return true;
   }
 }
 
