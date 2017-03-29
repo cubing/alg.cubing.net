@@ -271,25 +271,25 @@ export class SVG {
             if (fromCur === fromNext) {
               singleColor = true; // TODO: Avoid redundant work during move.
             }
-            var easedFraction = fraction * fraction * (2 - fraction * fraction); // TODO: Move easing up the stack.
-            this.gradients[id].children[0].setAttribute("stop-color", this.originalColors[fromNext]);
-            this.gradients[id].children[1].setAttribute("stop-color", this.originalColors[fromNext]);
-            this.gradients[id].children[1].setAttribute("offset", `${Math.max(easedFraction*100 - 5, 0)}%`)
-            this.gradients[id].children[2].setAttribute("offset", `${Math.max(easedFraction*100 - 5, 0)}%`)
-            this.gradients[id].children[3].setAttribute("offset", `${easedFraction*100}%`)
-            this.gradients[id].children[4].setAttribute("offset", `${easedFraction*100}%`)
-            this.gradients[id].children[4].setAttribute("stop-color", this.originalColors[fromCur]);
-            this.gradients[id].children[5].setAttribute("stop-color", this.originalColors[fromCur]);
+            var easedBackwardsPercent = 100 * (1 - fraction * fraction * (2 - fraction * fraction)); // TODO: Move easing up the stack.
+            this.gradients[id].children[0].setAttribute("stop-color", this.originalColors[fromCur]);
+            this.gradients[id].children[1].setAttribute("stop-color", this.originalColors[fromCur]);
+            this.gradients[id].children[1].setAttribute("offset", `${Math.max(easedBackwardsPercent - 5, 0)}%`)
+            this.gradients[id].children[2].setAttribute("offset", `${Math.max(easedBackwardsPercent - 5, 0)}%`)
+            this.gradients[id].children[3].setAttribute("offset", `${easedBackwardsPercent}%`)
+            this.gradients[id].children[4].setAttribute("offset", `${easedBackwardsPercent}%`)
+            this.gradients[id].children[4].setAttribute("stop-color", this.originalColors[fromNext]);
+            this.gradients[id].children[5].setAttribute("stop-color", this.originalColors[fromNext]);
           } else {
             singleColor = true; // TODO: Avoid redundant work during move.
           }
           if (singleColor) {
-            this.gradients[id].children[1].setAttribute("offset", `0%`)
-            this.gradients[id].children[2].setAttribute("offset", `0%`)
-            this.gradients[id].children[3].setAttribute("offset", `0%`)
-            this.gradients[id].children[4].setAttribute("offset", `0%`)
-            this.gradients[id].children[4].setAttribute("stop-color", this.originalColors[fromCur]);
-            this.gradients[id].children[5].setAttribute("stop-color", this.originalColors[fromCur]);
+            this.gradients[id].children[0].setAttribute("stop-color", this.originalColors[fromCur]);
+            this.gradients[id].children[1].setAttribute("stop-color", this.originalColors[fromCur]);
+            this.gradients[id].children[1].setAttribute("offset", `100%`)
+            this.gradients[id].children[2].setAttribute("offset", `100%`)
+            this.gradients[id].children[3].setAttribute("offset", `100%`)
+            this.gradients[id].children[4].setAttribute("offset", `100%`)
           }
           // this.gradients[id]
           // this.elementByID(id).style.fill = this.originalColors[from];
