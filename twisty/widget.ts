@@ -84,13 +84,13 @@ export module Button {
       this.anim.dispatcher.registerDirectionObserver(this);
     }
     onpress(): void { this.anim.togglePausePlayForward(); }
-    animDirectionChanged(direction: Timeline.Direction): void {
+    animDirectionChanged(direction: Cursor.Direction): void {
       // TODO: Handle flash of pause button when pressed while the Twisty is already at the end.
-      var newClass = direction === Timeline.Direction.Paused ? "play" : "pause";
+      var newClass = direction === Cursor.Direction.Paused ? "play" : "pause";
       this.element.classList.remove("play", "pause")
       this.element.classList.add(newClass);
 
-      this.element.title = direction === Timeline.Direction.Paused ? "Play" : "Pause";
+      this.element.title = direction === Cursor.Direction.Paused ? "Play" : "Pause";
     }
   }
   export class StepForward extends Button {
@@ -180,14 +180,12 @@ export class CursorTextView implements Anim.CursorObserver {
 }
 
 export class CursorTextMoveView implements Anim.CursorObserver {
-  private posFn: Timeline.AlgPosition;
   public readonly element: Element;
   constructor(private anim: Anim.Model) {
     this.element = document.createElement("cursor-text-view");
     this.anim.dispatcher.registerCursorObserver(this);
 
-    var durFn = new Timeline.AlgDuration(Timeline.DefaultDurationForAmount);
-    this.posFn = new Timeline.AlgPosition(durFn);
+    var durFn = new Cursor.AlgDuration(Cursor.DefaultDurationForAmount);
 
     this.animCursorChanged(anim.cursor);
   }
@@ -198,7 +196,11 @@ export class CursorTextMoveView implements Anim.CursorObserver {
 
   animCursorChanged(cursor: Cursor<Puzzle>) {
     var pos = cursor.currentPosition();
-    this.element.textContent = "" + Math.floor(cursor.currentTimestamp()) + " " + pos.moves[0].move.toString() + " " + this.formatFraction(pos.moves[0].fraction);
+    var s = "" + Math.floor(cursor.currentTimestamp());
+    if (pos.moves.length > 0) {
+      s += " " + pos.moves[0].move.toString() + " " + this.formatFraction(pos.moves[0].fraction);
+    }
+    this.element.textContent = s;
   }
 }
 
@@ -214,7 +216,21 @@ export class KSolveView implements Anim.CursorObserver {
   }
 
   animCursorChanged(cursor: Cursor<Puzzle>) {
-    this.svg.draw(KSolve.Puzzles["333"], cursor.currentPosition().state as KSolve.Transformation);
+    var pos = cursor.currentPosition();
+    if (pos.moves.length > 0) {
+
+      var move = (pos.moves[0].move as Alg.BlockMove);
+
+      var threeDef = KSolve.Puzzles["333"];
+      var newState = KSolve.Combine(
+        threeDef,
+        pos.state as KSolve.Transformation,
+        KSolve.Multiply(threeDef, threeDef.moves[move.base], move.amount * pos.moves[0].direction)
+      );
+      this.svg.draw(KSolve.Puzzles["333"], pos.state as KSolve.Transformation, newState, pos.moves[0].fraction);
+    } else {
+      this.svg.draw(KSolve.Puzzles["333"], pos.state as KSolve.Transformation);
+    }
   }
 }
 

@@ -28,6 +28,7 @@ export abstract class Puzzle {
     return newState;
   }
   abstract stateFromMove(moveName: MoveName): State<Puzzle>
+  abstract equivalent(s1: State<Puzzle>, s2: State<Puzzle>): boolean
 }
 
 interface KSolve333PuzzleState extends KSolve.Transformation, State<KSolve333Puzzle> {
@@ -51,6 +52,33 @@ export class KSolve333Puzzle extends Puzzle {
      }
      return state;
   }
+  equivalent(s1: KSolve333PuzzleState, s2: KSolve333PuzzleState): boolean {
+    return KSolve.EquivalentStates(threeDef, s1, s2);
+  }
 }
+
+
+class QTMCounterState implements State<QTMCounterPuzzle> {
+  constructor(public value: number) {}
+}
+
+export class QTMCounterPuzzle extends Puzzle {
+  startState(): QTMCounterState {
+    return new QTMCounterState(0);
+  }
+  invert(state: QTMCounterState): QTMCounterState {
+    return new QTMCounterState(-state.value);
+  }
+  combine(s1: QTMCounterState, s2: QTMCounterState): QTMCounterState {
+    return new QTMCounterState(s1.value + s2.value);
+  }
+  stateFromMove(moveName: MoveName): QTMCounterState {
+    return new QTMCounterState(1);
+  }
+  equivalent(s1: QTMCounterState, s2: QTMCounterState): boolean {
+    return s1.value === s2.value;
+  }
+}
+
 
 }
