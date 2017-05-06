@@ -192,6 +192,9 @@ export class SVG {
     document.body.appendChild(this.element);
 
     var svgElem = this.element.querySelector("svg");
+    if (!svgElem) {
+      throw "Could not get SVG element";
+    }
     if (xmlns !== svgElem.namespaceURI) {
       throw "Unexpected XML namespace";
     }
@@ -271,6 +274,7 @@ export class SVG {
             if (fromCur === fromNext) {
               singleColor = true; // TODO: Avoid redundant work during move.
             }
+            fraction = fraction || 0; // TODO Use the type system to tie this to nextState?
             var easedBackwardsPercent = 100 * (1 - fraction * fraction * (2 - fraction * fraction)); // TODO: Move easing up the stack.
             this.gradients[id].children[0].setAttribute("stop-color", this.originalColors[fromCur]);
             this.gradients[id].children[1].setAttribute("stop-color", this.originalColors[fromCur]);
