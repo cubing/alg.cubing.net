@@ -659,12 +659,12 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
 
   // TODO: Use IFs for puzzle/type
   var demos = {
-    "mats-4.74": {
+    "feliks-4.73": {
       puzzle: $scope.puzzle_map["3x3x3"],
       type: $scope.type_map["reconstruction"],
-      title: "Mats Valk, 4.74 WR",
-      setup: "B2 F2 D F2 L2 U R2 B2 F2 U2 L2 B' L2 R2 D' U2 L2 U' R' F R",
-      alg: "x' y' // Inspection\nL' D R2 // Cross\nR U' R' U' L' U' L // 1st Pair\nU2 R U R' U' d' R U R' // 2nd Pair\ny U2 R U' R' L U' L' // 3rd Pair\ny' U2 R' U2 R U2 // 4th Pair\nR' U R' F R F' U R // VLS\nU // AUF"
+      title: "Feliks Zemdegs, 4.73 WR",
+      setup: "L2 D' F R D' R' U' B' D2 F L' U F2 U2 R2 U B2 U",
+      alg: "z2 y' // Inspection\nR' F' D' R // Cross\nU' R U R' U2 R U R' // 1st pair\ny U R' U' R // 2nd pair\nd R' U' R // 3rd pair\nU L' U' L U L' U' L // 4th pair\nU R U R' U' M' U R U' r' // ELL"
     },
     "T-Perm": {
       type: $scope.type_map["alg"],
