@@ -663,8 +663,8 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
       puzzle: $scope.puzzle_map["3x3x3"],
       type: $scope.type_map["reconstruction"],
       title: "Feliks Zemdegs, 4.73 WR",
-      setup: "L2 D' F R D' R' U' B' D2 F L' U F2 U2 R2 U B2 U",
-      alg: "z2 y' // Inspection\nR' F' D' R // Cross\nU' R U R' U2 R U R' // 1st pair\ny U R' U' R // 2nd pair\nd R' U' R // 3rd pair\nU L' U' L U L' U' L // 4th pair\nU R U R' U' M' U R U' r' // ELL"
+      setup: "U2 F L2 U2 R2 F L2 F2 L' D' B2 R D2 R' B' U' L' B'",
+      alg: "x' y' // inspection\nU' R F R' (U' D) // Xcross\nL' U2 L2 U' L' // 2nd / 3rd pairs\nU R' U2 R U R' U' R // 4th pair\nF R U' R' U' R U R' F' // OLL(CP)\nR U' R U R U R U' R' U' R2 U // EPLL"
     },
     "T-Perm": {
       type: $scope.type_map["alg"],
