@@ -353,12 +353,12 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
 
   var selectionStart = document.getElementById("algorithm").selectionStart;
 
+  var webgl = ( function () { try { var canvas = document.createElement( 'canvas' ); return !! window.WebGLRenderingContext && ( canvas.getContext( 'webgl' ) || canvas.getContext( 'experimental-webgl' ) ); } catch( e ) { return false; } } )();
+  var Renderer = webgl ? THREE.WebGLRenderer : THREE.CanvasRenderer;
+
   $scope.twisty_init = function() {
 
     $("#viewer").empty();
-
-    var webgl = ( function () { try { var canvas = document.createElement( 'canvas' ); return !! window.WebGLRenderingContext && ( canvas.getContext( 'webgl' ) || canvas.getContext( 'experimental-webgl' ) ); } catch( e ) { return false; } } )();
-    var Renderer = webgl ? THREE.WebGLRenderer : THREE.CanvasRenderer;
 
     twistyScene = new twisty.scene({
       "allowDragging": true,
