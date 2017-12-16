@@ -666,6 +666,13 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
       setup: "B2 F2 D F2 L2 U R2 B2 F2 U2 L2 B' L2 R2 D' U2 L2 U' R' F R",
       alg: "x' y' // Inspection\nL' D R2 // Cross\nR U' R' U' L' U' L // 1st Pair\nU2 R U R' U' d' R U R' // 2nd Pair\ny U2 R U' R' L U' L' // 3rd Pair\ny' U2 R' U2 R U2 // 4th Pair\nR' U R' F R F' U R // VLS\nU // AUF"
     },
+    "seungbeom-4.59": {
+      puzzle: $scope.puzzle_map["3x3x3"],
+      type: $scope.type_map["reconstruction"],
+      title: "SeungBeom Cho, 4.59 WR",
+      setup: "U2 L' D2 L D2 R F2 D2 R' D2 U2 B U L U L' R D L2 F2 U2 R'",
+      alg: "x2 // inspection\nD' R' L2' U' F U' F' (D' U') U' R' // xxcross\ny' R' U' R // 3rd pair\ny' R U' R' U' R U R' // 4th pair\nU' R' U' F' U F R // OLL(CP)\nU' // AUF\n\n// Video: youtu.be/5x8jgGX3iNM"
+    },
     "T-Perm": {
       type: $scope.type_map["alg"],
       title: "T-Perm",
