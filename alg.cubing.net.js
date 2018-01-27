@@ -98,6 +98,7 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
     {"id": "L6E", name: "L6E", group: "Roux"},
     {"id": "CMLL", name: "CMLL", group: "Roux"},
     {"id": "WV", name: "WV", group: "Variation"},
+    {"id": "ZBLL", name: "ZBLL", group: "Variation"},
     {"id": "void", name: "Void Cube", group: "Puzzle"},
   ]);
 
