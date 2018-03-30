@@ -13,7 +13,6 @@ self.addEventListener('install', function(evt) {
 // On fetch, use cache but update the entry with the latest contents
 // from the server.
 self.addEventListener('fetch', function(evt) {
-  console.log('The service worker is serving the asset.');
   // Try network and if it fails, go for the cached copy.
   evt.respondWith(fromNetwork(evt.request, 400).catch(function () {
     return fromCache(evt.request);
