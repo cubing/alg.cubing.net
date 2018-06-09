@@ -85,7 +85,7 @@ function positionEqual<P extends Twisty.Puzzle>(puz: P, c: Twisty.Cursor<P>, ts:
 
 (function TestCursorValues() {
 
-  var puz = new Twisty.KSolve333Puzzle();
+  var puz = Twisty.KSolvePuzzle.fromID("333");
   var a = new Alg.Sequence([
     new Alg.Conjugate(
       new Alg.BlockMove("R", 1),
@@ -99,7 +99,7 @@ function positionEqual<P extends Twisty.Puzzle>(puz: P, c: Twisty.Cursor<P>, ts:
       1
     )
   ])
-  var c = new Twisty.Cursor<Twisty.KSolve333Puzzle>(a, puz);
+  var c = new Twisty.Cursor<Twisty.KSolvePuzzle>(a, puz);
   // twistyTest("initial", positionEqual(puz, c, 1, {"state": {"value": 0},"moves": []}));
   twistyTest("initial state", positionEqual(puz, c, 0, {
       "state": {"CORNERS":{"permutation":[1,2,3,4,5,6,7,8],"orientation":[0,0,0,0,0,0,0,0]},"EDGES":{"permutation":[1,2,3,4,5,6,7,8,9,10,11,12],"orientation":[0,0,0,0,0,0,0,0,0,0,0,0]}},

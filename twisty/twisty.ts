@@ -8,8 +8,8 @@ export class Twisty {
   private anim: Anim.Model;
   private cursor: Cursor<Puzzle>;
   constructor(public element: Element) {
-    this.alg = Alg.Example.TPerm;
-    this.cursor = new Cursor(this.alg, new KSolve333Puzzle());
+    this.alg = Alg.Example.Sune;
+    this.cursor = new Cursor(this.alg, KSolvePuzzle.fromID("pyram"));
     // this.timeline = new Timeline(Alg.Example.HeadlightSwaps);
     this.anim = new Anim.Model(this.cursor);
 

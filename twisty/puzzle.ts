@@ -31,32 +31,38 @@ export abstract class Puzzle {
   abstract equivalent(s1: State<Puzzle>, s2: State<Puzzle>): boolean
 }
 
-interface KSolve333PuzzleState extends KSolve.Transformation, State<KSolve333Puzzle> {
+interface KSolvePuzzleState extends KSolve.Transformation, State<KSolvePuzzle> {
 }
 
-var threeDef = KSolve.Puzzles["333"];
-export class KSolve333Puzzle extends Puzzle {
-  startState(): KSolve333PuzzleState {
-    return threeDef.startPieces;
+export class KSolvePuzzle extends Puzzle {
+  constructor(private definition: KSolve.PuzzleDefinition) {
+    super();
   }
-  invert(state: KSolve333PuzzleState): KSolve333PuzzleState {
-    return KSolve.Invert(threeDef, state);
+
+  static fromID(id: string): KSolvePuzzle {
+    return new KSolvePuzzle(KSolve.Puzzles[id]);
   }
-  combine(s1: KSolve333PuzzleState, s2: KSolve333PuzzleState): KSolve333PuzzleState {
-    return KSolve.Combine(threeDef, s1, s2);
+
+  startState(): KSolvePuzzleState {
+    return this.definition.startPieces;
   }
-  stateFromMove(moveName: MoveName): KSolve333PuzzleState {
-     var state = threeDef.moves[moveName];
+  invert(state: KSolvePuzzleState): KSolvePuzzleState {
+    return KSolve.Invert(this.definition, state);
+  }
+  combine(s1: KSolvePuzzleState, s2: KSolvePuzzleState): KSolvePuzzleState {
+    return KSolve.Combine(this.definition, s1, s2);
+  }
+  stateFromMove(moveName: MoveName): KSolvePuzzleState {
+     var state = this.definition.moves[moveName];
      if (!state) {
        throw `Unknown move: ${moveName}`;
      }
      return state;
   }
-  equivalent(s1: KSolve333PuzzleState, s2: KSolve333PuzzleState): boolean {
-    return KSolve.EquivalentStates(threeDef, s1, s2);
+  equivalent(s1: KSolvePuzzleState, s2: KSolvePuzzleState): boolean {
+    return KSolve.EquivalentStates(this.definition, s1, s2);
   }
 }
-
 
 class QTMCounterState implements State<QTMCounterPuzzle> {
   constructor(public value: number) {}

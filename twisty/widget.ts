@@ -211,7 +211,7 @@ export class KSolveView implements Anim.CursorObserver {
     this.element = document.createElement("ksolve-svg-view");
     this.anim.dispatcher.registerCursorObserver(this);
 
-    this.svg = new KSolve.SVG(KSolve.Puzzles["333"]); // TODO: Dynamic puzzle
+    this.svg = new KSolve.SVG(KSolve.Puzzles["pyram"]); // TODO: Dynamic puzzle
     this.element.appendChild(this.svg.element);
   }
 
@@ -221,15 +221,15 @@ export class KSolveView implements Anim.CursorObserver {
 
       var move = (pos.moves[0].move as Alg.BlockMove);
 
-      var threeDef = KSolve.Puzzles["333"];
+      var threeDef = KSolve.Puzzles["pyram"];
       var newState = KSolve.Combine(
         threeDef,
         pos.state as KSolve.Transformation,
         KSolve.Multiply(threeDef, threeDef.moves[move.base], move.amount * pos.moves[0].direction)
       );
-      this.svg.draw(KSolve.Puzzles["333"], pos.state as KSolve.Transformation, newState, pos.moves[0].fraction);
+      this.svg.draw(KSolve.Puzzles["pyram"], pos.state as KSolve.Transformation, newState, pos.moves[0].fraction);
     } else {
-      this.svg.draw(KSolve.Puzzles["333"], pos.state as KSolve.Transformation);
+      this.svg.draw(KSolve.Puzzles["pyram"], pos.state as KSolve.Transformation);
     }
   }
 }
