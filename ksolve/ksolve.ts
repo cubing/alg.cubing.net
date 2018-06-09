@@ -175,15 +175,27 @@ export class Puzzle {
 
 var xmlns = "http://www.w3.org/2000/svg";
 
+// Unique ID mechanism to keep SVG gradient element IDs unique. TODO: Is there
+// something more performant, and that can't be broken by other elements of the
+// page? (And also doesn't break if this library is run in parallel.)
+var svgCounter = 0;
+function nextSVGID(): string {
+  svgCounter += 1;
+  return "svg" + svgCounter.toString();
+}
+
 export class SVG {
   public element: HTMLElement;
   public gradientDefs: SVGDefsElement;
   private originalColors: {[type: string]: string} = {}
   private gradients: {[type: string]: SVGGradientElement} = {}
+  private svgID: string
   constructor(public puzzleDefinition: PuzzleDefinition) {
     if (!puzzleDefinition.svg) {
       throw `No SVG definition for puzzle type: ${puzzleDefinition.name}`
     }
+
+    this.svgID = nextSVGID();
 
     this.element = document.createElement("div");
     this.element.classList.add("svg-wrapper");
@@ -212,7 +224,7 @@ export class SVG {
           this.originalColors[id] = originalColor;
           this.gradients[id] = this.newGradient(id, originalColor);
           this.gradientDefs.appendChild(this.gradients[id]);
-          elem.setAttribute("style", `fill: url(#grad-${id})`);
+          elem.setAttribute("style", `fill: url(#grad-${this.svgID}-${id})`);
         }
       }
     }
@@ -220,7 +232,7 @@ export class SVG {
 
   private newGradient(id: string, originalColor: string): SVGGradientElement {
     var grad = <SVGGradientElement>document.createElementNS(xmlns, "radialGradient");
-    grad.setAttribute("id", `grad-${id}`);
+    grad.setAttribute("id", `grad-${this.svgID}-${id}`);
     grad.setAttribute("r", `70.7107%`); // TODO: Adapt to puzzle.
     var stopDefs = [
       {offset: 0, color: originalColor},
