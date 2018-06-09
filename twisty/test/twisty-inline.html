@@ -36,9 +36,23 @@
   <p>
     But this should <strong>not</strong> be initialized:
   </p>
-  <twisty
-    initialization="custom"
-  ></twisty>
+  <twisty initialization="custom"></twisty>
+  <p>
+    This should become initialized via JS:
+  </p>
+  <twisty id="custom-example" initialization="custom"></twisty>
+  <script>
+    var elem = document.querySelector("#custom-example");
+    var twisty = new Twisty.Twisty(elem, {
+      puzzle: KSolve.Puzzles["222"],
+      alg: new Alg.Sequence([
+        new Alg.BlockMove("R",2),
+        new Alg.BlockMove("F",2),
+        new Alg.BlockMove("U",2),
+        new Alg.BlockMove("R",2)
+      ])
+    });
+  </script>
   <p>
     Tempor tempor aliqua in commodo cillum Lorem magna dolore proident Lorem.
   </p>
