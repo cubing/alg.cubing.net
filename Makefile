@@ -1,4 +1,10 @@
-all: deploy open
+.PHONY: build
+build:
+	tsc
+
+.PHONY: dev
+dev:
+	tsc --watch
 
 .PHONY: deploy
 deploy:
