@@ -7,13 +7,15 @@ export class Twisty {
   private alg: Alg.Algorithm;
   private anim: Anim.Model;
   private cursor: Cursor<Puzzle>;
+  private puzzleDef: KSolve.PuzzleDefinition;
   constructor(public element: Element) {
-    this.alg = Alg.Example.Sune;
-    this.cursor = new Cursor(this.alg, KSolvePuzzle.fromID("pyram"));
+    this.alg = Alg.Example.Niklas;
+    this.puzzleDef = KSolve.Puzzles["pyram"];
+    this.cursor = new Cursor(this.alg, new KSolvePuzzle(this.puzzleDef));
     // this.timeline = new Timeline(Alg.Example.HeadlightSwaps);
     this.anim = new Anim.Model(this.cursor);
 
-    this.element.appendChild((new Widget.Player(this.anim)).element);
+    this.element.appendChild((new Widget.Player(this.anim, this.puzzleDef)).element);
   }
 }
 

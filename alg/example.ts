@@ -37,6 +37,17 @@ export const SuneCommutator: Algorithm = new Commutator(
   1
 )
 
+export const Niklas: Sequence = new Sequence([
+  new BlockMove("R",  1),
+  new BlockMove("U",  -1),
+  new BlockMove("L", -1),
+  new BlockMove("U", 1),
+  new BlockMove("R",  -1),
+  new BlockMove("U",  -1),
+  new BlockMove("L", 1),
+  new BlockMove("U", 1)
+]);
+
 export const FURURFCompact: Algorithm = new Conjugate(
   new BlockMove("F",  1),
   new Commutator(
