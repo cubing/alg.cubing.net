@@ -119,7 +119,7 @@ class Depth extends Alg.Traversal.Up<number> {
 
 (function TestNewAlgTypeNewTraversal() {
 
-  class HyperCloneTraversal extends Alg.Traversal.Clone  {
+  class ConfabAwareClone extends Alg.Traversal.Clone  {
     public traverseConfabulator(confabulator: Confabulator): Alg.Algorithm {
       return new Alg.Commutator(confabulator.A.clone(), confabulator.A.clone(), 3);
 
@@ -132,14 +132,15 @@ class Depth extends Alg.Traversal.Up<number> {
       super();
       this.freeze();
     }
-    dispatch<DataDown, DataUp>(t: HyperCloneTraversal): Alg.Algorithm {
-      return t.traverseConfabulator(this);
+    dispatch<DataDown, DataUp>(t: Alg.Traversal.DownUp<DataDown, DataUp>, dataDown: DataDown): DataUp {
+      // TODO: can we do this without breaking the type system?
+      return (t as any).traverseConfabulator(this, dataDown);
     }
   }
 
   // TODO: Figure out how to add definitions to existing traversals like ToString.
 
-  var h = new HyperCloneTraversal();
+  var h = new ConfabAwareClone();
   var t = h.traverse(new Alg.Group(new Confabulator(new Alg.BlockMove("R", 1)), 2));
   // console.log();
   algTest("Check that you can create a new traversal for a new algorithm type.", t.structureEquals(new Alg.Group(new Alg.Commutator(new Alg.BlockMove("R", 1), new Alg.BlockMove("R", 1), 3), 2)));
