@@ -1,5 +1,5 @@
 # If on HTTPS, sent the HSTS header.
-Header always set Strict-Transport-Security "max-age=15768000; includeSubDomains; preload;"
+Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
 Header always unset Strict-Transport-Security env=!HTTPS
 
 # Redirect to HTTPS first.
