@@ -1,6 +1,5 @@
 # If on HTTPS, sent the HSTS header.
-Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
-Header always unset Strict-Transport-Security env=!HTTPS
+Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload" env=HTTPS
 
 # Redirect to HTTPS first.
 RewriteEngine on
