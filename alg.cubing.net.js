@@ -664,7 +664,7 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
     "feliks-4.22": {
       puzzle: $scope.puzzle_map["3x3x3"],
       type: $scope.type_map["reconstruction"],
-      title: "Feliks' Zemdegs, 4.22 WR",
+      title: "Feliks Zemdegs, 4.22 WR",
       setup: "R2 L' F2 D2 F' D L2 B' D L U B2 U B2 D2 L2 D' F2 D",
       alg: "F' R' D' R // pseudo cross \ny R U' R' u' // Xcross \nU' R U R' // 2nd pair \ny' L' U2 L U' L' U L // 3rd pair \nd (U R' U' R)2 // 4th pair \nU' R U2' R' R' F R F' R U2' R' // OLL(CP) "
     },
