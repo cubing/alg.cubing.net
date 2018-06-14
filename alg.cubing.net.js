@@ -82,6 +82,13 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
     {id: "7x7x7", name: "7x7x7", group: "Cube", dimension: 7},
     {id: "8x8x8", name: "8x8x8", group: "Cube", dimension: 8},
     {id: "9x9x9", name: "9x9x9", group: "Cube", dimension: 9},
+    {id: "10x10x10", name: "10x10x10", group: "Cube", dimension: 10},
+    {id: "11x11x11", name: "11x11x11", group: "Cube", dimension: 11},
+    {id: "12x12x12", name: "12x12x12", group: "Cube", dimension: 12},
+    {id: "13x13x13", name: "13x13x13", group: "Cube", dimension: 13},
+    {id: "14x14x14", name: "14x14x14", group: "Cube", dimension: 14},
+    {id: "15x15x15", name: "15x15x15", group: "Cube", dimension: 15},
+    {id: "16x16x16", name: "16x16x16", group: "Cube", dimension: 16},
     {id: "17x17x17", name: "17x17x17", group: "Cube", dimension: 17}, // Over the top!
     {id: "1x1x1", name: "1x1x1", group: "Fun", dimension: 1},
   ]);
