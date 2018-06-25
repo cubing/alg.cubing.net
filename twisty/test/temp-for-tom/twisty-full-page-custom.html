@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Full-Page Test | twisty.js</title>
+
+  <script src="../../../build/alg/algorithm.js"></script>
+  <script src="../../../build/alg/traversal.js"></script>
+  <script src="../../../build/alg/example.js"></script>
+
+  <script src="../../../build/ksolve/puzzle_definitions.js"></script>
+  <script src="../../../build/ksolve/ksolve.js"></script>
+  <script src="../../../build/ksolve/parser.js"></script>
+
+  <script src="../../../build/twisty/puzzle.js"></script>
+  <script src="../../../build/twisty/timeline.js"></script>
+  <script src="../../../build/twisty/cursor.js"></script>
+  <script src="../../../build/twisty/anim.js"></script>
+  <script src="../../../build/twisty/widget.js"></script>
+  <script src="../../../build/twisty/twisty.js"></script>
+  <link href="../../twisty.css" rel="stylesheet" type="text/css">
+
+  <link href="../twisty-full-page.css" rel="stylesheet" type="text/css">
+  <script>
+    var p = KSolve.createPuzzle("Name 222\n\n# def-file by Kåre Krig\n# CORNERS: UBL UBR UFR UFL DBR DFR DFL\n# DBL is fixed. No B,L,D moves.\n\nSet CORNERS 7 3\n\nSolved\nCORNERS\n1 2 3 4 5 6 7\nEnd\n\nMove U\nCORNERS\n4 1 2 3 5 6 7\nEnd\n\nMove R\nCORNERS\n1 3 6 4 2 5 7\n0 2 1 0 1 2 0\nEnd\n\nMove F\nCORNERS\n1 2 4 7 5 3 6\n0 0 2 1 0 1 2\nEnd", "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.0//EN\"\n       \"http://www.w3.org/TR/2001/REC-SVG-20050904/DTD/svg11.dtd\">\n<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"490\" height=\"370\">\n  <defs>\n  </defs>\n  <title>222</title>\n  <defs>\n    <g id=\"sticker\">\n        <rect x=\"0\" y=\"0\" width=\"1\" height=\"1\" stroke=\"black\" stroke-width=\"0.04px\" />\n    </g>\n  </defs>\n  <g id=\"puzzle\" transform=\"translate(5, 5) scale(60)\">\n    <use id=\"CORNERS-l0-o0\" xlink:href=\"#sticker\" transform=\"translate(2, 0)\" style=\"fill: white\"/>\n    <use id=\"CORNERS-l0-o1\" xlink:href=\"#sticker\" transform=\"translate(7, 2)\" style=\"fill: blue\"/>\n    <use id=\"CORNERS-l0-o2\" xlink:href=\"#sticker\" transform=\"translate(0, 2)\" style=\"fill: orange\"/>\n\n    <use id=\"CORNERS-l1-o0\" xlink:href=\"#sticker\" transform=\"translate(3, 0)\" style=\"fill: white\"/>\n    <use id=\"CORNERS-l1-o1\" xlink:href=\"#sticker\" transform=\"translate(5, 2)\" style=\"fill: red\"/>\n    <use id=\"CORNERS-l1-o2\" xlink:href=\"#sticker\" transform=\"translate(6, 2)\" style=\"fill: blue\"/>\n\n    <use id=\"CORNERS-l2-o0\" xlink:href=\"#sticker\" transform=\"translate(3, 1)\" style=\"fill: white\"/>\n    <use id=\"CORNERS-l2-o1\" xlink:href=\"#sticker\" transform=\"translate(3, 2)\" style=\"fill: green\"/>\n    <use id=\"CORNERS-l2-o2\" xlink:href=\"#sticker\" transform=\"translate(4, 2)\" style=\"fill: red\"/>\n\n    <use id=\"CORNERS-l3-o0\" xlink:href=\"#sticker\" transform=\"translate(2, 1)\" style=\"fill: white\"/>\n    <use id=\"CORNERS-l3-o1\" xlink:href=\"#sticker\" transform=\"translate(1, 2)\" style=\"fill: orange\"/>\n    <use id=\"CORNERS-l3-o2\" xlink:href=\"#sticker\" transform=\"translate(2, 2)\" style=\"fill: green\"/>\n\n    <use id=\"CORNERS-l4-o0\" xlink:href=\"#sticker\" transform=\"translate(3, 5)\" style=\"fill: yellow\"/>\n    <use id=\"CORNERS-l4-o1\" xlink:href=\"#sticker\" transform=\"translate(6, 3)\" style=\"fill: blue\"/>\n    <use id=\"CORNERS-l4-o2\" xlink:href=\"#sticker\" transform=\"translate(5, 3)\" style=\"fill: red\"/>\n\n    <use id=\"CORNERS-l5-o0\" xlink:href=\"#sticker\" transform=\"translate(3, 4)\" style=\"fill: yellow\"/>\n    <use id=\"CORNERS-l5-o1\" xlink:href=\"#sticker\" transform=\"translate(4, 3)\" style=\"fill: red\"/>\n    <use id=\"CORNERS-l5-o2\" xlink:href=\"#sticker\" transform=\"translate(3, 3)\" style=\"fill: green\"/>\n\n    <use id=\"CORNERS-l6-o0\" xlink:href=\"#sticker\" transform=\"translate(2, 4)\" style=\"fill: yellow\"/>\n    <use id=\"CORNERS-l6-o1\" xlink:href=\"#sticker\" transform=\"translate(2, 3)\" style=\"fill: green\"/>\n    <use id=\"CORNERS-l6-o2\" xlink:href=\"#sticker\" transform=\"translate(1, 3)\" style=\"fill: orange\"/>\n\n    <use                    xlink:href=\"#sticker\" transform=\"translate(2, 5)\" style=\"fill: yellow\"/>\n    <use                    xlink:href=\"#sticker\" transform=\"translate(0, 3)\" style=\"fill: orange\"/>\n    <use                    xlink:href=\"#sticker\" transform=\"translate(7, 3)\" style=\"fill: blue\"/>\n  </g>\n\n</svg>");
+    window.addEventListener("load", function() {
+      var elem = document.querySelector("#custom-example");
+      var twisty = new Twisty.Twisty(elem, {
+        puzzle: p,
+        alg: new Alg.Sequence([
+          new Alg.BlockMove("R",  1),
+          new Alg.BlockMove("U",  1),
+          new Alg.BlockMove("R", -1),
+          new Alg.BlockMove("U",  1),
+          new Alg.BlockMove("R",  1),
+          new Alg.BlockMove("U",  1),
+          new Alg.BlockMove("R", -1)
+        ])
+      });
+    });
+  </script>
+</head>
+<body>
+  <twisty id="custom-example" initialization="custom"></twisty>
+</body>
+</html>
