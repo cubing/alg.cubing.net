@@ -206,8 +206,8 @@ export class CursorTextMoveView implements Anim.CursorObserver {
 
 export class KSolveView implements Anim.CursorObserver {
   public readonly element: Element;
-  private svg: KSolve.SVG;
-  constructor(private anim: Anim.Model, private definition: KSolve.PuzzleDefinition) {
+  protected svg: KSolve.SVG;
+  constructor(protected anim: Anim.Model, protected definition: KSolve.PuzzleDefinition) {
     this.element = document.createElement("ksolve-svg-view");
     this.anim.dispatcher.registerCursorObserver(this);
 
@@ -234,12 +234,39 @@ export class KSolveView implements Anim.CursorObserver {
   }
 }
 
+class KSolveInverseView extends KSolveView {
+
+  animCursorChanged(cursor: Cursor<Puzzle>) {
+    var pos = cursor.currentPosition();
+    if (pos.moves.length > 0) {
+
+      var move = (pos.moves[0].move as Alg.BlockMove);
+
+      var def = this.definition;
+      var inverse = KSolve.Invert(this.definition, pos.state as KSolve.Transformation);
+      var inverseMove = KSolve.Multiply(def, def.moves[move.base], -move.amount * pos.moves[0].direction);
+      var newState = KSolve.Combine(
+        def,
+        inverseMove,
+        inverse
+      );
+      this.svg.draw(this.definition, inverse, newState, pos.moves[0].fraction);
+    } else {
+      var inverse = KSolve.Invert(this.definition, pos.state as KSolve.Transformation);
+      this.svg.draw(this.definition, inverse);
+    }
+  }
+}
+
 export class Player {
   public element: Element;
   constructor(private anim: Anim.Model, definition: KSolve.PuzzleDefinition) {
     this.element = document.createElement("player");
 
+    // var div = document.createElement("div");
+    // this.element.appendChild(div);
     this.element.appendChild((new KSolveView(this.anim, definition)).element);
+    this.element.appendChild((new KSolveInverseView(this.anim, definition)).element);
     this.element.appendChild((new Scrubber(this.anim)).element);
     this.element.appendChild((new ControlBar(this.anim, this.element)).element);
     this.element.appendChild((new CursorTextMoveView(this.anim)).element);
