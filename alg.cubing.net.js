@@ -10,16 +10,16 @@ var algxApp = angular.module('algxApp', [
 ]);
 
 algxApp.config(['$locationProvider',
-  function($locationProvider) {
+  function ($locationProvider) {
     $locationProvider.html5Mode(true);
-}]);
+  }]);
 
 
-algxApp.filter('title', function() {
-  return function(input, title) {
+algxApp.filter('title', function () {
+  return function (input, title) {
     var prefix = title ? title + " | " : "";
     if (input.length > 20) {
-       return prefix + input.slice(0, 20) + (input.slice(20, 30) + " ").split(" ")[0] + "...";
+      return prefix + input.slice(0, 20) + (input.slice(20, 30) + " ").split(" ")[0] + "...";
     }
     return prefix + input;
   };
@@ -27,7 +27,7 @@ algxApp.filter('title', function() {
 
 var algxControllers = angular.module('algxControllers', ['monospaced.elastic']);
 
-algxControllers.controller('algxController', ["$scope", "$location", "debounce", function($scope, $location, debounce) {
+algxControllers.controller('algxController', ["$scope", "$location", "debounce", function ($scope, $location, debounce) {
 
   var touchBrowser = ("ontouchstart" in document.documentElement);
   var fire = true;
@@ -40,7 +40,7 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
 
   function indexBy(list, key) {
     var obj = {};
-    for(var i in list) {
+    for (var i in list) {
       obj[list[i][key]] = list[i];
     }
     return obj;
@@ -48,14 +48,14 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
 
   var param_defaults = [];
 
-  $scope.clear = function() {
+  $scope.clear = function () {
     $scope.alg = "";
     $scope.setup = "";
     $scope.current_move = 0;
     $scope.title = "";
   }
 
-  $scope.reset = function() {
+  $scope.reset = function () {
     for (var param in param_defaults) {
       $scope[param] = param_defaults[param];
     }
@@ -74,39 +74,39 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
 
 
   initParameter("puzzle", "3x3x3", [
-    {id: "2x2x2", name: "2x2x2", group: "Cube", dimension: 2},
-    {id: "3x3x3", name: "3x3x3", group: "Cube", dimension: 3},
-    {id: "4x4x4", name: "4x4x4", group: "Cube", dimension: 4},
-    {id: "5x5x5", name: "5x5x5", group: "Cube", dimension: 5},
-    {id: "6x6x6", name: "6x6x6", group: "Cube", dimension: 6},
-    {id: "7x7x7", name: "7x7x7", group: "Cube", dimension: 7},
-    {id: "8x8x8", name: "8x8x8", group: "Cube", dimension: 8},
-    {id: "9x9x9", name: "9x9x9", group: "Cube", dimension: 9},
-    {id: "10x10x10", name: "10x10x10", group: "Cube", dimension: 10},
-    {id: "11x11x11", name: "11x11x11", group: "Cube", dimension: 11},
-    {id: "12x12x12", name: "12x12x12", group: "Cube", dimension: 12},
-    {id: "13x13x13", name: "13x13x13", group: "Cube", dimension: 13},
-    {id: "14x14x14", name: "14x14x14", group: "Cube", dimension: 14},
-    {id: "15x15x15", name: "15x15x15", group: "Cube", dimension: 15},
-    {id: "16x16x16", name: "16x16x16", group: "Cube", dimension: 16},
-    {id: "17x17x17", name: "17x17x17", group: "Cube", dimension: 17}, // Over the top!
-    {id: "1x1x1", name: "1x1x1", group: "Fun", dimension: 1},
+    { id: "2x2x2", name: "2x2x2", group: "Cube", dimension: 2 },
+    { id: "3x3x3", name: "3x3x3", group: "Cube", dimension: 3 },
+    { id: "4x4x4", name: "4x4x4", group: "Cube", dimension: 4 },
+    { id: "5x5x5", name: "5x5x5", group: "Cube", dimension: 5 },
+    { id: "6x6x6", name: "6x6x6", group: "Cube", dimension: 6 },
+    { id: "7x7x7", name: "7x7x7", group: "Cube", dimension: 7 },
+    { id: "8x8x8", name: "8x8x8", group: "Cube", dimension: 8 },
+    { id: "9x9x9", name: "9x9x9", group: "Cube", dimension: 9 },
+    { id: "10x10x10", name: "10x10x10", group: "Cube", dimension: 10 },
+    { id: "11x11x11", name: "11x11x11", group: "Cube", dimension: 11 },
+    { id: "12x12x12", name: "12x12x12", group: "Cube", dimension: 12 },
+    { id: "13x13x13", name: "13x13x13", group: "Cube", dimension: 13 },
+    { id: "14x14x14", name: "14x14x14", group: "Cube", dimension: 14 },
+    { id: "15x15x15", name: "15x15x15", group: "Cube", dimension: 15 },
+    { id: "16x16x16", name: "16x16x16", group: "Cube", dimension: 16 },
+    { id: "17x17x17", name: "17x17x17", group: "Cube", dimension: 17 }, // Over the top!
+    { id: "1x1x1", name: "1x1x1", group: "Fun", dimension: 1 },
   ]);
 
   initParameter("stage", "full", [
-    {"id": "full", name: "Full", group: "Stage"},
-    {"id": "cross", name: "Cross", group: "Fridrich"},
-    {"id": "F2L", name: "F2L", group: "Fridrich"},
-    {"id": "LL", name: "LL", group: "Fridrich"},
-    {"id": "OLL", name: "OLL", group: "Fridrich"},
-    {"id": "PLL", name: "PLL", group: "Fridrich"},
-    {"id": "CLS", name: "CLS", group: "MGLS"},
-    {"id": "ELS", name: "ELS", group: "MGLS"},
-    {"id": "L6E", name: "L6E", group: "Roux"},
-    {"id": "CMLL", name: "CMLL", group: "Roux"},
-    {"id": "WV", name: "WV", group: "Variation"},
-    {"id": "ZBLL", name: "ZBLL", group: "Variation"},
-    {"id": "void", name: "Void Cube", group: "Puzzle"},
+    { "id": "full", name: "Full", group: "Stage" },
+    { "id": "cross", name: "Cross", group: "Fridrich" },
+    { "id": "F2L", name: "F2L", group: "Fridrich" },
+    { "id": "LL", name: "LL", group: "Fridrich" },
+    { "id": "OLL", name: "OLL", group: "Fridrich" },
+    { "id": "PLL", name: "PLL", group: "Fridrich" },
+    { "id": "CLS", name: "CLS", group: "MGLS" },
+    { "id": "ELS", name: "ELS", group: "MGLS" },
+    { "id": "L6E", name: "L6E", group: "Roux" },
+    { "id": "CMLL", name: "CMLL", group: "Roux" },
+    { "id": "WV", name: "WV", group: "Variation" },
+    { "id": "ZBLL", name: "ZBLL", group: "Variation" },
+    { "id": "void", name: "Void Cube", group: "Puzzle" },
   ]);
 
   initParameter("type", "moves", [
@@ -158,9 +158,9 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
 
   // TODO: BOY/Japanese translations.
   initParameter("scheme", "boy", [
-    {id: "boy", name: "BOY", type: "Color Scheme", scheme: "grobyw", display: "BOY", custom: false},
-    {id: "japanese", name: "Japanese", type: "Color Scheme", scheme: "groybw", display: "Japanese", custom: false},
-    {id: "custom", name: "Custom:", type: "Color Scheme", scheme: "grobyw", display: "", custom: true}
+    { id: "boy", name: "BOY", type: "Color Scheme", scheme: "grobyw", display: "BOY", custom: false },
+    { id: "japanese", name: "Japanese", type: "Color Scheme", scheme: "groybw", display: "Japanese", custom: false },
+    { id: "custom", name: "Custom:", type: "Color Scheme", scheme: "grobyw", display: "", custom: true }
   ]);
   $scope.custom_scheme = "";
 
@@ -172,9 +172,9 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
   $scope.hint_stickers = true;
 
   initParameter("view", "editor", [
-    {id:     "editor", next:   "playback", fullscreen: false, infoPane:  true, extraControls:  true, highlightMoveFields:  true},
-    {id:   "playback", next: "fullscreen", fullscreen: false, infoPane:  true, extraControls: false, highlightMoveFields: false},
-    {id: "fullscreen", next:     "editor", fullscreen:  true, infoPane: false, extraControls: false, highlightMoveFields: false}
+    { id: "editor", next: "playback", fullscreen: false, infoPane: true, extraControls: true, highlightMoveFields: true },
+    { id: "playback", next: "fullscreen", fullscreen: false, infoPane: true, extraControls: false, highlightMoveFields: false },
+    { id: "fullscreen", next: "editor", fullscreen: true, infoPane: false, extraControls: false, highlightMoveFields: false }
   ]);
 
   $scope.title_default = "";
@@ -183,18 +183,18 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
     $scope.title = search["title"];
   }
 
-  $scope.nextView = function() {
+  $scope.nextView = function () {
     // TODO: Is there a better way to do view cycling?
     var idx = $scope.view_list.indexOf($scope.view);
     $scope.view = $scope.view_list[(idx + 1) % ($scope.view_list.length)];
     $scope.updateLocation();
   }
 
-  $scope.expand = function() {
+  $scope.expand = function () {
     $scope.alg = alg.cube.expand($scope.alg);
   }
 
-  $scope.simplify = function() {
+  $scope.simplify = function () {
     $scope.alg = alg.cube.simplify($scope.alg);
     $scope.addHistoryCheckpoint = true;
   }
@@ -205,48 +205,48 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
     "alg": "moves",
     "reconstruction-end-with-setup": "reconstruction"
   }
-  $scope.invert = function() {
+  $scope.invert = function () {
 
     // The setup stays the same. It's like magic!
     $scope.alg = alg.cube.invert($scope.alg);
 
     var currentPosition = twistyScene.getPosition();
     var maxPosition = twistyScene.getMaxPosition();
-    $scope.current_move =  maxPosition - currentPosition;
+    $scope.current_move = maxPosition - currentPosition;
 
     $scope.type = $scope.type_map[inverseTypeMap[$scope.type.id]];
 
     $scope.addHistoryCheckpoint = true;
   }
 
-  $scope.mirrorAcrossM = function() {
+  $scope.mirrorAcrossM = function () {
     $scope.setup = alg.cube.mirrorAcrossM($scope.setup);
     $scope.alg = alg.cube.mirrorAcrossM($scope.alg);
     $scope.addHistoryCheckpoint = true;
   }
 
-  $scope.removeComments = function() {
+  $scope.removeComments = function () {
     $scope.setup = alg.cube.removeComments($scope.setup);
     $scope.alg = alg.cube.removeComments($scope.alg);
     $scope.addHistoryCheckpoint = true;
   }
 
-  $scope.mirrorAcrossS = function() {
+  $scope.mirrorAcrossS = function () {
     $scope.setup = alg.cube.mirrorAcrossS($scope.setup);
     $scope.alg = alg.cube.mirrorAcrossS($scope.alg);
     $scope.addHistoryCheckpoint = true;
   }
 
-  $scope.image = function() {
-      var canvas = document.getElementsByTagName("canvas")[0];
-      var img = canvas.toDataURL("image/png");
-      $("#canvasPNG").fadeTo(0, 0);
-      $("#canvasPNG").html('<a href="' + img + '" target="blank"><img src="'+img+'"/></a>');
-      $("#canvasPNG").fadeTo("slow", 1);
+  $scope.image = function () {
+    var canvas = document.getElementsByTagName("canvas")[0];
+    var img = canvas.toDataURL("image/png");
+    $("#canvasPNG").fadeTo(0, 0);
+    $("#canvasPNG").html('<a href="' + img + '" target="blank"><img src="' + img + '"/></a>');
+    $("#canvasPNG").fadeTo("slow", 1);
   }
 
   function escape_alg(alg) {
-    if (!alg) {return alg;}
+    if (!alg) { return alg; }
     var escaped = alg;
     escaped = escaped.replace(/_/g, "&#95;").replace(/ /g, "_");
     escaped = escaped.replace(/\+/g, "&#2b;");
@@ -255,7 +255,7 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
   }
 
   function unescape_alg(alg) {
-    if (!alg) {return alg;}
+    if (!alg) { return alg; }
     var unescaped = alg;
     unescaped = unescaped.replace(/-/g, "'").replace(/&#45;/g, "-");
     unescaped = unescaped.replace(/\+/g, " ").replace(/&#2b;/g, "+"); // Recognize + as space. Many URL encodings will do this.
@@ -276,10 +276,10 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
   }
 
   function forumLinkText(url) {
-    var algWithCommentsGreyed = ($scope.alg+"\n").replace(
+    var algWithCommentsGreyed = ($scope.alg + "\n").replace(
       /(\/\/.*)[\n\r]/g, "[COLOR=\"gray\"]$1[/COLOR]\n").replace(
-      /(\/\*[^(\*\/)]*\*\/)/g, "[COLOR=\"gray\"]$1[/COLOR]"
-    );
+        /(\/\*[^(\*\/)]*\*\/)/g, "[COLOR=\"gray\"]$1[/COLOR]"
+      );
     var text = algWithCommentsGreyed +
       '\n[COLOR="gray"]// View at [URL="' +
       url +
@@ -293,7 +293,7 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
     return text.trim(); // The trim is redundant for angular.js, but let's keep it just in case.
   }
 
-  $scope.updateLocation = function() {
+  $scope.updateLocation = function () {
     $location.replace();
     setWithDefault("alg", escape_alg($scope.alg));
     setWithDefault("setup", escape_alg($scope.setup));
@@ -350,7 +350,7 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
   function locationToIndex(text, line, column) {
     var lines = $scope.alg.split("\n");
     var index = 0;
-    for (var i = 0; i < line-1; i++) {
+    for (var i = 0; i < line - 1; i++) {
       index += lines[i].length + 1;
     }
     return index + column;
@@ -362,10 +362,10 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
 
   var selectionStart = document.getElementById("algorithm").selectionStart;
 
-  var webgl = ( function () { try { var canvas = document.createElement( 'canvas' ); return !! window.WebGLRenderingContext && ( canvas.getContext( 'webgl' ) || canvas.getContext( 'experimental-webgl' ) ); } catch( e ) { return false; } } )();
+  var webgl = (function () { try { var canvas = document.createElement('canvas'); return !!window.WebGLRenderingContext && (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')); } catch (e) { return false; } })();
   var Renderer = webgl ? THREE.WebGLRenderer : THREE.CanvasRenderer;
 
-  $scope.twisty_init = function() {
+  $scope.twisty_init = function () {
 
     $("#viewer").empty();
 
@@ -463,7 +463,7 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
         return;
       }
 
-      $("#algorithm_shadow").find("#start" ).text($scope.alg.slice(0, newStart));
+      $("#algorithm_shadow").find("#start").text($scope.alg.slice(0, newStart));
       $("#algorithm_shadow").find("#middle").text($scope.alg.slice(newStart, newEnd));
       // $("#algorithm_shadow").find("#end"   ).text($scope.alg.slice(newEnd));
 
@@ -473,7 +473,7 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
 
     twistyScene.setCameraPosition(0.5, 3);
 
-    var resizeFunction = function() {
+    var resizeFunction = function () {
       $("#algorithm_shadow").width($("#algorithm").width());
       twistyScene.resize();
       // Force redraw. iOS Safari until iOS 7 has a bug where vh units are not recalculated.
@@ -500,7 +500,7 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
     }
 
     function gettingCurrentMove(f) {
-      return function() {
+      return function () {
         f();
         getCurrentMove();
       }
@@ -520,7 +520,7 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
 
     $("#reset").click(reset);
     $("#back").click(gettingCurrentMove(twistyScene.play.back));
-    $("#play").click(function() {
+    $("#play").click(function () {
       if ($scope.animating) {
         twistyScene.play.pause();
       }
@@ -561,15 +561,15 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
       // console.log(apply)
       // if (apply) {
       $scope.current_move = i;
-        // $scope.$apply("current_move = " + i);
+      // $scope.$apply("current_move = " + i);
       // }
       twistyScene.setPosition(i);
       fire = true;
       highlightCurrentMove();
       return;
     }
-    $(document).bind("selectionchange", function(event) {
-      if (!$scope.algDelayed){
+    $(document).bind("selectionchange", function (event) {
+      if (!$scope.algDelayed) {
         followSelection(true);
       }
     });
@@ -577,15 +577,16 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
     followSelection(false);
 
     // twistyScene.play.reset();
-    twistyScene.addListener("animating", function(animating) {
+    twistyScene.addListener("animating", function (animating) {
       $scope.$apply("animating = " + animating);
     });
     twistyScene.addListener("position", getCurrentMove);
-    $scope.$watch('current_move', function() {
-      $("#currentMove").css({"background": "linear-gradient(to right, \
+    $scope.$watch('current_move', function () {
+      $("#currentMove").css({
+        "background": "linear-gradient(to right, \
         #cc181e 0%, \
-        #cc181e " + (($scope.current_move / $("#currentMove").attr("max"))*100) + "%, \
-        #AAA " + (($scope.current_move / $("#currentMove").attr("max"))*100) + "%, \
+        #cc181e " + (($scope.current_move / $("#currentMove").attr("max")) * 100) + "%, \
+        #AAA " + (($scope.current_move / $("#currentMove").attr("max")) * 100) + "%, \
         #AAA 100%)"
       });
       var idx = twistyScene.getPosition();
@@ -597,7 +598,7 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
       }
       highlightCurrentMove();
     });
-    $scope.$watch('speed', function() {
+    $scope.$watch('speed', function () {
       twistyScene.setSpeed($scope.speed);
     }); // initialize the watch
 
@@ -614,7 +615,7 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
     "title",
     "hint_stickers",
     "hollow"
-  ].map(function(prop){
+  ].map(function (prop) {
     $scope.$watch(prop, $scope.twisty_init);
   });
 
@@ -633,12 +634,12 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
   $scope.$watch("alg", updateMetrics);
 
   $scope.setupDelayed = false;
-  $scope.setupDebounce = function(event) {
+  $scope.setupDebounce = function (event) {
     $scope.setupDelayed = (event == "delayed");
   }
 
   $scope.algDelayed = false;
-  $scope.algDebounce = function(event) {
+  $scope.algDebounce = function (event) {
     $scope.algDelayed = (event == "delayed")
   }
 
@@ -653,22 +654,22 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
     clipboard.copy({
       "text/plain": $scope.share_forum_short
     }).then(
-      function(){displayToast("The forum link has been copied to your clipboard.");},
-      function(){displayErrorToast("ERROR: Could not copy the forum link.<br>(Your browser might not support web clipboard API yet.)");}
+      function () { displayToast("The forum link has been copied to your clipboard."); },
+      function () { displayErrorToast("ERROR: Could not copy the forum link.<br>(Your browser might not support web clipboard API yet.)"); }
     );
   });
   $("#copyLong").on("click", function (event) {
     clipboard.copy({
       "text/plain": $scope.share_forum_long
     }).then(
-      function(){displayToast("The forum link has been copied to your clipboard.");},
-      function(){displayErrorToast("ERROR: Could not copy the forum link.<br>(Your browser might not support web clipboard API yet.)");}
+      function () { displayToast("The forum link has been copied to your clipboard."); },
+      function () { displayErrorToast("ERROR: Could not copy the forum link.<br>(Your browser might not support web clipboard API yet.)"); }
     );
   });
 
   // TODO: Use IFs for puzzle/type
   var demos = {
-    "yusheng-3.47":{
+    "yusheng-3.47": {
       puzzle: $scope.puzzle_map["3x3x3"],
       type: $scope.type_map["reconstruction"],
       title: "Yusheng Du, 3.47 WR",
@@ -713,11 +714,11 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
       type: $scope.type_map["moves"],
       title: "Notation Stress Test",
       setup: "M2 U M2 U2 M2 U M2",
-      alg: "R L U D B F // Single moves, variable spacing.\nB' F' D' U' L' R' // Inverses.\nR L2 R3 L2' R5 L8' R7 // Move amount\nU . U . U . U // Pauses.\nM' E2 S2 M S2 E2 m2 e2 s2 m2 e2 s2 // Slice turns.\nM2' U' M2' U2' M2' U' M2' // H'perm.\nx y z // Rotations.\nR2 L2 R2' L2' // Half turns.\nRw r' // Wide turns.\n4Rw x L' // Very wide turns\n2-3Lw 3-4r // Wide block turns\n[[R: U], D2] // commutator/conjugate/nesting\n([R: U'] D2)2' [R: U2] // Grouping and repetition"
+      alg: "R L U D B F // Single moves, variable spacing.\nB' F' D' U' L' R' // Inverses.\nR L2 R3 L2' R5 L8' R7 // Move amount\nU . U . U . U // Pauses.\nM' E2 S2 M S2 E2 m2 e2 s2 m2 e2 s2 // Slice turns.\nM2' U' M2' U2' M2' U' M2' // H'perm.\nx y z // Rotations.\nR2 L2 R2' L2' // Half turns.\nRw r' Lw l' Uw u' Dw d' Bw b' Fw f' // Wide turns.\n4Rw x L' // Very wide turns\n2-3Lw 3-4r // Wide block turns\n[[R: U], D2] // commutator/conjugate/nesting\n([R: U'] D2)2' [R: U2] // Grouping and repetition"
     }
   }
 
-  $scope.demo = function(name) {
+  $scope.demo = function (name) {
     // $scope.reset();
     var demo = demos[name];
     for (i in demo) {
@@ -726,18 +727,18 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
   }
 
   if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.getRegistration().then(function(r) {
+    navigator.serviceWorker.getRegistration().then(function (r) {
       console.log(r);
       if (!r) {
-        navigator.serviceWorker.register("./service-worker.js").then(function(registration) {
+        navigator.serviceWorker.register("./service-worker.js").then(function (registration) {
           console.log("Registered service worker with scope: ", registration.scope);
-        }, function(err) {
+        }, function (err) {
           console.error(err);
         });
       } else {
         console.log("Service worker already registered.");
       }
-    }, function(err) {
+    }, function (err) {
       console.error("Could not enable offline support.");
     });
   }

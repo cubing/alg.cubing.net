@@ -165,7 +165,7 @@ html, textarea {
   font-size: 1.25em;
   /*margin: 4px 8px 4px;*/
   padding: 0.8em 1em;
-  font-family: Verdana, Helvetica, Tahoma, sans-serif;
+  font-family: "Ubuntu", Verdana, Helvetica, Tahoma, sans-serif;
 }
 
 #algorithm {
@@ -251,22 +251,6 @@ input.current_scheme {
 input.current_scheme[readonly] {
   color: #aaa;
 }
-
-/*hr {
-
-  width: 70%;
-  margin: auto;
-  height: 1px;
-  border: none;
-
-  /* Slimming/Fading Effect */
-  background: linear-gradient(
-    90deg,
-    rgba(127, 127, 127,0) 0%,
-    rgba(127, 127, 127,1) 50%,
-    rgba(127, 127, 127,0) 100%
-  );
-}*/
 
 #canvasPNG {
   text-align: center;
