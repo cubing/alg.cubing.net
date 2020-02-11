@@ -303,6 +303,7 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
     setWithDefault("stage", $scope.stage.id);
     setWithDefault("title", $scope.title);
     setWithDefault("view", $scope.view.id);
+    setWithDefault("fbclid", null); // Remove Facebook tracking ID
     //TODO: Update sharing links
 
     // TODO: Inject playback view into parameters properly.
