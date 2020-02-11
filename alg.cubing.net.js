@@ -674,7 +674,7 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
       type: $scope.type_map["reconstruction"],
       title: "Yusheng Du, 3.47 WR",
       setup: "F U2 L2 B2 F' U L2 U R2 D2 L' B L2 B' R2 U2",
-      alg: "z y // inspection \nU R2 U' F' L F' U' L' // 2x2x3+EO \nU' R U R2 U R U2 R' U R // F2L \nU R' U' R U' R' U2 R // ZBLL \nU // AUF"
+      alg: "y x' // inspection\nU R2 U' F' L F' U' L' // XX-Cross + EO\nU' R U R' // 3rd slot\nR' U R U2' R' U R // 4th slot\nU R' U' R U' R' U2 R // OLL / ZBLL\nU // AUF\n\n// from http://cubesolv.es/solve/5757"
     },
     "feliks-4.22": {
       puzzle: $scope.puzzle_map["3x3x3"],
