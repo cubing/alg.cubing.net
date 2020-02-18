@@ -708,7 +708,7 @@ algxControllers.controller('algxController', ["$scope", "$location", "debounce",
       type: $scope.type_map["alg"],
       title: "Sune",
       setup: "",
-      alg: "[R U R2, R U R']"
+      alg: "[R U R2', R U R']"
     },
     "notation": {
       puzzle: $scope.puzzle_map["5x5x5"],
