@@ -838,31 +838,31 @@ algxControllers.controller("algxController", [
       }
     };
 
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.getRegistration().then(
-        function (r) {
-          console.log(r);
-          if (!r) {
-            navigator.serviceWorker.register("./service-worker.js").then(
-              function (registration) {
-                console.log(
-                  "Registered service worker with scope: ",
-                  registration.scope
-                );
-              },
-              function (err) {
-                console.error(err);
-              }
-            );
-          } else {
-            console.log("Service worker already registered.");
-          }
-        },
-        function (err) {
-          console.error("Could not enable offline support.");
-        }
-      );
-    }
+    // if ("serviceWorker" in navigator) {
+    //   navigator.serviceWorker.getRegistration().then(
+    //     function (r) {
+    //       console.log(r);
+    //       if (!r) {
+    //         navigator.serviceWorker.register("./service-worker.js").then(
+    //           function (registration) {
+    //             console.log(
+    //               "Registered service worker with scope: ",
+    //               registration.scope
+    //             );
+    //           },
+    //           function (err) {
+    //             console.error(err);
+    //           }
+    //         );
+    //       } else {
+    //         console.log("Service worker already registered.");
+    //       }
+    //     },
+    //     function (err) {
+    //       console.error("Could not enable offline support.");
+    //     }
+    //   );
+    // }
 
     // For debugging.
     ss = $scope;
