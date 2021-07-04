@@ -1,3 +1,22 @@
+# v2
+
+alg.cubing.net development is currently frozen. "v2" will be part of [Twizzle](https://twizzle.net/), and is currently:
+
+- Available for testing at [`experiments.cubing.net`](https://experiments.cubing.net/cubing.js/alg.cubing.net/)
+- Developed as part of [`cubing.js`](https://github.com/cubing/cubing.js)
+
+If you have any requests, please file them under `cubing.js` for now!
+
+<br>
+<br>
+<br>
+
+--------
+
+<br>
+<br>
+<br>
+
 # alg.cubing.net
 
 The new generation of alg/reconstruction viewing and sharing.  
