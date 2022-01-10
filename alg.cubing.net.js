@@ -378,7 +378,7 @@ algxControllers.controller("algxController", [
           alg: theAlg,
           experimentalSetupAlg: theSetup,
           puzzle: $scope.puzzle.id,
-          experimentalStickering: $scope.stage,
+          experimentalStickering: $scope.stage.id,
         };
         if (["algorithm", "reconstruction-end-with-setup"].includes($scope.type.id)) {
           config.experimentalSetupAnchor = "end";
