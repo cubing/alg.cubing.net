@@ -741,6 +741,70 @@
     countMoves.comment_long = zero;
     countMoves.timestamp = zero;
 
+    let toCubingJSAlg = makeAlgTraversal();
+
+    toCubingJSAlg.sequence = function(algIn, data) {
+      // console.log("sequence", algIn)
+      const algBuilder = new data.alg.AlgBuilder();
+      for (const unit of algIn) {
+        // console.log(unit, toCubingJSAlg[unit.type])
+        algBuilder.push(toCubingJSAlg[unit.type](unit, data));
+      }
+      return algBuilder.toAlg();
+    }
+    toCubingJSAlg.move = function(move, data) {
+      return new data.alg.Move(new data.alg.QuantumMove(move.base,  move.endLayer, move.startLayer,), move.amount); // TODO: pass in parts?
+    }
+
+    // function ensureSequence(unitOrSequence) {
+    //   if (unitOrSequence.type === "sequence") {
+    //     return unitOrSequence;
+    //   } else {
+    //     return [unitOrSequence]
+    //   }
+    // }
+    toCubingJSAlg.commutator = function(commutator, data) {
+      let newCommutator = new data.alg.Commutator(
+        toCubingJSAlg.sequence(commutator.A, data),
+        toCubingJSAlg.sequence(commutator.B, data)
+      );
+      if (commutator.amount === 1) {
+        return newCommutator;
+      } else {
+        return new data.alg.Grouping(new data.alg.Alg([newCommutator]), commutator.amount);
+      }
+    }
+    toCubingJSAlg.conjugate = function(conjugate, data) {
+      let newConjugate = new data.alg.Conjugate(
+        toCubingJSAlg.sequence(conjugate.A, data),
+        toCubingJSAlg.sequence(conjugate.B, data)
+      );
+      if (conjugate.amount === 1) {
+        return newConjugate;
+      } else {
+        return new data.alg.Grouping(new data.alg.Alg([newConjugate]), conjugate.amount);
+      }
+    }
+    toCubingJSAlg.group = function(group, data) {
+      return new data.alg.Grouping(toCubingJSAlg.sequence(group.A, data), group.amount);
+    }
+    toCubingJSAlg.pause = function(pause, data) {
+      return new data.alg.Pause();
+    }
+    toCubingJSAlg.newline = function(newline, data) {
+      return new data.alg.Newline();
+    }
+    toCubingJSAlg.comment_short = function(comment_short, data) {
+      return new data.alg.LineComment(comment_short.comment.slice(2));
+    }
+    toCubingJSAlg.comment_long = function(comment_long, data) {
+      const text = comment_long.comment.slice(2, -2).replaceAll("\n", " //");
+      console.log("text", text, new data.alg.LineComment(text))
+      return new data.alg.LineComment(text); // TODO
+    }
+    toCubingJSAlg.timestamp = function(timestamp, data) {
+      return new data.alg.Pause(); // TODO
+    }
 
     /************************************************************************************************/
 
@@ -759,7 +823,8 @@
       removeComments: removeComments,
       toMoves: toMoves,
       expand: expand,
-      countMoves: countMoves
+      countMoves: countMoves,
+      toCubingJSAlg: toCubingJSAlg
     }
   })();
 

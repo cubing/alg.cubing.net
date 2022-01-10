@@ -30,6 +30,11 @@
   <script src="lib/elastic.js"></script>
   <script src="alg.cubing.net.js"></script>
 
+  <script type="module">
+    globalThis.algPromise = import("https://cdn.cubing.net/js/cubing/alg");
+    globalThis.twistyPromise = import("https://cdn.cubing.net/js/cubing/twisty");
+  </script>
+
 </head>
 <body>
 
@@ -53,6 +58,8 @@
         <i class="fa fa-mail-forward"></i>
       </button><button class="control" id="skip" title="Skip to End">
         <i class="fa fa-fast-forward"></i>
+      </button><button class="control" id="twizzle" title="Open in Twizzle">
+        <i class="fa fa-twizzle"></i>
       </button>
     </div><div id="progress">
       <input
