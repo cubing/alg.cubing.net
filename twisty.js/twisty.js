@@ -184,6 +184,7 @@ twisty.scene = function(options) {
         // Better yet, allow rendering to a CanvasRenderer view separately.
         preserveDrawingBuffer: true
       });
+      view.renderer.setPixelRatio(globalThis.devicePixelRatio ?? 1);
     }
     if (that.debug.cachedRenderer) {
       twisty.cachedRenderer[Renderer] = view.renderer;
