@@ -2,7 +2,7 @@
 
 alg.cubing.net development is currently frozen. "v2" will be part of [Twizzle](https://twizzle.net/), and is currently:
 
-- Available for testing at [`experiments.cubing.net`](https://experiments.cubing.net/cubing.js/alg.cubing.net/)
+- Available at [`alpha.twizzle.net/edit`](https://alpha.twizzle.net/edit/)
 - Developed as part of [`cubing.js`](https://github.com/cubing/cubing.js)
 
 If you have any requests, please file them under `cubing.js` for now!
