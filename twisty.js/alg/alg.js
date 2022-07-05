@@ -753,7 +753,17 @@
       return algBuilder.toAlg();
     }
     toCubingJSAlg.move = function(move, data) {
-      return new data.alg.Move(new data.alg.QuantumMove(move.base,  move.endLayer, move.startLayer,), move.amount); // TODO: pass in parts?
+      let quantumMove;
+      if (move.endLayer && (move.endLayer === move.startLayer)) {
+        quantumMove = new data.alg.QuantumMove((move.base).replace("w", "").toUpperCase(), move.endLayer)
+      } else {
+        quantumMove = new data.alg.QuantumMove(
+          move.base,
+          move.endLayer,
+          move.startLayer
+        );
+      }
+      return new data.alg.Move(quantumMove, move.amount); // TODO: pass in parts?
     }
 
     // function ensureSequence(unitOrSequence) {
