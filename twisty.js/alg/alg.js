@@ -754,7 +754,9 @@
     }
     toCubingJSAlg.move = function(move, data) {
       let quantumMove;
-      if (move.endLayer && (move.endLayer === move.startLayer)) {
+      if (move.layer) {
+        quantumMove = new data.alg.QuantumMove(move.base, move.layer)
+      } else if (move.endLayer && (move.endLayer === move.startLayer)) {
         quantumMove = new data.alg.QuantumMove((move.base).replace("w", "").toUpperCase(), move.endLayer)
       } else {
         quantumMove = new data.alg.QuantumMove(
