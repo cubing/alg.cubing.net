@@ -1,0 +1,701 @@
+jison alg_jison.jison -o alg_jison.js
+Conflict in grammar: multiple actions possible when lookahead token is WHITESPACE in state 0
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 5)
+Conflict in grammar: multiple actions possible when lookahead token is WHITESPACE in state 2
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 5)
+Conflict in grammar: multiple actions possible when lookahead token is WHITESPACE in state 3
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 5)
+Conflict in grammar: multiple actions possible when lookahead token is AT in state 3
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 13)
+Conflict in grammar: multiple actions possible when lookahead token is EOF in state 3
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 9)
+Conflict in grammar: multiple actions possible when lookahead token is COMMENT_LONG in state 3
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 22)
+Conflict in grammar: multiple actions possible when lookahead token is COMMENT_SHORT in state 3
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 21)
+Conflict in grammar: multiple actions possible when lookahead token is NEWLINE in state 3
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 16)
+Conflict in grammar: multiple actions possible when lookahead token is PAUSE in state 3
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 15)
+Conflict in grammar: multiple actions possible when lookahead token is OPEN_PARENTHESIS in state 3
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 20)
+Conflict in grammar: multiple actions possible when lookahead token is OPEN_BRACKET in state 3
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 19)
+Conflict in grammar: multiple actions possible when lookahead token is NUMBER in state 3
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 29)
+Conflict in grammar: multiple actions possible when lookahead token is BASE_SLICE in state 3
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 28)
+Conflict in grammar: multiple actions possible when lookahead token is BASE_ROTATION in state 3
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 27)
+Conflict in grammar: multiple actions possible when lookahead token is BASE_UPPERCASE in state 3
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 26)
+Conflict in grammar: multiple actions possible when lookahead token is BASE_LOWERCASE in state 3
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 31)
+Conflict in grammar: multiple actions possible when lookahead token is BASE_W in state 3
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 30)
+Conflict in grammar: multiple actions possible when lookahead token is WHITESPACE in state 4
+- reduce by rule: TOP_LEVEL_ALG -> NESTED_ALG
+- shift token (then go to state 5)
+Conflict in grammar: multiple actions possible when lookahead token is BASE_W in state 4
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> NESTED_ALG
+Conflict in grammar: multiple actions possible when lookahead token is BASE_LOWERCASE in state 4
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> NESTED_ALG
+Conflict in grammar: multiple actions possible when lookahead token is BASE_UPPERCASE in state 4
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> NESTED_ALG
+Conflict in grammar: multiple actions possible when lookahead token is BASE_ROTATION in state 4
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> NESTED_ALG
+Conflict in grammar: multiple actions possible when lookahead token is BASE_SLICE in state 4
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> NESTED_ALG
+Conflict in grammar: multiple actions possible when lookahead token is NUMBER in state 4
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> NESTED_ALG
+Conflict in grammar: multiple actions possible when lookahead token is OPEN_BRACKET in state 4
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> NESTED_ALG
+Conflict in grammar: multiple actions possible when lookahead token is OPEN_PARENTHESIS in state 4
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> NESTED_ALG
+Conflict in grammar: multiple actions possible when lookahead token is PAUSE in state 4
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> NESTED_ALG
+Conflict in grammar: multiple actions possible when lookahead token is NEWLINE in state 4
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> NESTED_ALG
+Conflict in grammar: multiple actions possible when lookahead token is COMMENT_SHORT in state 4
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> NESTED_ALG
+Conflict in grammar: multiple actions possible when lookahead token is COMMENT_LONG in state 4
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> NESTED_ALG
+Conflict in grammar: multiple actions possible when lookahead token is WHITESPACE in state 4
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 5)
+Conflict in grammar: multiple actions possible when lookahead token is WHITESPACE in state 7
+- reduce by rule: TOP_LEVEL_ALG -> TOP_LEVEL_ALG TOP_LEVEL_ALG
+- shift token (then go to state 5)
+Conflict in grammar: multiple actions possible when lookahead token is AT in state 7
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> TOP_LEVEL_ALG TOP_LEVEL_ALG
+Conflict in grammar: multiple actions possible when lookahead token is BASE_W in state 7
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> TOP_LEVEL_ALG TOP_LEVEL_ALG
+Conflict in grammar: multiple actions possible when lookahead token is BASE_LOWERCASE in state 7
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> TOP_LEVEL_ALG TOP_LEVEL_ALG
+Conflict in grammar: multiple actions possible when lookahead token is BASE_UPPERCASE in state 7
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> TOP_LEVEL_ALG TOP_LEVEL_ALG
+Conflict in grammar: multiple actions possible when lookahead token is BASE_ROTATION in state 7
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> TOP_LEVEL_ALG TOP_LEVEL_ALG
+Conflict in grammar: multiple actions possible when lookahead token is BASE_SLICE in state 7
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> TOP_LEVEL_ALG TOP_LEVEL_ALG
+Conflict in grammar: multiple actions possible when lookahead token is NUMBER in state 7
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> TOP_LEVEL_ALG TOP_LEVEL_ALG
+Conflict in grammar: multiple actions possible when lookahead token is OPEN_BRACKET in state 7
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> TOP_LEVEL_ALG TOP_LEVEL_ALG
+Conflict in grammar: multiple actions possible when lookahead token is OPEN_PARENTHESIS in state 7
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> TOP_LEVEL_ALG TOP_LEVEL_ALG
+Conflict in grammar: multiple actions possible when lookahead token is PAUSE in state 7
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> TOP_LEVEL_ALG TOP_LEVEL_ALG
+Conflict in grammar: multiple actions possible when lookahead token is NEWLINE in state 7
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> TOP_LEVEL_ALG TOP_LEVEL_ALG
+Conflict in grammar: multiple actions possible when lookahead token is COMMENT_SHORT in state 7
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> TOP_LEVEL_ALG TOP_LEVEL_ALG
+Conflict in grammar: multiple actions possible when lookahead token is COMMENT_LONG in state 7
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> TOP_LEVEL_ALG TOP_LEVEL_ALG
+Conflict in grammar: multiple actions possible when lookahead token is WHITESPACE in state 7
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 5)
+Conflict in grammar: multiple actions possible when lookahead token is WHITESPACE in state 8
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 5)
+Conflict in grammar: multiple actions possible when lookahead token is COMMENT_LONG in state 8
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 22)
+Conflict in grammar: multiple actions possible when lookahead token is COMMENT_SHORT in state 8
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 21)
+Conflict in grammar: multiple actions possible when lookahead token is NEWLINE in state 8
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 16)
+Conflict in grammar: multiple actions possible when lookahead token is PAUSE in state 8
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 15)
+Conflict in grammar: multiple actions possible when lookahead token is OPEN_PARENTHESIS in state 8
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 20)
+Conflict in grammar: multiple actions possible when lookahead token is OPEN_BRACKET in state 8
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 19)
+Conflict in grammar: multiple actions possible when lookahead token is NUMBER in state 8
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 29)
+Conflict in grammar: multiple actions possible when lookahead token is BASE_SLICE in state 8
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 28)
+Conflict in grammar: multiple actions possible when lookahead token is BASE_ROTATION in state 8
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 27)
+Conflict in grammar: multiple actions possible when lookahead token is BASE_UPPERCASE in state 8
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 26)
+Conflict in grammar: multiple actions possible when lookahead token is BASE_LOWERCASE in state 8
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 31)
+Conflict in grammar: multiple actions possible when lookahead token is BASE_W in state 8
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 30)
+Conflict in grammar: multiple actions possible when lookahead token is AT in state 8
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 13)
+Conflict in grammar: multiple actions possible when lookahead token is WHITESPACE in state 10
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 5)
+Conflict in grammar: multiple actions possible when lookahead token is WHITESPACE in state 11
+- reduce by rule: OPTIONAL_WHITESPACE -> OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+- shift token (then go to state 5)
+Conflict in grammar: multiple actions possible when lookahead token is EOF in state 11
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: OPTIONAL_WHITESPACE -> OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is AT in state 11
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: OPTIONAL_WHITESPACE -> OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is WHITESPACE in state 11
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 5)
+Conflict in grammar: multiple actions possible when lookahead token is BASE_W in state 11
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: OPTIONAL_WHITESPACE -> OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is BASE_LOWERCASE in state 11
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: OPTIONAL_WHITESPACE -> OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is BASE_UPPERCASE in state 11
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: OPTIONAL_WHITESPACE -> OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is BASE_ROTATION in state 11
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: OPTIONAL_WHITESPACE -> OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is BASE_SLICE in state 11
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: OPTIONAL_WHITESPACE -> OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is NUMBER in state 11
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: OPTIONAL_WHITESPACE -> OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is OPEN_BRACKET in state 11
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: OPTIONAL_WHITESPACE -> OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is OPEN_PARENTHESIS in state 11
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: OPTIONAL_WHITESPACE -> OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is PAUSE in state 11
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: OPTIONAL_WHITESPACE -> OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is NEWLINE in state 11
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: OPTIONAL_WHITESPACE -> OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is COMMENT_SHORT in state 11
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: OPTIONAL_WHITESPACE -> OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is COMMENT_LONG in state 11
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: OPTIONAL_WHITESPACE -> OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is COLON in state 11
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: OPTIONAL_WHITESPACE -> OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is COMMA in state 11
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: OPTIONAL_WHITESPACE -> OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is CLOSE_PARENTHESIS in state 11
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: OPTIONAL_WHITESPACE -> OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is CLOSE_BRACKET in state 11
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: OPTIONAL_WHITESPACE -> OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is WHITESPACE in state 12
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 5)
+Conflict in grammar: multiple actions possible when lookahead token is NUMBER in state 14
+- reduce by rule: REPEATED -> REPEATABLE
+- shift token (then go to state 40)
+Conflict in grammar: multiple actions possible when lookahead token is WHITESPACE in state 19
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 5)
+Conflict in grammar: multiple actions possible when lookahead token is WHITESPACE in state 20
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 5)
+Conflict in grammar: multiple actions possible when lookahead token is WHITESPACE in state 32
+- reduce by rule: NESTED_ALG -> NESTED_ALG NESTED_ALG
+- shift token (then go to state 5)
+Conflict in grammar: multiple actions possible when lookahead token is BASE_W in state 32
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: NESTED_ALG -> NESTED_ALG NESTED_ALG
+Conflict in grammar: multiple actions possible when lookahead token is BASE_LOWERCASE in state 32
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: NESTED_ALG -> NESTED_ALG NESTED_ALG
+Conflict in grammar: multiple actions possible when lookahead token is BASE_UPPERCASE in state 32
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: NESTED_ALG -> NESTED_ALG NESTED_ALG
+Conflict in grammar: multiple actions possible when lookahead token is BASE_ROTATION in state 32
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: NESTED_ALG -> NESTED_ALG NESTED_ALG
+Conflict in grammar: multiple actions possible when lookahead token is BASE_SLICE in state 32
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: NESTED_ALG -> NESTED_ALG NESTED_ALG
+Conflict in grammar: multiple actions possible when lookahead token is NUMBER in state 32
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: NESTED_ALG -> NESTED_ALG NESTED_ALG
+Conflict in grammar: multiple actions possible when lookahead token is OPEN_BRACKET in state 32
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: NESTED_ALG -> NESTED_ALG NESTED_ALG
+Conflict in grammar: multiple actions possible when lookahead token is OPEN_PARENTHESIS in state 32
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: NESTED_ALG -> NESTED_ALG NESTED_ALG
+Conflict in grammar: multiple actions possible when lookahead token is PAUSE in state 32
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: NESTED_ALG -> NESTED_ALG NESTED_ALG
+Conflict in grammar: multiple actions possible when lookahead token is NEWLINE in state 32
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: NESTED_ALG -> NESTED_ALG NESTED_ALG
+Conflict in grammar: multiple actions possible when lookahead token is COMMENT_SHORT in state 32
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: NESTED_ALG -> NESTED_ALG NESTED_ALG
+Conflict in grammar: multiple actions possible when lookahead token is COMMENT_LONG in state 32
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: NESTED_ALG -> NESTED_ALG NESTED_ALG
+Conflict in grammar: multiple actions possible when lookahead token is WHITESPACE in state 32
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 5)
+Conflict in grammar: multiple actions possible when lookahead token is WHITESPACE in state 33
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 5)
+Conflict in grammar: multiple actions possible when lookahead token is COMMENT_LONG in state 33
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 22)
+Conflict in grammar: multiple actions possible when lookahead token is COMMENT_SHORT in state 33
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 21)
+Conflict in grammar: multiple actions possible when lookahead token is NEWLINE in state 33
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 16)
+Conflict in grammar: multiple actions possible when lookahead token is PAUSE in state 33
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 15)
+Conflict in grammar: multiple actions possible when lookahead token is OPEN_PARENTHESIS in state 33
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 20)
+Conflict in grammar: multiple actions possible when lookahead token is OPEN_BRACKET in state 33
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 19)
+Conflict in grammar: multiple actions possible when lookahead token is NUMBER in state 33
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 29)
+Conflict in grammar: multiple actions possible when lookahead token is BASE_SLICE in state 33
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 28)
+Conflict in grammar: multiple actions possible when lookahead token is BASE_ROTATION in state 33
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 27)
+Conflict in grammar: multiple actions possible when lookahead token is BASE_UPPERCASE in state 33
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 26)
+Conflict in grammar: multiple actions possible when lookahead token is BASE_LOWERCASE in state 33
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 31)
+Conflict in grammar: multiple actions possible when lookahead token is BASE_W in state 33
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 30)
+Conflict in grammar: multiple actions possible when lookahead token is WHITESPACE in state 34
+- reduce by rule: TOP_LEVEL_ALG -> OPTIONAL_WHITESPACE TIMESTAMP OPTIONAL_WHITESPACE
+- shift token (then go to state 5)
+Conflict in grammar: multiple actions possible when lookahead token is WHITESPACE in state 34
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 5)
+Conflict in grammar: multiple actions possible when lookahead token is AT in state 34
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> OPTIONAL_WHITESPACE TIMESTAMP OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is COMMENT_LONG in state 34
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> OPTIONAL_WHITESPACE TIMESTAMP OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is COMMENT_SHORT in state 34
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> OPTIONAL_WHITESPACE TIMESTAMP OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is NEWLINE in state 34
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> OPTIONAL_WHITESPACE TIMESTAMP OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is PAUSE in state 34
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> OPTIONAL_WHITESPACE TIMESTAMP OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is OPEN_PARENTHESIS in state 34
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> OPTIONAL_WHITESPACE TIMESTAMP OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is OPEN_BRACKET in state 34
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> OPTIONAL_WHITESPACE TIMESTAMP OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is NUMBER in state 34
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> OPTIONAL_WHITESPACE TIMESTAMP OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is BASE_SLICE in state 34
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> OPTIONAL_WHITESPACE TIMESTAMP OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is BASE_ROTATION in state 34
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> OPTIONAL_WHITESPACE TIMESTAMP OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is BASE_UPPERCASE in state 34
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> OPTIONAL_WHITESPACE TIMESTAMP OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is BASE_LOWERCASE in state 34
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> OPTIONAL_WHITESPACE TIMESTAMP OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is BASE_W in state 34
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> OPTIONAL_WHITESPACE TIMESTAMP OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is EOF in state 34
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: TOP_LEVEL_ALG -> OPTIONAL_WHITESPACE TIMESTAMP OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is WHITESPACE in state 35
+- reduce by rule: NESTED_ALG -> OPTIONAL_WHITESPACE REPEATED OPTIONAL_WHITESPACE
+- shift token (then go to state 5)
+Conflict in grammar: multiple actions possible when lookahead token is WHITESPACE in state 35
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 5)
+Conflict in grammar: multiple actions possible when lookahead token is COMMENT_LONG in state 35
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: NESTED_ALG -> OPTIONAL_WHITESPACE REPEATED OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is COMMENT_SHORT in state 35
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: NESTED_ALG -> OPTIONAL_WHITESPACE REPEATED OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is NEWLINE in state 35
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: NESTED_ALG -> OPTIONAL_WHITESPACE REPEATED OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is PAUSE in state 35
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: NESTED_ALG -> OPTIONAL_WHITESPACE REPEATED OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is OPEN_PARENTHESIS in state 35
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: NESTED_ALG -> OPTIONAL_WHITESPACE REPEATED OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is OPEN_BRACKET in state 35
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: NESTED_ALG -> OPTIONAL_WHITESPACE REPEATED OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is NUMBER in state 35
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: NESTED_ALG -> OPTIONAL_WHITESPACE REPEATED OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is BASE_SLICE in state 35
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: NESTED_ALG -> OPTIONAL_WHITESPACE REPEATED OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is BASE_ROTATION in state 35
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: NESTED_ALG -> OPTIONAL_WHITESPACE REPEATED OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is BASE_UPPERCASE in state 35
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: NESTED_ALG -> OPTIONAL_WHITESPACE REPEATED OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is BASE_LOWERCASE in state 35
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: NESTED_ALG -> OPTIONAL_WHITESPACE REPEATED OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is BASE_W in state 35
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: NESTED_ALG -> OPTIONAL_WHITESPACE REPEATED OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is AT in state 35
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: NESTED_ALG -> OPTIONAL_WHITESPACE REPEATED OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is EOF in state 35
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: NESTED_ALG -> OPTIONAL_WHITESPACE REPEATED OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is CLOSE_BRACKET in state 35
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: NESTED_ALG -> OPTIONAL_WHITESPACE REPEATED OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is CLOSE_PARENTHESIS in state 35
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: NESTED_ALG -> OPTIONAL_WHITESPACE REPEATED OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is COMMA in state 35
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: NESTED_ALG -> OPTIONAL_WHITESPACE REPEATED OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is COLON in state 35
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- reduce by rule: NESTED_ALG -> OPTIONAL_WHITESPACE REPEATED OPTIONAL_WHITESPACE
+Conflict in grammar: multiple actions possible when lookahead token is WHITESPACE in state 41
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 5)
+Conflict in grammar: multiple actions possible when lookahead token is WHITESPACE in state 42
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 5)
+Conflict in grammar: multiple actions possible when lookahead token is WHITESPACE in state 48
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 5)
+Conflict in grammar: multiple actions possible when lookahead token is WHITESPACE in state 49
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 5)
+Conflict in grammar: multiple actions possible when lookahead token is WHITESPACE in state 52
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 5)
+Conflict in grammar: multiple actions possible when lookahead token is WHITESPACE in state 53
+- reduce by rule: OPTIONAL_WHITESPACE -> 
+- shift token (then go to state 5)
+
+States with conflicts:
+State 0
+  $accept -> .expressions $end #lookaheads= $end
+  expressions -> .TOP_LEVEL_ALG EOF #lookaheads= $end
+  expressions -> .OPTIONAL_WHITESPACE EOF #lookaheads= $end
+  TOP_LEVEL_ALG -> .NESTED_ALG #lookaheads= EOF BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG WHITESPACE AT
+  TOP_LEVEL_ALG -> .OPTIONAL_WHITESPACE TIMESTAMP OPTIONAL_WHITESPACE #lookaheads= EOF BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG WHITESPACE AT
+  TOP_LEVEL_ALG -> .TOP_LEVEL_ALG TOP_LEVEL_ALG #lookaheads= EOF BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG WHITESPACE AT
+  OPTIONAL_WHITESPACE -> .WHITESPACE #lookaheads= EOF AT WHITESPACE BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG COLON COMMA CLOSE_PARENTHESIS CLOSE_BRACKET
+  OPTIONAL_WHITESPACE -> . #lookaheads= EOF AT WHITESPACE BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG
+  OPTIONAL_WHITESPACE -> .OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE #lookaheads= EOF AT WHITESPACE BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG COLON COMMA CLOSE_PARENTHESIS CLOSE_BRACKET
+  NESTED_ALG -> .OPTIONAL_WHITESPACE REPEATED OPTIONAL_WHITESPACE #lookaheads= EOF BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG WHITESPACE AT COMMA COLON CLOSE_PARENTHESIS CLOSE_BRACKET
+  NESTED_ALG -> .NESTED_ALG NESTED_ALG #lookaheads= EOF BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG WHITESPACE AT COMMA COLON CLOSE_PARENTHESIS CLOSE_BRACKET
+State 2
+  expressions -> TOP_LEVEL_ALG .EOF #lookaheads= $end
+  TOP_LEVEL_ALG -> TOP_LEVEL_ALG .TOP_LEVEL_ALG #lookaheads= EOF BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG WHITESPACE AT
+  TOP_LEVEL_ALG -> .NESTED_ALG
+  TOP_LEVEL_ALG -> .OPTIONAL_WHITESPACE TIMESTAMP OPTIONAL_WHITESPACE
+  TOP_LEVEL_ALG -> .TOP_LEVEL_ALG TOP_LEVEL_ALG
+  NESTED_ALG -> .OPTIONAL_WHITESPACE REPEATED OPTIONAL_WHITESPACE
+  NESTED_ALG -> .NESTED_ALG NESTED_ALG
+  OPTIONAL_WHITESPACE -> .WHITESPACE
+  OPTIONAL_WHITESPACE -> . #lookaheads= AT BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG WHITESPACE
+  OPTIONAL_WHITESPACE -> .OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+State 3
+  expressions -> OPTIONAL_WHITESPACE .EOF #lookaheads= $end
+  TOP_LEVEL_ALG -> OPTIONAL_WHITESPACE .TIMESTAMP OPTIONAL_WHITESPACE #lookaheads= EOF BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG WHITESPACE AT
+  OPTIONAL_WHITESPACE -> OPTIONAL_WHITESPACE .OPTIONAL_WHITESPACE #lookaheads= EOF AT WHITESPACE BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG COLON COMMA CLOSE_PARENTHESIS CLOSE_BRACKET
+  NESTED_ALG -> OPTIONAL_WHITESPACE .REPEATED OPTIONAL_WHITESPACE #lookaheads= EOF BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG WHITESPACE AT COMMA COLON CLOSE_PARENTHESIS CLOSE_BRACKET
+  TIMESTAMP -> .AT FLOAT SECONDS #lookaheads= EOF WHITESPACE AT COMMENT_LONG COMMENT_SHORT NEWLINE PAUSE OPEN_PARENTHESIS OPEN_BRACKET NUMBER BASE_SLICE BASE_ROTATION BASE_UPPERCASE BASE_LOWERCASE BASE_W
+  OPTIONAL_WHITESPACE -> .WHITESPACE
+  OPTIONAL_WHITESPACE -> . #lookaheads= WHITESPACE AT EOF COMMENT_LONG COMMENT_SHORT NEWLINE PAUSE OPEN_PARENTHESIS OPEN_BRACKET NUMBER BASE_SLICE BASE_ROTATION BASE_UPPERCASE BASE_LOWERCASE BASE_W
+  OPTIONAL_WHITESPACE -> .OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+  REPEATED -> .REPEATABLE #lookaheads= EOF WHITESPACE BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT COLON COMMA CLOSE_PARENTHESIS CLOSE_BRACKET
+  REPEATED -> .REPEATABLE AMOUNT #lookaheads= EOF WHITESPACE BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT COLON COMMA CLOSE_PARENTHESIS CLOSE_BRACKET
+  REPEATED -> .PAUSE #lookaheads= EOF WHITESPACE BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT COLON COMMA CLOSE_PARENTHESIS CLOSE_BRACKET
+  REPEATED -> .NEWLINE #lookaheads= EOF WHITESPACE BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT COLON COMMA CLOSE_PARENTHESIS CLOSE_BRACKET
+  REPEATED -> .COMMENT #lookaheads= EOF WHITESPACE BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT COLON COMMA CLOSE_PARENTHESIS CLOSE_BRACKET
+  REPEATABLE -> .BLOCK #lookaheads= WHITESPACE EOF NUMBER PRIME BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT CLOSE_PARENTHESIS COMMA COLON CLOSE_BRACKET
+  REPEATABLE -> .OPEN_BRACKET NESTED_ALG COMMA NESTED_ALG CLOSE_BRACKET #lookaheads= WHITESPACE EOF NUMBER PRIME BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT CLOSE_PARENTHESIS COMMA COLON CLOSE_BRACKET
+  REPEATABLE -> .OPEN_BRACKET NESTED_ALG COLON NESTED_ALG CLOSE_BRACKET #lookaheads= WHITESPACE EOF NUMBER PRIME BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT CLOSE_PARENTHESIS COMMA COLON CLOSE_BRACKET
+  REPEATABLE -> .OPEN_PARENTHESIS NESTED_ALG CLOSE_PARENTHESIS #lookaheads= WHITESPACE EOF NUMBER PRIME BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT CLOSE_PARENTHESIS COMMA COLON CLOSE_BRACKET
+  COMMENT -> .COMMENT_SHORT #lookaheads= WHITESPACE EOF BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT CLOSE_PARENTHESIS COMMA COLON CLOSE_BRACKET
+  COMMENT -> .COMMENT_LONG #lookaheads= WHITESPACE EOF BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT CLOSE_PARENTHESIS COMMA COLON CLOSE_BRACKET
+  BLOCK -> .BASE #lookaheads= PRIME NUMBER EOF WHITESPACE BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT COLON COMMA CLOSE_PARENTHESIS CLOSE_BRACKET
+  BLOCK -> .LAYER BASE_UPPERCASE #lookaheads= PRIME NUMBER EOF WHITESPACE BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT COLON COMMA CLOSE_PARENTHESIS CLOSE_BRACKET
+  BLOCK -> .LAYER BASE_WIDE #lookaheads= PRIME NUMBER EOF WHITESPACE BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT COLON COMMA CLOSE_PARENTHESIS CLOSE_BRACKET
+  BLOCK -> .LAYER DASH LAYER BASE_WIDE #lookaheads= PRIME NUMBER EOF WHITESPACE BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT COLON COMMA CLOSE_PARENTHESIS CLOSE_BRACKET
+  BASE -> .BASE_WIDE #lookaheads= WHITESPACE EOF NUMBER PRIME BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT CLOSE_PARENTHESIS COMMA COLON CLOSE_BRACKET
+  BASE -> .BASE_UPPERCASE #lookaheads= WHITESPACE EOF NUMBER PRIME BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT CLOSE_PARENTHESIS COMMA COLON CLOSE_BRACKET
+  BASE -> .BASE_ROTATION #lookaheads= WHITESPACE EOF NUMBER PRIME BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT CLOSE_PARENTHESIS COMMA COLON CLOSE_BRACKET
+  BASE -> .BASE_SLICE #lookaheads= WHITESPACE EOF NUMBER PRIME BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT CLOSE_PARENTHESIS COMMA COLON CLOSE_BRACKET
+  LAYER -> .NUMBER #lookaheads= BASE_UPPERCASE BASE_W BASE_LOWERCASE DASH
+  BASE_WIDE -> .BASE_W #lookaheads= PRIME NUMBER EOF WHITESPACE BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT CLOSE_PARENTHESIS COMMA COLON CLOSE_BRACKET
+  BASE_WIDE -> .BASE_LOWERCASE #lookaheads= PRIME NUMBER EOF WHITESPACE BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT CLOSE_PARENTHESIS COMMA COLON CLOSE_BRACKET
+State 4
+  TOP_LEVEL_ALG -> NESTED_ALG . #lookaheads= EOF BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG WHITESPACE AT
+  NESTED_ALG -> NESTED_ALG .NESTED_ALG #lookaheads= EOF BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG WHITESPACE AT COMMA COLON CLOSE_PARENTHESIS CLOSE_BRACKET
+  NESTED_ALG -> .OPTIONAL_WHITESPACE REPEATED OPTIONAL_WHITESPACE
+  NESTED_ALG -> .NESTED_ALG NESTED_ALG
+  OPTIONAL_WHITESPACE -> .WHITESPACE
+  OPTIONAL_WHITESPACE -> . #lookaheads= BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG WHITESPACE
+  OPTIONAL_WHITESPACE -> .OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+State 7
+  TOP_LEVEL_ALG -> TOP_LEVEL_ALG TOP_LEVEL_ALG . #lookaheads= EOF BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG WHITESPACE AT
+  TOP_LEVEL_ALG -> TOP_LEVEL_ALG .TOP_LEVEL_ALG
+  TOP_LEVEL_ALG -> .NESTED_ALG
+  TOP_LEVEL_ALG -> .OPTIONAL_WHITESPACE TIMESTAMP OPTIONAL_WHITESPACE
+  TOP_LEVEL_ALG -> .TOP_LEVEL_ALG TOP_LEVEL_ALG
+  NESTED_ALG -> .OPTIONAL_WHITESPACE REPEATED OPTIONAL_WHITESPACE
+  NESTED_ALG -> .NESTED_ALG NESTED_ALG
+  OPTIONAL_WHITESPACE -> .WHITESPACE
+  OPTIONAL_WHITESPACE -> . #lookaheads= AT BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG WHITESPACE
+  OPTIONAL_WHITESPACE -> .OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+State 8
+  TOP_LEVEL_ALG -> OPTIONAL_WHITESPACE .TIMESTAMP OPTIONAL_WHITESPACE
+  NESTED_ALG -> OPTIONAL_WHITESPACE .REPEATED OPTIONAL_WHITESPACE
+  OPTIONAL_WHITESPACE -> OPTIONAL_WHITESPACE .OPTIONAL_WHITESPACE
+  TIMESTAMP -> .AT FLOAT SECONDS
+  REPEATED -> .REPEATABLE
+  REPEATED -> .REPEATABLE AMOUNT
+  REPEATED -> .PAUSE
+  REPEATED -> .NEWLINE
+  REPEATED -> .COMMENT
+  OPTIONAL_WHITESPACE -> .WHITESPACE
+  OPTIONAL_WHITESPACE -> . #lookaheads= WHITESPACE COMMENT_LONG COMMENT_SHORT NEWLINE PAUSE OPEN_PARENTHESIS OPEN_BRACKET NUMBER BASE_SLICE BASE_ROTATION BASE_UPPERCASE BASE_LOWERCASE BASE_W AT
+  OPTIONAL_WHITESPACE -> .OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+  REPEATABLE -> .BLOCK
+  REPEATABLE -> .OPEN_BRACKET NESTED_ALG COMMA NESTED_ALG CLOSE_BRACKET
+  REPEATABLE -> .OPEN_BRACKET NESTED_ALG COLON NESTED_ALG CLOSE_BRACKET
+  REPEATABLE -> .OPEN_PARENTHESIS NESTED_ALG CLOSE_PARENTHESIS
+  COMMENT -> .COMMENT_SHORT
+  COMMENT -> .COMMENT_LONG
+  BLOCK -> .BASE
+  BLOCK -> .LAYER BASE_UPPERCASE
+  BLOCK -> .LAYER BASE_WIDE
+  BLOCK -> .LAYER DASH LAYER BASE_WIDE
+  BASE -> .BASE_WIDE
+  BASE -> .BASE_UPPERCASE
+  BASE -> .BASE_ROTATION
+  BASE -> .BASE_SLICE
+  LAYER -> .NUMBER
+  BASE_WIDE -> .BASE_W
+  BASE_WIDE -> .BASE_LOWERCASE
+State 10
+  TOP_LEVEL_ALG -> OPTIONAL_WHITESPACE TIMESTAMP .OPTIONAL_WHITESPACE #lookaheads= EOF BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG WHITESPACE AT
+  OPTIONAL_WHITESPACE -> .WHITESPACE
+  OPTIONAL_WHITESPACE -> . #lookaheads= EOF BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG WHITESPACE AT
+  OPTIONAL_WHITESPACE -> .OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+State 11
+  OPTIONAL_WHITESPACE -> OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE . #lookaheads= EOF AT WHITESPACE BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG COLON COMMA CLOSE_PARENTHESIS CLOSE_BRACKET
+  OPTIONAL_WHITESPACE -> OPTIONAL_WHITESPACE .OPTIONAL_WHITESPACE
+  OPTIONAL_WHITESPACE -> .WHITESPACE
+  OPTIONAL_WHITESPACE -> . #lookaheads= EOF AT WHITESPACE BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG COLON COMMA CLOSE_PARENTHESIS CLOSE_BRACKET
+  OPTIONAL_WHITESPACE -> .OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+State 12
+  NESTED_ALG -> OPTIONAL_WHITESPACE REPEATED .OPTIONAL_WHITESPACE #lookaheads= EOF BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG WHITESPACE AT COMMA COLON CLOSE_PARENTHESIS CLOSE_BRACKET
+  OPTIONAL_WHITESPACE -> .WHITESPACE
+  OPTIONAL_WHITESPACE -> . #lookaheads= EOF AT WHITESPACE COMMENT_LONG COMMENT_SHORT NEWLINE PAUSE OPEN_PARENTHESIS OPEN_BRACKET NUMBER BASE_SLICE BASE_ROTATION BASE_UPPERCASE BASE_LOWERCASE BASE_W COLON COMMA CLOSE_PARENTHESIS CLOSE_BRACKET
+  OPTIONAL_WHITESPACE -> .OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+State 14
+  REPEATED -> REPEATABLE . #lookaheads= EOF WHITESPACE BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT COLON COMMA CLOSE_PARENTHESIS CLOSE_BRACKET
+  REPEATED -> REPEATABLE .AMOUNT #lookaheads= EOF WHITESPACE BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT COLON COMMA CLOSE_PARENTHESIS CLOSE_BRACKET
+  AMOUNT -> .REPETITION #lookaheads= WHITESPACE EOF BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT CLOSE_PARENTHESIS COMMA COLON CLOSE_BRACKET
+  AMOUNT -> .REPETITION PRIME #lookaheads= WHITESPACE EOF BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT CLOSE_PARENTHESIS COMMA COLON CLOSE_BRACKET
+  AMOUNT -> .PRIME #lookaheads= WHITESPACE EOF BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT CLOSE_PARENTHESIS COMMA COLON CLOSE_BRACKET
+  REPETITION -> .NUMBER #lookaheads= AT WHITESPACE COMMENT_LONG COMMENT_SHORT NEWLINE PAUSE OPEN_PARENTHESIS OPEN_BRACKET NUMBER BASE_SLICE BASE_ROTATION BASE_UPPERCASE BASE_LOWERCASE BASE_W EOF PRIME COLON COMMA CLOSE_PARENTHESIS CLOSE_BRACKET
+State 19
+  REPEATABLE -> OPEN_BRACKET .NESTED_ALG COMMA NESTED_ALG CLOSE_BRACKET #lookaheads= WHITESPACE EOF NUMBER PRIME BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT CLOSE_PARENTHESIS COMMA COLON CLOSE_BRACKET
+  REPEATABLE -> OPEN_BRACKET .NESTED_ALG COLON NESTED_ALG CLOSE_BRACKET #lookaheads= WHITESPACE EOF NUMBER PRIME BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT CLOSE_PARENTHESIS COMMA COLON CLOSE_BRACKET
+  NESTED_ALG -> .OPTIONAL_WHITESPACE REPEATED OPTIONAL_WHITESPACE
+  NESTED_ALG -> .NESTED_ALG NESTED_ALG
+  OPTIONAL_WHITESPACE -> .WHITESPACE
+  OPTIONAL_WHITESPACE -> . #lookaheads= BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG WHITESPACE
+  OPTIONAL_WHITESPACE -> .OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+State 20
+  REPEATABLE -> OPEN_PARENTHESIS .NESTED_ALG CLOSE_PARENTHESIS #lookaheads= WHITESPACE EOF NUMBER PRIME BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT CLOSE_PARENTHESIS COMMA COLON CLOSE_BRACKET
+  NESTED_ALG -> .OPTIONAL_WHITESPACE REPEATED OPTIONAL_WHITESPACE
+  NESTED_ALG -> .NESTED_ALG NESTED_ALG
+  OPTIONAL_WHITESPACE -> .WHITESPACE
+  OPTIONAL_WHITESPACE -> . #lookaheads= BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG WHITESPACE
+  OPTIONAL_WHITESPACE -> .OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+State 32
+  NESTED_ALG -> NESTED_ALG NESTED_ALG . #lookaheads= EOF BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG WHITESPACE AT COMMA COLON CLOSE_PARENTHESIS CLOSE_BRACKET
+  NESTED_ALG -> NESTED_ALG .NESTED_ALG
+  NESTED_ALG -> .OPTIONAL_WHITESPACE REPEATED OPTIONAL_WHITESPACE
+  NESTED_ALG -> .NESTED_ALG NESTED_ALG
+  OPTIONAL_WHITESPACE -> .WHITESPACE
+  OPTIONAL_WHITESPACE -> . #lookaheads= BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG WHITESPACE
+  OPTIONAL_WHITESPACE -> .OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+State 33
+  NESTED_ALG -> OPTIONAL_WHITESPACE .REPEATED OPTIONAL_WHITESPACE
+  OPTIONAL_WHITESPACE -> OPTIONAL_WHITESPACE .OPTIONAL_WHITESPACE
+  REPEATED -> .REPEATABLE
+  REPEATED -> .REPEATABLE AMOUNT
+  REPEATED -> .PAUSE
+  REPEATED -> .NEWLINE
+  REPEATED -> .COMMENT
+  OPTIONAL_WHITESPACE -> .WHITESPACE
+  OPTIONAL_WHITESPACE -> . #lookaheads= WHITESPACE COMMENT_LONG COMMENT_SHORT NEWLINE PAUSE OPEN_PARENTHESIS OPEN_BRACKET NUMBER BASE_SLICE BASE_ROTATION BASE_UPPERCASE BASE_LOWERCASE BASE_W
+  OPTIONAL_WHITESPACE -> .OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+  REPEATABLE -> .BLOCK
+  REPEATABLE -> .OPEN_BRACKET NESTED_ALG COMMA NESTED_ALG CLOSE_BRACKET
+  REPEATABLE -> .OPEN_BRACKET NESTED_ALG COLON NESTED_ALG CLOSE_BRACKET
+  REPEATABLE -> .OPEN_PARENTHESIS NESTED_ALG CLOSE_PARENTHESIS
+  COMMENT -> .COMMENT_SHORT
+  COMMENT -> .COMMENT_LONG
+  BLOCK -> .BASE
+  BLOCK -> .LAYER BASE_UPPERCASE
+  BLOCK -> .LAYER BASE_WIDE
+  BLOCK -> .LAYER DASH LAYER BASE_WIDE
+  BASE -> .BASE_WIDE
+  BASE -> .BASE_UPPERCASE
+  BASE -> .BASE_ROTATION
+  BASE -> .BASE_SLICE
+  LAYER -> .NUMBER
+  BASE_WIDE -> .BASE_W
+  BASE_WIDE -> .BASE_LOWERCASE
+State 34
+  TOP_LEVEL_ALG -> OPTIONAL_WHITESPACE TIMESTAMP OPTIONAL_WHITESPACE . #lookaheads= EOF BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG WHITESPACE AT
+  OPTIONAL_WHITESPACE -> OPTIONAL_WHITESPACE .OPTIONAL_WHITESPACE
+  OPTIONAL_WHITESPACE -> .WHITESPACE
+  OPTIONAL_WHITESPACE -> . #lookaheads= WHITESPACE AT COMMENT_LONG COMMENT_SHORT NEWLINE PAUSE OPEN_PARENTHESIS OPEN_BRACKET NUMBER BASE_SLICE BASE_ROTATION BASE_UPPERCASE BASE_LOWERCASE BASE_W EOF
+  OPTIONAL_WHITESPACE -> .OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+State 35
+  NESTED_ALG -> OPTIONAL_WHITESPACE REPEATED OPTIONAL_WHITESPACE . #lookaheads= EOF BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG WHITESPACE AT COMMA COLON CLOSE_PARENTHESIS CLOSE_BRACKET
+  OPTIONAL_WHITESPACE -> OPTIONAL_WHITESPACE .OPTIONAL_WHITESPACE
+  OPTIONAL_WHITESPACE -> .WHITESPACE
+  OPTIONAL_WHITESPACE -> . #lookaheads= WHITESPACE COMMENT_LONG COMMENT_SHORT NEWLINE PAUSE OPEN_PARENTHESIS OPEN_BRACKET NUMBER BASE_SLICE BASE_ROTATION BASE_UPPERCASE BASE_LOWERCASE BASE_W AT EOF CLOSE_BRACKET CLOSE_PARENTHESIS COMMA COLON
+  OPTIONAL_WHITESPACE -> .OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+State 41
+  REPEATABLE -> OPEN_BRACKET NESTED_ALG .COMMA NESTED_ALG CLOSE_BRACKET #lookaheads= WHITESPACE EOF NUMBER PRIME BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT CLOSE_PARENTHESIS COMMA COLON CLOSE_BRACKET
+  REPEATABLE -> OPEN_BRACKET NESTED_ALG .COLON NESTED_ALG CLOSE_BRACKET #lookaheads= WHITESPACE EOF NUMBER PRIME BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT CLOSE_PARENTHESIS COMMA COLON CLOSE_BRACKET
+  NESTED_ALG -> NESTED_ALG .NESTED_ALG
+  NESTED_ALG -> .OPTIONAL_WHITESPACE REPEATED OPTIONAL_WHITESPACE
+  NESTED_ALG -> .NESTED_ALG NESTED_ALG
+  OPTIONAL_WHITESPACE -> .WHITESPACE
+  OPTIONAL_WHITESPACE -> . #lookaheads= BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG WHITESPACE
+  OPTIONAL_WHITESPACE -> .OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+State 42
+  REPEATABLE -> OPEN_PARENTHESIS NESTED_ALG .CLOSE_PARENTHESIS #lookaheads= WHITESPACE EOF NUMBER PRIME BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT CLOSE_PARENTHESIS COMMA COLON CLOSE_BRACKET
+  NESTED_ALG -> NESTED_ALG .NESTED_ALG
+  NESTED_ALG -> .OPTIONAL_WHITESPACE REPEATED OPTIONAL_WHITESPACE
+  NESTED_ALG -> .NESTED_ALG NESTED_ALG
+  OPTIONAL_WHITESPACE -> .WHITESPACE
+  OPTIONAL_WHITESPACE -> . #lookaheads= BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG WHITESPACE
+  OPTIONAL_WHITESPACE -> .OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+State 48
+  REPEATABLE -> OPEN_BRACKET NESTED_ALG COMMA .NESTED_ALG CLOSE_BRACKET #lookaheads= WHITESPACE EOF NUMBER PRIME BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT CLOSE_PARENTHESIS COMMA COLON CLOSE_BRACKET
+  NESTED_ALG -> .OPTIONAL_WHITESPACE REPEATED OPTIONAL_WHITESPACE
+  NESTED_ALG -> .NESTED_ALG NESTED_ALG
+  OPTIONAL_WHITESPACE -> .WHITESPACE
+  OPTIONAL_WHITESPACE -> . #lookaheads= BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG WHITESPACE
+  OPTIONAL_WHITESPACE -> .OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+State 49
+  REPEATABLE -> OPEN_BRACKET NESTED_ALG COLON .NESTED_ALG CLOSE_BRACKET #lookaheads= WHITESPACE EOF NUMBER PRIME BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT CLOSE_PARENTHESIS COMMA COLON CLOSE_BRACKET
+  NESTED_ALG -> .OPTIONAL_WHITESPACE REPEATED OPTIONAL_WHITESPACE
+  NESTED_ALG -> .NESTED_ALG NESTED_ALG
+  OPTIONAL_WHITESPACE -> .WHITESPACE
+  OPTIONAL_WHITESPACE -> . #lookaheads= BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG WHITESPACE
+  OPTIONAL_WHITESPACE -> .OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+State 52
+  REPEATABLE -> OPEN_BRACKET NESTED_ALG COMMA NESTED_ALG .CLOSE_BRACKET #lookaheads= WHITESPACE EOF NUMBER PRIME BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT CLOSE_PARENTHESIS COMMA COLON CLOSE_BRACKET
+  NESTED_ALG -> NESTED_ALG .NESTED_ALG
+  NESTED_ALG -> .OPTIONAL_WHITESPACE REPEATED OPTIONAL_WHITESPACE
+  NESTED_ALG -> .NESTED_ALG NESTED_ALG
+  OPTIONAL_WHITESPACE -> .WHITESPACE
+  OPTIONAL_WHITESPACE -> . #lookaheads= BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG WHITESPACE
+  OPTIONAL_WHITESPACE -> .OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE
+State 53
+  REPEATABLE -> OPEN_BRACKET NESTED_ALG COLON NESTED_ALG .CLOSE_BRACKET #lookaheads= WHITESPACE EOF NUMBER PRIME BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG AT CLOSE_PARENTHESIS COMMA COLON CLOSE_BRACKET
+  NESTED_ALG -> NESTED_ALG .NESTED_ALG
+  NESTED_ALG -> .OPTIONAL_WHITESPACE REPEATED OPTIONAL_WHITESPACE
+  NESTED_ALG -> .NESTED_ALG NESTED_ALG
+  OPTIONAL_WHITESPACE -> .WHITESPACE
+  OPTIONAL_WHITESPACE -> . #lookaheads= BASE_W BASE_LOWERCASE BASE_UPPERCASE BASE_ROTATION BASE_SLICE NUMBER OPEN_BRACKET OPEN_PARENTHESIS PAUSE NEWLINE COMMENT_SHORT COMMENT_LONG WHITESPACE
+  OPTIONAL_WHITESPACE -> .OPTIONAL_WHITESPACE OPTIONAL_WHITESPACE

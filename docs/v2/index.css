@@ -1,0 +1,32 @@
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+body, body * {
+  font-family: Helvetica, Tahoma, sans-serif;
+  display: flex;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+twisty, controls {
+  flex: 1 0 0;
+}
+
+/* Dynamic layout */
+controls {
+  border-left: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+@media (orientation: portrait) {
+  body {
+    flex-direction: column;
+  }
+
+  controls {
+    border-left: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.25);
+  }
+}

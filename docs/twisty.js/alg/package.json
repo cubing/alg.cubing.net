@@ -1,0 +1,32 @@
+{
+  "name": "alg",
+  "version": "0.2.0",
+  "description": "A library for parsing and transforming puzzle algorithms (\"algs\").",
+  "main": "alg.js",
+  "dependencies": {
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cubing/alg.js.git"
+  },
+  "keywords": [
+    "cubing",
+    "alg",
+    "algs",
+    "algorithms",
+    "speedcubing",
+    "puzzles",
+    "twistypuzzles",
+    "rubik",
+    "rubiks"
+  ],
+  "author": "Lucas Garron <code@garron.net> (https://garron.net/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cubing/alg.js/issues"
+  }
+}

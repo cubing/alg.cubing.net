@@ -1,0 +1,8 @@
+# Permit access to the challenge files but nothing else
+Order allow,deny
+Allow from all
+
+RewriteCond %{REQUEST_URI} ^/[.]well-known/acme-challenge/[a-zA-Z0-9_-]+$
+RewriteRule .* - [L]
+
+RewriteRule .* - [F]
