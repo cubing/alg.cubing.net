@@ -384,6 +384,9 @@ algxControllers.controller("algxController", [
           config.experimentalSetupAnchor = "end";
         }
         const player = new TwistyPlayer(config);
+        if ($scope.title) {
+          player.experimentalTitle = $scope.title
+        }
 
         const url = await player.experimentalModel.twizzleLink();
         console.log(url);
