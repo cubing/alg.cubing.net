@@ -1,1 +1,0 @@
-# alg.cubing.net v2
