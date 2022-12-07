@@ -54,4 +54,6 @@ Built on [`alg.js`](https://github.com/cubing/alg.js) and [`twisty.js`](https://
 - [twisty.js](https://github.com/cubing/twisty.js)
   - Started at a hackathon in June 2011, with the goal of providing a Javascript-only alternative to existing cube applets.
 - [alg.cubing.net](http://alg.cubing.net/)
-  - Under development. Eventually, all [alg.garron.us](http://alg.garron.us/)  traffic will be redirected here.
+  - Deprecated.
+- [Twizzle (Editor)](https://alpha.twizzle.net/edit/)
+  - Under development. Eventually, all [alg.cubing.net](http://alg.cubing.net/) traffic will be redirected here.
